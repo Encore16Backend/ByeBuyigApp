@@ -7,13 +7,17 @@ import SingInModal from '../../../modals/SignInModal';
 
 
 const NavB = ()=>{
-    const [singUpModalOn, setSingUpModalOn]= useState(false) // 로그인
-    const [SingInModalOn, setSingInModalOn] =useState(false) // 회원가입
+    const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
+    const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
+    const closeHander = ()=>{
+      
+    }
+    // ()=>{setSingUpModalOn(false)}
     return(
         <>
         <Navbar bg="dark" variant="dark">
           <Container>
-          <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/>
+          <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
           <Navbar.Brand href="#home">BuyBuying</Navbar.Brand>
           <Nav className="me-auto">
