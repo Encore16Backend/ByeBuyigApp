@@ -12,13 +12,12 @@ function SingUpModal({ show, onHide }) {
   // 회원가입 실행 함수
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://127.0.0.1:8080/user/save',{
-      ID : id,
-      PASSWORD : pwd, 
-      LOCATION : isAddress + ' ' + isZoneCode,
-      STYLE : fashion,
-      EMAIL : email,
-      ROLE : 0,
+    await axios.post('http://127.0.0.1:8080/api/user/save',{
+      username : id,
+      password : pwd, 
+      location : isAddress + ' ' + isZoneCode,
+      style : fashion,
+      email : email,
     },{
       headers: {
         "Content-Type": "application/json",
@@ -29,6 +28,8 @@ function SingUpModal({ show, onHide }) {
     }).catch(error =>{
       alert("회원가입 오류")
     })
+    setEmailMsg('');
+    setPwdMsg('');
   }
 
   // id관련
@@ -46,7 +47,7 @@ function SingUpModal({ show, onHide }) {
   }
 
   const duplicateId = async () => {
-    await axios.get("http://127.0.0.1:8080/api/getUser", {
+    await axios.get("http://127.0.0.1:8080/api/checkUser", {
       params: {
         username: id
       }
@@ -55,7 +56,7 @@ function SingUpModal({ show, onHide }) {
         "Content-Type": "application/json"
       }
     }).then(res => {
-      if(res.data) {
+      if(res.data === 'FAIL') {
         alert("중복된 아이디입니다.");
       } else {
         alert("사용 가능한 아이디입니다.");
@@ -189,21 +190,18 @@ function SingUpModal({ show, onHide }) {
     }
   }
 
-  const buttonRef = useRef(Button); // 버튼을 disable을 toggle하기 위해 만든 Ref
+  const [buttonRef, setButtonRef] = useState(false); // 버튼을 disable을 toggle하기 위해 만든 Ref
 
   // 유효성 체크값들이 모두true가 되면 true를 리턴하여 회원가입 버튼을 활성화 시키는 함수
   const getActivate = () => {
-    let isOk = false
-    if (checkID === true && valchkPwd === 1 && valisAddress === true && valisZoneCode === true && valemail === 1) // valname === true
-    { isOk = true }
-    return isOk
+    return (checkID === true && valchkPwd === 1 && valisAddress === true && valisZoneCode === true && valemail === 1) // valname === true
   }
   // getActivate함수가 활성화되면 자동으로 회원가입 버튼을 활성화시킴
   useEffect(() => { 
     if (!getActivate() ) {
-      buttonRef.current.disabled = true
+      setButtonRef(true);
     } else {
-      buttonRef.current.disabled = false
+      setButtonRef(false);
     }
   }, [checkID, valchkPwd, valisAddress, valisZoneCode, valemail]) // valname
 
@@ -323,7 +321,7 @@ function SingUpModal({ show, onHide }) {
               // <Button type="submit" disabled={true} ref={buttonRef} >회원가입</Button> db없이 체크용
               checkID ?
               <>
-                <Button type="submit" disabled={true} ref={buttonRef} >회원가입</Button>
+                <Button type="submit" disabled={buttonRef} >회원가입</Button>
               </> :
               <>
                 <Button  onClick={duplicateId}> 중복확인 </Button>

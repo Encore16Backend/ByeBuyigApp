@@ -4,7 +4,7 @@ import {useState, useEffect, useRef} from "react";
 import Test from "../components/auth/Test";
 import {useForm} from "react-hook-form"
 import axios from "axios";
-import Cookies from "universal-cookie/es6";
+// import Cookies from "universal-cookie/es6";
 
 function SingInModal({show, onHide}){
 
