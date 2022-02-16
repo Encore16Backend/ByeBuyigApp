@@ -1,0 +1,8 @@
+.invalid-input {
+    color : red;
+    padding-top: 5px;
+}
+
+.password {
+    -ms-ime-mode: disabled; /* 영문만 쓸 수 있게 함 */
+}
