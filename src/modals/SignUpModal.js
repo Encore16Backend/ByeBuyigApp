@@ -3,18 +3,17 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { useState, useEffect, useRef } from "react";
 import Test from "../components/auth/Test";
 import axios from "axios";
-import join from "../css/join.css"
+import join from "../css/join.css" 
 
 function SingUpModal({ show, onHide }) {
-  // id(pk) ,pwd, 이름, 주소, 관심패션, 이메일
-  const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입모달창
+  // id(pk) ,pwd, 이름?, 주소, 관심패션, 이메일
+  
 
   // 회원가입 실행 함수
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://127.0.0.1:8080/api/join',{
+    await axios.post('http://127.0.0.1:8080/user/save',{
       ID : id,
-      USERNAME : name,
       PASSWORD : pwd, 
       LOCATION : isAddress + ' ' + isZoneCode,
       STYLE : fashion,
@@ -26,11 +25,13 @@ function SingUpModal({ show, onHide }) {
       },
     }).then(res =>{
       closeHander();
+      alert('회원가입 성공')
     }).catch(error =>{
       alert("회원가입 오류")
     })
   }
 
+  // id관련
   const [id, setID] = useState('')
   const [checkID, setCheckID] = useState(false)
   
@@ -40,6 +41,7 @@ function SingUpModal({ show, onHide }) {
     const curValue = e.currentTarget.value;
     if (!regExp.test(curValue)){
       setID(curValue);
+      // setCheckID(true); db없이 체크용
     }
   }
 
@@ -61,42 +63,71 @@ function SingUpModal({ show, onHide }) {
       }
     })
   }
-  
+
+  // pwd관련
 
   const [pwd, setPwd] = useState('')
+  const [chkPwd, setChkPwd] = useState('')
+  const [valchkPwd, setvalchkPwd] = useState(0) // 0 기본 1 성공 -1 실패
+  const [pwdStyle, setPwdStyle]= useState('')
+  const [pwdMsg, setPwdMsg]= useState('')
 
   const onPwdValid = (e)=>{
     setPwd(e.target.value)
-    if (e.target.value === chkPwd && chkPwd != '') setvalchkPwd(true) 
-    else setvalchkPwd(false) 
-  }
-
-  const [chkPwd, setChkPwd] = useState('')
-  const [valchkPwd, setvalchkPwd] = useState(false) 
-
-  const onChkPwdValid = (e)=>{
-    setChkPwd(e.target.value)         
-    if ( e.target.value === pwd ) setvalchkPwd(true)
-    else setvalchkPwd(false) 
-  }
-
-  const [name, setName] = useState('')
-  const [valname, setvalname] = useState(false)
-
-  const onNameValid = (e)=>{
-    setName(e.target.value)
-    var regExp = /[ㄱ-힣]/;
-    const NameValid = regExp.test(e.target.value)     
-    if (NameValid) {
-      setvalname(true)
-    } else {
-      setvalname(false)
+    if (e.target.value === chkPwd && chkPwd != '') {
+      setvalchkPwd(1) 
+      setPwdStyle('valid-input')
+      setPwdMsg('※ 비밀번호 확인 성공')
+    }
+    else if (e.target.value != chkPwd &&  chkPwd != ''){
+      if (e.target.value === ""){
+        setvalchkPwd(0) 
+      }else{
+        setvalchkPwd(-1) 
+        setPwdStyle('invalid-input')
+        setPwdMsg('※ 비밀번호 확인 실패')
+      }
     }
   }
 
+  const onChkPwdValid = (e)=>{
+    setChkPwd(e.target.value)         
+    if ( e.target.value === pwd && pwd != "") {
+      setvalchkPwd(1)
+      setPwdStyle('valid-input')
+      setPwdMsg('※ 비밀번호 확인 성공')
+    }
+    else if (e.target.value != pwd){
+      if (e.target.value === ""){
+        setvalchkPwd(0)
+        setPwdMsg('')
+      }else{
+        setvalchkPwd(-1) 
+        setPwdStyle('invalid-input')
+        setPwdMsg('※ 비밀번호 확인 실패')
+      }
+    }
+  }
+
+  // 이름관련
+
+  // const [name, setName] = useState('')
+  // const [valname, setvalname] = useState(false)
+  // const onNameValid = (e)=>{
+  //   setName(e.target.value)
+  //   var regExp = /[ㄱ-힣]/;
+  //   const NameValid = regExp.test(e.target.value)     
+  //   if (NameValid) {
+  //     setvalname(true)
+  //   } else {
+  //     setvalname(false)
+  //   }
+  // }
+
+  // 상세 주소관련 
+
   const [isAddress, setIsAddress] = useState('');
   const [valisAddress, setvalisAddress] = useState(false)
-
   const onIsAddress = (e)=>{
     setIsAddress(e.target.value)
     const Addr = e.target.value
@@ -107,6 +138,7 @@ function SingUpModal({ show, onHide }) {
     }
   }
 
+  // 우편번호 관련  
   const [isZoneCode, setIsZoneCode] = useState('');
   const [valisZoneCode, setvalisZoneCode] = useState(false)
 
@@ -120,67 +152,78 @@ function SingUpModal({ show, onHide }) {
     }
   }
 
+  // 우편번호 검색으로 값이 생기면 유효성검사를 통과시키는 함수
   const OnAddr = ()=>{
-      console.log('addr 입장')
       setvalisAddress(true)
-      setvalisZoneCode(true)  // 우편번호 검색으로 값이 생기면 유효성검사를 통과시킴
+      setvalisZoneCode(true) 
   }
 
+  // 패션관련
   const [fashion, setFashion] = useState('')
-
+  
+  // 이메일 관련
   const [email, setEmail] = useState('')
-  const [valemail, setvalemail] = useState(false)
+  const [valemail, setvalemail] = useState(0) // 0 기본상태 1성공 -1실패
+  const [emailMsg , setEmailMsg] = useState('')
+  const [emailStyle, setEmailStyle]= useState('')
 
+  // 이메일 검증 함수
   const onEmail = (e)=>{
     setEmail(e.target.value)
     var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
     const valMyEmail = regExp.test(e.target.value)
-    if (valMyEmail) {
-      setvalemail(true)
-    } else {
-      setvalemail(false)
+    if (valMyEmail && email != '') {
+      setvalemail(1)
+      setEmailMsg('※ 이메일 형식 일치')
+      setEmailStyle('valid-input')
+    } 
+    else if (!(valMyEmail)){ // 이메일이 형식에 맞지 않으면
+      if (e.target.value === ""){ // 이메일이 형식에 맞지 않고 input이 빈값이면
+        setvalemail(0)
+        setEmailMsg('')
+      }else{
+        setvalemail(-1) // 이메일이 형식에 맞지 않고 input이 빈값이 아니면
+        setEmailMsg('※ 이메일 형식 불일치')
+        setEmailStyle('invalid-input')
+      }
     }
   }
 
-  const buttonRef = useRef(Button); //submitRef
+  const buttonRef = useRef(Button); // 버튼을 disable을 toggle하기 위해 만든 Ref
 
-  const getActivate = () => { // 유효성 체크값들이 모두true가 되면 true를 리턴하여 회원가입 버튼을 활성화 시키는 함수
+  // 유효성 체크값들이 모두true가 되면 true를 리턴하여 회원가입 버튼을 활성화 시키는 함수
+  const getActivate = () => {
     let isOk = false
-    if (
-      checkID === true && valchkPwd === true && valname === true && valisAddress === true && valisZoneCode === true
-      && valemail === true
-    ) {
-      isOk = true
-    }
+    if (checkID === true && valchkPwd === 1 && valisAddress === true && valisZoneCode === true && valemail === 1) // valname === true
+    { isOk = true }
     return isOk
   }
-  useEffect(() => { // getActivate함수가 활성화되면 회원가입 버튼을 활성화시킴
+  // getActivate함수가 활성화되면 자동으로 회원가입 버튼을 활성화시킴
+  useEffect(() => { 
     if (!getActivate() ) {
       buttonRef.current.disabled = true
     } else {
-      console.log(id)
-      console.log(pwd)
-      console.log(name)
-      console.log(isAddress)
-      console.log(isZoneCode)
-      console.log(fashion)
-      console.log(email)
       buttonRef.current.disabled = false
     }
-  }, [checkID, valchkPwd, valname, valisAddress, valisZoneCode, valemail])
+  }, [checkID, valchkPwd, valisAddress, valisZoneCode, valemail]) // valname
 
 
-
-
+  // 모달창을 닫고 state들을 초기화 시키는 함수
   const closeHander = ()=>{
     setID('')
+    setCheckID(false)
     setPwd('')
+    setvalchkPwd(0)
     setChkPwd('')
-    setName('')
+    // setName('')
+    // setvalname(false)
     setIsAddress('')
+    setvalisAddress(false)
     setIsZoneCode('')
+    setvalisZoneCode(false)
     setFashion('')
     setEmail('')
+    setvalemail(0)
     onHide()
   }
   
@@ -210,29 +253,26 @@ function SingUpModal({ show, onHide }) {
               <Form.Group className="mb-3" >
               <Form.Label>password</Form.Label>
               <Form.Control type="password" className="password" placeholder="8자 이상 영문, 숫자 조합" minLength={8} maxLength={20}
-                onChange={
-                  onPwdValid
-                } value={pwd} />
+                onChange={onPwdValid} value={pwd} />
             </Form.Group>
+
             {/* chkPWD */}
             <Form.Group className="mb-3">
               <Form.Label>password 확인</Form.Label>
               <Form.Control type="password" placeholder="비밀번호 확인"
-              onChange={
-                onChkPwdValid
-               } 
+              onChange={onChkPwdValid} 
               value={chkPwd} />
-              {/* {!valchkPwd && <div className="invalid-input">※ 패드워스가 일치하지 않습니다.</div>} */}
-              {valchkPwd && <div className="valid-input">※ 비밀번호 확인 완료</div>}
+              {<div className={pwdStyle}>{pwdMsg}</div>}
             </Form.Group>
 
-            {/* name */}
+            {/* name 
             <Form.Group className="mb-3" >
               <Form.Label>이름</Form.Label>
               <Form.Control type="text" placeholder="이름입력" onChange={
                 onNameValid
               } value={name} />
             </Form.Group>
+            */}
 
             {/* 주소 API */}
             <a onClick={OnAddr}>
@@ -247,6 +287,7 @@ function SingUpModal({ show, onHide }) {
                 onIsAddress
               } value={isAddress} />
             </Form.Group>
+
             {/* ZIP */}
             <Form.Group className="mb-3">
               <Form.Label>우편번호</Form.Label>
@@ -257,11 +298,11 @@ function SingUpModal({ show, onHide }) {
 
             {/* 관심패션 */}
             <Form.Group className="mb-3">
-              <Form.Label>평상시 스타일 (미선택시 선호스타일으로 분류)</Form.Label>
+              <Form.Label>선호하는 스타일 (미선택시 선호 스타일 없음으로 분류)</Form.Label>
               <Form.Select aria-label="Default select example" onChange={(e) => {
                 setFashion(e.target.value)
               }} value={fashion}>
-                <option value="1">아직없음</option>
+                <option value="1">없음</option>
                 <option value="2">캐주얼</option>
                 <option value="3">미니멀</option>
                 <option value="4">스트릿</option>
@@ -269,23 +310,25 @@ function SingUpModal({ show, onHide }) {
                 <option value="6">아메카지</option>
               </Form.Select>
             </Form.Group>
+
             {/* 이메일 */}
             <Form.Group className="mb-3">
               <Form.Label>E-mail</Form.Label>
-              <Form.Control type="text" placeholder="E-mail을 입력하세요" onChange={
-                onEmail
-              } value={email} />
+              <Form.Control type="text" placeholder="E-mail을 입력하세요" onChange={onEmail} value={email} />
+              {<div className={emailStyle}>{emailMsg}</div>}
+              
+              
             </Form.Group>
             {
+              // <Button type="submit" disabled={true} ref={buttonRef} >회원가입</Button> db없이 체크용
               checkID ?
               <>
                 <Button type="submit" disabled={true} ref={buttonRef} >회원가입</Button>
               </> :
               <>
-                <Button  onClick={duplicateId} >중복확인</Button>
+                <Button  onClick={duplicateId}> 중복확인 </Button>
               </>
             }
-            
           </Form>
           {/* </form> */}
         </>
@@ -295,7 +338,6 @@ function SingUpModal({ show, onHide }) {
       </Modal.Footer>
     </Modal>
   );
-
 }
 
 export default SingUpModal
