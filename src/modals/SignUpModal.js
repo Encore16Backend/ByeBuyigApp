@@ -12,6 +12,7 @@ function SingUpModal({ show, onHide }) {
 
   // 회원가입 실행 함수
   const onSubmit = (e) => {
+    e.preventDefault();
     axios.post(url, {
       ID: e.target.id.value,
       PASSWORD: e.target.pwd.value,
@@ -80,14 +81,6 @@ function SingUpModal({ show, onHide }) {
       && valemail === true
     ) {
       isOk = true
-    }else{
-      // console.log(valID)
-      // console.log(valPwd)
-      // console.log(valchkPwd)
-      // console.log(valname)
-      // console.log(valisAddress)
-      // console.log(valisZoneCode)
-      // console.log(valemail)
     }
     return isOk
   }
@@ -107,7 +100,7 @@ function SingUpModal({ show, onHide }) {
   return (
     <Modal
       show={show}
-      onHide={onHide}
+      onHide={closeHander}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -128,13 +121,12 @@ function SingUpModal({ show, onHide }) {
                 setID(e.target.value)
                 var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
                 // 영문자로 시작하는 영문자 또는 숫자 6~20자
+
                 let idChkVAlid = regExp.test(e.target.value)
                 if (idChkVAlid === true) {
                   setvalID(true)
-                  
                 } else {
                   setvalID(false)
-                  
                 }
               }} value={id} />
 
@@ -150,7 +142,7 @@ function SingUpModal({ show, onHide }) {
                 
                 if (PwdValid === true) {
                   setvalPwd(true)
-                  
+
                 } else {
                   setvalPwd(false)
                   
@@ -225,11 +217,10 @@ function SingUpModal({ show, onHide }) {
 
             {/* 관심패션 */}
             <Form.Group className="mb-3">
-              <Form.Label>평상시 스타일 (미선택시 관심없음으로 분류)</Form.Label>
+              <Form.Label>평상시 스타일 (미선택시 선호스타일으로 분류)</Form.Label>
               <Form.Select aria-label="Default select example" onChange={(e) => {
                 setFashion(e.target.value)
               }} value={fashion}>
-                <option value="0">관심있는 스타일을 선택해주세요</option>
                 <option value="1">아직없음</option>
                 <option value="2">캐주얼</option>
                 <option value="3">미니멀</option>

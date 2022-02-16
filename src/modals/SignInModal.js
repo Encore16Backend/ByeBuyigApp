@@ -49,7 +49,6 @@ function SingInModal({show, onHide}){
                     setID(e.target.value)
                     var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
                     // 영문자로 시작하는 영문자 또는 숫자 6~20자
-                    console.log('ID 유효성 검사 :: ', regExp.test(e.target.value))
                     if (regExp.test(e.target.value) === false){ // 유효성 여부에 따라 submit버튼 활성화
                         setvalID(false)
                     }else{
@@ -65,7 +64,6 @@ function SingInModal({show, onHide}){
                     setPwd(e.target.value)
                     //  8 ~ 10자 영문, 숫자 조합
                     var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,10}$/
-                    console.log('비밀번호 유효성 검사 :: ', regExp.test(e.target.value))
                     if (regExp.test(e.target.value) === false){
                         setvalPwd(false)
                     }else{

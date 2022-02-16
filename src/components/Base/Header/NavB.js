@@ -5,7 +5,6 @@ import React, {useState} from 'react';
 import SingUpModal from '../../../modals/SignUpModal';
 import SingInModal from '../../../modals/SignInModal';
 
-
 const NavB = ()=>{
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
