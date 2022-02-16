@@ -12,7 +12,6 @@ function SingUpModal({ show, onHide }) {
   // 회원가입 실행 함수
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log(id); 
     await axios.post('http://127.0.0.1:8080/api/join',{
       ID : id,
       USERNAME : name,
@@ -41,7 +40,6 @@ function SingUpModal({ show, onHide }) {
     const curValue = e.currentTarget.value;
     if (!regExp.test(curValue)){
       setID(curValue);
-      setCheckID(true);
     }
   }
 
@@ -66,7 +64,6 @@ function SingUpModal({ show, onHide }) {
   
 
   const [pwd, setPwd] = useState('')
-  
 
   const onPwdValid = (e)=>{
     setPwd(e.target.value)
@@ -161,7 +158,13 @@ function SingUpModal({ show, onHide }) {
     if (!getActivate() ) {
       buttonRef.current.disabled = true
     } else {
-      console.log("act검사 성공")
+      console.log(id)
+      console.log(pwd)
+      console.log(name)
+      console.log(isAddress)
+      console.log(isZoneCode)
+      console.log(fashion)
+      console.log(email)
       buttonRef.current.disabled = false
     }
   }, [checkID, valchkPwd, valname, valisAddress, valisZoneCode, valemail])
