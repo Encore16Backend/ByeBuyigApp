@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { Modal, Button, Form, Container } from "react-bootstrap";
+import React from "react";
+import { Modal, Button, Form } from "react-bootstrap";
 import { useState, useEffect, useRef } from "react";
 import Test from "../components/auth/Test";
 import axios from "axios";
@@ -41,6 +41,7 @@ function SingUpModal({ show, onHide }) {
     const curValue = e.currentTarget.value;
     if (!regExp.test(curValue)){
       setID(curValue);
+      setCheckID(true);
     }
   }
 
@@ -65,48 +66,108 @@ function SingUpModal({ show, onHide }) {
   
 
   const [pwd, setPwd] = useState('')
-  const [checkPwd, setCheckPwd] = useState(false)
-
-  const [chkPwd, setChkPwd] = useState('')
-  const [valchkPwd, setvalchkPwd] = useState(false)
-
-
   
 
+  const onPwdValid = (e)=>{
+    setPwd(e.target.value)
+    if (e.target.value === chkPwd && chkPwd != '') setvalchkPwd(true) 
+    else setvalchkPwd(false) 
+  }
 
+  const [chkPwd, setChkPwd] = useState('')
+  const [valchkPwd, setvalchkPwd] = useState(false) 
+
+  const onChkPwdValid = (e)=>{
+    setChkPwd(e.target.value)         
+    if ( e.target.value === pwd ) setvalchkPwd(true)
+    else setvalchkPwd(false) 
+  }
 
   const [name, setName] = useState('')
   const [valname, setvalname] = useState(false)
 
+  const onNameValid = (e)=>{
+    setName(e.target.value)
+    var regExp = /[ㄱ-힣]/;
+    const NameValid = regExp.test(e.target.value)     
+    if (NameValid) {
+      setvalname(true)
+    } else {
+      setvalname(false)
+    }
+  }
+
   const [isAddress, setIsAddress] = useState('');
   const [valisAddress, setvalisAddress] = useState(false)
+
+  const onIsAddress = (e)=>{
+    setIsAddress(e.target.value)
+    const Addr = e.target.value
+    if (Addr === true) {
+      setvalisAddress(true)
+    } else {
+      setvalisAddress(false)
+    }
+  }
 
   const [isZoneCode, setIsZoneCode] = useState('');
   const [valisZoneCode, setvalisZoneCode] = useState(false)
 
+  const onIsZoneCode = (e)=>{
+    setIsZoneCode(e.target.value)
+    const zip = e.target.value
+    if (zip === true) {
+      setvalisZoneCode(true)
+    } else {
+      setvalisZoneCode(false)
+    }
+  }
+
+  const OnAddr = ()=>{
+      console.log('addr 입장')
+      setvalisAddress(true)
+      setvalisZoneCode(true)  // 우편번호 검색으로 값이 생기면 유효성검사를 통과시킴
+  }
+
   const [fashion, setFashion] = useState('')
-  const [valfashion, setvalfashion] = useState(false)
 
   const [email, setEmail] = useState('')
   const [valemail, setvalemail] = useState(false)
 
+  const onEmail = (e)=>{
+    setEmail(e.target.value)
+    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+    const valMyEmail = regExp.test(e.target.value)
+    if (valMyEmail) {
+      setvalemail(true)
+    } else {
+      setvalemail(false)
+    }
+  }
+
   const buttonRef = useRef(Button); //submitRef
 
-  // useEffect(()=>{
-  //   setvalisAddress(true)
-  //   setvalisZoneCode(true)
-  // }, [isAddress, isZoneCode]) // 우편번호 검색으로 값이 생기면 유효성검사를 통과시킴
+  const getActivate = () => { // 유효성 체크값들이 모두true가 되면 true를 리턴하여 회원가입 버튼을 활성화 시키는 함수
+    let isOk = false
+    if (
+      checkID === true && valchkPwd === true && valname === true && valisAddress === true && valisZoneCode === true
+      && valemail === true
+    ) {
+      isOk = true
+    }
+    return isOk
+  }
+  useEffect(() => { // getActivate함수가 활성화되면 회원가입 버튼을 활성화시킴
+    if (!getActivate() ) {
+      buttonRef.current.disabled = true
+    } else {
+      console.log("act검사 성공")
+      buttonRef.current.disabled = false
+    }
+  }, [checkID, valchkPwd, valname, valisAddress, valisZoneCode, valemail])
 
-  // const getActivate = () => { // 유효성 체크값들이 true가 되면 버튼을 true를 리턴함
-  //   let isOk = true
-  //   if (
-  //     valchkPwd === true && valname === true && valisAddress === true && valisZoneCode === true
-  //     && valemail === true
-  //   ) {
-  //     isOk = true
-  //   }
-  //   return isOk
-  // }
+
+
 
   const closeHander = ()=>{
     setID('')
@@ -146,73 +207,49 @@ function SingUpModal({ show, onHide }) {
               <Form.Group className="mb-3" >
               <Form.Label>password</Form.Label>
               <Form.Control type="password" className="password" placeholder="8자 이상 영문, 숫자 조합" minLength={8} maxLength={20}
-                onChange={(e) => {
-                  setPwd(e.target.value)
-                  console.log(e.target.value)
-                  if (e.target.value != chkPwd && chkPwd != '') setvalchkPwd(true)
-                  else setvalchkPwd(false)
-                }} value={pwd} />
+                onChange={
+                  onPwdValid
+                } value={pwd} />
             </Form.Group>
-
             {/* chkPWD */}
             <Form.Group className="mb-3">
               <Form.Label>password 확인</Form.Label>
-              <Form.Control type="password" placeholder="비밀번호 확인" pattern="^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]"
-              onChange={(e) => {
-                setChkPwd(e.target.value)         
-                if (e.target.value === pwd) setvalchkPwd(false)
-                else setvalchkPwd(true)
-              }} value={chkPwd} />
-              {valchkPwd && <div className="invalid-input">※ 패드워스가 일치하지 않습니다.</div>}
+              <Form.Control type="password" placeholder="비밀번호 확인"
+              onChange={
+                onChkPwdValid
+               } 
+              value={chkPwd} />
+              {/* {!valchkPwd && <div className="invalid-input">※ 패드워스가 일치하지 않습니다.</div>} */}
+              {valchkPwd && <div className="valid-input">※ 비밀번호 확인 완료</div>}
             </Form.Group>
 
             {/* name */}
             <Form.Group className="mb-3" >
               <Form.Label>이름</Form.Label>
-              <Form.Control type="text" placeholder="이름입력" onChange={(e) => {
-                const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/gi; // 한글 정규표현식
-                setName(e.target.value)
-                var regExp = /[ㄱ-힣]/;
-                // 한글만 입력
-                const NameValid = regExp.test(e.target.value)     
-                if (NameValid) {
-                  setvalname(true)
-                } else {
-                  setvalname(false)
-                }
-
-              }} value={name} />
+              <Form.Control type="text" placeholder="이름입력" onChange={
+                onNameValid
+              } value={name} />
             </Form.Group>
+
             {/* 주소 API */}
-            <Test setIsAddress={setIsAddress} setIsZoneCode={setIsZoneCode} />
+            <a onClick={OnAddr}>
+            <Test setIsAddress={setIsAddress} setIsZoneCode={setIsZoneCode}/>
+            </a>
             <br></br>
+
             {/* ADDR */}
             <Form.Group className="mb-3">
               <Form.Label>상세주소</Form.Label>
-              <Form.Control type="text" placeholder="상세주소입력" onChange={(e) => {
-                setIsAddress(e.target.value)
-                const Addr = e.target.value
-                
-                if (Addr === true) {
-                  setvalisAddress(true)
-                } else {
-                  setvalisAddress(false)
-                }
-              }} value={isAddress} />
+              <Form.Control type="text" placeholder="상세주소입력" onChange={
+                onIsAddress
+              } value={isAddress} />
             </Form.Group>
             {/* ZIP */}
             <Form.Group className="mb-3">
               <Form.Label>우편번호</Form.Label>
-              <Form.Control type="text" placeholder="우편번호입력" onChange={(e) => {
-                setIsZoneCode(e.target.value)
-                const zip = e.target.value
-                if (zip === true) {
-                  setvalisZoneCode(true)
-                } else {
-                  setvalisZoneCode(false)
-                }
-
-              }} value={isZoneCode} />
+              <Form.Control type="text" placeholder="우편번호입력" onChange={
+                onIsZoneCode
+              } value={isZoneCode} />
             </Form.Group>
 
             {/* 관심패션 */}
@@ -232,25 +269,17 @@ function SingUpModal({ show, onHide }) {
             {/* 이메일 */}
             <Form.Group className="mb-3">
               <Form.Label>E-mail</Form.Label>
-              <Form.Control type="text" placeholder="E-mail을 입력하세요" onChange={(e) => {
-                setEmail(e.target.value)
-                var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-                // 형식에 맞는 경우 true 리턴
-                const valMyEmail = regExp.test(e.target.value)
-                if (valMyEmail) {
-                  setvalemail(true)
-                } else {
-                  setvalemail(false)
-                }
-              }} value={email} />
+              <Form.Control type="text" placeholder="E-mail을 입력하세요" onChange={
+                onEmail
+              } value={email} />
             </Form.Group>
             {
               checkID ?
               <>
-                <Button type="submit">회원가입</Button>
+                <Button type="submit" disabled={true} ref={buttonRef} >회원가입</Button>
               </> :
               <>
-                <Button onClick={duplicateId}>중복확인</Button>
+                <Button  onClick={duplicateId} >중복확인</Button>
               </>
             }
             

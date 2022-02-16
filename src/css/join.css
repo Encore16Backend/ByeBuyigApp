@@ -1,8 +1,11 @@
 .invalid-input {
-    color : red;
-    padding-top: 5px;
+  color: red;
+  padding-top: 5px;
 }
-
+.valid-input {
+  color: forestgreen;
+  padding-top: 5px;
+}
 .password {
-    -ms-ime-mode: disabled; /* 영문만 쓸 수 있게 함 */
+  -ms-ime-mode: disabled; /* 영문만 쓸 수 있게 함 */
 }
