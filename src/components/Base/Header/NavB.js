@@ -9,49 +9,55 @@ import { logOut } from '../../../redux/user/actions';
 import { connect } from 'react-redux';
 import setAuthorizationToken from '../../../utils/setAuthorizationToken';
 import axios from 'axios'
+import chkToken from '../../../hooks/chkToken';
 
 
 const NavB = ({ID, logOut})=>{
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
+    const [toRender, setToRender] = useState('')
     var history = useHistory();
+    const id = localStorage.getItem('id')
 
     const out = ()=>{ // logout과 동시에 home으로 이동
       logOut()
       localStorage.removeItem('id');
-      console.log(localStorage.getItem('id'), ' logout ')
-      setAuthorizationToken(null)
-      history.push('/')
-  
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
+      window.location.replace("/")
     }
+
     const toMyPage = ()=>{
-      history.push('/mypage') 
-    }
-
-    if (!localStorage.getItem('access_token')){
-      const refreshToken = async () =>{
-        await axios.post('http://127.0.0.1:8081/token/refresh', {
-          refresh_token:localStorage.getItem('refresh_token'),
-          access_token:localStorage.getItem('access_token'),
-      }, {
-          headers: {
-              "Content-Type": "application/json",
-            },
-      }).then(res => {
-          setAuthorizationToken(res.data.access_token)
-          localStorage.setItem('refresh_token', res.data.refresh_token)
-          localStorage.setItem('access_token', res.data.access_token) 
-      }).catch(error => {
-          alert("아이디 혹은 비밀번호를 확인해주세요.")
-      })
+      if (chkToken){
+        history.push('/mypage') 
       }
-      refreshToken()
-    
-    }else{
-      console.log('navB 토큰있음')
     }
 
+    // if (!localStorage.getItem('access_token')){
+    //   console.log('navB 토큰없음')
+    //   const refreshToken = async () =>{
+    //     await axios.post('http://127.0.0.1:8081/token/refresh', {
+    //       refresh_token:localStorage.getItem('refresh_token'),
+    //       access_token:localStorage.getItem('access_token'),
+    //   }, {
+    //       headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //   }).then(res => {
+    //       setAuthorizationToken(res.data.access_token)
+    //       localStorage.setItem('refresh_token', res.data.refresh_token)
+    //       localStorage.setItem('access_token', res.data.access_token) 
+    //   }).catch(error => {
+    //       console.log('navB')
+    //   })
+    //   }
+    //   refreshToken()
     
+    // }else{
+    //   console.log('navB 토큰있음')
+    //   console.log(localStorage.getItem('id'), 'navB localID')
+    // }
+
     
     return(
         <>
@@ -61,14 +67,14 @@ const NavB = ({ID, logOut})=>{
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
           <Navbar.Brand to={"/"}>BuyBuying</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link to={"/"}>Home</Nav.Link>
+            <Nav.Link href={"/"}>Home</Nav.Link>
           </Nav>
           <Nav>
           {
-              (ID !== '') 
+              (!!id) // !! (null undefined '' 등 모든 false형 값이면)
               ? 
               <>
-              <Nav.Link onClick={toMyPage}>{ID}</Nav.Link>
+              <Nav.Link onClick={toMyPage}>{id}</Nav.Link>
               <Nav.Link onClick={out}>로그아웃</Nav.Link>
               </>
                :

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Test from "../components/auth/Test";
 import axios from "axios";
 import join from "../css/join.css" 
+import {connect} from 'react-redux'
 
 function SingUpModal({ show, onHide }) {
   // id(pk) ,pwd, 이름?, 주소, 관심패션, 이메일
@@ -24,6 +25,8 @@ function SingUpModal({ show, onHide }) {
       },
     }).then(res =>{
       closeHander();
+      // 여기서 값들을 redux에 저장하자
+
       alert('회원가입 성공')
     }).catch(error =>{
       alert("회원가입 오류")
@@ -339,5 +342,7 @@ function SingUpModal({ show, onHide }) {
     </Modal>
   );
 }
+
+
 
 export default SingUpModal
