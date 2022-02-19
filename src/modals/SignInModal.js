@@ -4,14 +4,16 @@ import {useState, useEffect, useRef} from "react";
 import Test from "../components/auth/Test";
 import {useForm} from "react-hook-form"
 import axios from "axios";
-// import Cookies from "universal-cookie/es6";
+import setAuthorizationToken from "../utils/setAuthorizationToken";
+import { connect } from 'react-redux';
+import {logIn} from '../redux/user/actions'
 
-function SingInModal({show, onHide}){
+function SingInModal({show, onHide, logIn}){
 
         // 로그인 실행 함수
         const onSubmit = async (e)=>{
             e.preventDefault();            
-            await axios.post('http://127.0.0.1:8080/api/login', {
+            await axios.post('http://127.0.0.1:8081/api/login', {
                 username: id,
                 password:pwd
             }, {
@@ -19,9 +21,15 @@ function SingInModal({show, onHide}){
                     "Content-Type": "application/json",
                   },
             }).then(res => {
-                onHide();
-                // console.log(res.data.access_token);
-                // console.log(res.data.refresh_token); 최초로그인 시 발급
+                setAuthorizationToken(res.data.access_token)
+                localStorage.setItem('refresh_token', res.data.refresh_token)
+                localStorage.setItem('access_token', res.data.access_token) 
+                closeHander();
+            }).then(res =>{
+                logIn(id)
+                localStorage.setItem('id', id)
+                console.log()
+                
             }).catch(error => {
                 alert("아이디 혹은 비밀번호를 확인해주세요.")
             })
@@ -37,6 +45,7 @@ function SingInModal({show, onHide}){
             onHide()
         }
 
+        
 
         return (
             <Modal
@@ -78,4 +87,12 @@ function SingInModal({show, onHide}){
             );
 }
 
-export default SingInModal
+const mapDispatchToProps = (dispatch) =>{
+    return {
+        logIn : (data)=>{
+            dispatch(logIn(data))
+        }
+    }
+}
+
+export default connect(null,mapDispatchToProps)(SingInModal)

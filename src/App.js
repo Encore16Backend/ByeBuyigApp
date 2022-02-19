@@ -4,10 +4,13 @@ import { BrowserRouter as Router, Switch, Route,Link
 import Routers from './Routers';
 import axios from 'axios';
 import NavB from './components/Base/Header/NavB';
+import {Provider} from 'react-redux'
+import store from './store';
 
 function App() {
   return (
     <Router>
+      <Provider store={store}>
     <div className="App">
         <NavB/>
         <div className='container'>
@@ -22,6 +25,7 @@ function App() {
           </Switch>
         </div>
     </div>
+    </Provider>
     </Router>
   );
 }

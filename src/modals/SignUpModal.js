@@ -12,7 +12,7 @@ function SingUpModal({ show, onHide }) {
   // 회원가입 실행 함수
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://127.0.0.1:8080/api/user/save',{
+    await axios.post('http://127.0.0.1:8081/api/user/save',{
       username : id,
       password : pwd, 
       location : isAddress + ' ' + isZoneCode,
@@ -47,7 +47,7 @@ function SingUpModal({ show, onHide }) {
   }
 
   const duplicateId = async () => {
-    await axios.get("http://127.0.0.1:8080/api/checkUser", {
+    await axios.get("http://127.0.0.1:8081/api/checkUser", {
       params: {
         username: id
       }
@@ -222,6 +222,8 @@ function SingUpModal({ show, onHide }) {
     setFashion('')
     setEmail('')
     setvalemail(0)
+    setEmailMsg('')
+    setPwdMsg('')
     onHide()
   }
   
