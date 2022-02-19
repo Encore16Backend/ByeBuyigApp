@@ -1,10 +1,11 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore } from "redux";
+import { applyMiddleware } from "redux";
 import rootReducer from "./rootReducer";
-import logger from "redux-logger"; // 미들웨어로 활용
+import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
-import thunk from "redux-thunk"; // action에서 dispatch를 리턴
+import thunk from "redux-thunk";
 
 const middleware = [logger,thunk]
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)))
 
-export default store;
+export default store

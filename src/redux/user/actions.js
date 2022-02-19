@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { LogIn } from './types';
 import { LogOut } from './types';
 

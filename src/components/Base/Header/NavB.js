@@ -1,37 +1,57 @@
-import { BrowserRouter as Router, Switch, Route,Link, NavLink, withRouter
+import { BrowserRouter as Router, Switch, Route,Link, NavLink
 } from 'react-router-dom';
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import SingUpModal from '../../../modals/SignUpModal';
 import SingInModal from '../../../modals/SignInModal';
-import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { logOut } from '../../../redux/user/actions';
-import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import setAuthorizationToken from '../../../utils/setAuthorizationToken';
-import { useHistory } from 'react-router-dom';
+import axios from 'axios'
 
 
 const NavB = ({ID, logOut})=>{
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
     var history = useHistory();
-    
 
     const out = ()=>{ // logout과 동시에 home으로 이동
       logOut()
+      localStorage.removeItem('id');
+      console.log(localStorage.getItem('id'), ' logout ')
       setAuthorizationToken(null)
       history.push('/')
-      
-      
+  
     }
     const toMyPage = ()=>{
-
-
-      
-      history.push('/mypage')
-      
-      
+      history.push('/mypage') 
     }
+
+    if (!localStorage.getItem('access_token')){
+      const refreshToken = async () =>{
+        await axios.post('http://127.0.0.1:8081/token/refresh', {
+          refresh_token:localStorage.getItem('refresh_token'),
+          access_token:localStorage.getItem('access_token'),
+      }, {
+          headers: {
+              "Content-Type": "application/json",
+            },
+      }).then(res => {
+          setAuthorizationToken(res.data.access_token)
+          localStorage.setItem('refresh_token', res.data.refresh_token)
+          localStorage.setItem('access_token', res.data.access_token) 
+      }).catch(error => {
+          alert("아이디 혹은 비밀번호를 확인해주세요.")
+      })
+      }
+      refreshToken()
+    
+    }else{
+      console.log('navB 토큰있음')
+    }
+
+    
     
     return(
         <>
@@ -39,12 +59,12 @@ const NavB = ({ID, logOut})=>{
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
-          <Navbar.Brand href={"/"}>BuyBuying</Navbar.Brand>
+          <Navbar.Brand to={"/"}>BuyBuying</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href={"/"}>Home</Nav.Link>
+            <Nav.Link to={"/"}>Home</Nav.Link>
           </Nav>
           <Nav>
-            {
+          {
               (ID !== '') 
               ? 
               <>

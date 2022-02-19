@@ -3,20 +3,17 @@ import { Modal, Button, Form, Container } from "react-bootstrap";
 import {useState, useEffect, useRef} from "react";
 import Test from "../components/auth/Test";
 import {useForm} from "react-hook-form"
-import setAuthorizationToken from "../utils/setAuthorizationToken";
 import axios from "axios";
+import setAuthorizationToken from "../utils/setAuthorizationToken";
 import { connect } from 'react-redux';
 import {logIn} from '../redux/user/actions'
-
-
-
 
 function SingInModal({show, onHide, logIn}){
 
         // 로그인 실행 함수
         const onSubmit = async (e)=>{
             e.preventDefault();            
-            await axios.post('http://127.0.0.1:8080/api/login', {
+            await axios.post('http://127.0.0.1:8081/api/login', {
                 username: id,
                 password:pwd
             }, {
@@ -24,21 +21,15 @@ function SingInModal({show, onHide, logIn}){
                     "Content-Type": "application/json",
                   },
             }).then(res => {
-               
-                //Bearer설정 (api요청하는 콜마다 헤더에  accessToken 담아 보내도록 설정)
-                setAuthorizationToken(res.data)
-
-                // 1. refresh token은 local storage에 저장하고, access token은 cookie에 저장하라
-                // 2. 요청 헤더에는 access token을 넣어라
-                // 3. access token이 만료됐다고 하면, refresh token을 가져와 새로운 token을 발급받는 요청을 하여 갱신해라
+                setAuthorizationToken(res.data.access_token)
                 localStorage.setItem('refresh_token', res.data.refresh_token)
-                localStorage.setItem('access_token', res.data.access_token)
-                logIn(res.data.ID)
+                localStorage.setItem('access_token', res.data.access_token) 
+                closeHander();
+            }).then(res =>{
+                logIn(id)
+                localStorage.setItem('id', id)
+                console.log()
                 
-                
-                onHide();
-                // console.log(res.data.access_token);
-                // console.log(res.data.refresh_token); 최초로그인 시 발급
             }).catch(error => {
                 alert("아이디 혹은 비밀번호를 확인해주세요.")
             })
@@ -54,6 +45,7 @@ function SingInModal({show, onHide, logIn}){
             onHide()
         }
 
+        
 
         return (
             <Modal
@@ -103,5 +95,4 @@ const mapDispatchToProps = (dispatch) =>{
     }
 }
 
-
-export default connect(mapDispatchToProps)(SingInModal)
+export default connect(null,mapDispatchToProps)(SingInModal)

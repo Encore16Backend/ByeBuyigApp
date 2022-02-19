@@ -1,8 +1,9 @@
 import { LogIn } from "./types"
 import { LogOut } from "./types"
 
+
 const initState = {
-    ID : '비회원',
+    ID : '',
     location:'',
     username:'',
     style:'',

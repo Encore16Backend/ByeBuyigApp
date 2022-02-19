@@ -12,7 +12,6 @@ export default function setAuthorizationToken(token){
     }
 }
 
-
 // NOTE. access token은
 // (1) query string
 // (2) HTTP request header - "Authorization: Bearer "형식
