@@ -6,11 +6,17 @@ import axios from 'axios';
 import NavB from './components/Base/Header/NavB';
 import {Provider} from 'react-redux'
 import store from './store';
+import {persistStore} from 'redux-persist'
+import {PersistGate} from 'redux-persist/integration/react'
+import rootReducer from './rootReducer';
+
+
 
 function App() {
   return (
     <Router>
       <Provider store={store}>
+        
     <div className="App">
         <NavB/>
         <div className='container'>
@@ -25,6 +31,7 @@ function App() {
           </Switch>
         </div>
     </div>
+    
     </Provider>
     </Router>
   );

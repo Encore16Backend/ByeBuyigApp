@@ -7,8 +7,10 @@ import axios from "axios";
 import setAuthorizationToken from "../utils/setAuthorizationToken";
 import { connect } from 'react-redux';
 import {logIn} from '../redux/user/actions'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function SingInModal({show, onHide, logIn}){
+        var history = useHistory();
 
         // 로그인 실행 함수
         const onSubmit = async (e)=>{
@@ -21,14 +23,14 @@ function SingInModal({show, onHide, logIn}){
                     "Content-Type": "application/json",
                   },
             }).then(res => {
-                setAuthorizationToken(res.data.access_token)
+                // setAuthorizationToken(res.data.access_token)
                 localStorage.setItem('refresh_token', res.data.refresh_token)
                 localStorage.setItem('access_token', res.data.access_token) 
                 closeHander();
             }).then(res =>{
                 logIn(id)
                 localStorage.setItem('id', id)
-                console.log()
+                window.location.replace("/")
                 
             }).catch(error => {
                 alert("아이디 혹은 비밀번호를 확인해주세요.")
