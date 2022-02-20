@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route,Link, NavLink
 } from 'react-router-dom';
-import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, Button , Offcanvas} from "react-bootstrap";
 import React, {useState} from 'react';
 import SingUpModal from '../../../modals/SignUpModal';
 import SingInModal from '../../../modals/SignInModal';
@@ -10,9 +10,17 @@ import { connect } from 'react-redux';
 import setAuthorizationToken from '../../../utils/setAuthorizationToken';
 import axios from 'axios'
 import chkToken from '../../../hooks/chkToken';
+import SideBar from '../../sidebar'
 
 
 const NavB = ({ID, logOut})=>{
+
+  // 사이드바 용 hook
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  // login용 hook
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
     const [toRender, setToRender] = useState('')
@@ -58,14 +66,28 @@ const NavB = ({ID, logOut})=>{
     //   console.log(localStorage.getItem('id'), 'navB localID')
     // }
 
-    
+     
     return(
         <>
         <Navbar bg="dark" variant="dark">
+          <img  onClick={handleShow} style={{width:"70px", height:"50px"}} alt="sidebar" src="img\icons\sidebar.png" />
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
-          <Navbar.Brand to={"/"}>BuyBuying</Navbar.Brand>
+
+          {/* leftSideBar */}
+          <Navbar.Brand to={"/"} onClick={handleShow} >BuyBuying</Navbar.Brand>
+                <Offcanvas show={show} onHide={handleClose}>
+                    <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>상품목록</Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                    {/* sidebar컴포넌트  */}
+                    <SideBar/>
+
+                    </Offcanvas.Body>
+                </Offcanvas> 
+
           <Nav className="me-auto">
             <Nav.Link href={"/"}>Home</Nav.Link>
           </Nav>
