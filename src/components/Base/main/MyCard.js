@@ -2,12 +2,12 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { Carousel } from "bootstrap";
 import Carsol from "./Carsol";
+import cardComponent from "../../../css/mycard.css"
 
 const MyCard = ()=>{
 
     return(
-        <div>
-
+        <div className="cardComponent">
         <Card style={{ width: '18rem' }}>
                 <Card.Body>
                     <Carsol/>

@@ -16,10 +16,9 @@ function App() {
   return (
     <Router>
       <Provider store={store}>
-        
     <div className="App">
         <NavB/>
-        <div className='container'>
+        <div >
           <Switch>
             {Routers.map(route =>{
                 return(
