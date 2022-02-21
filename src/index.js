@@ -12,6 +12,9 @@ import { logIn } from './redux/user/actions';
 import thunk from "redux-thunk"; // action에서 dispatch를 리턴
 import setAuthorizationToken from './utils/setAuthorizationToken';
 import store from './store';
+import axios from 'axios';
+import GetMainItem from './hooks/GetMainItems';
+import { addMainItems } from './redux/items/actions';
 
 
 //  reload시에도 저장 가능하도록 index.js에 추가
@@ -20,11 +23,12 @@ if (localStorage.getItem('access_token')){
   const id = localStorage.getItem('id')
   console.log(id , ' index ')
   store.dispatch(logIn(id))
-  
 }else{
   store.dispatch(logIn(''))
   console.log('index 토큰없음')
 }
+
+
 
 
 ReactDOM.render(
