@@ -2,12 +2,21 @@ import React from 'react';
 import side from '../css/sidebar.css'
 import { Dropdown, Button } from 'bootstrap';
 import { ButtonGroup } from 'react-bootstrap';
+import GetBestCataItems from '../hooks/GetBestCataItems';
+import CateList from '../pages/CateList';
+import { Link, NavLink, Route } from 'react-router-dom';
+import qs from "qs"
 
-const SideBar = () => {
+
+const SideBar = ({setShow}) => {
+
+    const moveCata = ()=>{
+
+      setShow(false)
+    }
 
     return (
       <>
-      
   <aside className="sidebar">
          <header>
         
@@ -15,26 +24,138 @@ const SideBar = () => {
     <nav className="sidebar-nav">
  
       <ul>
-
-
         <li>
           <div className="dropdown">
-          <i className="ion-bag"></i> <span className="dropbtn">
-          상의 
+          <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata}>
+          <Link to={{pathname:"/category",
+                    search : "?id=9",
+                    state : {
+                   id:'9',
+                   },
+          }}>
+            상의 (9)
+          </Link>
           </span>
           <div className="dropdown-content">
           <ul className="nav-flyout">
             <li>
-              <a href="#"><i className="ion-ios-color-filter-outline"></i>긴팔</a>
+              <span  onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
+              <Link to={{pathname:"/category",
+                    search : "?id=10",
+                    state : {
+                   id:'10',
+                   },
+              }}>
+                반팔 (10)
+              </Link>
+              
+              </span>
             </li>
             <li>
-              <a href="#"><i className="ion-ios-clock-outline"></i>반팔</a>
+              <span  onClick={moveCata}><i className="ion-ios-clock-outline"></i>
+              <Link to={{pathname:"/category",
+                    search : "?id=10",
+                    state : {
+                   id:'10',
+                   },
+              }}>
+                긴팔 (11)
+              </Link>
+              
+              </span>
+            </li>
+           
+          </ul>
+          </div>
+          </div>
+        </li>
+        {/* // 9상의 10반팔 11긴팔 12하의 13반바지 14긴바지 15아우터 16코트 17패딩 18모자 19신발 */}
+        <li>
+          <div className="dropdown">
+          <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata} >
+          <Link to={{
+           pathname:"/category",
+           search : "?id=12",
+           state : {
+             id:'12',
+           },
+          }}>
+            하의 (12)
+          </Link>
+          </span>
+          <div className="dropdown-content">
+          <ul className="nav-flyout">
+            <li>
+              <span  onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
+              <Link to={{pathname:"/category",
+                    search : "?id=13",
+                    state : {
+                   id:'13',
+                   },
+              }}>
+                반바지 (13)
+              </Link>
+              </span>
             </li>
             <li>
-              <a href="#"><i className="ion-android-star-outline"></i>맨투맨</a>
+              <span  onClick={moveCata}><i className="ion-ios-clock-outline"></i>
+              <Link to={{pathname:"/category",
+                    search : "?id=14",
+                    state : {
+                   id:'14',
+                   },
+              }}>
+                긴바지 (14)
+              </Link>
+              
+              </span>
+            </li>
+           
+          </ul>
+          </div>
+          </div>
+        </li>
+
+        <li>
+          <div className="dropdown">
+          <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata} >
+          <Link to={{
+           pathname:"/category",
+           search : "?id=15",
+           state : {
+             id:'15',
+           },
+          }}>
+            아우터 (15)
+          </Link>
+          </span>
+          <div className="dropdown-content">
+          <ul className="nav-flyout">
+            <li>
+              <span onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
+              <Link to={{
+           pathname:"/category",
+           search : "?id=16",
+           state : {
+             id:'16',
+           },
+          }}>
+            코트 (16)
+          </Link>
+              </span>
             </li>
             <li>
-              <a href="#"><i className="ion-heart-broken"></i>니트</a>
+              <span onClick={moveCata}><i className="ion-ios-clock-outline"></i>
+              <Link to={{
+              pathname:"/category",
+              search : "?id=17",
+              state : {
+                id:'17',
+              },
+              }}>
+                패딩 (17)
+              </Link>
+              </span>
             </li>
           </ul>
           </div>
@@ -43,105 +164,45 @@ const SideBar = () => {
 
         <li>
           <div className="dropdown">
-          <i className="ion-bag"></i> <span className="dropbtn">
-          하의 
-          </span>
-          <div className="dropdown-content">
-          <ul className="nav-flyout">
-            <li>
-              <a href="#"><i className="ion-ios-color-filter-outline"></i>반바지</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-ios-clock-outline"></i>청바지</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-android-star-outline"></i>면바지</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-heart-broken"></i>카고바지</a>
-            </li>
-          </ul>
-          </div>
-          </div>
-        </li>
-
-        <li>
-          <div className="dropdown">
-          <i className="ion-bag"></i> <span className="dropbtn">
-          아우터 
-          </span>
-          <div className="dropdown-content">
-          <ul className="nav-flyout">
-            <li>
-              <a href="#"><i className="ion-ios-color-filter-outline"></i>롱패딩</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-ios-clock-outline"></i>숏패딩</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-android-star-outline"></i>롱코트</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-heart-broken"></i>자켓</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-heart-broken"></i>숏코트</a>
-            </li>
-          </ul>
-          </div>
-          </div>
-        </li>
-
-        <li>
-          <div className="dropdown">
-          <i className="ion-bag"></i> <span className="dropbtn">
-          악세사리 
-          </span>
-          <div className="dropdown-content">
-          <ul className="nav-flyout">
-            <li>
-              <a href="#"><i className="ion-ios-color-filter-outline"></i>모자</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-ios-clock-outline"></i>반지</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-android-star-outline"></i>목걸이</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-heart-broken"></i>팔찌</a>
-            </li>
-          </ul>
-          </div>
-          </div>
-        </li>
-
-        <li>
-          <div className="dropdown">
-          <i className="ion-bag"></i> <span className="dropbtn">
+          <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata} >
           ETC 
           </span>
           <div className="dropdown-content">
           <ul className="nav-flyout">
-            {/* <li>
-              <a href="#"><i className="ion-ios-color-filter-outline"></i>롱패딩</a>
+            <li>
+              <span onClick={moveCata} ><i className="ion-ios-color-filter-outline"></i>
+              <Link to={{
+              pathname:"/category",
+              search : "?id=18",
+              state : {
+                id:'18',
+              },
+              }}>
+                모자 (18)
+              </Link>
+              
+              </span>
             </li>
             <li>
-              <a href="#"><i className="ion-ios-clock-outline"></i>숏패딩</a>
+              <span onClick={moveCata}><i className="ion-ios-clock-outline"></i>
+              <Link to={{
+              pathname:"/category",
+              search : "?id=19",
+              state : {
+                id:'19',
+              },
+              }}>
+              신발 (19)
+              </Link>
+              
+              
+              </span>
             </li>
-            <li>
-              <a href="#"><i className="ion-android-star-outline"></i>롱코트</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-heart-broken"></i>자켓</a>
-            </li>
-            <li>
-              <a href="#"><i className="ion-heart-broken"></i>숏코트</a>
-            </li> */}
           </ul>
           </div>
           </div>
         </li>
+
       
 
 

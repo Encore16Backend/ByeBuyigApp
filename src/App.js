@@ -9,6 +9,9 @@ import store from './store';
 import {persistStore} from 'redux-persist'
 import {PersistGate} from 'redux-persist/integration/react'
 import rootReducer from './rootReducer';
+import Wrapper from './pages/Wrapper';
+import GetMainItem from './hooks/GetMainItems';
+
 
 
 
@@ -16,7 +19,9 @@ function App() {
   return (
     <Router>
       <Provider store={store}>
+        
     <div className="App">
+      
         <NavB/>
         <div >
           <Switch>
@@ -29,6 +34,7 @@ function App() {
             })}
           </Switch>
         </div>
+      
     </div>
     
     </Provider>

@@ -11,6 +11,7 @@ import setAuthorizationToken from '../../../utils/setAuthorizationToken';
 import axios from 'axios'
 import chkToken from '../../../hooks/chkToken';
 import SideBar from '../../sidebar'
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const NavB = ({ID, logOut})=>{
@@ -23,7 +24,6 @@ const NavB = ({ID, logOut})=>{
   // login용 hook
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
-    const [toRender, setToRender] = useState('')
     var history = useHistory();
     const id = localStorage.getItem('id')
 
@@ -40,31 +40,6 @@ const NavB = ({ID, logOut})=>{
         history.push('/mypage') 
       }
     }
-
-    // if (!localStorage.getItem('access_token')){
-    //   console.log('navB 토큰없음')
-    //   const refreshToken = async () =>{
-    //     await axios.post('http://127.0.0.1:8081/token/refresh', {
-    //       refresh_token:localStorage.getItem('refresh_token'),
-    //       access_token:localStorage.getItem('access_token'),
-    //   }, {
-    //       headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //   }).then(res => {
-    //       setAuthorizationToken(res.data.access_token)
-    //       localStorage.setItem('refresh_token', res.data.refresh_token)
-    //       localStorage.setItem('access_token', res.data.access_token) 
-    //   }).catch(error => {
-    //       console.log('navB')
-    //   })
-    //   }
-    //   refreshToken()
-    
-    // }else{
-    //   console.log('navB 토큰있음')
-    //   console.log(localStorage.getItem('id'), 'navB localID')
-    // }
 
      
     return(
@@ -83,8 +58,7 @@ const NavB = ({ID, logOut})=>{
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                     {/* sidebar컴포넌트  */}
-                    <SideBar/>
-
+                    <SideBar setShow={setShow}/>
                     </Offcanvas.Body>
                 </Offcanvas> 
 

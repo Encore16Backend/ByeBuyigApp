@@ -1,3 +1,4 @@
+import CateList from "./pages/CateList";
 import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
 
@@ -9,5 +10,9 @@ export default [
     {
         path:'/mypage',
         component:MyPage
+    },
+    {
+        path:'/category',
+        component:CateList
     }
 ]
