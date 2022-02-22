@@ -4,9 +4,9 @@
   object-fit: cover;
 }
 
-
 .centered {
   /* height: 100vh; Magic here */
+  padding-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,4 +19,18 @@
 .BestButtons {
   padding-bottom: 1rem;
   text-align:right
+}
+
+.pagination-ul{
+  color:gray; 
+  display: flex;
+  align-items: center;
+}
+
+.pagination-ul li {
+  padding: 1rem;
+}
+
+.currentPage{
+  color:black
 }

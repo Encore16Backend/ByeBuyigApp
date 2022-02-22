@@ -15,6 +15,7 @@ import store from './store';
 import axios from 'axios';
 import GetMainItem from './hooks/GetMainItems';
 import { addMainItems } from './redux/items/actions';
+import GetBestItems from './hooks/GetBestItems';
 
 
 //  reload시에도 저장 가능하도록 index.js에 추가
@@ -23,9 +24,11 @@ if (localStorage.getItem('access_token')){
   const id = localStorage.getItem('id')
   console.log(id , ' index ')
   store.dispatch(logIn(id))
+  
 }else{
   store.dispatch(logIn(''))
   console.log('index 토큰없음')
+  
 }
 
 

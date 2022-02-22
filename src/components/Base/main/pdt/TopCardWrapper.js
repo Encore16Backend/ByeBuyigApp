@@ -27,7 +27,9 @@ const TopCardWrapper = ({cata})=>{
 
     return(
         <>
-            {pdtRendering()}
+        {
+            (TopItem.length != 0 ? pdtRendering() : <h4 className="centered">해당 상품이 없습니다</h4>)
+        }
         </>
     )
 }

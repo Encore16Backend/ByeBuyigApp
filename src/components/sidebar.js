@@ -9,9 +9,8 @@ import qs from "qs"
 
 
 const SideBar = ({setShow}) => {
-
+// main/category/order?category=1&order=1&page=1
     const moveCata = ()=>{
-
       setShow(false)
     }
 
@@ -28,9 +27,9 @@ const SideBar = ({setShow}) => {
           <div className="dropdown">
           <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata}>
           <Link to={{pathname:"/category",
-                    search : "?id=9",
+                    // search : "?id=9",
                     state : {
-                   id:'9',
+                   id:'1',
                    },
           }}>
             상의 (9)
@@ -41,7 +40,7 @@ const SideBar = ({setShow}) => {
             <li>
               <span  onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
               <Link to={{pathname:"/category",
-                    search : "?id=10",
+                    // search : "?id=10",
                     state : {
                    id:'10',
                    },
@@ -54,17 +53,15 @@ const SideBar = ({setShow}) => {
             <li>
               <span  onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{pathname:"/category",
-                    search : "?id=10",
+                    // search : "?id=10",
                     state : {
                    id:'10',
                    },
               }}>
                 긴팔 (11)
               </Link>
-              
               </span>
             </li>
-           
           </ul>
           </div>
           </div>
@@ -75,12 +72,12 @@ const SideBar = ({setShow}) => {
           <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata} >
           <Link to={{
            pathname:"/category",
-           search : "?id=12",
+          //  search : "?id=12",
            state : {
-             id:'12',
+             id:'4',
            },
           }}>
-            하의 (12)
+            하의 (4)
           </Link>
           </span>
           <div className="dropdown-content">
@@ -88,7 +85,7 @@ const SideBar = ({setShow}) => {
             <li>
               <span  onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
               <Link to={{pathname:"/category",
-                    search : "?id=13",
+                    // search : "?id=13",
                     state : {
                    id:'13',
                    },
@@ -100,14 +97,13 @@ const SideBar = ({setShow}) => {
             <li>
               <span  onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{pathname:"/category",
-                    search : "?id=14",
+                    // search : "?id=14",
                     state : {
                    id:'14',
                    },
               }}>
                 긴바지 (14)
               </Link>
-              
               </span>
             </li>
            
@@ -121,9 +117,9 @@ const SideBar = ({setShow}) => {
           <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata} >
           <Link to={{
            pathname:"/category",
-           search : "?id=15",
+          //  search : "?id=15",
            state : {
-             id:'15',
+             id:'7',
            },
           }}>
             아우터 (15)
@@ -135,7 +131,7 @@ const SideBar = ({setShow}) => {
               <span onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
               <Link to={{
            pathname:"/category",
-           search : "?id=16",
+          //  search : "?id=16",
            state : {
              id:'16',
            },
@@ -148,7 +144,7 @@ const SideBar = ({setShow}) => {
               <span onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{
               pathname:"/category",
-              search : "?id=17",
+              // search : "?id=17",
               state : {
                 id:'17',
               },
@@ -173,7 +169,7 @@ const SideBar = ({setShow}) => {
               <span onClick={moveCata} ><i className="ion-ios-color-filter-outline"></i>
               <Link to={{
               pathname:"/category",
-              search : "?id=18",
+              // search : "?id=18",
               state : {
                 id:'18',
               },
@@ -187,7 +183,7 @@ const SideBar = ({setShow}) => {
               <span onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{
               pathname:"/category",
-              search : "?id=19",
+              // search : "?id=19",
               state : {
                 id:'19',
               },
@@ -202,12 +198,6 @@ const SideBar = ({setShow}) => {
           </div>
           </div>
         </li>
-
-      
-
-
-        
-        
       </ul>
     </nav>
   </aside>
