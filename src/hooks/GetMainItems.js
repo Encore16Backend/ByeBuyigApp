@@ -8,16 +8,19 @@ import React, { useEffect, useState } from "react";
 
 const GetMainItem = async () =>{
     const dispatch = useDispatch()
-
+    console.log( "getMainItem 시작")
     await axios.get('http://127.0.0.1:8081/main/items', {
         headers: {
             "Content-Type": "application/json",
         }
     }).then(res => {
+        console.log(res.data , "getMainItem")
        dispatch(addMainItems(res.data))
     }).catch(error => {
+        console.log(error.data , "getMainItem error")
         console.log(error, ' getItemLis');
     })
+    console.log( "getMainItem 종료")
   }
 
 

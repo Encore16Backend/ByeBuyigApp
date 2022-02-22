@@ -1,51 +1,44 @@
 import react, { useEffect, useState } from "react";
-import { createStore } from 'redux';
-import {Provider, useSelector, useDispatch, connect} from 'react-redux'
-import postRefresh from "../hooks/postRefresh";
 import { Container, Row, Col, Carousel, Card, Button, Offcanvas, ButtonToolbar, ButtonGroup } from "react-bootstrap";
-import { InputGroup, FormControl } from "react-bootstrap";
-import MyCard from "../components/Base/main/MyCard";
-import MyPage from "./MyPage";
-import SideBar from "../components/sidebar";
-import Carsol from "../components/Base/main/Carsol";
-import GetMainItems from "../hooks/GetMainItems"
-import CardWrapper from "../components/Base/main/CardWrapper";
-import BestCardWrapper from "../components/Base/main/BestCarpWrapper";
-import GetBestItems from "../hooks/GetBestItems";
-import GetBestTop from "../hooks/pdtHook/GetBestTop";
-import GetBestPants from "../hooks/pdtHook/GetBestPants";
-import GetBestOuter from "../hooks/pdtHook/GetBestOuter";
 import GetCate from "../hooks/pdtHook/GetCate"
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import OuterCardWrapper from "../components/Base/main/pdt/OuterCardWarpper"
-import TopCardWrapper from "../components/Base/main/pdt/TopCardWrapper";
-import PantsCardWrapper from "../components/Base/main/pdt/PantsCardWrapper";
 import CateCardWrapper from "../components/Base/main/pdt/CateCardWrapper";
+import ReactPaginate from 'react-paginate'
+import {useSelector} from 'react-redux'
 
 
 const CateList = ()=>{
     // 9상의 10반팔 11긴팔 12하의 13반바지 14긴바지 15아우터 16코트 17패딩 18모자 19신발
-    const [chk, setChk] = useState({
+    const location = useLocation();
+    // 카테고리 id liocation으로 받아옴
+    const id = location.state.id
+    console.log(location , "location")
+
+    // 들어온 카테고리의 상세 넘버
+    const pdtNum = useSelector(state => state.cateItem.items.length)
+    // url을 전달할 변수
+    const [BestItemUrl , setBestItemUrl] = useState('/main/category/order?category='+id)
+    // order값을 전달할 변수
+    const [orderNum , setOrderNum] = useState('')
+
+    const [chk, setChk] = useState({ 
+         // 여기 state객체의 값을 바꾸고 렌더링하고싶으면
         flag:false
     }) 
-    const location = useLocation();
 
-    useEffect(()=>{
-        setChk({
-            ...chk,
-            flag : !!chk.flag
-        })
+    useEffect(()=>{ 
+        const newId = location.state.id
+        setChk({ // 함수에서 set을 호출하고 
+            ...chk, // 기존객체를 받아오고
+            flag : !!chk.flag // 그리고 받아온 객체를 수정하면
+        }) // 새로운 chk 객체가리턴되어서 다시 렌더링이 됩니다
+        setBestItemUrl('/main/category/order?category='+newId)
     }, [location])
 
-
-    console.log(location, " location");
-    const id = location.state.id
-
-
-
-    // 베스트 아이템들 url을 변경하기 위한 state
-    const [BestItemUrl , setBestItemUrl] = useState('/main/category/purchase?category='+id)
     
+
+    console.log(BestItemUrl)
+    console.log(orderNum , "orderNum입니다")
 
     // 넘어온 상품
     // GetCate(url)
@@ -59,31 +52,51 @@ const CateList = ()=>{
     const changeBestItemUrl = (url)=>{
         setBestItemUrl(url)
     }
-    
+    // order번호를 수정하는 함수
+    const changeOrderNum= (num)=>{
+        setOrderNum(num)
+    }
+
+    const handlePageChange = (e)=>{
+        console.log(e.selected)
+        if (!!orderNum){
+            setBestItemUrl('/main/category/order?category='+id+"&order="+orderNum+"&page="+e.selected)
+        }else{
+            setBestItemUrl('/main/category/order?category='+id+"&page="+e.selected)
+        }
+    }
+
     return(
         <>
         <Container>
             <Row>
                 <Col sm={12}>
                     <Row>
-                        <br/><br/><br/><br/>
+                        <br/><br/><br/><br/> 
                         <h1 className="centered" >BEST PRODUCT</h1>
                         <div className="BestButtons">
                             {/* 후기 별점 .. 변경버튼 */}
+                            {/* 판매량 낮은가격 높은가격 후기 */}
                             <span onClick={() => {
-                                changeBestItemUrl("/main/category/review?category="+id)
+                                changeOrderNum('4')
+                                changeBestItemUrl("/main/category/order?category="+id+"&order=4")
                                
-                            }} variant="secondary">후기</span>&nbsp;&nbsp;
+                            }} variant="secondary">
+                                후기
+                            </span>&nbsp;&nbsp;
                             <span onClick={() => {
-                                changeBestItemUrl("/main/category/price1?category="+id)
+                                changeOrderNum('3')
+                                changeBestItemUrl("/main/category/order?category="+id+"&order=3")
                             
                             }}  variant="secondary">높은가격순</span>&nbsp;&nbsp;
                             <span onClick={() => {
-                                changeBestItemUrl("/main/category/price2?category="+id)
+                                changeOrderNum('2')
+                                changeBestItemUrl("/main/category/order?category="+id+"&order=2")
                              
                             }}  variant="secondary">낮은가격순</span>&nbsp;&nbsp;
                             <span onClick={() => {
-                                changeBestItemUrl("/main/category/purchase?category="+id)
+                                changeOrderNum('1')
+                                changeBestItemUrl("/main/category/order?category="+id+"&order=1")
                              
                             }} variant="secondary">판매량</span>
                         </div>
@@ -93,8 +106,36 @@ const CateList = ()=>{
                             {/* id로 받은 상품을 렌더링 할 component */}
                         </div>
                     </Row>
+                </Col>
+            </Row>
 
-                   
+            <Row>
+                <Col>
+{/* pageCount - 총 게시글의 개수(총 row 수)
+pageRangeDisplayed - 한 페이지에 표시할 게시글의 수
+marginPagesDisplayed - 
+breakLabel - 페이지 수가 많을 경우 건너뛸 수 있는 버튼
+previousLabel - 이전페이지로 가는 버튼의 value값
+nextLabel - 다음페이지로 가는 버튼의 value값
+onPageChange - 페이지 버튼을 눌렀을 때 일어나는 이벤트 이를 이용해 페이지 증감
+containerClassName - css적용할 때 사용
+activeClassName - 현재 페이지에 css처리해주기 위한 클래스명을 적으면 됨
+previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스명을 적으면 됨 */}
+                    <div className="myPage centered">
+                    <ReactPaginate
+                         pageCount={Math.ceil(pdtNum / 10)}
+                         pageRangeDisplayed={4}
+                         marginPagesDisplayed={0}
+                         breakLabel={""}
+                         previousLabel={"이전"}
+                         nextLabel={"다음"}
+                         onPageChange={handlePageChange}
+                         containerClassName={"pagination-ul"}
+                         activeClassName={"currentPage"}
+                         previousClassName={"pageLabel-btn"}
+                         nextClassName={"pageLabel-btn"}
+                    />
+                    </div>
                 </Col>
             </Row>
         </Container>

@@ -1,10 +1,10 @@
-import { add_best_outer_items } from "./types"
+import { add_best_acc_items } from "./types"
 
 
 // action은 첫글자 소문자
-export const addBestOuterItems = (data)=>{
+export const addBestAccItems = (data)=>{
     return{
-        type:add_best_outer_items,
+        type:add_best_acc_items,
         payload:data
     }
 }

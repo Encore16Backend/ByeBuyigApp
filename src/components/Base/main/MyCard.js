@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap";
 import { Carousel } from "bootstrap";
 import Carsol from "./Carsol";
 import cardComponent from "../../../css/mycard.css"
+import { Link, NavLink, Route } from 'react-router-dom';
 
 const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, images, reviewmean})=>{
 
@@ -22,7 +23,22 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
         <Card style={{ width: '18rem' }}>
                 <Card.Body>
                     <Carsol images = {images}/>
-                        <Card.Title>{itemname}</Card.Title>
+                    <Card.Title>
+                    <Link to={{ pathname:"/detail", search : "?itemid="+itemid,
+                    state : {
+                        categories:categories,
+                        itemid : itemid,
+                        itemname : itemname,
+                        description : description,
+                        price : price,
+                        purchasecnt : purchasecnt,
+                        images : images,
+                        reviewmean : reviewmean
+                    },
+                    }}>
+                    {itemname}
+                    </Link>
+                    </Card.Title>
                         <br/>
                         <Card.Subtitle className="mb-2 text-muted">가격 : {price}</Card.Subtitle>
                         <Card.Text>
