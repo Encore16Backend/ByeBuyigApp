@@ -14,6 +14,8 @@ const CateList = ()=>{
     const id = location.state.id
     console.log(location , "location")
 
+    const [Homelendering , setHomeLandering] = useState(false)
+
     // 들어온 카테고리의 상세 넘버
     const pdtNum = useSelector(state => state.cateItem.items.length)
     // url을 전달할 변수
@@ -58,11 +60,11 @@ const CateList = ()=>{
     }
 
     const handlePageChange = (e)=>{
-        console.log(e.selected)
+        let page = e.selected+1
         if (!!orderNum){
-            setBestItemUrl('/main/category/order?category='+id+"&order="+orderNum+"&page="+e.selected)
+            setBestItemUrl('/main/category/order?category='+id+"&order="+orderNum+"&page="+page)
         }else{
-            setBestItemUrl('/main/category/order?category='+id+"&page="+e.selected)
+            setBestItemUrl('/main/category/order?category='+id+"&page="+page)
         }
     }
 
@@ -102,7 +104,7 @@ const CateList = ()=>{
                         </div>
 
                         <div className="bestpdts">
-                            <CateCardWrapper cata = {"catapdt"}/>
+                            <CateCardWrapper cata = {"catapdt"} setHomeLandering={setHomeLandering} HomeLandering={Homelendering}/>
                             {/* id로 받은 상품을 렌더링 할 component */}
                         </div>
                     </Row>
@@ -124,7 +126,7 @@ previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스�
                     <div className="myPage centered">
                     <ReactPaginate
                          pageCount={Math.ceil(pdtNum / 10)}
-                         pageRangeDisplayed={4}
+                         pageRangeDisplayed={3}
                          marginPagesDisplayed={0}
                          breakLabel={""}
                          previousLabel={"이전"}
@@ -144,7 +146,4 @@ previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스�
 }
 
 
-
-
-
-export default react.memo(CateList);
+export default CateList;

@@ -7,7 +7,7 @@ import { Row, Col } from "react-bootstrap";
 import { useState } from "react";
 import GetBestItems from "../../../hooks/GetBestItems";
 
-const BestCardWrapper = ({cata})=>{
+const BestCardWrapper = ({cata,  setHomeLandering, HomeLandering})=>{
     // 받아온 값들을 렌더링하는 컴포넌
 
     const all = useSelector(
@@ -31,13 +31,14 @@ const BestCardWrapper = ({cata})=>{
         }
     )
 
-    console.log(all, "all")
     
 
     const allpdtRendering = ()=>{
         const result = []
         for (let i =0; i < all.length; i++){
             result.push(<MyCard key={all[i]['itemid']} 
+                setHomeLandering = {setHomeLandering}
+                HomeLandering = {HomeLandering}
                 categories = {all[i]['categories']} 
                 itemid = {all[i]['itemid']} 
                 itemname = {all[i]['itemname']} 
@@ -55,6 +56,8 @@ const BestCardWrapper = ({cata})=>{
         const result = [];
         for (let i =0; i < outer.length; i++){
             result.push(<MyCard key={outer[i]['itemid']} 
+                setHomeLandering = {setHomeLandering}
+                HomeLandering = {HomeLandering}
                 categories = {outer[i]['categories']} 
                 itemid = {outer[i]['itemid']} 
                 itemname = {outer[i]['itemname']} 
@@ -72,6 +75,8 @@ const BestCardWrapper = ({cata})=>{
         const result = [];
         for (let i =0; i < bottom.length; i++){
             result.push(<MyCard key={bottom[i]['itemid']} 
+                   setHomeLandering = {setHomeLandering}
+                HomeLandering = {HomeLandering}
                 categories = {bottom[i]['categories']} 
                 itemid = {bottom[i]['itemid']} 
                 itemname = {bottom[i]['itemname']} 
@@ -89,6 +94,8 @@ const BestCardWrapper = ({cata})=>{
         const result = [];
         for (let i =0; i < top.length; i++){
             result.push(<MyCard key={top[i]['itemid']} 
+            setHomeLandering = {setHomeLandering}
+                HomeLandering = {HomeLandering}
                 categories = {top[i]['categories']} 
                 itemid = {top[i]['itemid']} 
                 itemname = {top[i]['itemname']} 
@@ -102,8 +109,6 @@ const BestCardWrapper = ({cata})=>{
         return result;
     };
 
-
-    console.log("BestWrapper 끝")
     return(
         <>
         <Container>

@@ -9,7 +9,6 @@ import store from './store';
 import {persistStore} from 'redux-persist'
 import {PersistGate} from 'redux-persist/integration/react'
 import rootReducer from './rootReducer';
-import Wrapper from './pages/Wrapper';
 import GetBestItems from './hooks/GetBestItems';
 
 
@@ -17,14 +16,12 @@ import GetBestItems from './hooks/GetBestItems';
 
 function App() {
   // 메인페이지 상품렌더링
-  console.log("app")
 
   return (
     <Router>
       <Provider store={store}>
         
     <div className="App">
-      
         <NavB/>
         <div >
           <Switch>

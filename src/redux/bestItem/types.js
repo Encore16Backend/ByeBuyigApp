@@ -6,3 +6,5 @@ export const add_top = 'add_top'
 export const add_pants = 'add_pants'
 // outer
 export const add_outer = 'add_outer'
+// 검색
+export const find = 'find'

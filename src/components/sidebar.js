@@ -9,7 +9,7 @@ import qs from "qs"
 
 
 const SideBar = ({setShow}) => {
-// main/category/order?category=1&order=1&page=1
+
     const moveCata = ()=>{
       setShow(false)
     }
@@ -30,6 +30,7 @@ const SideBar = ({setShow}) => {
                     // search : "?id=9",
                     state : {
                    id:'1',
+                   
                    },
           }}>
             상의 (9)
