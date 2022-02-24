@@ -2,6 +2,7 @@ import { add_best_items } from './types';
 import { add_outer } from './types';
 import { add_top } from './types';
 import { add_pants } from './types';
+import {find} from './types'
 
 
 // action은 첫글자 소문자
@@ -30,5 +31,13 @@ export const addOuter = (data)=>{
     return{
         type:add_outer,
         payload:data
+    }
+}
+
+export const findSomething = (data)=>{
+    return{
+        type:find,
+        payload:data
+
     }
 }

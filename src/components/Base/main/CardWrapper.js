@@ -3,15 +3,12 @@ import { useSelector } from "react-redux";
 import MyCard from "./MyCard";
 
 const CardWrapper = ({cata})=>{
-    console.log("cardWrapper 시작")
     
     const BasicItem = useSelector(
             (state)=>{
                 return state.Item.items
             }
         )
-    console.log(BasicItem , "cardWrapper")
-    console.log(typeof(BasicItem) , "cardWrapperType")
 
     const pdtRendering = ()=>{
         const result = [];
@@ -29,8 +26,6 @@ const CardWrapper = ({cata})=>{
         }
         return result;
     };
-
-    console.log(BasicItem , "cardWrapper 종료")
 
     return(
         <>

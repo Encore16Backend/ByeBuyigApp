@@ -34,3 +34,9 @@
 .currentPage{
   color:black
 }
+
+.reviewDelChange{
+  display: inline;
+  float: right;
+}
+

@@ -1,1 +1,0 @@
-export const add_best_pants_items = 'add_best_pants_items'

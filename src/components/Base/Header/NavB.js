@@ -9,7 +9,6 @@ import { logOut } from '../../../redux/user/actions';
 import { connect } from 'react-redux';
 import setAuthorizationToken from '../../../utils/setAuthorizationToken';
 import axios from 'axios'
-import chkToken from '../../../hooks/chkToken';
 import SideBar from '../../sidebar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
@@ -25,20 +24,20 @@ const NavB = ({ID, logOut})=>{
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
     var history = useHistory();
-    const id = localStorage.getItem('id')
+    const id = sessionStorage.getItem('id')
 
     const out = ()=>{ // logout과 동시에 home으로 이동
       logOut()
-      localStorage.removeItem('id');
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('refresh_token')
+      sessionStorage.removeItem('id');
+      sessionStorage.removeItem('access_token')
+      sessionStorage.removeItem('refresh_token')
       window.location.replace("/")
     }
 
     const toMyPage = ()=>{
-      if (chkToken){
+      // if (chkToken){
         history.push('/mypage') 
-      }
+      // }
     }
 
      
