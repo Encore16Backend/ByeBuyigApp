@@ -5,7 +5,6 @@ import { ButtonGroup } from 'react-bootstrap';
 import GetBestCataItems from '../hooks/GetBestCataItems';
 import CateList from '../pages/CateList';
 import { Link, NavLink, Route } from 'react-router-dom';
-import qs from "qs"
 
 
 const SideBar = ({setShow}) => {
@@ -27,13 +26,13 @@ const SideBar = ({setShow}) => {
           <div className="dropdown">
           <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata}>
           <Link to={{pathname:"/category",
-                    // search : "?id=9",
                     state : {
                    id:'1',
-                   
+                   cataname:"상의"
+
                    },
           }}>
-            상의 (9)
+            상의 (1)
           </Link>
           </span>
           <div className="dropdown-content">
@@ -44,6 +43,7 @@ const SideBar = ({setShow}) => {
                     // search : "?id=10",
                     state : {
                    id:'10',
+                   cataname:"반팔"
                    },
               }}>
                 반팔 (10)
@@ -54,9 +54,9 @@ const SideBar = ({setShow}) => {
             <li>
               <span  onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{pathname:"/category",
-                    // search : "?id=10",
                     state : {
-                   id:'10',
+                   id:'11',
+                   cataname:"긴팔"
                    },
               }}>
                 긴팔 (11)
@@ -67,7 +67,6 @@ const SideBar = ({setShow}) => {
           </div>
           </div>
         </li>
-        {/* // 9상의 10반팔 11긴팔 12하의 13반바지 14긴바지 15아우터 16코트 17패딩 18모자 19신발 */}
         <li>
           <div className="dropdown">
           <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata} >
@@ -76,6 +75,7 @@ const SideBar = ({setShow}) => {
           //  search : "?id=12",
            state : {
              id:'4',
+             cataname:"하의"
            },
           }}>
             하의 (4)
@@ -86,9 +86,9 @@ const SideBar = ({setShow}) => {
             <li>
               <span  onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
               <Link to={{pathname:"/category",
-                    // search : "?id=13",
                     state : {
                    id:'13',
+                   cataname:"반바지"
                    },
               }}>
                 반바지 (13)
@@ -98,9 +98,9 @@ const SideBar = ({setShow}) => {
             <li>
               <span  onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{pathname:"/category",
-                    // search : "?id=14",
                     state : {
                    id:'14',
+                   cataname:"긴바지"
                    },
               }}>
                 긴바지 (14)
@@ -118,12 +118,12 @@ const SideBar = ({setShow}) => {
           <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata} >
           <Link to={{
            pathname:"/category",
-          //  search : "?id=15",
            state : {
              id:'7',
+             cataname:"아우터"
            },
           }}>
-            아우터 (15)
+            아우터 (7)
           </Link>
           </span>
           <div className="dropdown-content">
@@ -132,9 +132,9 @@ const SideBar = ({setShow}) => {
               <span onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
               <Link to={{
            pathname:"/category",
-          //  search : "?id=16",
            state : {
              id:'16',
+             cataname:"코트"
            },
           }}>
             코트 (16)
@@ -145,9 +145,9 @@ const SideBar = ({setShow}) => {
               <span onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{
               pathname:"/category",
-              // search : "?id=17",
               state : {
                 id:'17',
+                cataname:"패딩"
               },
               }}>
                 패딩 (17)
@@ -170,9 +170,9 @@ const SideBar = ({setShow}) => {
               <span onClick={moveCata} ><i className="ion-ios-color-filter-outline"></i>
               <Link to={{
               pathname:"/category",
-              // search : "?id=18",
               state : {
                 id:'18',
+                cataname:"모자"
               },
               }}>
                 모자 (18)
@@ -184,9 +184,9 @@ const SideBar = ({setShow}) => {
               <span onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{
               pathname:"/category",
-              // search : "?id=19",
               state : {
                 id:'19',
+                cataname:"신발"
               },
               }}>
               신발 (19)

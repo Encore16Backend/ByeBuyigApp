@@ -9,6 +9,7 @@ import GetBestItems from "../hooks/GetBestItems";
 import axios from "axios";
 import { addReview } from "../redux/reviews/actions";
 import GetMainItems from "../hooks/GetMainItems";
+import CarsolBig from "../components/Base/main/CarsolBig";
 
 
 const DetailPage = ()=>{
@@ -20,7 +21,10 @@ const DetailPage = ()=>{
     
      // 리뷰값 받아오기
      const GetReviewItem = async (name, asc, sort, page) =>{
-        alert(name, asc, sort, page)
+        alert(name)
+        alert(asc)
+        alert(sort)
+        alert(page)
         await axios.get('http://127.0.0.1:8081/review/byItemname',{
            params:{
             itemname:name,
@@ -52,21 +56,14 @@ const DetailPage = ()=>{
 
     const [lendering , setLandering] = useState(false)
 
-    const itemid = locationState.itemid
-    const itemname = locationState.itemname
-    const purchasecnt = locationState.purchasecnt
-    const price = locationState.price
-    const reviewmean = locationState.reviewmean
+    // const itemid = locationState.itemid
     const imgs = locationState.images
-    const setHomeLandering = locationState.setHomeLandering
-    const HomeLandering = locationState.HomeLandering
-
-    // // 들어온 카테고리의 상세 품목 길이
-    // const bestItemLength = useSelector(state => state.bestItem.items.length)
-    // const bestItemTop = useSelector(state => state.bestItem.outer.length)
-    // const bestItemOuter = useSelector(state => state.bestItem.pants.length)
-    // const bestItemBottom = useSelector(state => state.bestItem.top.length)
-    // const cateItemL = useSelector(state => state.cateItem.items.length)
+    const itemname = locationState.itemname
+    // const purchasecnt = locationState.purchasecnt
+    // const price = locationState.price
+    // const reviewmean = locationState.reviewmean
+    // const setHomeLandering = locationState.setHomeLandering
+    // const HomeLandering = locationState.HomeLandering
 
     GetReviewItem(itemname, desc, data, page)
 
@@ -81,8 +78,8 @@ const DetailPage = ()=>{
                 </Col>
             </Row>
             <Row>
-                <Col xs={12} md={6}>
-                상품 사진
+                <Col xs={6} md={6}>
+                    <CarsolBig images={imgs}/>
                 </Col>
                 <Col xs={6} md={6}>
                     <DetailDesc pdtState = {locationState} lendering={lendering} setLandering={setLandering}/>

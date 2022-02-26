@@ -4,16 +4,24 @@ import GetCate from "../hooks/pdtHook/GetCate"
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import CateCardWrapper from "../components/Base/main/pdt/CateCardWrapper";
 import ReactPaginate from 'react-paginate'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
+import { addNum } from "../redux/cataNum/actions";
 
 
 const CateList = ()=>{
     // 9상의 10반팔 11긴팔 12하의 13반바지 14긴바지 15아우터 16코트 17패딩 18모자 19신발
+    const dispatch = useDispatch()
     const location = useLocation();
     // 카테고리 id liocation으로 받아옴
     const id = location.state.id
-    console.log(location , "location")
-
+    const cataname = location.state.cataname // 카테고리명
+    // 들어오면 카테고리id를 받아 리덕스에 저장시킴
+    useEffect(()=>{
+        dispatch(addNum(id))
+    },[id])
+    
+    
+    // 하위 컴포넌트들이 렌더링되면 함께 렌더링되기 위함 
     const [Homelendering , setHomeLandering] = useState(false)
 
     // 들어온 카테고리의 상세 넘버
@@ -24,7 +32,6 @@ const CateList = ()=>{
     const [orderNum , setOrderNum] = useState('')
 
     const [chk, setChk] = useState({ 
-         // 여기 state객체의 값을 바꾸고 렌더링하고싶으면
         flag:false
     }) 
 
@@ -45,9 +52,6 @@ const CateList = ()=>{
     // 넘어온 상품
     // GetCate(url)
     GetCate(BestItemUrl)
-
-
-    // 베스트 아이템들 (기본 url 후기Best) 전체 Best
 
 
     // 후기 판매량, 가격에서 best상품을 가져오도록 url을 수정하는 함수
@@ -75,7 +79,7 @@ const CateList = ()=>{
                 <Col sm={12}>
                     <Row>
                         <br/><br/><br/><br/> 
-                        <h1 className="centered" >BEST PRODUCT</h1>
+                        <h1 className="centered" >{cataname}</h1>
                         <div className="BestButtons">
                             {/* 후기 별점 .. 변경버튼 */}
                             {/* 판매량 낮은가격 높은가격 후기 */}
@@ -124,19 +128,21 @@ containerClassName - css적용할 때 사용
 activeClassName - 현재 페이지에 css처리해주기 위한 클래스명을 적으면 됨
 previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스명을 적으면 됨 */}
                     <div className="myPage centered">
-                    <ReactPaginate
-                         pageCount={Math.ceil(pdtNum / 10)}
-                         pageRangeDisplayed={3}
-                         marginPagesDisplayed={0}
-                         breakLabel={""}
-                         previousLabel={"이전"}
-                         nextLabel={"다음"}
-                         onPageChange={handlePageChange}
-                         containerClassName={"pagination-ul"}
-                         activeClassName={"currentPage"}
-                         previousClassName={"pageLabel-btn"}
-                         nextClassName={"pageLabel-btn"}
-                    />
+                        {
+                            pdtNum != 0 ?   <ReactPaginate
+                            pageCount={Math.ceil(pdtNum / 10)}
+                            pageRangeDisplayed={3}
+                            marginPagesDisplayed={0}
+                            breakLabel={""}
+                            previousLabel={"이전"}
+                            nextLabel={"다음"}
+                            onPageChange={handlePageChange}
+                            containerClassName={"pagination-ul"}
+                            activeClassName={"currentPage"}
+                            previousClassName={"pageLabel-btn"}
+                            nextClassName={"pageLabel-btn"}
+                            /> : ""
+                        }
                     </div>
                 </Col>
             </Row>

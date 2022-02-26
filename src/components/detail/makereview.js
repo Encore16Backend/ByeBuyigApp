@@ -4,6 +4,7 @@ import { InputGroup, FormControl, Button } from "react-bootstrap";
 import { Form } from "react-bootstrap";
 import postRefresh from "../../hooks/postRefresh";
 import { useSelector } from "react-redux";
+import ReactStars from "react-stars"
 
 const MakeReview = ({pdtState, lendering, setLandering}) =>{
 
@@ -16,13 +17,18 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
     const pdtName = pdtState.itemname
     const userId = localStorage.getItem('id')
     const [content , setContent] = useState('')
-    const [score, setScore] = useState(0)
+    const [score, setScore] = useState(1)
+
 
     const makeContent = (e)=>{
         setContent(e.target.value)
     }
     const makeScore = (e)=>{
         setScore(e.target.value)
+        alert(e.target.value)
+    }
+    const ratingChanged = (newRating)=>{
+        setScore(newRating)
     }
 
     // 댓글등록함수
@@ -69,19 +75,14 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
 
 
     return(
-        <div>
+        <div className="reviewMakeForm">
          <Form onSubmit={onSubmit}>
+             <div className="reviewMakeFormStar"> 
+                <ReactStars id="reviewMakeFormStarID" count={5} onChange={ratingChanged} size={30} color2={'#ffd700'} value={score}  />
+            </div>
             <InputGroup>
                 <FormControl as="textarea" aria-label="With textarea" onChange={makeContent} value={content} />
-                <Form.Select aria-label="Default select example" onChange={
-                makeScore
-              } value={score}>
-                <option value="1.0">1</option>
-                <option value="2.0">2</option>
-                <option value="3.0">3</option>
-                <option value="4.0">4</option>
-                <option value="5.0">5</option>
-              </Form.Select>
+
                 <Button type="submit" onClick={chkUser}>리뷰작성</Button>
             </InputGroup>
         </Form>

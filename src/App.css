@@ -20,6 +20,9 @@
   padding-bottom: 1rem;
   text-align:right
 }
+.sortAndOrder{
+  text-align: right;
+}
 
 .pagination-ul{
   color:gray; 
@@ -40,3 +43,19 @@
   float: right;
 }
 
+.reviewDiv{
+  border-top: 1px solid black;
+}
+
+.reviewMakeForm{
+  padding-bottom: 1rem;
+}
+.reviewMakeFormStar{
+  float: left;
+}
+#reviewMakeFormStarID{
+  display: inline;
+}
+.descStar{
+  display: inline;
+}

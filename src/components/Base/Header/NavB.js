@@ -1,13 +1,12 @@
 import { BrowserRouter as Router, Switch, Route,Link, NavLink
 } from 'react-router-dom';
-import { Navbar, Container, Nav, Button , Offcanvas} from "react-bootstrap";
+import { Navbar, Container, Nav, Button , Offcanvas, Form, FormControl} from "react-bootstrap";
 import React, {useState} from 'react';
 import SingUpModal from '../../../modals/SignUpModal';
 import SingInModal from '../../../modals/SignInModal';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { logOut } from '../../../redux/user/actions';
-import { connect } from 'react-redux';
-import setAuthorizationToken from '../../../utils/setAuthorizationToken';
+import { connect, useSelector } from 'react-redux';
 import axios from 'axios'
 import SideBar from '../../sidebar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
@@ -35,10 +34,28 @@ const NavB = ({ID, logOut})=>{
     }
 
     const toMyPage = ()=>{
-      // if (chkToken){
         history.push('/mypage') 
-      // }
     }
+
+    // 검색
+    // 카테고리 상의(1) 하의(4) 스커트(?) 아우터(7) (반팔(10) 긴팔(11) 셔츠 반바지(13) 슬랙스 데님팬츠 미니스커트 롱스커트 롱패딩 숏패딩 코트 트렌치코트  )
+    const [keyword, setKeyword] = useState('')
+    const cataNum = useSelector(state => state.cataNum.items)
+    
+    const changeKeyword = (e)=>{
+      setKeyword(e.target.value)
+    }
+    const onSubmit = (e)=>{
+      e.preventDefault();
+      if (!!cataNum){ // 특정 카테고리 페이지가 아니면 id없이 날려
+
+      }else{
+        // 특정 카테고리 페이지이면 이 id를 가지고 요청을 날려
+      }
+        history.push('/mypage') 
+    }
+
+
 
      
     return(
@@ -50,7 +67,7 @@ const NavB = ({ID, logOut})=>{
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
 
           {/* leftSideBar */}
-          <Navbar.Brand to={"/"} onClick={handleShow} >BuyBuying</Navbar.Brand>
+          <Navbar.Brand href={"/"} >BuyBuying</Navbar.Brand>
                 <Offcanvas show={show} onHide={handleClose}>
                     <Offcanvas.Header closeButton>
                     <Offcanvas.Title>상품목록</Offcanvas.Title>
@@ -62,7 +79,13 @@ const NavB = ({ID, logOut})=>{
                 </Offcanvas> 
 
           <Nav className="me-auto">
-            <Nav.Link href={"/"}>Home</Nav.Link>
+             {/* 검색폼 */}
+             <Form className="d-flex" onSubmit={onSubmit}>
+                <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search"
+                  value={keyword} onChange={changeKeyword}
+                />
+             <Button type="submit" variant="outline-success">Search</Button>
+            </Form>
           </Nav>
           <Nav>
           {

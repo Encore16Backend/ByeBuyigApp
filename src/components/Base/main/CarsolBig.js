@@ -2,7 +2,7 @@ import React from "react";
 import {Carousel} from "react-bootstrap"
 
 
-const Carsol = ({images})=>{
+const CarsolBig = ({images})=>{
 
     console.log(images, "imgs")
     // 배열안에 .imgid .imgpath
@@ -46,4 +46,4 @@ const Carsol = ({images})=>{
     )
 }
 
-export default Carsol
+export default CarsolBig

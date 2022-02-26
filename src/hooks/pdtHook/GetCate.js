@@ -12,7 +12,7 @@ const GetCate = async (url) =>{
             "Content-Type": "application/json",
         }
     }).then(res => {
-        console.log(res.data.content , "GetCateData 데이터입니다")
+        console.log(res.data.content , " GetCateData 데이터입니다")
         dispatch(addCateItems(res.data.content))
     }).catch(error => {
         console.log(error, ' GetCate 에러');

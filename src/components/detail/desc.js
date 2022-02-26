@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import ReactStars from "react-stars"
 
 const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
@@ -18,14 +19,16 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
     const render = allItem.filter(item => item.itemid === itemid)
     const renderedItem = render[0]
-
     const rendering = ()=>{
         return(
         <div>
             <h1>Product Info</h1>
             <br/><br/>
             <p> 상품명/품번 : <b>{renderedItem.itemname}/{renderedItem.itemid}</b> </p>
-            <p> 평점 : <b>{renderedItem.reviewmean}</b> </p>
+            <div className="descStar">
+                <div>평점 : {renderedItem.reviewmean} </div>
+                <div><ReactStars edit={false} value={renderedItem.reviewmean}/></div>
+            </div>
             <p> 가격 : <b>{renderedItem.price}</b> </p>
             <p> 구매수 : <b>{renderedItem.purchasecnt}</b> </p>
             <p> 리뷰 수 : {renderedItem.reviewcount}</p>
