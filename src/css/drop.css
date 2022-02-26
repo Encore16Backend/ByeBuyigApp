@@ -1,0 +1,15 @@
+.dropdown {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  color: antiquewhite;
+}
+
+.content1 {
+  display: none;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  background: white;
+  box-shadow: 0 4px 5px 0 #00000026;
+}
