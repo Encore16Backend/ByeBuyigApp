@@ -11,8 +11,18 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import ReactStars from "react-stars"
 import lodash, { cond } from 'lodash'
 
+const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtState })=>{
 
-const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate })=>{
+    // 해당 item을 받아옴
+    const allItem = useSelector(state => state.Item.items)
+    const rendered = allItem.filter(item => item.itemid === pdtState.itemid)
+    const renderedItem = rendered[0]
+    let allReviewNums = 0
+    if (renderedItem){  
+        allReviewNums = renderedItem.reviewcount
+    }
+
+
 
     const [content , setContent] = useState('')
     const [score, setScore] = useState(1)
@@ -66,11 +76,12 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate })=>{
             })
     }
     // 리뷰삭제 안댐
-    const delReview = async (id)=>{
-        alert(id)
+    const delReview = async (id, itemname)=>{
+        alert(id+"/"+itemname)
         await axios.delete('http://127.0.0.1:8081/review/delete',{
-                data:{
-                    id:id
+                params:{
+                    id:id,
+                    itemname:itemname
                 }
         },{
             headers:{
@@ -98,9 +109,9 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate })=>{
     const [conditionSelect,setConditionSelect ] = useState('date')
     const [sortSelect, setSortSelect] = useState('desc')
     const makeCondition = (e)=>{
-        alert(e.target.value)
+        
         setConditionSelect(e.target.value)
-        alert(conditionSelect)
+        
         if (e.target.value === "date"){
             setDate('date')
             setPage(1)
@@ -125,7 +136,7 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate })=>{
     const render = reviews.map((review,index)  =>{
         let forReviewContent = lodash.cloneDeep(review.content)
         console.log(forReviewContent, "forReviewContent")
-        // setContent(review.content)
+        
         return(
             
             <div key={"review"+review.id} className="reviewDiv" id={review.id}>
@@ -136,7 +147,7 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate })=>{
                             (userID === review.username) ? <span key={'modifyText'+review.id} onClick={()=>{modify(review.id, review.content, review.score)}}>수정 /</span> : ""
                         }
                         {
-                            (userID === review.username) ? <span key={'delText'+review.id} onClick={()=>{delReview(review.id)}}>삭제</span> : ""
+                            (userID === review.username) ? <span key={'delText'+review.id} onClick={()=>{delReview(review.id, review.itemname)}}>삭제</span> : ""
                         }
                         </div>
                     </div>
@@ -171,19 +182,20 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate })=>{
             <br/>
            {render}
            <div className="myPage centered">
-             <ReactPaginate 
-                  pageCount={Math.ceil(65 / 10)}
-                  pageRangeDisplayed={2}
-                  marginPagesDisplayed={0}
-                  breakLabel={""}
-                  previousLabel={"<"}
-                  nextLabel={">"}
-                  onPageChange={handlePageChange}
-                  containerClassName={"pagination-ul"}
-                  activeClassName={"currentPage"}
-                  previousClassName={"pageLabel-btn"}
-                  nextClassName={"pageLabel-btn"}
-             />
+               {
+                   allReviewNums != 0 ?  <ReactPaginate 
+                   pageCount={Math.ceil(65 / 10)}
+                   pageRangeDisplayed={2}
+                   marginPagesDisplayed={0}
+                   breakLabel={""}
+                   previousLabel={"<"}
+                   nextLabel={">"}
+                   onPageChange={handlePageChange}
+                   containerClassName={"pagination-ul"}
+                   activeClassName={"currentPage"}
+                   previousClassName={"pageLabel-btn"}
+                   nextClassName={"pageLabel-btn"}/> : ""
+               }
              </div>
         </div>
     )

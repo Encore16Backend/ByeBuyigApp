@@ -48,16 +48,6 @@ const Home = ()=>{
                         </div>
                     </Row>
                         <br/><br/><br/><br/>
-                    <Row>
-                        <h1 className="centered" >ALL PRODUCT</h1>
-                        <div className="pdts">
-                            {/* <CardWrapper cata={"basic"} setHomeLandering={setHomeLandering} HomeLandering={Homelendering} /> */}
-                            {/* 일반상품을 렌더링할 component */}
-                        </div>
-                    </Row>
-                    <Row>
-                        <button onClick={chkUserDelete} ></button>
-                    </Row>
                 </Col>
             </Row>
         </Container>

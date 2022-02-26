@@ -21,10 +21,6 @@ const DetailPage = ()=>{
     
      // 리뷰값 받아오기
      const GetReviewItem = async (name, asc, sort, page) =>{
-        alert(name)
-        alert(asc)
-        alert(sort)
-        alert(page)
         await axios.get('http://127.0.0.1:8081/review/byItemname',{
            params:{
             itemname:name,
@@ -35,7 +31,6 @@ const DetailPage = ()=>{
         },{
             headers: {
                 "Content-Type": "application/json",
-                
             }
         }).then(res => {
             console.log(res.data.content , "GetReviewItem 데이터입니다")
@@ -93,7 +88,7 @@ const DetailPage = ()=>{
             </Row>
             <Row>
                 <Col sm={12}>
-                <ReviewView lendering={lendering} setLandering={setLandering}  setPage={setPage} setDesc={setDesc}  setDate={setDate} />
+                <ReviewView pdtState = {locationState} lendering={lendering} setLandering={setLandering}  setPage={setPage} setDesc={setDesc}  setDate={setDate} />
                 </Col>
             </Row>
         </Container>

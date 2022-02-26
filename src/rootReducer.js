@@ -8,7 +8,7 @@ import bestCataItemReducer from "./redux/bestcataItem/reducer";
 import cateItemReducer from "./redux/CateItem/reducer";
 import reviewReducer from "./redux/reviews/reducer";
 import cataNumReducer from "./redux/cataNum/reducer";
-
+import pageReducer from "./redux/pages/reducer";
 
 
 const rootReducer = combineReducers({
@@ -18,7 +18,8 @@ const rootReducer = combineReducers({
     bestCataItem : bestCataItemReducer, // 안씀 삭제 예정
     cateItem : cateItemReducer, // sidebar로 이동할떄 사용할 reducer
     reviews : reviewReducer,
-    cataNum : cataNumReducer
+    cataNum : cataNumReducer,
+    totalPage : pageReducer
 })
 
 export default rootReducer

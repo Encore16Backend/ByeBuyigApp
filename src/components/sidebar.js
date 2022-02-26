@@ -13,6 +13,11 @@ const SideBar = ({setShow}) => {
       setShow(false)
     }
 
+    // 1 상의 2 바지 3 스커트 4 아우터 5 반팔 6 긴팔 7 셔츠 8 반바지
+    // 9 슬렉스 10 데님팬츠 11 롱스커트 12 롱스커트 13 롱패딩 15 코트
+    // 16 트렌치 코트
+    
+
     return (
       <>
   <aside className="sidebar">
@@ -28,7 +33,7 @@ const SideBar = ({setShow}) => {
           <Link to={{pathname:"/category",
                     state : {
                    id:'1',
-                   cataname:"상의"
+                   cataname:"상의",
 
                    },
           }}>
@@ -42,11 +47,11 @@ const SideBar = ({setShow}) => {
               <Link to={{pathname:"/category",
                     // search : "?id=10",
                     state : {
-                   id:'10',
+                   id:'5',
                    cataname:"반팔"
                    },
               }}>
-                반팔 (10)
+                반팔 (5)
               </Link>
               
               </span>
@@ -55,11 +60,11 @@ const SideBar = ({setShow}) => {
               <span  onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{pathname:"/category",
                     state : {
-                   id:'11',
+                   id:'6',
                    cataname:"긴팔"
                    },
               }}>
-                긴팔 (11)
+                긴팔 (6)
               </Link>
               </span>
             </li>
@@ -74,11 +79,11 @@ const SideBar = ({setShow}) => {
            pathname:"/category",
           //  search : "?id=12",
            state : {
-             id:'4',
-             cataname:"하의"
+             id:'2',
+             cataname:"바지"
            },
           }}>
-            하의 (4)
+            바지 (2)
           </Link>
           </span>
           <div className="dropdown-content">
@@ -87,11 +92,11 @@ const SideBar = ({setShow}) => {
               <span  onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
               <Link to={{pathname:"/category",
                     state : {
-                   id:'13',
+                   id:'8',
                    cataname:"반바지"
                    },
               }}>
-                반바지 (13)
+                반바지 (8)
               </Link>
               </span>
             </li>
@@ -99,11 +104,23 @@ const SideBar = ({setShow}) => {
               <span  onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{pathname:"/category",
                     state : {
-                   id:'14',
-                   cataname:"긴바지"
+                   id:'9',
+                   cataname:"슬랙스"
                    },
               }}>
-                긴바지 (14)
+                슬랙스 (9)
+              </Link>
+              </span>
+            </li>
+            <li>
+              <span  onClick={moveCata}><i className="ion-ios-clock-outline"></i>
+              <Link to={{pathname:"/category",
+                    state : {
+                   id:'10',
+                   cataname:"데님팬츠"
+                   },
+              }}>
+                데님팬츠 (10)
               </Link>
               </span>
             </li>
@@ -119,7 +136,7 @@ const SideBar = ({setShow}) => {
           <Link to={{
            pathname:"/category",
            state : {
-             id:'7',
+             id:'4',
              cataname:"아우터"
            },
           }}>
@@ -133,7 +150,7 @@ const SideBar = ({setShow}) => {
               <Link to={{
            pathname:"/category",
            state : {
-             id:'16',
+             id:'15',
              cataname:"코트"
            },
           }}>
@@ -142,15 +159,43 @@ const SideBar = ({setShow}) => {
               </span>
             </li>
             <li>
+              <span onClick={moveCata}><i className="ion-ios-color-filter-outline"></i>
+              <Link to={{
+           pathname:"/category",
+           state : {
+             id:'16',
+             cataname:"코트"
+           },
+          }}>
+            트렌치 코트 (16)
+          </Link>
+              </span>
+            </li>
+            
+            <li>
               <span onClick={moveCata}><i className="ion-ios-clock-outline"></i>
               <Link to={{
               pathname:"/category",
               state : {
-                id:'17',
-                cataname:"패딩"
+                id:'13',
+                cataname:"롱패딩"
               },
               }}>
-                패딩 (17)
+                롱패딩
+              </Link>
+              </span>
+            </li>
+
+            <li>
+              <span onClick={moveCata}><i className="ion-ios-clock-outline"></i>
+              <Link to={{
+              pathname:"/category",
+              state : {
+                id:'14',
+                cataname:"숏패딩"
+              },
+              }}>
+                숏패딩
               </Link>
               </span>
             </li>
@@ -162,7 +207,16 @@ const SideBar = ({setShow}) => {
         <li>
           <div className="dropdown">
           <i className="ion-bag"></i> <span className="dropbtn" onClick={moveCata} >
-          ETC 
+          <Link to={{
+           pathname:"/category",
+          //  search : "?id=12",
+           state : {
+             id:'3',
+             cataname:"스커트"
+           },
+          }}>
+            스커트
+          </Link> 
           </span>
           <div className="dropdown-content">
           <ul className="nav-flyout">
@@ -171,11 +225,25 @@ const SideBar = ({setShow}) => {
               <Link to={{
               pathname:"/category",
               state : {
-                id:'18',
-                cataname:"모자"
+                id:'12',
+                cataname:"롱스커트"
               },
               }}>
-                모자 (18)
+                롱스커트 (12)
+              </Link>
+              
+              </span>
+            </li>
+            <li>
+              <span onClick={moveCata} ><i className="ion-ios-color-filter-outline"></i>
+              <Link to={{
+              pathname:"/category",
+              state : {
+                id:'11',
+                cataname:"미니스커트"
+              },
+              }}>
+                미니스커트 (12)
               </Link>
               
               </span>

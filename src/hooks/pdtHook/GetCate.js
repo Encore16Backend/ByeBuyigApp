@@ -1,6 +1,8 @@
 import axios from "axios";
 import { addCateItems } from "../../redux/CateItem/actions";
 import { useDispatch } from "react-redux";
+import { setTotalPage } from "../../redux/CateItem/actions";
+
 
 
 const GetCate = async (url) =>{
@@ -12,10 +14,11 @@ const GetCate = async (url) =>{
             "Content-Type": "application/json",
         }
     }).then(res => {
-        console.log(res.data.content , " GetCateData 데이터입니다")
+        console.log(res.data , " GetCateData 데이터입니다")
+        console.log(res.data);
         dispatch(addCateItems(res.data.content))
     }).catch(error => {
-        console.log(error, ' GetCate 에러');
+        console.log(error, ' GetCateData 에러');
     })
   }
 export default GetCate
