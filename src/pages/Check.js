@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Modal, Button, Form} from "react-bootstrap";
 import axios from "axios";
-import chkToken from "../hooks/chkToken";
 import postRefresh from "../hooks/postRefresh";
 import { BrowserRouter as Router, Switch, Route,Link
 } from 'react-router-dom';
@@ -14,7 +13,7 @@ import { type } from "@testing-library/user-event/dist/type";
 const Check = ()=>{
 
     const [pwd,setPwd] = useState('');
-    const [id, setID] = useState(localStorage.getItem('id'));
+    const [id, setID] = useState(sessionStorage.getItem('id'));
 
     var history = useHistory();
     
@@ -31,7 +30,7 @@ const Check = ()=>{
         }, {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem('access_token'),
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
             },
         }).then(res => {
             history.push({
