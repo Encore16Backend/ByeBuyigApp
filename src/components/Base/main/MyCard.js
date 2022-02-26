@@ -2,18 +2,43 @@ import React from "react";
 import { Card } from "react-bootstrap";
 import { Carousel } from "bootstrap";
 import Carsol from "./Carsol";
+import cardComponent from "../../../css/mycard.css"
+import { Link, NavLink, Route } from 'react-router-dom';
 
-const MyCard = ()=>{
+const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, images, reviewmean,  setHomeLandering ,
+    HomeLandering})=>{
 
     return(
-        <div>
-
-        <Card style={{ width: '18rem' }}>
+        <div className="cardComponent">
+        <Card style={{ width: '13rem' }}>
                 <Card.Body>
-                    <Carsol/>
-                        <Card.Title>상품이름</Card.Title>
+                    <Carsol images = {images}/>
+                    <Card.Title>
+                    <Link to={{ pathname:"/detail", search : "?itemid="+itemid,
+                    state : {
+                        categories:categories,
+                        itemid : itemid,
+                        itemname : itemname,
+                        description : description,
+                        price : price,
+                        purchasecnt : purchasecnt,
+                        images : images,
+                        reviewmean : reviewmean,
+                    },
+                    }}>
+                    {itemname}
+                    </Link>
+                    </Card.Title>
+                        <br/>
+                        <Card.Subtitle className="mb-2 text-muted">가격 : {price}</Card.Subtitle>
                         <Card.Text>
-                           상품설명
+                           {description}
+                        </Card.Text>
+                        <Card.Text>
+                           
+                        </Card.Text>
+                        <Card.Text>
+                           평점 : {reviewmean}
                         </Card.Text>
                 </Card.Body>
         </Card>

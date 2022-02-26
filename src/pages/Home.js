@@ -1,82 +1,72 @@
-import react, { useState } from "react";
+import react, { useEffect, useState } from "react";
 import { createStore } from 'redux';
 import {Provider, useSelector, useDispatch, connect} from 'react-redux'
 import postRefresh from "../hooks/postRefresh";
-import { Container, Row, Col, Carousel, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Carousel, Card, Button, Offcanvas, ButtonToolbar, ButtonGroup } from "react-bootstrap";
+import { InputGroup, FormControl } from "react-bootstrap";
 import MyCard from "../components/Base/main/MyCard";
 import MyPage from "./MyPage";
-import carsol from "../components/Base/main/Carsol";
+import SideBar from "../components/sidebar";
+import Carsol from "../components/Base/main/Carsol";
+import GetMainItems from "../hooks/GetMainItems"
+import CardWrapper from "../components/Base/main/CardWrapper";
+import BestCardWrapper from "../components/Base/main/BestCarpWrapper";
+import GetBestItems from "../hooks/GetBestItems";
 
 const Home = ()=>{
+    // 9상의 10반팔 11긴팔 12하의 13반바지 14긴바지 15아우터 16코트 17패딩 18모자 19신발
+    console.log('Home 랜더링')
 
-// cate 상의 하의 반팔 악세사리
+    const [Homelendering , setHomeLandering] = useState(false)
 
-    const arr = [
-        {'상품명':'상품1' , '상품이미지':"img/1.jpg", '상품설명': '긴팔' },
-        {'상품명':'상품2' , '상품이미지':"img/2.jpg", '상품설명': '반팔' },
-        {'상품명':'상품2' , '상품이미지':"img/3.jpg", '상품설명': '반바지' },
-        {'상품명':'상품2' , '상품이미지':"img/1.jpg", '상품설명': '긴바지' },
-        {'상품명':'상품3' , '상품이미지':"img/3.jpg", '상품설명': '패딩' },
-        {'상품명':'상품4' , '상품이미지':"img/2.jpg", '상품설명': '모자' },
-        {'상품명':'상품5' , '상품이미지':"img/1.jpg", '상품설명': '긴팔' },
-        {'상품명':'상품6' , '상품이미지':"img/3.jpg", '상품설명': '긴바지' },
-        {'상품명':'상품7' , '상품이미지':"img/1.jpg", '상품설명': '긴팔' },
-    ]
-    
+    // 베스트 아이템들 url을 변경하기 위한 state
+    const [BestItemUrl , setBestItemUrl] = useState('/main/bestItem')
+    // 상의 Best 기본값 구매수
+    const [BestTopUrl, setBestTop] = useState('/main/category/purchase?category=9')
+    // 하의 Best 기본값 구매수
+    const [PantsPantsUrl, setBestPants] = useState('/main/category/purchase?category=12')
+    // 이우터 Best 기본값 구매수
+    const [BestOuterUrl, setBestOuter] = useState('/main/category/purchase?category=15')
 
+
+    // 베스트 아이템들 (기본 url 후기Best) 전체 Best
+    GetBestItems(BestItemUrl)
+    // 일반 모든 상품
+    GetMainItems()
+
+    console.log('Home 랜더링 종료')
     return(
         <>
-        {/* 비밀번호 뺴고 다 보내야함 */}
-        <br></br><br></br>
-        <Card style={{ width: '18rem' }}>
-                <Card.Body>
-                    <Carousel fade>
-                        <Carousel.Item>
-                            <img
-                            className="d-block w-100 main_img"
-                            src="img/1.jpg"
-                            alt="First slide"
-                            />
-                            <Carousel.Caption>
-                            <h3>상품메인사진</h3>
-                            <p></p>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                            className="d-block w-100 main_img"
-                            src="img/2.jpg"
-                            alt="Second slide"
-                            />
-                            <Carousel.Caption>
-                            <h3>상품사진2</h3>
-                            <p></p>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                            className="d-block w-100  main_img"
-                            src="img/3.jpg"
-                            alt="Third slide"
-                            />
-                            <Carousel.Caption>
-                            <h3>상품사진3</h3>
-                            <p></p>
-                        </Carousel.Caption>
-                        </Carousel.Item>
-                    </Carousel>
-                        <Card.Title>상품이름</Card.Title>
-                        <Card.Text>
-                           상품설명
-                        </Card.Text>
-                </Card.Body>
-        </Card>
-        
-        
-        
+        <Container className="container centered">
+            <Row>
+                <Col sm={12}>
+                    <Row>
+                        <br/><br/><br/><br/>
+                        <div className="bestpdts">
+                            <BestCardWrapper cata = {"bestPdt"} setHomeLandering={setHomeLandering} HomeLandering={Homelendering}/>
+                            {/* best상품을 렌더링 할 component */}
+                        </div>
+                    </Row>
+                        <br/><br/><br/><br/>
+                    <Row>
+                        <h1 className="centered" >ALL PRODUCT</h1>
+                        <div className="pdts">
+                            {/* <CardWrapper cata={"basic"} setHomeLandering={setHomeLandering} HomeLandering={Homelendering} /> */}
+                            {/* 일반상품을 렌더링할 component */}
+                        </div>
+                    </Row>
+                    <Row>
+                        <button onClick={chkUserDelete} ></button>
+                    </Row>
+                </Col>
+            </Row>
+        </Container>
         </>
     )
 }
 
 
-export default Home;
+
+
+
+export default react.memo(Home);

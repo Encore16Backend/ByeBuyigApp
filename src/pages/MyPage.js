@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Modal, Button, Form} from "react-bootstrap";
 import axios from "axios";
-import chkToken from "../hooks/chkToken";
 import postRefresh from "../hooks/postRefresh";
+import { useSelector } from "react-redux";
 
 
 
 const MyPage = ()=>{
-    
+
 
     return(
         <div>

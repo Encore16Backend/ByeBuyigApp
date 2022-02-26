@@ -9,17 +9,21 @@ import store from './store';
 import {persistStore} from 'redux-persist'
 import {PersistGate} from 'redux-persist/integration/react'
 import rootReducer from './rootReducer';
+import GetBestItems from './hooks/GetBestItems';
+
 
 
 
 function App() {
+  // 메인페이지 상품렌더링
+
   return (
     <Router>
       <Provider store={store}>
         
     <div className="App">
         <NavB/>
-        <div className='container'>
+        <div >
           <Switch>
             {Routers.map(route =>{
                 return(
@@ -30,11 +34,14 @@ function App() {
             })}
           </Switch>
         </div>
+      
     </div>
     
     </Provider>
     </Router>
+    
   );
+  
 }
 
 export default App;

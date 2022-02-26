@@ -3,3 +3,59 @@
   height: 200px;
   object-fit: cover;
 }
+
+.centered {
+  /* height: 100vh; Magic here */
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bestpdts {
+  float : left;
+}
+
+.BestButtons {
+  padding-bottom: 1rem;
+  text-align:right
+}
+.sortAndOrder{
+  text-align: right;
+}
+
+.pagination-ul{
+  color:gray; 
+  display: flex;
+  align-items: center;
+}
+
+.pagination-ul li {
+  padding: 1rem;
+}
+
+.currentPage{
+  color:black
+}
+
+.reviewDelChange{
+  display: inline;
+  float: right;
+}
+
+.reviewDiv{
+  border-top: 1px solid black;
+}
+
+.reviewMakeForm{
+  padding-bottom: 1rem;
+}
+.reviewMakeFormStar{
+  float: left;
+}
+#reviewMakeFormStarID{
+  display: inline;
+}
+.descStar{
+  display: inline;
+}
