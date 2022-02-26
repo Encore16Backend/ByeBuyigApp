@@ -19,10 +19,13 @@ import GetBestItems from './hooks/GetBestItems';
 
 
 //  reload시에도 저장 가능하도록 index.js에 추가
-if (localStorage.getItem('access_token')){
-  const token = localStorage.getItem('access_token')
-  const id = localStorage.getItem('id')
+if (sessionStorage.getItem('access_token')){
+  const token = sessionStorage.getItem('access_token')
+  const refreshToken = sessionStorage.getItem('refresh_token')
+  const id = sessionStorage.getItem('id')
   console.log(id , ' index ')
+  console.log(refreshToken , ' refreshToken ')
+  console.log(token , ' acc_token ')
   store.dispatch(logIn(id))
   
 }else{

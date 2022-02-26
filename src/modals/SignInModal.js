@@ -24,12 +24,13 @@ function SingInModal({show, onHide, logIn}){
                   },
             }).then(res => {
                 // setAuthorizationToken(res.data.access_token)
-                localStorage.setItem('refresh_token', res.data.refresh_token)
-                localStorage.setItem('access_token', res.data.access_token) 
+                sessionStorage.setItem('refresh_token', res.data.refresh_token)
+                sessionStorage.setItem('access_token', res.data.access_token) 
                 closeHander();
             }).then(res =>{
                 logIn(id)
                 localStorage.setItem('id', id)
+                sessionStorage.setItem('id', id)
                 window.location.replace("/")
                 
             }).catch(error => {

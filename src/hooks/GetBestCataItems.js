@@ -8,13 +8,6 @@ import React, { useEffect, useState } from "react";
 
 const GetBestCataItems = async (url) =>{
     const dispatch = useDispatch()
-    
-
-    // 후기순	    /main/category/review
-    // 높은 가격순	/main/category/price1
-    // 낮은 가격순	/main/category/price2
-    // 판매량순	    /main/category/purchase
-    
 
     await axios.get('http://127.0.0.1:8081'+url, {
         headers: {

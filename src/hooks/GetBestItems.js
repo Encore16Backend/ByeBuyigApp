@@ -31,7 +31,7 @@ const GetBestItems = async (url) =>{
         dispatch(addPants(pants[1]))
 
     }).catch(error => {
-        console.log(error, ' bestItem');
+        console.log(error, ' bestItem error');
     })
     
   }

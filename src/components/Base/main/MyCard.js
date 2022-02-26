@@ -5,22 +5,12 @@ import Carsol from "./Carsol";
 import cardComponent from "../../../css/mycard.css"
 import { Link, NavLink, Route } from 'react-router-dom';
 
-const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, images, reviewmean})=>{
-
-    // result.push(<MyCard key={BasicItem[i]['itemid']} 
-    // categories = {BasicItem[i]['categories']} 
-    // itemid = {BasicItem[i]['itemid']} 
-    // itemname = {BasicItem[i]['itemname']} 
-    // description = {BasicItem[i]['description']} 
-    // price = {BasicItem[i]['price']} 
-    // purchasecnt = {BasicItem[i]['purchasecnt']} 
-    // images = {BasicItem[i]['images']} 
-    // reviewmean = {BasicItem[i]['reviewmean']} 
-    // />);
+const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, images, reviewmean,  setHomeLandering ,
+    HomeLandering})=>{
 
     return(
         <div className="cardComponent">
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '13rem' }}>
                 <Card.Body>
                     <Carsol images = {images}/>
                     <Card.Title>
@@ -33,7 +23,7 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
                         price : price,
                         purchasecnt : purchasecnt,
                         images : images,
-                        reviewmean : reviewmean
+                        reviewmean : reviewmean,
                     },
                     }}>
                     {itemname}

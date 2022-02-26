@@ -3,7 +3,7 @@ import { add_main_items } from "./types"
 // 일반 상품을 넣을 reducer
 
 const initState = {
-    items : {},
+    items : [],
     categories: [],
     count: 0,
     description: "",
