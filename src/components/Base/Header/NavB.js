@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 import setAuthorizationToken from '../../../utils/setAuthorizationToken';
 import axios from 'axios'
 import chkToken from '../../../hooks/chkToken';
+import "../../../css/drop.css";
+
 
 
 const NavB = ({ID, logOut})=>{
@@ -32,6 +34,71 @@ const NavB = ({ID, logOut})=>{
         history.push('/mypage') 
       }
     }
+
+    const tocheck =()=>{
+      history.push('/Check')
+    }
+
+
+
+
+     
+    const [isOpen, setMenu] = useState(false);  
+  
+    const toggleMenu = () => {
+        setMenu(isOpen => !isOpen); 
+        console.log(isOpen)
+    }
+
+
+    const [dispaly,setDisplay]=useState([false]);
+
+    function outMouse(index) {
+      let newDisplay = [...dispaly];
+      newDisplay[index] = false;
+      setDisplay(newDisplay);
+    }
+
+
+    function onMouse(index) {
+      let newDisplay = [...dispaly];
+      newDisplay[index] = true;
+      setDisplay(newDisplay);
+    }
+
+
+    const List = () =>{
+      return(
+        <div style={{position:'relateve'}}>
+          <div className="content">
+            <ul className="dropdown">
+              <a Link onClick={tocheck}>개인정보수정</a>
+              <a>구매목록</a>
+              <a>장바구니</a>
+            </ul>
+          </div>
+        </div>
+      )
+    }
+
+    const Test = () =>{
+      return(
+        <div>
+          <input className = "dropdown" type="checkbox"></input>
+          <label className="dropdownLabel" for ="dropdown">
+          </label>
+          <div className="content">
+            <ul>
+              <li>개인정보수정</li>
+              <li>구매목록</li>
+              <li>장바구니</li>
+            </ul>
+          </div>
+        </div>
+
+      )
+    }
+
 
     // if (!localStorage.getItem('access_token')){
     //   console.log('navB 토큰없음')
@@ -75,6 +142,10 @@ const NavB = ({ID, logOut})=>{
               ? 
               <>
               <Nav.Link onClick={toMyPage}>{id}</Nav.Link>
+              <Nav.Link onClick={()=>toggleMenu()}>마이샵</Nav.Link>
+
+              {isOpen == true ? <List/> : null}
+              
               <Nav.Link onClick={out}>로그아웃</Nav.Link>
               </>
                :
