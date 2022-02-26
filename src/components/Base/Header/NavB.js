@@ -8,7 +8,6 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { logOut } from '../../../redux/user/actions';
 import { connect, useSelector } from 'react-redux';
 import axios from 'axios'
-import chkToken from '../../../hooks/chkToken';
 import "../../../css/drop.css";
 import SideBar from '../../sidebar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Modal, Button, Form} from "react-bootstrap";
 import axios from "axios";
-import chkToken from "../hooks/chkToken";
 import postRefresh from "../hooks/postRefresh";
 import { BrowserRouter as Router, Switch, Route,Link
 } from 'react-router-dom';
@@ -24,12 +23,12 @@ const Update= () => {
     
     useEffect(() => {
         axios.post('http://127.0.0.1:8081/api/user/getUser', {
-            username: localStorage.getItem('id'),
+            username: sessionStorage.getItem('id'),
             password:data.state.pwd
         }, {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem('access_token'),
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
             },
         }).then(res => {
             setEmail(res.data.email);
@@ -71,7 +70,7 @@ const Update= () => {
         e.preventDefault();
         await axios.delete('http://127.0.0.1:8081/api/user/delete', {
             params :{
-                username: localStorage.getItem('id')
+                username: sessionStorage.getItem('id')
             }
 
         }, {
@@ -81,9 +80,9 @@ const Update= () => {
             },
         }).then(res => {
             alert('삭제성공')
-            localStorage.removeItem('id');
-            localStorage.removeItem('access_token')
-            localStorage.removeItem('refresh_token')
+            sessionStorage.removeItem('id');
+            sessionStorage.removeItem('access_token')
+            sessionStorage.removeItem('refresh_token')
             window.location.replace("/")
 
         }).catch(error => {
@@ -96,7 +95,7 @@ const Update= () => {
     const update = async (e)=>{
         e.preventDefault();
         await axios.put('http://127.0.0.1:8081/api/user/update', {
-            username: localStorage.getItem('id'),
+            username: sessionStorage.getItem('id'),
             location : location,
             style : style,
             email : email
@@ -104,7 +103,7 @@ const Update= () => {
         }, {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem('access_token'),
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
             },
         }).then(res => {
             alert('정보수정 성공')

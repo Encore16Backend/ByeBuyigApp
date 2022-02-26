@@ -55,9 +55,6 @@ const Home = ()=>{
                             {/* 일반상품을 렌더링할 component */}
                         </div>
                     </Row>
-                    <Row>
-                        <button onClick={chkUserDelete} ></button>
-                    </Row>
                 </Col>
             </Row>
         </Container>
