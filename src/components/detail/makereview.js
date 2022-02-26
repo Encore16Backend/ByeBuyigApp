@@ -19,6 +19,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
     const [content , setContent] = useState('')
     const [score, setScore] = useState(1)
 
+
     const makeContent = (e)=>{
         setContent(e.target.value)
     }
@@ -81,6 +82,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
             </div>
             <InputGroup>
                 <FormControl as="textarea" aria-label="With textarea" onChange={makeContent} value={content} />
+
                 <Button type="submit" onClick={chkUser}>리뷰작성</Button>
             </InputGroup>
         </Form>

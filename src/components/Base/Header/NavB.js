@@ -52,7 +52,7 @@ const NavB = ({ID, logOut})=>{
       }else{
         // 특정 카테고리 페이지이면 이 id를 가지고 요청을 날려
       }
-      
+        history.push('/mypage') 
     }
 
 

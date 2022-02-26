@@ -29,6 +29,7 @@ const SideBar = ({setShow}) => {
                     state : {
                    id:'1',
                    cataname:"상의"
+
                    },
           }}>
             상의 (1)

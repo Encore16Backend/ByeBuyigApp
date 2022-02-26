@@ -19,9 +19,6 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
     const render = allItem.filter(item => item.itemid === itemid)
     const renderedItem = render[0]
-
-    console.log(allItem, "아아아아아아아아아앙")
-
     const rendering = ()=>{
         return(
         <div>
