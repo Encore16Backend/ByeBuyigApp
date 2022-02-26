@@ -6,6 +6,7 @@ import CateCardWrapper from "../components/Base/main/pdt/CateCardWrapper";
 import ReactPaginate from 'react-paginate'
 import {useDispatch, useSelector} from 'react-redux'
 import { addNum } from "../redux/cataNum/actions";
+import GetTotalPage from "../hooks/pdtHook/GetTotalPage";
 
 
 const CateList = ()=>{
@@ -14,44 +15,47 @@ const CateList = ()=>{
     const location = useLocation();
     // 카테고리 id liocation으로 받아옴
     const id = location.state.id
-    const cataname = location.state.cataname // 카테고리명
+    const cataname = location.state.cataname
     // 들어오면 카테고리id를 받아 리덕스에 저장시킴
-    useEffect(()=>{
-        dispatch(addNum(id))
-    },[id])
-    
-    
+    const totalPage = useSelector(state=>state.totalPage.pages)
     // 하위 컴포넌트들이 렌더링되면 함께 렌더링되기 위함 
     const [Homelendering , setHomeLandering] = useState(false)
-
-    // 들어온 카테고리의 상세 넘버
-    const pdtNum = useSelector(state => state.cateItem.items.length)
     // url을 전달할 변수
-    const [BestItemUrl , setBestItemUrl] = useState('/main/category/order?category='+id)
+    const [BestItemUrl , setBestItemUrl] = useState('/main/category/order?category='+cataname)
+    // page값을 위한 url을 전달할 변수
+    const [pageUrl , setPageUrl] = useState('/main/category/order?category='+cataname)
     // order값을 전달할 변수
-    const [orderNum , setOrderNum] = useState('')
+    const [orderNum , setOrderNum] = useState(1)
+
+    let [page, setPage] = useState(1);
 
     const [chk, setChk] = useState({ 
         flag:false
     }) 
 
+    useEffect(()=>{
+        dispatch(addNum(id))
+        setOrderNum(1)
+    },[id])
+
     useEffect(()=>{ 
-        const newId = location.state.id
+        const category = location.state.cataname
         setChk({ // 함수에서 set을 호출하고 
             ...chk, // 기존객체를 받아오고
             flag : !!chk.flag // 그리고 받아온 객체를 수정하면
         }) // 새로운 chk 객체가리턴되어서 다시 렌더링이 됩니다
-        setBestItemUrl('/main/category/order?category='+newId)
+        setBestItemUrl('/main/category/order?category='+location.state.cataname+"&order=1&page=1")
+        setPageUrl('/main/category/order?category='+location.state.cataname)
     }, [location])
-
     
-
-    console.log(BestItemUrl)
-    console.log(orderNum , "orderNum입니다")
-
+    const handlePageChange = (e)=>{
+        setPage(e.selected+1);
+        setBestItemUrl('/main/category/order?category='+cataname+"&order="+orderNum+"&page="+(e.selected+1));
+    }
     // 넘어온 상품
     // GetCate(url)
-    GetCate(BestItemUrl)
+    GetCate(BestItemUrl);
+    GetTotalPage(pageUrl)
 
 
     // 후기 판매량, 가격에서 best상품을 가져오도록 url을 수정하는 함수
@@ -63,15 +67,7 @@ const CateList = ()=>{
         setOrderNum(num)
     }
 
-    const handlePageChange = (e)=>{
-        let page = e.selected+1
-        if (!!orderNum){
-            setBestItemUrl('/main/category/order?category='+id+"&order="+orderNum+"&page="+page)
-        }else{
-            setBestItemUrl('/main/category/order?category='+id+"&page="+page)
-        }
-    }
-
+    
     return(
         <>
         <Container>
@@ -85,24 +81,24 @@ const CateList = ()=>{
                             {/* 판매량 낮은가격 높은가격 후기 */}
                             <span onClick={() => {
                                 changeOrderNum('4')
-                                changeBestItemUrl("/main/category/order?category="+id+"&order=4")
+                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=4")
                                
                             }} variant="secondary">
                                 후기
                             </span>&nbsp;&nbsp;
                             <span onClick={() => {
                                 changeOrderNum('3')
-                                changeBestItemUrl("/main/category/order?category="+id+"&order=3")
+                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=3")
                             
                             }}  variant="secondary">높은가격순</span>&nbsp;&nbsp;
                             <span onClick={() => {
                                 changeOrderNum('2')
-                                changeBestItemUrl("/main/category/order?category="+id+"&order=2")
+                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=2")
                              
                             }}  variant="secondary">낮은가격순</span>&nbsp;&nbsp;
                             <span onClick={() => {
                                 changeOrderNum('1')
-                                changeBestItemUrl("/main/category/order?category="+id+"&order=1")
+                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=1")
                              
                             }} variant="secondary">판매량</span>
                         </div>
@@ -129,8 +125,8 @@ activeClassName - 현재 페이지에 css처리해주기 위한 클래스명을 
 previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스명을 적으면 됨 */}
                     <div className="myPage centered">
                         {
-                            pdtNum != 0 ?   <ReactPaginate
-                            pageCount={Math.ceil(pdtNum / 10)}
+                            totalPage != 0 ?   <ReactPaginate
+                            pageCount={Math.ceil(totalPage)}
                             pageRangeDisplayed={3}
                             marginPagesDisplayed={0}
                             breakLabel={""}

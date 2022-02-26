@@ -1,9 +1,11 @@
 import {add_cate_items} from "./types"
+import { totalPage } from "./types"
 
 // best상품을 넣을 reducer
 
 const initState = {
     items : {},
+    pages : 0
 }
 const cateItemReducer = (state=initState, action)=>{
     switch(action.type){
@@ -11,6 +13,11 @@ const cateItemReducer = (state=initState, action)=>{
             return{
                 ...state,
                 items : action.payload
+            }
+            case totalPage:
+            return{
+                ...state,
+                pages : action.payload
             }
         
         default : return state

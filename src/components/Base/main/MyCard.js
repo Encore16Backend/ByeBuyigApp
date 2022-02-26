@@ -9,9 +9,9 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
     HomeLandering})=>{
 
     return(
-        <div className="cardComponent">
+        <div className="cardComponent" >
         <Card style={{ width: '13rem' }}>
-                <Card.Body>
+                <Card.Body className="cBody">
                     <Carsol images = {images}/>
                     <Card.Title>
                     <Link to={{ pathname:"/detail", search : "?itemid="+itemid,

@@ -9,6 +9,7 @@ const CarsolBig = ({images})=>{
     
     return(
     <Carousel fade>
+        
         <Carousel.Item>
             <img
             className="d-block w-100 main_img"
@@ -20,7 +21,8 @@ const CarsolBig = ({images})=>{
             <p></p>
             </Carousel.Caption>
         </Carousel.Item>
-        <Carousel.Item>
+
+        {/* <Carousel.Item>
             <img
             className="d-block w-100 main_img"
             src="img/2.jpg"
@@ -41,7 +43,7 @@ const CarsolBig = ({images})=>{
             <h3>상품사진3</h3>
             <p></p>
             </Carousel.Caption>
-        </Carousel.Item>
+        </Carousel.Item> */}
     </Carousel>
     )
 }

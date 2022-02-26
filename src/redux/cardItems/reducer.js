@@ -12,7 +12,6 @@ const cardItemReducer = (state=initState, action)=>{
                 ...state,
                 items : action.payload
             }
-        
         default : return state
     }
 }

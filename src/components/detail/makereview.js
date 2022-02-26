@@ -41,7 +41,6 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
             alert("로그인 후에 작성 할 수 있습니다")
             return
         }
-
         await axios.post('http://127.0.0.1:8081/review/save',{
                 // body
                 itemname : pdtName,
@@ -62,13 +61,9 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
-            postRefresh() // 토큰이 없으면 재발행시키는 함수
-            onSubmit(e) //  토큰을 받고 실행하고 싶은 함수 다시 실행
+            // postRefresh() // 토큰이 없으면 재발행시키는 함수
+            // onSubmit(e) //  토큰을 받고 실행하고 싶은 함수 다시 실행
         })
-    }
-
-    const chkUser = ()=>{
-        
     }
 
 
@@ -83,7 +78,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
             <InputGroup>
                 <FormControl as="textarea" aria-label="With textarea" onChange={makeContent} value={content} />
 
-                <Button type="submit" onClick={chkUser}>리뷰작성</Button>
+                <Button type="submit" >리뷰작성</Button>
             </InputGroup>
         </Form>
         </div>
