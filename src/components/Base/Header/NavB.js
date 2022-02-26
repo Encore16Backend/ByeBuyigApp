@@ -8,8 +8,10 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { logOut } from '../../../redux/user/actions';
 import { connect, useSelector } from 'react-redux';
 import axios from 'axios'
+import "../../../css/drop.css";
 import SideBar from '../../sidebar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+
 
 
 const NavB = ({ID, logOut})=>{
@@ -37,10 +39,95 @@ const NavB = ({ID, logOut})=>{
         history.push('/mypage') 
     }
 
+    const tocheck =()=>{
+      history.push('/Check')
+    }
+
+
+
+
+     
+    const [isOpen, setMenu] = useState(false);  
+  
+    const toggleMenu = () => {
+        setMenu(isOpen => !isOpen); 
+        console.log(isOpen)
+    }
+
+
+    const [dispaly,setDisplay]=useState([false]);
+
+    function outMouse(index) {
+      let newDisplay = [...dispaly];
+      newDisplay[index] = false;
+      setDisplay(newDisplay);
+    }
+
+
+    function onMouse(index) {
+      let newDisplay = [...dispaly];
+      newDisplay[index] = true;
+      setDisplay(newDisplay);
+    }
+
+
+    const List = () =>{
+      return(
+        <div style={{position:'relateve'}}>
+          <div className="content">
+            <ul className="dropdown">
+              <a Link onClick={tocheck}>개인정보수정</a>
+              <a>구매목록</a>
+              <a>장바구니</a>
+            </ul>
+          </div>
+        </div>
+      )
+    }
+
+    const Test = () =>{
+      return(
+        <div>
+          <input className = "dropdown" type="checkbox"></input>
+          <label className="dropdownLabel" for ="dropdown">
+          </label>
+          <div className="content">
+            <ul>
+              <li>개인정보수정</li>
+              <li>구매목록</li>
+              <li>장바구니</li>
+            </ul>
+          </div>
+        </div>
+
+      )
+    }
+
+
+    // if (!localStorage.getItem('access_token')){
+    //   console.log('navB 토큰없음')
+    //   const refreshToken = async () =>{
+    //     await axios.post('http://127.0.0.1:8081/token/refresh', {
+    //       refresh_token:localStorage.getItem('refresh_token'),
+    //       access_token:localStorage.getItem('access_token'),
+    //   }, {
+    //       headers: {
+    //           "Content-Type": "application/json",
+    //         },
+    //   }).then(res => {
+    //       setAuthorizationToken(res.data.access_token)
+    //       localStorage.setItem('refresh_token', res.data.refresh_token)
+    //       localStorage.setItem('access_token', res.data.access_token) 
+    //   }).catch(error => {
+    //       console.log('navB')
+    //   })
+    //   }
+    //   refreshToken()
     // 검색
     // 카테고리 상의(1) 하의(4) 스커트(?) 아우터(7) (반팔(10) 긴팔(11) 셔츠 반바지(13) 슬랙스 데님팬츠 미니스커트 롱스커트 롱패딩 숏패딩 코트 트렌치코트  )
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
+
     
     const changeKeyword = (e)=>{
       setKeyword(e.target.value)
@@ -55,9 +142,6 @@ const NavB = ({ID, logOut})=>{
         history.push('/mypage') 
     }
 
-
-
-     
     return(
         <>
         <Navbar bg="dark" variant="dark">
@@ -93,6 +177,10 @@ const NavB = ({ID, logOut})=>{
               ? 
               <>
               <Nav.Link onClick={toMyPage}>{id}</Nav.Link>
+              <Nav.Link onClick={()=>toggleMenu()}>마이샵</Nav.Link>
+
+              {isOpen == true ? <List/> : null}
+              
               <Nav.Link onClick={out}>로그아웃</Nav.Link>
               </>
                :
