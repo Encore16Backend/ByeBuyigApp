@@ -3,7 +3,6 @@ import side from '../css/sidebar.css'
 import { Dropdown, Button } from 'bootstrap';
 import { ButtonGroup } from 'react-bootstrap';
 import GetBestCataItems from '../hooks/GetBestCataItems';
-import CateList from '../pages/CateList';
 import { Link, NavLink, Route } from 'react-router-dom';
 
 
@@ -12,11 +11,7 @@ const SideBar = ({setShow}) => {
     const moveCata = ()=>{
       setShow(false)
     }
-
-    // 1 상의 2 바지 3 스커트 4 아우터 5 반팔 6 긴팔 7 셔츠 8 반바지
-    // 9 슬렉스 10 데님팬츠 11 롱스커트 12 롱스커트 13 롱패딩 15 코트
-    // 16 트렌치 코트
-    
+  
 
     return (
       <>

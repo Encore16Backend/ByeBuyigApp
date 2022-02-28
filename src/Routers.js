@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
 import Check from "./pages/Check";
 import Update from "./pages/Update";
+import SearchList from "./pages/SearchPage";
 
 
 export default [
@@ -30,5 +31,9 @@ export default [
     {
         path:'/detail', // 쿼리 사용시에는 경로에 적을 필요없음
         component : DetailPage
+    },
+    {
+        path:'/searchlist',
+        component:SearchList
     }
 ]

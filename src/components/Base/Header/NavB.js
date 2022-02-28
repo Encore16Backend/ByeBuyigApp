@@ -44,9 +44,6 @@ const NavB = ({ID, logOut})=>{
     }
 
 
-
-
-     
     const [isOpen, setMenu] = useState(false);  
   
     const toggleMenu = () => {
@@ -134,12 +131,17 @@ const NavB = ({ID, logOut})=>{
     }
     const onSubmit = (e)=>{
       e.preventDefault();
-      if (!!cataNum){ // 특정 카테고리 페이지가 아니면 id없이 날려
-
-      }else{
-        // 특정 카테고리 페이지이면 이 id를 가지고 요청을 날려
-      }
-        history.push('/mypage') 
+      // if (!!cataNum){ // 특정 카테고리 페이지가 아니면 id없이 날려
+      // }else{
+      //   // 특정 카테고리 페이지이면 이 id를 가지고 요청을 날려
+      // }
+      history.push({
+        pathname: "/searchlist",
+        search : "?searchName="+keyword,
+        state: {
+            keyword:keyword
+        }
+    })   
     }
 
     return(
