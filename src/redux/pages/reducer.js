@@ -1,9 +1,11 @@
 import { totalPage } from "./types"
+import { searchPage } from "./types"
 
 // best상품을 넣을 reducer
 
 const initState = {
-    pages : 0
+    pages : 0,
+    searchpages : 0
 }
 const pageReducer = (state=initState, action)=>{
     switch(action.type){
@@ -12,7 +14,11 @@ const pageReducer = (state=initState, action)=>{
                 ...state,
                 pages : action.payload
             }
-        
+        case searchPage:
+            return{
+                ...state,
+                searchpages:action.payload
+            }
         default : return state
     }
 }

@@ -10,6 +10,7 @@ import axios from "axios";
 import { addReview } from "../redux/reviews/actions";
 import GetMainItems from "../hooks/GetMainItems";
 import CarsolBig from "../components/Base/main/CarsolBig";
+import ImageSlide from "../components/detail/ImageSlide";
 
 
 const DetailPage = ()=>{
@@ -74,7 +75,8 @@ const DetailPage = ()=>{
             </Row>
             <Row>
                 <Col xs={6} md={6}>
-                    <CarsolBig images={imgs}/>
+                    <ImageSlide images={imgs} />
+                    {/* <CarsolBig images={imgs}/> */}
                 </Col>
                 <Col xs={6} md={6}>
                     <DetailDesc pdtState = {locationState} lendering={lendering} setLandering={setLandering}/>

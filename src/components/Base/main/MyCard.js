@@ -13,7 +13,6 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
         <Card style={{ width: '13rem' }}>
                 <Card.Body className="cBody">
                     <Carsol images = {images}/>
-                    <Card.Title>
                     <Link to={{ pathname:"/detail", search : "?itemid="+itemid,
                     state : {
                         categories:categories,
@@ -26,9 +25,8 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
                         reviewmean : reviewmean,
                     },
                     }}>
-                    {itemname}
+                    <Card.Title> {itemname.substring(0,20)}... </Card.Title>
                     </Link>
-                    </Card.Title>
                         <br/>
                         <Card.Subtitle className="mb-2 text-muted">가격 : {price}</Card.Subtitle>
                         <Card.Text>

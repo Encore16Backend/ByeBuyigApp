@@ -7,8 +7,6 @@ import join from "../css/join.css"
 import {connect} from 'react-redux'
 
 function SingUpModal({ show, onHide }) {
-  // id(pk) ,pwd, 이름?, 주소, 관심패션, 이메일
-  
 
   // 회원가입 실행 함수
   const onSubmit = async (e) => {
@@ -27,6 +25,7 @@ function SingUpModal({ show, onHide }) {
       closeHander();
       alert('회원가입 성공')
     }).catch(error =>{
+      console.log(error)
       alert("회원가입 오류")
     })
     setEmailMsg('');

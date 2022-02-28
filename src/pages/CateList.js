@@ -52,11 +52,9 @@ const CateList = ()=>{
         setPage(e.selected+1);
         setBestItemUrl('/main/category/order?category='+cataname+"&order="+orderNum+"&page="+(e.selected+1));
     }
-    // 넘어온 상품
-    // GetCate(url)
+ 
     GetCate(BestItemUrl);
     GetTotalPage(pageUrl)
-
 
     // 후기 판매량, 가격에서 best상품을 가져오도록 url을 수정하는 함수
     const changeBestItemUrl = (url)=>{
@@ -127,7 +125,7 @@ previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스�
                         {
                             totalPage != 0 ?   <ReactPaginate
                             pageCount={Math.ceil(totalPage)}
-                            pageRangeDisplayed={3}
+                            pageRangeDisplayed={2}
                             marginPagesDisplayed={0}
                             breakLabel={""}
                             previousLabel={"이전"}
