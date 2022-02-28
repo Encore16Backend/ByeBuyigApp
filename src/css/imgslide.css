@@ -82,3 +82,9 @@
     width: 100%;
     cursor: pointer;
   }
+  .faArrow{
+    margin-bottom: 1rem;
+  }
+  #faArrowRight{
+    margin-left: 10px;
+  }

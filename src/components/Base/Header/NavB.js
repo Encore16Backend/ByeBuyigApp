@@ -11,7 +11,8 @@ import axios from 'axios'
 import "../../../css/drop.css";
 import SideBar from '../../sidebar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faCarSide} from "@fortawesome/free-solid-svg-icons"
 
 
 const NavB = ({ID, logOut})=>{
@@ -100,7 +101,6 @@ const NavB = ({ID, logOut})=>{
       )
     }
 
-
     // if (!localStorage.getItem('access_token')){
     //   console.log('navB 토큰없음')
     //   const refreshToken = async () =>{
@@ -147,7 +147,8 @@ const NavB = ({ID, logOut})=>{
     return(
         <>
         <Navbar bg="dark" variant="dark">
-          <img  onClick={handleShow} style={{width:"70px", height:"50px"}} alt="sidebar" src="img\icons\sidebar.png" />
+          {/* <FontAwesomeIcon icon={faCarSide} onClick={handleShow}/> */}
+          <img onClick={handleShow} style={{width:"70px", height:"50px"}} alt="sidebar" src="img\icons\sidebar.png" />
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
