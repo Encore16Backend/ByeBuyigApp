@@ -1,5 +1,10 @@
 import React from 'react';
 import imgcss from "../../css/imgslide.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons"
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
+
+
 
 class ImageSlide extends React.Component {
   constructor() {
@@ -12,14 +17,14 @@ class ImageSlide extends React.Component {
   onChangeImage = index => {
     if (this.props.images.length <= index) index = 0;
     if (index < 0) index = this.props.images.length - 1;
-
     this.setState({ imageCurrentNo: index });
   };
 
   render() {
     console.log(this.props , "이미지에 들어옴")
-    const { images } = this.props;
+    const { images, itemname } = this.props;
     return (
+      <>
       <div className="imageSlide">
         <div className="navBox">
           <span>{this.state.imageCurrentNo + 1}</span>
@@ -47,13 +52,14 @@ class ImageSlide extends React.Component {
             className="buttonPrev"
             onClick={() => this.onChangeImage(this.state.imageCurrentNo - 1)}
           >
-            <i class="fas fa-chevron-left"></i>
+            <FontAwesomeIcon icon={faArrowLeft} className="faArrow" id="faArrowLeft"/>
+            
           </div>
           <div
             className="buttonNext"
             onClick={() => this.onChangeImage(this.state.imageCurrentNo + 1)}
           >
-            <i class="fas fa-chevron-right"></i>
+            <FontAwesomeIcon icon={faArrowRight} className="faArrow" id="faArrowRight"/>
           </div>
         </div>
         <div className="paginationBox">
@@ -71,6 +77,7 @@ class ImageSlide extends React.Component {
           ))}
         </div>
       </div>
+      </>
     );
   }
 }

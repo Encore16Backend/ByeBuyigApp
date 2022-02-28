@@ -7,7 +7,7 @@ import { setTotalPage } from "../../redux/CateItem/actions";
 
 const GetCate = async (url) =>{
     const dispatch = useDispatch()
-    console.log(url , ' GetCateUrl 입니다')
+    
 
     await axios.get('http://127.0.0.1:8081'+url, {
         headers: {
