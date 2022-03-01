@@ -97,31 +97,10 @@ const NavB = ({ID, logOut})=>{
             </ul>
           </div>
         </div>
-
       )
     }
 
-    // if (!localStorage.getItem('access_token')){
-    //   console.log('navB 토큰없음')
-    //   const refreshToken = async () =>{
-    //     await axios.post('http://127.0.0.1:8081/token/refresh', {
-    //       refresh_token:localStorage.getItem('refresh_token'),
-    //       access_token:localStorage.getItem('access_token'),
-    //   }, {
-    //       headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //   }).then(res => {
-    //       setAuthorizationToken(res.data.access_token)
-    //       localStorage.setItem('refresh_token', res.data.refresh_token)
-    //       localStorage.setItem('access_token', res.data.access_token) 
-    //   }).catch(error => {
-    //       console.log('navB')
-    //   })
-    //   }
-    //   refreshToken()
-    // 검색
-    // 카테고리 상의(1) 하의(4) 스커트(?) 아우터(7) (반팔(10) 긴팔(11) 셔츠 반바지(13) 슬랙스 데님팬츠 미니스커트 롱스커트 롱패딩 숏패딩 코트 트렌치코트  )
+   
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
 
@@ -147,24 +126,22 @@ const NavB = ({ID, logOut})=>{
     return(
         <>
         <Navbar bg="dark" variant="dark">
-          {/* <FontAwesomeIcon icon={faCarSide} onClick={handleShow}/> */}
-          <img onClick={handleShow} style={{width:"70px", height:"50px"}} alt="sidebar" src="img\icons\sidebar.png" />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <Navbar.Brand href={"/"} >BuyBuying</Navbar.Brand>
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
 
-          {/* leftSideBar */}
-          <Navbar.Brand href={"/"} >BuyBuying</Navbar.Brand>
+
                 <Offcanvas show={show} onHide={handleClose}>
                     <Offcanvas.Header closeButton>
                     <Offcanvas.Title>상품목록</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                    {/* sidebar컴포넌트  */}
-                    <SideBar setShow={setShow}/>
+                   
+                   
                     </Offcanvas.Body>
                 </Offcanvas> 
-
           <Nav className="me-auto">
              {/* 검색폼 */}
              <Form className="d-flex" onSubmit={onSubmit}>

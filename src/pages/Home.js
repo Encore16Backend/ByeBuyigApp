@@ -12,6 +12,9 @@ import GetMainItems from "../hooks/GetMainItems"
 import CardWrapper from "../components/Base/main/CardWrapper";
 import BestCardWrapper from "../components/Base/main/BestCarpWrapper";
 import GetBestItems from "../hooks/GetBestItems";
+import sidecas from "../css/sidebar.css"
+import { Link } from "react-router-dom";
+import Realsidebar from "../components/Base/Side/Realsidebar";
 
 const Home = ()=>{
     // 9상의 10반팔 11긴팔 12하의 13반바지 14긴바지 15아우터 16코트 17패딩 18모자 19신발
@@ -33,11 +36,10 @@ const Home = ()=>{
     GetBestItems(BestItemUrl)
     // 일반 모든 상품
     GetMainItems()
-
-    console.log('Home 랜더링 종료')
     return(
-        <>
-        <Container className="container centered">
+        <div>
+        <Realsidebar/>
+        <Container className="pdtContainer centered" style={{width: "auto"}} >
             <Row>
                 <Col sm={12}>
                     <Row>
@@ -58,7 +60,7 @@ const Home = ()=>{
                 </Col>
             </Row>
         </Container>
-        </>
+        </div>
     )
 }
 

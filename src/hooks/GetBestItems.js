@@ -20,10 +20,11 @@ const GetBestItems = async (url) =>{
     }).then(res => {
         let temp = Object.entries(res.data) // 4개의 배열로 나눈다
         let all = temp[0] // all
-        let top = temp[1] // all
-        let outer = temp[3] // all
-        let pants = temp[2] // all
+        let top = temp[1] // top
+        let outer = temp[3] // bottom
+        let pants = temp[2] // outer
         console.log(temp , " bestItem res temp")
+        console.log(res, "resres")
 
         dispatch(addBestItems(all[1]))
         dispatch(addTop(top[1]))

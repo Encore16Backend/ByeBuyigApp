@@ -78,7 +78,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
             <InputGroup>
                 <FormControl as="textarea" aria-label="With textarea" onChange={makeContent} value={content} />
 
-                <Button type="submit" >리뷰작성</Button>
+                <Button type="submit">리뷰작성</Button>
             </InputGroup>
         </Form>
         </div>
