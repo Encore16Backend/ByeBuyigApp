@@ -2,9 +2,7 @@ import CateList from "./pages/CateList";
 import DetailPage from "./pages/DetailPage";
 import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
-import Check from "./pages/Check";
 import Update from "./pages/Update";
-
 
 export default [
     {
@@ -14,10 +12,6 @@ export default [
     {
         path:'/mypage',
         component:MyPage
-    },
-    {
-        path: '/Check',
-        component : Check
     },
     {
         path : '/Update',

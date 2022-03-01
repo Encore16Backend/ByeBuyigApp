@@ -1,26 +1,33 @@
 import { useState } from "react";
-import { Modal, Button, Form} from "react-bootstrap";
+import { Modal, Button, Form,Nav} from "react-bootstrap";
 import axios from "axios";
 import postRefresh from "../hooks/postRefresh";
 import { BrowserRouter as Router, Switch, Route,Link
 } from 'react-router-dom';
-import MyPage from "./MyPage";
 import React from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { type } from "@testing-library/user-event/dist/type";
 
 
-const Check = ()=>{
+function CheckModal (){
 
     const [pwd,setPwd] = useState('');
     const [id, setID] = useState(sessionStorage.getItem('id'));
+    const [show, setShow] = useState(false);
+
+    const handleClose = ()=> {
+        setShow(false);
+        setPwd('')
+    };
+
+    const handleShow = ()=> setShow(true);
 
     var history = useHistory();
-    
+
     const onChange = (e) => {
         setPwd(e.target.value);
     };
-    
+
 
     const pwdCheck = async (e)=>{
         e.preventDefault();
@@ -42,7 +49,8 @@ const Check = ()=>{
                     location: res.data.location,
                     style: res.data.style
                 }
-            })   
+            })
+            handleClose();
         }).catch(error => {
             alert("비밀번호를 확인해주세요.");
         })
@@ -50,21 +58,31 @@ const Check = ()=>{
 
     return(
         <>
-        <div style={{textAlign:"center"}}>
-            <div className="container">
-                <br></br><br></br>
-                <p>마이페이지</p>
-                <br></br>
-                <p>id : {id}</p> 
-                비밀번호 : <input onChange={onChange} value={pwd}></input> 
-                <button onClick={pwdCheck}>check</button>
-                <br></br>
+        
+          <div>
+            <Nav.Link onClick={handleShow}>개인정보수정</Nav.Link>
+                <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>비밀번호 확인</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>PASSWORD <br></br><br></br>
+                <input onChange={onChange} value={pwd} type="password"></input>
+                </Modal.Body>
+
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary" onClick={pwdCheck}>
+                    Check
+                </Button>
+                </Modal.Footer>
+                </Modal>
             </div>
-        </div>
         </>
         
     )
-}
+    }
 
-
-export default Check;
+export default CheckModal;

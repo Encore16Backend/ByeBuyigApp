@@ -11,7 +11,7 @@ import axios from 'axios'
 import "../../../css/drop.css";
 import SideBar from '../../sidebar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
-
+import CheckModal from "../../../modals/CheckModal";
 
 
 const NavB = ({ID, logOut})=>{
@@ -24,6 +24,8 @@ const NavB = ({ID, logOut})=>{
   // login용 hook
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
+    const [checkModalOn,setCheckModalOn] = useState(false) // pwd check
+
     var history = useHistory();
     const id = sessionStorage.getItem('id')
 
@@ -76,7 +78,7 @@ const NavB = ({ID, logOut})=>{
         <div style={{position:'relateve'}}>
           <div className="content">
             <ul className="dropdown">
-              <a Link onClick={tocheck}>개인정보수정</a>
+              <CheckModal show={checkModalOn} onHide = {()=>{setCheckModalOn(false)}}  />
               <a>구매목록</a>
               <a>장바구니</a>
             </ul>
@@ -85,46 +87,6 @@ const NavB = ({ID, logOut})=>{
       )
     }
 
-    const Test = () =>{
-      return(
-        <div>
-          <input className = "dropdown" type="checkbox"></input>
-          <label className="dropdownLabel" for ="dropdown">
-          </label>
-          <div className="content">
-            <ul>
-              <li>개인정보수정</li>
-              <li>구매목록</li>
-              <li>장바구니</li>
-            </ul>
-          </div>
-        </div>
-
-      )
-    }
-
-
-    // if (!localStorage.getItem('access_token')){
-    //   console.log('navB 토큰없음')
-    //   const refreshToken = async () =>{
-    //     await axios.post('http://127.0.0.1:8081/token/refresh', {
-    //       refresh_token:localStorage.getItem('refresh_token'),
-    //       access_token:localStorage.getItem('access_token'),
-    //   }, {
-    //       headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //   }).then(res => {
-    //       setAuthorizationToken(res.data.access_token)
-    //       localStorage.setItem('refresh_token', res.data.refresh_token)
-    //       localStorage.setItem('access_token', res.data.access_token) 
-    //   }).catch(error => {
-    //       console.log('navB')
-    //   })
-    //   }
-    //   refreshToken()
-    // 검색
-    // 카테고리 상의(1) 하의(4) 스커트(?) 아우터(7) (반팔(10) 긴팔(11) 셔츠 반바지(13) 슬랙스 데님팬츠 미니스커트 롱스커트 롱패딩 숏패딩 코트 트렌치코트  )
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
 
@@ -149,6 +111,7 @@ const NavB = ({ID, logOut})=>{
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
+          
 
           {/* leftSideBar */}
           <Navbar.Brand href={"/"} >BuyBuying</Navbar.Brand>
