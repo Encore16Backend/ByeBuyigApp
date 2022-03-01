@@ -57,7 +57,23 @@ function CheckModal (){
             })
             handleClose();
         }).catch(error => {
-            alert("비밀번호를 확인해주세요.");
+            if (error.response.status === 403) {
+                const { data } = error.response;
+                if (data['error_message'].indexOf("The Token has expired") != -1) {
+                    axios.get('http://127.0.0.1:8081/api/token/refresh', {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + sessionStorage.getItem('refresh_token'),
+                        }
+                    }).then(res => {
+                        sessionStorage.setItem('access_token', res.data.access_token);
+                        pwdCheck();
+                    })
+                }
+            }
+            else {
+                alert("비밀번호를 확인해주세요.");
+            }  
         })
     };
 

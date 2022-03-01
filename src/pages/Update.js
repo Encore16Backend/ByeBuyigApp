@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Modal, Button, Form} from "react-bootstrap";
+import { Modal, Button, Form, Container} from "react-bootstrap";
 import axios from "axios";
 import postRefresh from "../hooks/postRefresh";
 import { BrowserRouter as Router, Switch, Route,Link
 } from 'react-router-dom';
 import MyPage from "./MyPage";
+import Test from "../components/auth/Test";
 import React from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
@@ -20,16 +21,18 @@ const Update= () => {
 
 
     let [email, setEmail] = useState('');
-    let [style, setStyle] = useState('');
     //pwd
-    let [pwd, setPwd] = useState('');
-    let [checkpwd, setCheckPwd] = useState('');
+    const [pwd, setPwd] = useState('')
+    const [chkPwd, setChkPwd] = useState('')
+
     let [pwdMsg,setPwdMsg]=useState('');
-    const [valchkPwd, setvalchkPwd] = useState(true) 
+    const [valchkPwd, setvalchkPwd] = useState('')
     const [pwdStyle, setPwdStyle]= useState('')
 
-    //location
-    let [location, setLocation] = useState('');
+    const [isAddress, setIsAddress] = useState('');
+    const [valisAddress, setvalisAddress] = useState(false);
+
+    const [fashion, setFashion] = useState('')
 
 
     useEffect(() => {
@@ -43,35 +46,56 @@ const Update= () => {
             },
         }).then(res => {
             setEmail(res.data.email);
-            setLocation(res.data.location);
-            setStyle(res.data.style);
+            const location = res.data.location.split(' ');
+            setIsZoneCode(location.pop());
+            setIsAddress(location.join(' '));
+            setFashion(res.data.style);
             setPwd('')
-            setCheckPwd('')
-            // history.push({
-            //     pathname: "/update/",
-            //     state: {
-            //         pwd:pwd
-            //         // id : res.data.username,
-            //         // email: res.data.email,
-            //         // location: res.data.location,
-            //         // style: res.data.style
-            //     }
-            // })   
+            setChkPwd('') 
         }).catch(error => {
-            history.push("/")
+            console.log(error);
         })
-    }, [])
+    }, [data])
    
 
-    const onLoctionChange = (e) => {
-        setLocation(e.target.value);
-    };
+    // 상세 주소관련 
+    const onIsAddress = (e)=>{
+        setIsAddress(e.target.value)
+        const Addr = e.target.value
+        if (Addr === true) {
+            setvalisAddress(true)
+        } else {
+            setvalisAddress(false)
+        }
+    }
+
+    // 우편번호 관련  
+    const [isZoneCode, setIsZoneCode] = useState('');
+    const [valisZoneCode, setvalisZoneCode] = useState(false)
+
+    const onIsZoneCode = (e)=>{
+        setIsZoneCode(e.target.value)
+        const zip = e.target.value
+        if (zip === true) {
+            setvalisZoneCode(true)
+        } else {
+            setvalisZoneCode(false)
+        }
+    }
+
+    // 우편번호 검색으로 값이 생기면 유효성검사를 통과시키는 함수
+    const OnAddr = ()=>{
+        setvalisAddress(true)
+        setvalisZoneCode(true) 
+    }
+
+    
 
     
     const onPwdChange = (e) => {
         setPwd(e.target.value);
         const firstPwd = e.target.value
-        if (checkpwd ===firstPwd && firstPwd !="" ){
+        if (chkPwd ===firstPwd && firstPwd !="" ){
             setvalchkPwd(true)
             setPwdStyle('valid-input')
             setPwdMsg('※ 비밀번호 확인 성공')
@@ -89,7 +113,7 @@ const Update= () => {
 
 
     const onChekcPwdChange = (e) => {
-        setCheckPwd(e.target.value);
+        setChkPwd(e.target.value);
         const afterPwd = e.target.value;
         if (pwd ===afterPwd && afterPwd !=""){
             setvalchkPwd(true)
@@ -107,7 +131,7 @@ const Update= () => {
 
 
     const onstlyeChange = (e) => {
-        setStyle(e.target.value);
+        setFashion(e.target.value);
     };
 
     
@@ -141,9 +165,9 @@ const Update= () => {
         e.preventDefault();
         await axios.put('http://127.0.0.1:8081/api/user/update', {
             username: sessionStorage.getItem('id'),
-            location : location,
+            location : isAddress + ' ' + isZoneCode,
             password : pwd,
-            style : style,
+            style : fashion,
             email : email
 
         }, {
@@ -163,21 +187,72 @@ const Update= () => {
     
 
     return(
-        <>
-        <div style={{position:"relative",textAlign:"center" /*,background:"gray",margin:"100px"*/}}>
-            <br></br><br></br>
-            ID <br></br> {localStorage.getItem('id')} <br></br><br></br>
-            E-mail <br></br> {email} <br></br><br></br>
-            PASSOWRD <br></br> <input onChange={onPwdChange} value={pwd} type="password"></input> <br></br><br></br>
-            PASSOWRD 확인 <br></br> <input onChange={onChekcPwdChange} value={checkpwd} type="password"></input> <br></br>
-            {<div className={pwdStyle}>{pwdMsg}</div>} <br></br>
-            ADDRESS <br></br><input onChange={onLoctionChange} value={location}></input> <br></br><br></br>
-            선호하는 스타일 <br></br> <input onChange={onstlyeChange} value={style}></input> <br></br><br></br>
-            {valchkPwd == true ? <Button onClick={update}>정보 수정</Button> : <Button disabled={true}>정보 수정</Button>}&nbsp; &nbsp;
-            <Button onClick={del}>회원 탈퇴</Button>
-            <br></br><br></br>
+        <div>
+        <Container>
+            <br />
+            <Form onSubmit={update}>
+                <Form.Group className="mb-3" >
+                    <Form.Label>ID :</Form.Label> &nbsp;
+                    <Form.Label>{localStorage.getItem('id')}</Form.Label>
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label>password</Form.Label>
+                    <Form.Control type="password" className="password" placeholder="8자 이상 영문, 숫자 조합" minLength={8} maxLength={20}
+                onChange={onPwdChange} value={pwd} />
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label>password 확인</Form.Label>
+                    <Form.Control type="password" placeholder="비밀번호 확인"
+                    onChange={onChekcPwdChange} value={chkPwd} />
+                    {<div className={pwdStyle}>{pwdMsg}</div>}
+                </Form.Group>
+
+                <a onClick={OnAddr}>
+                <Test setIsAddress={setIsAddress} setIsZoneCode={setIsZoneCode}/>
+                </a>
+                <br></br>
+
+                <Form.Group className="mb-3">
+                    <Form.Label>상세주소</Form.Label>
+                    <Form.Control type="text" placeholder="상세주소입력" onChange={
+                        onIsAddress
+                    } value={isAddress} />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                    <Form.Label>우편번호</Form.Label>
+                    <Form.Control type="text" placeholder="우편번호입력" onChange={
+                        onIsZoneCode
+                    } value={isZoneCode} />
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                <Form.Label>선호하는 스타일</Form.Label>
+                <Form.Select aria-label="Default select example" onChange={(e) => {
+                    setFashion(e.target.value)
+                }} value={fashion}>
+                    <option value="1">없음</option>
+                    <option value="2">캐주얼</option>
+                    <option value="3">미니멀</option>
+                    <option value="4">스트릿</option>
+                    <option value="5">시티보이</option>
+                    <option value="6">아메카지</option>
+                </Form.Select>
+                </Form.Group>
+
+                <Form.Group className="mb-3">
+                <Form.Label>E-mail :</Form.Label> &nbsp;
+                <Form.Label>{email}</Form.Label>
+                </Form.Group>
+
+
+                <Button type="submit">회원수정</Button> &nbsp;
+                <Button  onClick={del}> 회원탈퇴 </Button>
+            </Form>
+        </Container>
         </div>
-        </>
     )
 }
 export default Update;
