@@ -23,9 +23,11 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
     }
 
 
-
+    // 댓글의 점수와 내용
     const [content , setContent] = useState('')
     const [score, setScore] = useState(1)
+    const [dateMsg, setDateMsg] = useState("최근 댓글")
+    const [reviewMsg, setReviewMsg] = useState("높은 별점 순")
     // 댓글 수정시 값
     const makeContent = (e)=>{
         setContent(e.target.value)
@@ -100,6 +102,7 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
             delReview(id) //  토큰을 받고 실행하고 싶은 함수 다시 실행
         })
     }
+    // 별점점수 바꾸는 함수
     const ratingChanged = (newRating)=>{
         setScore(newRating)
     }
@@ -131,11 +134,39 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
             setPage(1)
         }
     }
+    // 문자열로 정렬할떄 함수
+    const orderReview = (e)=>{
+        if (reviewMsg == "높은 별점 순"){
+            setReviewMsg("낮은 별점 순")
+            setDate("score")
+            setPage(1)
+            setDesc("DESC")
+
+        }else{
+            setReviewMsg("높은 별점 순")
+            setDate("score")
+            setPage(1)
+            setDesc("ASC")
+        }
+    }
+    const orderDate = (e)=>{
+        if (dateMsg == "최근 댓글"){
+            setDateMsg("오래된 댓글")
+            setDate("date")
+            setPage(1)
+            setDesc("DESC")
+
+        }else{
+            setDateMsg("최근 댓글")
+            setDate("date")
+            setPage(1)
+            setDesc("ASC")
+        }
+    }
 
     {/* 댓글들 받아와서 반복문 돌림*/}
     const render = reviews.map((review,index)  =>{
         let forReviewContent = lodash.cloneDeep(review.content)
-        console.log(forReviewContent, "forReviewContent")
         
         return(
             
@@ -169,16 +200,23 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
 
     return(
         <div className="reviews">
-            <div>
-            <Form.Select size="sm" onChange={makeCondition} value={conditionSelect}>
-                <option value="date">날짜순</option>
-                <option value="score">별점순</option>
-            </Form.Select>
-            <Form.Select size="sm" onChange={makeSort} value={sortSelect}>
-                <option value="DESC">내림차순</option>
-                <option value="ASC">오름차순</option>
-            </Form.Select>
+            <div className="BestButtons centered" >
+                {/* 후기 별점 .. 변경버튼 */}
+                <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
+                <span onClick={orderDate}  variant="secondary">{dateMsg}</span>&nbsp;&nbsp;
             </div>
+
+            {/* <div>
+                <Form.Select size="sm" onChange={makeCondition} value={conditionSelect}>
+                    <option value="date">날짜순</option>
+                    <option value="score">별점순</option>
+                </Form.Select>
+                <Form.Select size="sm" onChange={makeSort} value={sortSelect}>
+                    <option value="DESC">내림차순</option>
+                    <option value="ASC">오름차순</option>
+                </Form.Select>
+            </div> */}
+
             <br/>
            {render}
            <div className="myPage centered">
@@ -188,8 +226,8 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
                    pageRangeDisplayed={2}
                    marginPagesDisplayed={0}
                    breakLabel={""}
-                   previousLabel={"<"}
-                   nextLabel={">"}
+                   previousLabel={"이전"}
+                   nextLabel={"다음"}
                    onPageChange={handlePageChange}
                    containerClassName={"pagination-ul"}
                    activeClassName={"currentPage"}

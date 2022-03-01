@@ -5,7 +5,7 @@ import { ButtonGroup } from 'react-bootstrap';
 import GetBestCataItems from '../hooks/GetBestCataItems';
 import { Link, NavLink, Route } from 'react-router-dom';
 
-
+// 현재 사용 안함
 const SideBar = ({setShow}) => {
 
     const moveCata = ()=>{
@@ -18,7 +18,6 @@ const SideBar = ({setShow}) => {
         
       </header>
     <nav className="sidebar-nav">
- 
       <ul>
         <li>
           <div className="dropdown">
@@ -267,4 +266,4 @@ const SideBar = ({setShow}) => {
     );
 }
 
-export default SideBar;
+// export default SideBar;

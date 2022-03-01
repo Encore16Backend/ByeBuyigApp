@@ -7,6 +7,10 @@ import ReactPaginate from 'react-paginate'
 import {useDispatch, useSelector} from 'react-redux'
 import { addNum } from "../redux/cataNum/actions";
 import GetTotalPage from "../hooks/pdtHook/GetTotalPage";
+import Realsidebar from "../components/Base/Side/Realsidebar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faAngleLeft} from "@fortawesome/free-solid-svg-icons"
+import {faAngleRight} from "@fortawesome/free-solid-svg-icons"
 
 
 const CateList = ()=>{
@@ -27,8 +31,8 @@ const CateList = ()=>{
     // order값을 전달할 변수
     const [orderNum , setOrderNum] = useState(1)
 
-    let [page, setPage] = useState(1);
 
+    let [page, setPage] = useState(1);
     const [chk, setChk] = useState({ 
         flag:false
     }) 
@@ -48,11 +52,23 @@ const CateList = ()=>{
         setPageUrl('/main/category/order?category='+location.state.cataname)
     }, [location])
     
+    // 페이지 이동함수
     const handlePageChange = (e)=>{
         setPage(e.selected+1);
         setBestItemUrl('/main/category/order?category='+cataname+"&order="+orderNum+"&page="+(e.selected+1));
     }
+    const toFirst = (e)=>{
+        setPage(1);
+        alert(page)
+        setBestItemUrl('/main/category/order?category='+cataname+"&order="+orderNum+"&page="+page);
+    }
+    const toEnd = (e)=>{
+        setPage(totalPage);
+        alert(page)
+        setBestItemUrl('/main/category/order?category='+cataname+"&order="+orderNum+"&page="+page);
+    }
  
+    // axios
     GetCate(BestItemUrl);
     GetTotalPage(pageUrl)
 
@@ -65,22 +81,60 @@ const CateList = ()=>{
         setOrderNum(num)
     }
 
+    // order에 따른 MSG
+    const [reviewMsg, setReviewMsg] = useState('높은 별점순')
+    const [priceMsg, setPriceMsg] = useState('높은 가격순')
+    const [saleMsg, setSaleMsg] = useState('판매량 많은 순')
+     // 문자로 정렬할때
+     const orderReview = (e)=>{
+        if (reviewMsg == "높은 별점순"){
+            setReviewMsg("낮은 별점순")
+            setPage(1)
+            
+        }else{
+            setReviewMsg("높은 별점순")
+            setPage(1)
+            
+        }
+    }
+    const orderPrice = (e)=>{
+        if (priceMsg == "높은 가격순"){
+            setPriceMsg("낮은 가격순")
+            setPage(1)
+            
+        }else{
+            setPriceMsg("높은 가격순")
+            setPage(1)
+            
+        }
+    }
+    const orderSales = (e)=>{
+        if (saleMsg == "판매량 많은 순"){
+            setSaleMsg("판매량 적은 순")
+            setPage(1)
+            
+        }else{
+            setSaleMsg("판매량 많은 순")
+            setPage(1)
+        }
+    }
+
     
     return(
         <>
-        <Container>
+        <Realsidebar/>
+        <Container className="pdtContainer centered" style={{width: "76%"}}>
             <Row>
                 <Col sm={12}>
                     <Row>
                         <br/><br/><br/><br/> 
                         <h1 className="centered" >{cataname}</h1>
-                        <div className="BestButtons">
+                        <div className="BestButtons centered">
                             {/* 후기 별점 .. 변경버튼 */}
-                            {/* 판매량 낮은가격 높은가격 후기 */}
+                            {/* 판매량 낮은가격 높은가격() 후기(4) */}
                             <span onClick={() => {
                                 changeOrderNum('4')
                                 changeBestItemUrl("/main/category/order?category="+cataname+"&order=4")
-                               
                             }} variant="secondary">
                                 후기
                             </span>&nbsp;&nbsp;
@@ -101,6 +155,12 @@ const CateList = ()=>{
                             }} variant="secondary">판매량</span>
                         </div>
 
+                        {/* <div className="BestButtons" >
+                            <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
+                            <span onClick={orderPrice}  variant="secondary">{priceMsg}</span>&nbsp;&nbsp;
+                            <span onClick={orderSales} variant="secondary">{saleMsg}</span>
+                        </div> */}
+
                         <div className="bestpdts">
                             <CateCardWrapper cata = {"catapdt"} setHomeLandering={setHomeLandering} HomeLandering={Homelendering}/>
                             {/* id로 받은 상품을 렌더링 할 component */}
@@ -109,9 +169,12 @@ const CateList = ()=>{
                 </Col>
             </Row>
 
-            <Row>
-                <Col>
-{/* pageCount - 총 게시글의 개수(총 row 수)
+            {/* <Row>
+                <Col sm={12}>
+                </Col>
+            </Row> */}
+        </Container>
+        {/* pageCount - 총 게시글의 개수(총 row 수)
 pageRangeDisplayed - 한 페이지에 표시할 게시글의 수
 marginPagesDisplayed - 
 breakLabel - 페이지 수가 많을 경우 건너뛸 수 있는 버튼
@@ -138,9 +201,6 @@ previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스�
                             /> : ""
                         }
                     </div>
-                </Col>
-            </Row>
-        </Container>
         </>
     )
 }

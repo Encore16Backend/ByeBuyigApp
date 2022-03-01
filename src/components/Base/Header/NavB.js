@@ -86,7 +86,25 @@ const NavB = ({ID, logOut})=>{
       )
     }
 
+    const Test = () =>{
+      return(
+        <div>
+          <input className = "dropdown" type="checkbox"></input>
+          <label className="dropdownLabel" for ="dropdown">
+          </label>
+          <div className="content">
+            <ul>
+              <li>개인정보수정</li>
+              <li>구매목록</li>
+              <li>장바구니</li>
+            </ul>
+          </div>
+        </div>
+      )
+    }
 
+   
+ 
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
 
@@ -112,25 +130,23 @@ const NavB = ({ID, logOut})=>{
     return(
         <>
         <Navbar bg="dark" variant="dark">
-          {/* <FontAwesomeIcon icon={faCarSide} onClick={handleShow}/> */}
-          <img onClick={handleShow} style={{width:"70px", height:"50px"}} alt="sidebar" src="img\icons\sidebar.png" />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <Navbar.Brand href={"/"} >BuyBuying</Navbar.Brand>
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
           
 
-          {/* leftSideBar */}
-          <Navbar.Brand href={"/"} >BuyBuying</Navbar.Brand>
+
                 <Offcanvas show={show} onHide={handleClose}>
                     <Offcanvas.Header closeButton>
                     <Offcanvas.Title>상품목록</Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                    {/* sidebar컴포넌트  */}
-                    <SideBar setShow={setShow}/>
+                   
+                   
                     </Offcanvas.Body>
                 </Offcanvas> 
-
           <Nav className="me-auto">
              {/* 검색폼 */}
              <Form className="d-flex" onSubmit={onSubmit}>

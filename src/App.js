@@ -22,7 +22,7 @@ function App() {
       <Provider store={store}>
         
     <div className="App">
-        <NavB/>
+      <NavB/>
         <div >
           <Switch>
             {Routers.map(route =>{

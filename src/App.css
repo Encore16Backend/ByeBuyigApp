@@ -65,3 +65,22 @@
 .Detailtitle{
   padding-left: 4rem;
 }
+.homeSideBar{
+  padding-top: 5rem;
+  float: left;
+  border-right: 3px solid black;
+  height: 2136px;
+  width: 18%;
+}
+a:link { 
+  text-decoration: none;
+  color: black;
+ }
+ a:visited { 
+  text-decoration: none;
+  color: black;
+ }
+ a:hover { 
+  text-decoration: underline;
+  color: black;
+ }
