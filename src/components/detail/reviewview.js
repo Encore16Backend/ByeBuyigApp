@@ -96,8 +96,8 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
-            // postRefresh() // 토큰이 없으면 재발행시키는 함수
-            // delReview(id) //  토큰을 받고 실행하고 싶은 함수 다시 실행
+            postRefresh() // 토큰이 없으면 재발행시키는 함수
+            delReview(id) //  토큰을 받고 실행하고 싶은 함수 다시 실행
         })
     }
     const ratingChanged = (newRating)=>{
@@ -184,7 +184,7 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
            <div className="myPage centered">
                {
                    allReviewNums != 0 ?  <ReactPaginate 
-                   pageCount={Math.ceil(65 / 10)}
+                   pageCount={Math.ceil(allReviewNums / 5)}
                    pageRangeDisplayed={2}
                    marginPagesDisplayed={0}
                    breakLabel={""}

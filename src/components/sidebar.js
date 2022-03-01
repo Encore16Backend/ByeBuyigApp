@@ -3,7 +3,6 @@ import side from '../css/sidebar.css'
 import { Dropdown, Button } from 'bootstrap';
 import { ButtonGroup } from 'react-bootstrap';
 import GetBestCataItems from '../hooks/GetBestCataItems';
-import CateList from '../pages/CateList';
 import { Link, NavLink, Route } from 'react-router-dom';
 
 
@@ -12,12 +11,6 @@ const SideBar = ({setShow}) => {
     const moveCata = ()=>{
       setShow(false)
     }
-
-    // 1 상의 2 바지 3 스커트 4 아우터 5 반팔 6 긴팔 7 셔츠 8 반바지
-    // 9 슬렉스 10 데님팬츠 11 롱스커트 12 롱스커트 13 롱패딩 15 코트
-    // 16 트렌치 코트
-    
-
     return (
       <>
   <aside className="sidebar">
@@ -37,7 +30,7 @@ const SideBar = ({setShow}) => {
 
                    },
           }}>
-            상의 (1)
+            상의 
           </Link>
           </span>
           <div className="dropdown-content">
@@ -51,7 +44,7 @@ const SideBar = ({setShow}) => {
                    cataname:"반팔"
                    },
               }}>
-                반팔 (5)
+                반팔
               </Link>
               
               </span>
@@ -64,7 +57,7 @@ const SideBar = ({setShow}) => {
                    cataname:"긴팔"
                    },
               }}>
-                긴팔 (6)
+                긴팔 
               </Link>
               </span>
             </li>
@@ -83,7 +76,7 @@ const SideBar = ({setShow}) => {
              cataname:"바지"
            },
           }}>
-            바지 (2)
+            바지 
           </Link>
           </span>
           <div className="dropdown-content">
@@ -96,7 +89,7 @@ const SideBar = ({setShow}) => {
                    cataname:"반바지"
                    },
               }}>
-                반바지 (8)
+                반바지 
               </Link>
               </span>
             </li>
@@ -108,7 +101,7 @@ const SideBar = ({setShow}) => {
                    cataname:"슬랙스"
                    },
               }}>
-                슬랙스 (9)
+                슬랙스 
               </Link>
               </span>
             </li>
@@ -120,7 +113,7 @@ const SideBar = ({setShow}) => {
                    cataname:"데님팬츠"
                    },
               }}>
-                데님팬츠 (10)
+                데님팬츠 
               </Link>
               </span>
             </li>
@@ -140,7 +133,7 @@ const SideBar = ({setShow}) => {
              cataname:"아우터"
            },
           }}>
-            아우터 (7)
+            아우터
           </Link>
           </span>
           <div className="dropdown-content">
@@ -154,7 +147,7 @@ const SideBar = ({setShow}) => {
              cataname:"코트"
            },
           }}>
-            코트 (16)
+            코트 
           </Link>
               </span>
             </li>
@@ -167,7 +160,7 @@ const SideBar = ({setShow}) => {
              cataname:"코트"
            },
           }}>
-            트렌치 코트 (16)
+            트렌치 코트 
           </Link>
               </span>
             </li>
@@ -229,7 +222,7 @@ const SideBar = ({setShow}) => {
                 cataname:"롱스커트"
               },
               }}>
-                롱스커트 (12)
+                롱스커트
               </Link>
               
               </span>
@@ -243,7 +236,7 @@ const SideBar = ({setShow}) => {
                 cataname:"미니스커트"
               },
               }}>
-                미니스커트 (12)
+                미니스커트
               </Link>
               
               </span>
@@ -257,7 +250,7 @@ const SideBar = ({setShow}) => {
                 cataname:"신발"
               },
               }}>
-              신발 (19)
+              신발 
               </Link>
               
               

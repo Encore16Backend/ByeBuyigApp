@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 const GetReviewItem = async (id) =>{
     const dispatch = useDispatch()
-    console.log(id , ' GetReviewItemID 입니다')
+    
 
     await axios.get('http://127.0.0.1:8081'+url, {
         headers: {

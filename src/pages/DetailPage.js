@@ -10,6 +10,7 @@ import axios from "axios";
 import { addReview } from "../redux/reviews/actions";
 import GetMainItems from "../hooks/GetMainItems";
 import CarsolBig from "../components/Base/main/CarsolBig";
+import ImageSlide from "../components/detail/ImageSlide";
 
 
 const DetailPage = ()=>{
@@ -34,7 +35,6 @@ const DetailPage = ()=>{
             }
         }).then(res => {
             console.log(res.data.content , "GetReviewItem 데이터입니다")
-            console.log(name, asc, sort, page)
             dispatch(addReview(res.data.content))
         }).catch(error => {
             console.log(error, ' GetReviewItem 에러');
@@ -51,14 +51,9 @@ const DetailPage = ()=>{
 
     const [lendering , setLandering] = useState(false)
 
-    // const itemid = locationState.itemid
     const imgs = locationState.images
     const itemname = locationState.itemname
-    // const purchasecnt = locationState.purchasecnt
-    // const price = locationState.price
-    // const reviewmean = locationState.reviewmean
-    // const setHomeLandering = locationState.setHomeLandering
-    // const HomeLandering = locationState.HomeLandering
+
 
     GetReviewItem(itemname, desc, data, page)
 
@@ -69,15 +64,16 @@ const DetailPage = ()=>{
             <Row>
                 <Col sm={12}>
                 <br/><br/><br/><br/><br/>
-                <h3>{itemname}</h3>
+                {/* <div className="Detailtitle" ><h3>{itemname}</h3></div> */}
                 </Col>
             </Row>
             <Row>
                 <Col xs={6} md={6}>
-                    <CarsolBig images={imgs}/>
+                    <ImageSlide images={imgs} itemname={itemname} />
+                    {/* <CarsolBig images={imgs}/> */}
                 </Col>
                 <Col xs={6} md={6}>
-                    <DetailDesc pdtState = {locationState} lendering={lendering} setLandering={setLandering}/>
+                    <DetailDesc pdtState={locationState} lendering={lendering} setLandering={setLandering}/>
                 </Col>
             </Row>
             <br/><br/><br/><br/>

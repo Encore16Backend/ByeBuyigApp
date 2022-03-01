@@ -12,6 +12,8 @@ import "../../../css/drop.css";
 import SideBar from '../../sidebar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CheckModal from "../../../modals/CheckModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faCarSide} from "@fortawesome/free-solid-svg-icons"
 
 
 const NavB = ({ID, logOut})=>{
@@ -46,9 +48,6 @@ const NavB = ({ID, logOut})=>{
     }
 
 
-
-
-     
     const [isOpen, setMenu] = useState(false);  
   
     const toggleMenu = () => {
@@ -87,6 +86,7 @@ const NavB = ({ID, logOut})=>{
       )
     }
 
+
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
 
@@ -96,18 +96,24 @@ const NavB = ({ID, logOut})=>{
     }
     const onSubmit = (e)=>{
       e.preventDefault();
-      if (!!cataNum){ // 특정 카테고리 페이지가 아니면 id없이 날려
-
-      }else{
-        // 특정 카테고리 페이지이면 이 id를 가지고 요청을 날려
-      }
-        history.push('/mypage') 
+      // if (!!cataNum){ // 특정 카테고리 페이지가 아니면 id없이 날려
+      // }else{
+      //   // 특정 카테고리 페이지이면 이 id를 가지고 요청을 날려
+      // }
+      history.push({
+        pathname: "/searchlist",
+        search : "?searchName="+keyword,
+        state: {
+            keyword:keyword
+        }
+    })   
     }
 
     return(
         <>
         <Navbar bg="dark" variant="dark">
-          <img  onClick={handleShow} style={{width:"70px", height:"50px"}} alt="sidebar" src="img\icons\sidebar.png" />
+          {/* <FontAwesomeIcon icon={faCarSide} onClick={handleShow}/> */}
+          <img onClick={handleShow} style={{width:"70px", height:"50px"}} alt="sidebar" src="img\icons\sidebar.png" />
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />

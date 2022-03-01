@@ -4,32 +4,30 @@ import {Carousel} from "react-bootstrap"
 
 const Carsol = ({images})=>{
 
-    console.log(images, "imgs")
+    // console.log(images, "imgs")
     // 배열안에 .imgid .imgpath
 
     
     {/* 댓글들 받아와서 반복문 돌림*/}
     const render = images.map((img,index)  =>{
         return(
-            <Carousel fade>
-                <Carousel.Item >
+                <Carousel.Item key={"imgItem"+img.imgid} >
                     <img
-                            className="d-block w-100 main_img"
-                            src="img/1.jpg"
-                            alt="First slide"
+                        className="d-block w-100 main_img"
+                        src={img.imgpath}
+                        alt="First slide"
                     />
                     <Carousel.Caption>
-                    <h3>상품메인사진</h3>
-                    <p></p>
+                    <h3  key={"itemTitle"+img.imgid}></h3>
                     </Carousel.Caption>
                 </Carousel.Item>
-            </Carousel>
         )
     })
     
     return(
     <Carousel fade>
-        <Carousel.Item>
+        {render}
+        {/* <Carousel.Item>
             <img
             className="d-block w-100 main_img"
             src="img/1.jpg"
@@ -61,7 +59,7 @@ const Carsol = ({images})=>{
             <h3>상품사진3</h3>
             <p></p>
             </Carousel.Caption>
-        </Carousel.Item>
+        </Carousel.Item> */}
     </Carousel>
     )
 }

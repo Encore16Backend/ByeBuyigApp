@@ -26,6 +26,7 @@ function SingUpModal({ show, onHide }) {
       closeHander();
       alert('회원가입 성공')
     }).catch(error =>{
+      console.log(error)
       alert("회원가입 오류")
     })
     setEmailMsg('');
