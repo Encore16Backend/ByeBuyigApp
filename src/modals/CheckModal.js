@@ -28,9 +28,14 @@ function CheckModal (){
         setPwd(e.target.value);
     };
 
+    const pressEnter = (e)=>{
+        if(e.key==='Enter'){
+            pwdCheck();
+        }
+    }
 
     const pwdCheck = async (e)=>{
-        e.preventDefault();
+        //e.preventDefault();
         await axios.post('http://127.0.0.1:8081/api/user/getUser', {
             username: id,
             password:pwd
@@ -67,7 +72,7 @@ function CheckModal (){
                 </Modal.Header>
 
                 <Modal.Body>PASSWORD <br></br><br></br>
-                <input onChange={onChange} value={pwd} type="password"></input>
+                <input onChange={onChange} value={pwd} type="password" onKeyPress={pressEnter}></input>
                 </Modal.Body>
 
                 <Modal.Footer>
