@@ -9,7 +9,6 @@ import React from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-
 const Update= () => {
     
 
@@ -48,57 +47,7 @@ const Update= () => {
             history.push("/")
         })
     }, [])
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)// const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [location,setLoction] = useState(data.state.location)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-    // const [email,setEmail] = useState(data.state.email)
-    // const [style,setStyle] = useState(data.state.style)
-
-
-
-
-
+   
 
     const onLoctionChange = (e) => {
         setLocation(e.target.value);
@@ -159,13 +108,13 @@ const Update= () => {
 
     return(
         <>
-        <div>
-            id : {localStorage.getItem('id')} <br></br>
-            주소 :<input onChange={onLoctionChange} value={location}></input> <br></br>
-            이메일 : <input onChange={onEmailChange} value={email}></input> <br></br>
-            스타일 : <input onChange={onstlyeChange} value={style}></input> <br></br>
-            <button onClick={update}>수정</button>
-            <button onClick={del}>삭제</button>
+        <div style={{position:"relative",left:"600px",top : "100px"}}>
+            ID : {localStorage.getItem('id')} <br></br><br></br>
+            주소 <br></br><input onChange={onLoctionChange} value={location}></input> <br></br><br></br>
+            이메일 <br></br> <input onChange={onEmailChange} value={email}></input> <br></br><br></br>
+            스타일 <br></br> <input onChange={onstlyeChange} value={style}></input> <br></br><br></br>
+            <Button onClick={update}>정보 수정</Button>  &nbsp; &nbsp;
+            <Button onClick={del}>회원 탈퇴</Button>
         </div>
         </>
     )
