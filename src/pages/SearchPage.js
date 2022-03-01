@@ -130,7 +130,7 @@ const SearchList = ()=>{
                 <Col sm={12}>
                     <Row>
                         <br/><br/><br/><br/> 
-                        <h1 className="centered" >PDTS</h1>
+                        {/* <h1 className="centered" >PDTS</h1> */}
                         {/* <div>
                         <Form.Select size="sm" onChange={makeCondition} value={conditionSelect}>
                             <option value="purchasecnt">판매수량순</option>

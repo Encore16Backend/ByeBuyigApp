@@ -31,7 +31,6 @@ const Home = ()=>{
     // 이우터 Best 기본값 구매수
     const [BestOuterUrl, setBestOuter] = useState('/main/category/purchase?category=15')
 
-
     // 베스트 아이템들 (기본 url 후기Best) 전체 Best
     GetBestItems(BestItemUrl)
     // 일반 모든 상품
