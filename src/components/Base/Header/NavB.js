@@ -11,6 +11,7 @@ import axios from 'axios'
 import "../../../css/drop.css";
 import SideBar from '../../sidebar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import CheckModal from "../../../modals/CheckModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCarSide} from "@fortawesome/free-solid-svg-icons"
 
@@ -25,6 +26,8 @@ const NavB = ({ID, logOut})=>{
   // login용 hook
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
+    const [checkModalOn,setCheckModalOn] = useState(false) // pwd check
+
     var history = useHistory();
     const id = sessionStorage.getItem('id')
 
@@ -74,7 +77,7 @@ const NavB = ({ID, logOut})=>{
         <div style={{position:'relateve'}}>
           <div className="content">
             <ul className="dropdown">
-              <a Link onClick={tocheck}>개인정보수정</a>
+              <CheckModal show={checkModalOn} onHide = {()=>{setCheckModalOn(false)}}  />
               <a>구매목록</a>
               <a>장바구니</a>
             </ul>
@@ -101,6 +104,7 @@ const NavB = ({ID, logOut})=>{
     }
 
    
+ 
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
 
@@ -131,6 +135,7 @@ const NavB = ({ID, logOut})=>{
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
+          
 
 
                 <Offcanvas show={show} onHide={handleClose}>

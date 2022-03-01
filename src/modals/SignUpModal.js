@@ -7,6 +7,7 @@ import join from "../css/join.css"
 import {connect} from 'react-redux'
 
 function SingUpModal({ show, onHide }) {
+  // id(pk) ,pwd, 이름?, 주소, 관심패션, 이메일
 
   // 회원가입 실행 함수
   const onSubmit = async (e) => {
@@ -112,19 +113,7 @@ function SingUpModal({ show, onHide }) {
 
   // 이름관련
 
-  // const [name, setName] = useState('')
-  // const [valname, setvalname] = useState(false)
-  // const onNameValid = (e)=>{
-  //   setName(e.target.value)
-  //   var regExp = /[ㄱ-힣]/;
-  //   const NameValid = regExp.test(e.target.value)     
-  //   if (NameValid) {
-  //     setvalname(true)
-  //   } else {
-  //     setvalname(false)
-  //   }
-  // }
-
+  
   // 상세 주소관련 
 
   const [isAddress, setIsAddress] = useState('');
