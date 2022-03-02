@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import MyPage from "./pages/MyPage";
 import Update from "./pages/Update";
 import SearchList from "./pages/SearchPage";
+import ImgSearchPage from "./pages/ImgSearchPage";
 
 export default [
     {
@@ -29,5 +30,9 @@ export default [
     {
         path:'/searchlist',
         component:SearchList
+    },
+    {
+        path:"/imgsearch",
+        component:ImgSearchPage
     }
 ]

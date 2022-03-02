@@ -7,7 +7,6 @@ import { Link, NavLink, Route } from 'react-router-dom';
 
 const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, images, reviewmean,  setHomeLandering ,
     HomeLandering})=>{
-
     return(
         <div className="cardComponent" >
         <Card style={{ width: '12rem' }}>
@@ -24,7 +23,7 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
                         images : images,
                         reviewmean : reviewmean,
                     },
-                    }}>
+                    }} >
                     <Card.Title> {itemname.substring(0,20)}... </Card.Title>
                     </Link>
                         <br/>

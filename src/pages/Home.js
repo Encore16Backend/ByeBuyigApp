@@ -6,7 +6,6 @@ import { Container, Row, Col, Carousel, Card, Button, Offcanvas, ButtonToolbar, 
 import { InputGroup, FormControl } from "react-bootstrap";
 import MyCard from "../components/Base/main/MyCard";
 import MyPage from "./MyPage";
-import SideBar from "../components/sidebar";
 import Carsol from "../components/Base/main/Carsol";
 import GetMainItems from "../hooks/GetMainItems"
 import CardWrapper from "../components/Base/main/CardWrapper";
@@ -37,7 +36,7 @@ const Home = ()=>{
     GetMainItems()
     return(
         <div>
-        <Realsidebar/>
+        {/* <Realsidebar/> */}
         <Container className="pdtContainer centered" style={{width: "auto"}} >
             <Row>
                 <Col sm={12}>

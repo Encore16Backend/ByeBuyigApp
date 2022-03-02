@@ -10,8 +10,9 @@ import ReactPaginate from "react-paginate"
 import { Button, Form, InputGroup } from "react-bootstrap";
 import ReactStars from "react-stars"
 import lodash, { cond } from 'lodash'
+import Page from "../Base/main/Page";
 
-const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtState })=>{
+const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, pdtState })=>{
 
     // 해당 item을 받아옴
     const allItem = useSelector(state => state.Item.items)
@@ -35,6 +36,9 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
     // 페이지 변경함수
     const handlePageChange = (e)=>{
         setPage(e.selected+1)
+    }
+    const handlePage = (data)=>{
+        setPage(data)
     }
     // 리뷰배열과 아이디
     const reviews = useSelector(state => state.reviews.reviews)
@@ -112,9 +116,7 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
     const [conditionSelect,setConditionSelect ] = useState('date')
     const [sortSelect, setSortSelect] = useState('desc')
     const makeCondition = (e)=>{
-        
         setConditionSelect(e.target.value)
-        
         if (e.target.value === "date"){
             setDate('date')
             setPage(1)
@@ -167,7 +169,6 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
     {/* 댓글들 받아와서 반복문 돌림*/}
     const render = reviews.map((review,index)  =>{
         let forReviewContent = lodash.cloneDeep(review.content)
-        
         return(
             
             <div key={"review"+review.id} className="reviewDiv" id={review.id}>
@@ -205,18 +206,6 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
                 <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
                 <span onClick={orderDate}  variant="secondary">{dateMsg}</span>&nbsp;&nbsp;
             </div>
-
-            {/* <div>
-                <Form.Select size="sm" onChange={makeCondition} value={conditionSelect}>
-                    <option value="date">날짜순</option>
-                    <option value="score">별점순</option>
-                </Form.Select>
-                <Form.Select size="sm" onChange={makeSort} value={sortSelect}>
-                    <option value="DESC">내림차순</option>
-                    <option value="ASC">오름차순</option>
-                </Form.Select>
-            </div> */}
-
             <br/>
            {render}
            <div className="myPage centered">
@@ -226,14 +215,19 @@ const ReviewView = ({ lendering, setLandering, setPage, setDesc, setDate, pdtSta
                    pageRangeDisplayed={2}
                    marginPagesDisplayed={0}
                    breakLabel={""}
-                   previousLabel={"이전"}
-                   nextLabel={"다음"}
                    onPageChange={handlePageChange}
                    containerClassName={"pagination-ul"}
                    activeClassName={"currentPage"}
                    previousClassName={"pageLabel-btn"}
                    nextClassName={"pageLabel-btn"}/> : ""
                }
+               {/* {
+                    allReviewNums != 0 ? <Page
+                    setPage = {handlePage}
+                    totalPage = {allReviewNums}
+                    selected = {page}
+                /> : ""
+                } */}
              </div>
         </div>
     )
