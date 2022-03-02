@@ -27,7 +27,6 @@ const Realsidebar = ()=>{
                             <li>
                             <span ><i className="ion-ios-color-filter-outline"></i>
                             <Link to={{pathname:"/category",
-                                    // search : "?id=10",
                                     state : {
                                 id:'5',
                                 cataname:"반팔"
@@ -59,7 +58,6 @@ const Realsidebar = ()=>{
                         <i className="ion-bag"></i> <span className="dropbtn"  >
                         <Link to={{
                         pathname:"/category",
-                        //  search : "?id=12",
                         state : {
                             id:'2',
                             cataname:"바지"

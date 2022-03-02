@@ -1,5 +1,4 @@
-import react from "react"
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Realsidebar from "../components/Base/Side/Realsidebar";
 
 const ImgSearchPage = ()=>{
