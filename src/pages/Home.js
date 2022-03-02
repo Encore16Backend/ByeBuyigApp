@@ -32,11 +32,12 @@ const Home = ()=>{
 
     // 베스트 아이템들 (기본 url 후기Best) 전체 Best
     GetBestItems(BestItemUrl)
+
     // 일반 모든 상품
-    GetMainItems()
+    // GetMainItems()
+
     return(
         <div>
-        {/* <Realsidebar/> */}
         <Container className="pdtContainer centered" style={{width: "auto"}} >
             <Row>
                 <Col sm={12}>
