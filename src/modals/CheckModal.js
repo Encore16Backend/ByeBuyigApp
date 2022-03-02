@@ -46,7 +46,7 @@ function CheckModal (){
             },
         }).then(res => {
             history.push({
-                pathname: "/update/",
+                pathname: "/update",
                 state: {
                     pwd:pwd,
                     id : res.data.username,

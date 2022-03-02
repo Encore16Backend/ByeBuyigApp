@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createStore } from 'redux';
 import {Provider, useSelector, useDispatch, connect} from 'react-redux'
 import postRefresh from "../hooks/postRefresh";
@@ -63,8 +63,4 @@ const Home = ()=>{
     )
 }
 
-
-
-
-
-export default react.memo(Home);
+export default React.memo(Home);

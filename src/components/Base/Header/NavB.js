@@ -101,6 +101,7 @@ const NavB = ({ID, logOut})=>{
         </div>
       )
     }
+
  
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)

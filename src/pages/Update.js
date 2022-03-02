@@ -15,7 +15,6 @@ const Update= () => {
     
 
     var history=useHistory();
-
     const data = useLocation();
     // const id = localStorage.getItem('id');
 
@@ -26,7 +25,7 @@ const Update= () => {
     const [chkPwd, setChkPwd] = useState('')
 
     let [pwdMsg,setPwdMsg]=useState('');
-    const [valchkPwd, setvalchkPwd] = useState('')
+    const [valchkPwd, setvalchkPwd] = useState(true)
     const [pwdStyle, setPwdStyle]= useState('')
 
     const [isAddress, setIsAddress] = useState('');
@@ -36,6 +35,7 @@ const Update= () => {
 
 
     useEffect(() => {
+        console.log("!")
         axios.post('http://127.0.0.1:8081/api/user/getUser', {
             username: sessionStorage.getItem('id'),
             password:data.state.pwd
@@ -184,10 +184,8 @@ const Update= () => {
         })
     };
 
-    
-
     return(
-        <div>
+        <div className="centered">
         <Container>
             <br />
             <Form onSubmit={update}>
@@ -195,7 +193,6 @@ const Update= () => {
                     <Form.Label>ID :</Form.Label> &nbsp;
                     <Form.Label>{localStorage.getItem('id')}</Form.Label>
                 </Form.Group>
-
                 <Form.Group className="mb-3" >
                     <Form.Label>password</Form.Label>
                     <Form.Control type="password" className="password" placeholder="8자 이상 영문, 숫자 조합" minLength={8} maxLength={20}
@@ -248,11 +245,11 @@ const Update= () => {
                 </Form.Group>
 
 
-                <Button type="submit">회원수정</Button> &nbsp;
+                {valchkPwd == true? <Button type="submit">회원수정</Button>:<Button disabled={true}>회원수정</Button>} &nbsp;
                 <Button  onClick={del}> 회원탈퇴 </Button>
             </Form>
         </Container>
-        </div>
+    </div>
     )
 }
 export default Update;

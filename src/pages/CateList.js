@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Carousel, Card, Button, Offcanvas, ButtonToolbar, ButtonGroup } from "react-bootstrap";
 import GetCate from "../hooks/pdtHook/GetCate"
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
