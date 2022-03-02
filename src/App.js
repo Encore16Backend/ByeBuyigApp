@@ -10,6 +10,7 @@ import {persistStore} from 'redux-persist'
 import {PersistGate} from 'redux-persist/integration/react'
 import rootReducer from './rootReducer';
 import GetBestItems from './hooks/GetBestItems';
+import Realsidebar from './components/Base/Side/Realsidebar';
 
 
 
@@ -23,7 +24,8 @@ function App() {
         
     <div className="App">
       <NavB/>
-        <div >
+        <div>
+          <Realsidebar/>
           <Switch>
             {Routers.map(route =>{
                 return(

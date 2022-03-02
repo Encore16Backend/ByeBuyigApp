@@ -9,7 +9,6 @@ import { logOut } from '../../../redux/user/actions';
 import { connect, useSelector } from 'react-redux';
 import axios from 'axios'
 import "../../../css/drop.css";
-import SideBar from '../../sidebar'
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CheckModal from "../../../modals/CheckModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -108,16 +107,16 @@ const NavB = ({ID, logOut})=>{
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
 
-    
+    const toImgSearch = (e)=>{
+      history.push({
+        pathname:"/imgsearch",
+      })
+    }
     const changeKeyword = (e)=>{
       setKeyword(e.target.value)
     }
     const onSubmit = (e)=>{
       e.preventDefault();
-      // if (!!cataNum){ // 특정 카테고리 페이지가 아니면 id없이 날려
-      // }else{
-      //   // 특정 카테고리 페이지이면 이 id를 가지고 요청을 날려
-      // }
       history.push({
         pathname: "/searchlist",
         search : "?searchName="+keyword,
@@ -155,7 +154,9 @@ const NavB = ({ID, logOut})=>{
                 />
              <Button type="submit" variant="outline-success">Search</Button>
             </Form>
+            <Link to={{pathname:"/imgsearch"}} >이미지검색</Link>
           </Nav>
+
           <Nav>
           {
               (!!id) // !! (null undefined '' 등 모든 false형 값이면)

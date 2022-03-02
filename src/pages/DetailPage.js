@@ -9,7 +9,6 @@ import GetBestItems from "../hooks/GetBestItems";
 import axios from "axios";
 import { addReview } from "../redux/reviews/actions";
 import GetMainItems from "../hooks/GetMainItems";
-import CarsolBig from "../components/Base/main/CarsolBig";
 import ImageSlide from "../components/detail/ImageSlide";
 
 
@@ -34,7 +33,6 @@ const DetailPage = ()=>{
                 "Content-Type": "application/json",
             }
         }).then(res => {
-            console.log(res.data.content , "GetReviewItem 데이터입니다")
             dispatch(addReview(res.data.content))
         }).catch(error => {
             console.log(error, ' GetReviewItem 에러');
@@ -64,13 +62,11 @@ const DetailPage = ()=>{
             <Row>
                 <Col sm={12}>
                 <br/><br/><br/><br/><br/>
-                {/* <div className="Detailtitle" ><h3>{itemname}</h3></div> */}
                 </Col>
             </Row>
             <Row>
                 <Col xs={6} md={6}>
                     <ImageSlide images={imgs} itemname={itemname} />
-                    {/* <CarsolBig images={imgs}/> */}
                 </Col>
                 <Col xs={6} md={6}>
                     <DetailDesc pdtState={locationState} lendering={lendering} setLandering={setLandering}/>
@@ -84,7 +80,7 @@ const DetailPage = ()=>{
             </Row>
             <Row>
                 <Col sm={12}>
-                <ReviewView pdtState = {locationState} lendering={lendering} setLandering={setLandering}  setPage={setPage} setDesc={setDesc}  setDate={setDate} />
+                <ReviewView page={page} pdtState = {locationState} lendering={lendering} setLandering={setLandering}  setPage={setPage} setDesc={setDesc}  setDate={setDate} />
                 </Col>
             </Row>
         </Container>

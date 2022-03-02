@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 
 
 const Realsidebar = ()=>{
+
     return(
         <div>
    <div className="homeSideBar"> 
@@ -16,9 +17,8 @@ const Realsidebar = ()=>{
                                     state : {
                                 id:'1',
                                 cataname:"상의",
-
                                 },
-                        }}>
+                        }}> 
                             상의 
                         </Link>
                         </span>

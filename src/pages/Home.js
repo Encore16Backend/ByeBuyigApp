@@ -6,7 +6,6 @@ import { Container, Row, Col, Carousel, Card, Button, Offcanvas, ButtonToolbar, 
 import { InputGroup, FormControl } from "react-bootstrap";
 import MyCard from "../components/Base/main/MyCard";
 import MyPage from "./MyPage";
-import SideBar from "../components/sidebar";
 import Carsol from "../components/Base/main/Carsol";
 import GetMainItems from "../hooks/GetMainItems"
 import CardWrapper from "../components/Base/main/CardWrapper";
@@ -31,14 +30,13 @@ const Home = ()=>{
     // 이우터 Best 기본값 구매수
     const [BestOuterUrl, setBestOuter] = useState('/main/category/purchase?category=15')
 
-
     // 베스트 아이템들 (기본 url 후기Best) 전체 Best
     GetBestItems(BestItemUrl)
     // 일반 모든 상품
     GetMainItems()
     return(
         <div>
-        <Realsidebar/>
+        {/* <Realsidebar/> */}
         <Container className="pdtContainer centered" style={{width: "auto"}} >
             <Row>
                 <Col sm={12}>

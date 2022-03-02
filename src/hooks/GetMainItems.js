@@ -14,7 +14,6 @@ const GetMainItem = async () =>{
             "Content-Type": "application/json",
         }
     }).then(res => {
-        console.log(res.data , "getMainItem")
        dispatch(addMainItems(res.data))
     }).catch(error => {
         console.log(error.data , "getMainItem error")

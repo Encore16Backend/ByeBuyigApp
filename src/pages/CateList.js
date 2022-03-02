@@ -9,12 +9,10 @@ import { addNum } from "../redux/cataNum/actions";
 import GetTotalPage from "../hooks/pdtHook/GetTotalPage";
 import Realsidebar from "../components/Base/Side/Realsidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faAngleLeft} from "@fortawesome/free-solid-svg-icons"
-import {faAngleRight} from "@fortawesome/free-solid-svg-icons"
-
+import Page from "../components/Base/main/Page";
 
 const CateList = ()=>{
-    // 9상의 10반팔 11긴팔 12하의 13반바지 14긴바지 15아우터 16코트 17패딩 18모자 19신발
+
     const dispatch = useDispatch()
     const location = useLocation();
     // 카테고리 id liocation으로 받아옴
@@ -39,7 +37,6 @@ const CateList = ()=>{
 
     useEffect(()=>{
         dispatch(addNum(id))
-        setOrderNum(1)
     },[id])
 
     useEffect(()=>{ 
@@ -50,22 +47,13 @@ const CateList = ()=>{
         }) // 새로운 chk 객체가리턴되어서 다시 렌더링이 됩니다
         setBestItemUrl('/main/category/order?category='+location.state.cataname+"&order=1&page=1")
         setPageUrl('/main/category/order?category='+location.state.cataname)
+        handlePage(1)
     }, [location])
+
     
-    // 페이지 이동함수
-    const handlePageChange = (e)=>{
-        setPage(e.selected+1);
-        setBestItemUrl('/main/category/order?category='+cataname+"&order="+orderNum+"&page="+(e.selected+1));
-    }
-    const toFirst = (e)=>{
-        setPage(1);
-        alert(page)
-        setBestItemUrl('/main/category/order?category='+cataname+"&order="+orderNum+"&page="+page);
-    }
-    const toEnd = (e)=>{
-        setPage(totalPage);
-        alert(page)
-        setBestItemUrl('/main/category/order?category='+cataname+"&order="+orderNum+"&page="+page);
+    const handlePage = (value)=>{
+        setPage(value)
+        setBestItemUrl('/main/category/order?category='+cataname+"&order="+orderNum+"&page="+value);
     }
  
     // axios
@@ -89,40 +77,43 @@ const CateList = ()=>{
      const orderReview = (e)=>{
         if (reviewMsg == "높은 별점순"){
             setReviewMsg("낮은 별점순")
-            setPage(1)
-            
+            // setPage(1)
+            handlePage(1)
         }else{
             setReviewMsg("높은 별점순")
-            setPage(1)
-            
+            // setPage(1)
+            handlePage(1)
         }
     }
     const orderPrice = (e)=>{
         if (priceMsg == "높은 가격순"){
             setPriceMsg("낮은 가격순")
-            setPage(1)
-            
+            // setPage(1)
+            handlePage(1)
         }else{
             setPriceMsg("높은 가격순")
-            setPage(1)
+            // setPage(1)
+            handlePage(1)
             
         }
     }
     const orderSales = (e)=>{
         if (saleMsg == "판매량 많은 순"){
             setSaleMsg("판매량 적은 순")
-            setPage(1)
+            // setPage(1)
+            handlePage(1)
             
         }else{
             setSaleMsg("판매량 많은 순")
-            setPage(1)
+            // setPage(1)
+            handlePage(1)
         }
     }
 
     
     return(
         <>
-        <Realsidebar/>
+        {/* <Realsidebar/> */}
         <Container className="pdtContainer centered" style={{width: "76%"}}>
             <Row>
                 <Col sm={12}>
@@ -130,8 +121,6 @@ const CateList = ()=>{
                         <br/><br/><br/><br/> 
                         <h1 className="centered" >{cataname}</h1>
                         <div className="BestButtons centered">
-                            {/* 후기 별점 .. 변경버튼 */}
-                            {/* 판매량 낮은가격 높은가격() 후기(4) */}
                             <span onClick={() => {
                                 changeOrderNum('4')
                                 changeBestItemUrl("/main/category/order?category="+cataname+"&order=4")
@@ -154,39 +143,16 @@ const CateList = ()=>{
                              
                             }} variant="secondary">판매량</span>
                         </div>
-
-                        {/* <div className="BestButtons" >
-                            <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
-                            <span onClick={orderPrice}  variant="secondary">{priceMsg}</span>&nbsp;&nbsp;
-                            <span onClick={orderSales} variant="secondary">{saleMsg}</span>
-                        </div> */}
-
                         <div className="bestpdts">
                             <CateCardWrapper cata = {"catapdt"} setHomeLandering={setHomeLandering} HomeLandering={Homelendering}/>
-                            {/* id로 받은 상품을 렌더링 할 component */}
                         </div>
                     </Row>
                 </Col>
             </Row>
-
-            {/* <Row>
-                <Col sm={12}>
-                </Col>
-            </Row> */}
         </Container>
-        {/* pageCount - 총 게시글의 개수(총 row 수)
-pageRangeDisplayed - 한 페이지에 표시할 게시글의 수
-marginPagesDisplayed - 
-breakLabel - 페이지 수가 많을 경우 건너뛸 수 있는 버튼
-previousLabel - 이전페이지로 가는 버튼의 value값
-nextLabel - 다음페이지로 가는 버튼의 value값
-onPageChange - 페이지 버튼을 눌렀을 때 일어나는 이벤트 이를 이용해 페이지 증감
-containerClassName - css적용할 때 사용
-activeClassName - 현재 페이지에 css처리해주기 위한 클래스명을 적으면 됨
-previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스명을 적으면 됨 */}
                     <div className="myPage centered">
-                        {
-                            totalPage != 0 ?   <ReactPaginate
+                        {/* {
+                            totalPage != 0 ?  <ReactPaginate 
                             pageCount={Math.ceil(totalPage)}
                             pageRangeDisplayed={2}
                             marginPagesDisplayed={0}
@@ -199,7 +165,16 @@ previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스�
                             previousClassName={"pageLabel-btn"}
                             nextClassName={"pageLabel-btn"}
                             /> : ""
+                        } */}
+
+                        {
+                            totalPage != 0 ? <Page
+                                setPage = {handlePage}
+                                totalPage = {totalPage}
+                                selected = {page}
+                            /> : ""
                         }
+
                     </div>
         </>
     )

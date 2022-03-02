@@ -3,7 +3,6 @@
   height: 200px;
   object-fit: cover;
 }
-
 .centered {
   /* height: 100vh; Magic here */
   padding-top: 1rem;
@@ -11,11 +10,9 @@
   justify-content: center;
   align-items: center;
 }
-
 .bestpdts {
   float : left;
 }
-
 .BestButtons {
   padding-bottom: 1rem;
   text-align:right
@@ -23,30 +20,24 @@
 .sortAndOrder{
   text-align: right;
 }
-
 .pagination-ul{
   color:gray; 
   display: flex;
   align-items: center;
 }
-
 .pagination-ul li {
   padding: 1rem;
 }
-
 .currentPage{
   color:black
 }
-
 .reviewDelChange{
   display: inline;
   float: right;
 }
-
 .reviewDiv{
   border-top: 1px solid black;
 }
-
 .reviewMakeForm{
   padding-bottom: 1rem;
 }
@@ -72,15 +63,15 @@
   height: 2136px;
   width: 18%;
 }
-a:link { 
+a:link{ 
   text-decoration: none;
   color: black;
  }
- a:visited { 
+a:visited{ 
   text-decoration: none;
   color: black;
  }
- a:hover { 
+a:hover{ 
   text-decoration: underline;
   color: black;
  }

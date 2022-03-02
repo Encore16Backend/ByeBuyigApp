@@ -41,7 +41,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     return(
         <> 
         {
-            (renderedItem != undefined) ? rendering() : <p>실패</p>
+            (renderedItem != undefined) ? rendering() : ""
         }
             
         </>

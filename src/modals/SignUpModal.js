@@ -111,11 +111,8 @@ function SingUpModal({ show, onHide }) {
     }
   }
 
-  // 이름관련
-
   
-  // 상세 주소관련 
-
+  // 상세 주소관련
   const [isAddress, setIsAddress] = useState('');
   const [valisAddress, setvalisAddress] = useState(false)
   const onIsAddress = (e)=>{
@@ -202,8 +199,6 @@ function SingUpModal({ show, onHide }) {
     setPwd('')
     setvalchkPwd(0)
     setChkPwd('')
-    // setName('')
-    // setvalname(false)
     setIsAddress('')
     setvalisAddress(false)
     setIsZoneCode('')
@@ -291,12 +286,12 @@ function SingUpModal({ show, onHide }) {
               <Form.Select aria-label="Default select example" onChange={(e) => {
                 setFashion(e.target.value)
               }} value={fashion}>
-                <option value="1">없음</option>
-                <option value="2">캐주얼</option>
-                <option value="3">미니멀</option>
-                <option value="4">스트릿</option>
-                <option value="5">시티보이</option>
-                <option value="6">아메카지</option>
+                <option value="1" >없음</option>
+                <option value="2" >캐주얼</option>
+                <option value="3" >미니멀</option>
+                <option value="4" >스트릿</option>
+                <option value="5" >시티보이</option>
+                <option value="6" >아메카지</option>
               </Form.Select>
             </Form.Group>
 
@@ -309,7 +304,6 @@ function SingUpModal({ show, onHide }) {
               
             </Form.Group>
             {
-              // <Button type="submit" disabled={true} ref={buttonRef} >회원가입</Button> db없이 체크용
               checkID ?
               <>
                 <Button type="submit" disabled={buttonRef} >회원가입</Button>

@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { useRouteMatch } from "react-router-dom/cjs/react-router-dom.min";
 import GetCate from "../hooks/pdtHook/GetCate";
 import Realsidebar from "../components/Base/Side/Realsidebar";
+import Page from "../components/Base/main/Page";
 
 
 const SearchList = ()=>{
@@ -39,15 +40,20 @@ const SearchList = ()=>{
     useEffect(()=>{
         const keyword = history.location.state.keyword
         console.log(keyword, "useStat키워드")
+        setPage(1)
         setSearchPageUrl('/main/search?searchName='+keyword)
         setSearchUrl('/main/search?searchName='+keyword+"&asc="+asc+"&sortname="+sortName);
+        handlePage(1)
     }, [match, asc, sortName])
 
     // 페이징 버튼 클릭시 사용할 함수
     const handlePageChange = (e)=>{
         setSearchUrl('/main/search?searchName='+keyword+"&asc="+asc+"&sortname="+sortName+"&page="+(e.selected+1));
     }
-    
+    const handlePage = (value)=>{
+        setPage(value)
+        setSearchUrl('/main/search?searchName='+keyword+"&asc="+asc+"&sortname="+sortName+"&page="+value);
+    }
       // select로 리뷰 정렬값들을 받을 state 
       const [conditionSelect,setConditionSelect ] = useState('')
       const [sortSelect, setSortSelect] = useState('')
@@ -124,13 +130,13 @@ const SearchList = ()=>{
     GetTotalPage(searchPageUrl)
     return(
         <>
-        <Realsidebar/>
+        {/* <Realsidebar/> */}
         <Container className="pdtContainer centered container" style={{width: "76%"}}>
             <Row>
                 <Col sm={12}>
                     <Row>
                         <br/><br/><br/><br/> 
-                        <h1 className="centered" >PDTS</h1>
+                        {/* <h1 className="centered" >PDTS</h1> */}
                         {/* <div>
                         <Form.Select size="sm" onChange={makeCondition} value={conditionSelect}>
                             <option value="purchasecnt">판매수량순</option>
@@ -163,18 +169,9 @@ const SearchList = ()=>{
                 </Col>
             </Row>
         </Container>
-        {/* pageCount - 총 게시글의 개수(총 row 수)
-pageRangeDisplayed - 한 페이지에 표시할 게시글의 수
-marginPagesDisplayed - 
-breakLabel - 페이지 수가 많을 경우 건너뛸 수 있는 버튼
-previousLabel - 이전페이지로 가는 버튼의 value값
-nextLabel - 다음페이지로 가는 버튼의 value값
-onPageChange - 페이지 버튼을 눌렀을 때 일어나는 이벤트 이를 이용해 페이지 증감
-containerClassName - css적용할 때 사용
-activeClassName - 현재 페이지에 css처리해주기 위한 클래스명을 적으면 됨
-previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스명을 적으면 됨 */}
+       
                     <div className="myPage centered">
-                        {
+                        {/* {
                             totalPage != 0 ?   <ReactPaginate
                             pageCount={Math.ceil(totalPage)}
                             pageRangeDisplayed={2}
@@ -187,6 +184,14 @@ previousClassName/NextClassName - 이전/다음버튼 css적용위한 클래스�
                             activeClassName={"currentPage"}
                             previousClassName={"pageLabel-btn"}
                             nextClassName={"pageLabel-btn"}
+                            /> : ""
+                        } */}
+
+                        {
+                            totalPage != 0 ? <Page
+                                setPage = {handlePage}
+                                totalPage = {totalPage}
+                                selected = {page}
                             /> : ""
                         }
                     </div>

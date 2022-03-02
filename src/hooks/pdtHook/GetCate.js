@@ -14,9 +14,8 @@ const GetCate = async (url) =>{
             "Content-Type": "application/json",
         }
     }).then(res => {
-        console.log(res.data , " GetCateData 데이터입니다")
-        console.log(res.data);
         dispatch(addCateItems(res.data.content))
+        console.log(res.data, "GetCate")
     }).catch(error => {
         console.log(error, ' GetCateData 에러');
     })
