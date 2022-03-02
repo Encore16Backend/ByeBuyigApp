@@ -23,7 +23,6 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
         allReviewNums = renderedItem.reviewcount
     }
 
-
     // 댓글의 점수와 내용
     const [content , setContent] = useState('')
     const [score, setScore] = useState(1)
@@ -111,7 +110,6 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
         setScore(newRating)
     }
 
-
     // 리뷰 정렬값들을 받을 state
     const [conditionSelect,setConditionSelect ] = useState('date')
     const [sortSelect, setSortSelect] = useState('desc')
@@ -166,6 +164,7 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
         }
     }
 
+
     {/* 댓글들 받아와서 반복문 돌림*/}
     const render = reviews.map((review,index)  =>{
         let forReviewContent = lodash.cloneDeep(review.content)
@@ -201,11 +200,14 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
 
     return(
         <div className="reviews">
-            <div className="BestButtons centered" >
+            {
+                allReviewNums != 0 ?
+                <div className="BestButtons centered" >
                 {/* 후기 별점 .. 변경버튼 */}
                 <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
                 <span onClick={orderDate}  variant="secondary">{dateMsg}</span>&nbsp;&nbsp;
-            </div>
+                </div> : ""
+            }
             <br/>
            {render}
            <div className="myPage centered">
@@ -221,13 +223,15 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
                    previousClassName={"pageLabel-btn"}
                    nextClassName={"pageLabel-btn"}/> : ""
                }
+
                {/* {
                     allReviewNums != 0 ? <Page
                     setPage = {handlePage}
-                    totalPage = {allReviewNums}
+                    reviewNum = {allReviewNums}
                     selected = {page}
                 /> : ""
                 } */}
+
              </div>
         </div>
     )

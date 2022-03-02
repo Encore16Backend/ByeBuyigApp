@@ -22,7 +22,6 @@ const ImgSearchPage = ()=>{
 
   return (
     <div>
-      <Realsidebar/>
         <div className="centered">
             {/* 이미지 미리보기 */}
             <div>
