@@ -5,6 +5,7 @@ import MyPage from "./pages/MyPage";
 import Update from "./pages/Update";
 import SearchList from "./pages/SearchPage";
 import ImgSearchPage from "./pages/ImgSearchPage";
+import MyReview from "./pages/MyReview";
 
 export default [
     {
@@ -34,5 +35,9 @@ export default [
     {
         path:"/imgsearch",
         component:ImgSearchPage
+    },
+    {
+        path:"/myReview",
+        component:MyReview
     }
 ]
