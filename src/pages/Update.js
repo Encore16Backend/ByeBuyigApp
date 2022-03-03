@@ -97,9 +97,9 @@ const Update= () => {
             setPwdStyle('valid-input')
             setPwdMsg('※ 비밀번호 확인 성공')
         } 
-        else if (firstPwd ==="") {
-            setvalchkPwd(true)
-            setPwdMsg('')
+        else if (firstPwd === "") {
+                setvalchkPwd(true)
+                setPwdMsg('')
         }
         else {
             setvalchkPwd(false)
@@ -117,6 +117,7 @@ const Update= () => {
             setPwdStyle('valid-input')
             setPwdMsg('※ 비밀번호 확인 성공')
         } else if (afterPwd===''){
+            setvalchkPwd(false)
             setPwdMsg('')
         }
         else {
@@ -242,7 +243,7 @@ const Update= () => {
                 </Form.Group>
 
 
-                {valchkPwd == true? <Button type="submit">회원수정</Button>:<Button disabled={true}>회원수정</Button>} &nbsp;
+                {valchkPwd == true ? <Button type="submit">회원수정</Button>:<Button disabled={true}>회원수정</Button>} &nbsp;
                 <Button  onClick={del}> 회원탈퇴 </Button>
             </Form>
         </Container>

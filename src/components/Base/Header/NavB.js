@@ -39,9 +39,6 @@ const NavB = ({ID, logOut})=>{
         history.push('/mypage') 
     }
 
-    const tocheck =()=>{
-      history.push('/Check')
-    }
 
 
     const [isOpen, setMenu] = useState(false);  
@@ -52,20 +49,7 @@ const NavB = ({ID, logOut})=>{
     }
 
 
-    const [dispaly,setDisplay]=useState([false]);
 
-    function outMouse(index) {
-      let newDisplay = [...dispaly];
-      newDisplay[index] = false;
-      setDisplay(newDisplay);
-    }
-
-
-    function onMouse(index) {
-      let newDisplay = [...dispaly];
-      newDisplay[index] = true;
-      setDisplay(newDisplay);
-    }
 
 
     const List = () =>{
@@ -278,7 +262,41 @@ const NavB = ({ID, logOut})=>{
               ? 
               <>
               <Nav.Link onClick={toMyPage}>{id}</Nav.Link>
-              <Nav.Link onClick={()=>toggleMenu()}>마이샵</Nav.Link>
+              {/* <Nav.Link onClick={()=>toggleMenu()}>마이샵</Nav.Link> */}
+              
+                <div className='NavBarCataForm'>
+                  <div className='navBarCate dropdown' style={{display:"inline"}}>
+                  <span className='dropbtn'>
+                    <Link style={{color:"white"}}>마이샵</Link> 
+                    </span>
+                  <div className="dropdown-content" style={{position:"absolute", left:"1rem", textAlign:'left',zIndex:5}}>
+                    <ul className="nav-flyout">
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <span><CheckModal show={checkModalOn} onHide = {()=>{setCheckModalOn(false)}}/></span>
+                          </span>
+                        </li>
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link >구매목록</Link>
+                          </span>
+                        </li>
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link >장바구니</Link>
+                          </span>
+                        </li>
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link >리뷰 관리</Link>
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              
+
 
               {isOpen == true ? <List/> : null}
               

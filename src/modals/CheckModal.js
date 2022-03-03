@@ -3,7 +3,8 @@ import { Modal, Button, Form,Nav} from "react-bootstrap";
 import axios from "axios";
 import React from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import { BrowserRouter as Router, Switch, Route,Link, NavLink
+} from 'react-router-dom';
 
 function CheckModal (){
 
@@ -77,7 +78,7 @@ function CheckModal (){
         <>
         
           <div>
-            <Nav.Link onClick={handleShow}>개인정보수정</Nav.Link>
+            <Link onClick={handleShow}>개인정보수정</Link>
                 <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title>비밀번호 확인</Modal.Title>
