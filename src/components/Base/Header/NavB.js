@@ -9,7 +9,6 @@ import { logOut } from '../../../redux/user/actions';
 import { connect, useSelector } from 'react-redux';
 import "../../../css/drop.css";
 import CheckModal from "../../../modals/CheckModal";
-import {Menu, MenuItem, MenuButton, SubMenu} from '@szhsin/react-menu'
 
 const NavB = ({ID, logOut})=>{
 
