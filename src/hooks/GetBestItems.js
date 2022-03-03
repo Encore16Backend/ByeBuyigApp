@@ -1,12 +1,9 @@
 import axios from "axios";
-import { connect } from "react-redux";
-import { add_main_items } from "../redux/items/types";
 import { addBestItems } from "../redux/bestItem/actions"
 import { addTop } from "../redux/bestItem/actions";
 import { addOuter } from "../redux/bestItem/actions";
 import { addPants } from "../redux/bestItem/actions";
 import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
 
 
 const GetBestItems = async (url) =>{

@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import ReactStars from "react-stars"
 
 const DetailDesc = ({pdtState, lendering, setLandering})=>{
@@ -9,13 +8,13 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
      const allItem = useSelector(state => state.Item.items)
      
 
-    const desc = pdtState.description
-    const itemname = pdtState.itemname
-    const purchasecnt = pdtState.purchasecnt
-    const price = pdtState.price
-    const reviewmean = pdtState.reviewmean
+    // const desc = pdtState.description
+    // const itemname = pdtState.itemname
+    // const purchasecnt = pdtState.purchasecnt
+    // const price = pdtState.price
+    // const reviewmean = pdtState.reviewmean
     const itemid = pdtState.itemid
-    const temp = pdtState.reviewcount
+    // const temp = pdtState.reviewcount
 
     const render = allItem.filter(item => item.itemid === itemid)
     const renderedItem = render[0]
@@ -41,7 +40,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     return(
         <> 
         {
-            (renderedItem != undefined) ? rendering() : ""
+            (renderedItem !== undefined) ? rendering() : ""
         }
             
         </>

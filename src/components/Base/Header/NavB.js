@@ -7,13 +7,10 @@ import SingInModal from '../../../modals/SignInModal';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { logOut } from '../../../redux/user/actions';
 import { connect, useSelector } from 'react-redux';
-import axios from 'axios'
 import "../../../css/drop.css";
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import CheckModal from "../../../modals/CheckModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCarSide} from "@fortawesome/free-solid-svg-icons"
-
+import {Menu, MenuItem, MenuButton, SubMenu} from '@szhsin/react-menu'
+import '@szhsin/react-menu/dist/core.css';
 
 const NavB = ({ID, logOut})=>{
 
@@ -102,6 +99,8 @@ const NavB = ({ID, logOut})=>{
       )
     }
 
+   
+
  
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
@@ -152,7 +151,126 @@ const NavB = ({ID, logOut})=>{
              <Button type="submit" variant="outline-success">Search</Button>
             </Form>
             <Link to={{pathname:"/imgsearch"}} >이미지검색</Link>
+
+
+            {/* cate */}
+            <div className='NavBarCataForm'>
+            {/* 상의 */}
+            <div className='navBarCate dropdown' style={{display:"inline", zIndex:2}}>
+            <span className='dropbtn'>
+            <Link style={{color:"white"}} to={{pathname:"/category",state : {id:'1',cataname:"상의",},}}> 상의</Link></span>
+                <div className="dropdown-content" style={{position:"absolute", left:"1rem" ,zIndex:5}}>
+                  <ul className="nav-flyout">
+                        <li>
+                            <span ><i className="ion-ios-color-filter-outline"></i>
+                            <Link to={{pathname:"/category",
+                                    state : {
+                                id:'5',
+                                cataname:"반팔"
+                                },
+                            }}>
+                                반팔
+                            </Link>
+                            
+                            </span>
+                        </li>
+                        <li>
+                          <span ><i className="ion-ios-clock-outline"></i>
+                          <Link to={{pathname:"/category",
+                                  state : {
+                              id:'6',
+                              cataname:"긴팔"
+                              },
+                          }}>
+                              긴팔 
+                          </Link>
+                          </span>
+                    </li>
+                 </ul>
+              </div>
+            </div>
+            {/* 하의 */}
+            <div className='navBarCate dropdown' style={{display:"inline"}}>
+            <span className='dropbtn'>
+            <Link style={{color:"white"}} to={{pathname:"/category",state : {id:'2',cataname:"바지"},}}>바지 </Link></span>
+                <div className="dropdown-content" style={{position:"absolute", left:"1rem", zIndex:5}}>
+                   <ul className="nav-flyout">
+                      <li>
+                        <span><i className="ion-ios-color-filter-outline"></i>
+                        <Link to={{pathname:"/category",state : {id:'8',cataname:"반바지"},}}>반바지 </Link>
+                        </span>
+                      </li>
+                      <li>
+                        <span ><i className="ion-ios-clock-outline"></i>
+                      <Link to={{pathname:"/category",state : {id:'9',cataname:"슬랙스"},}}>슬랙스 </Link>
+                        </span>
+                      </li>
+                      <li>
+                        <span ><i className="ion-ios-clock-outline"></i>
+                      <Link to={{pathname:"/category",state : {id:'10',cataname:"데님팬츠"},}}>데님팬츠 </Link>
+                        </span>
+                      </li>
+                    </ul>
+                </div>
+            </div >
+            {/* 아우터 */}
+            <div className='navBarCate dropdown' style={{display:"inline"}}>
+            <span  className='dropbtn'> 
+            <Link style={{color:"white"}} to={{pathname:"/category",state : {id:'4',cataname:"아우터"},}}>아우터</Link></span>
+                <div className="dropdown-content" style={{position:"absolute", left:"1rem", zIndex:5}}>
+                        <ul className="nav-flyout">
+                            <li>
+                              <span ><i className="ion-ios-color-filter-outline"></i>
+                              <Link to={{pathname:"/category",state : {id:'15',cataname:"코트"},}}>코트 </Link>
+                              </span>
+                            </li>
+
+                            <li>
+                              <span ><i className="ion-ios-color-filter-outline"></i>
+                              <Link to={{pathname:"/category",state : {id:'16',cataname:"코트"},}}>트렌치 코트 </Link>
+                              </span>
+                            </li>
+                            
+                            <li>
+                              <span ><i className="ion-ios-clock-outline"></i>
+                              <Link to={{pathname:"/category",state : {id:'13',cataname:"롱패딩"},}}>롱패딩</Link>
+                              </span>
+                            </li>
+
+                            <li>
+                            <span ><i className="ion-ios-clock-outline"></i>
+                            <Link to={{pathname:"/category",state : {id:'14',cataname:"숏패딩"},}}>숏패딩</Link>
+                            </span>
+                            </li>
+                        </ul>
+                  </div>
+            </div>
+            {/* 스커트 */}
+            <div className='navBarCate dropdown' style={{display:"inline"}}>
+            <span className='dropbtn'>
+            <Link style={{color:"white"}} to={{pathname:"/category", state : {id:'3',cataname:"스커트"},}}>스커트</Link> 
+            </span>
+              <div className="dropdown-content" style={{position:"absolute", left:"1rem", zIndex:5}}>
+                <ul className="nav-flyout">
+                    <li>
+                      <span ><i className="ion-ios-color-filter-outline"></i>
+                      <Link to={{pathname:"/category",state : {id:'12',cataname:"롱스커트"},}}>롱스커트</Link>
+                      </span>
+                    </li>
+                    <li>
+                      <span ><i className="ion-ios-color-filter-outline"></i>
+                      <Link to={{pathname:"/category",state : {id:'11',cataname:"미니스커트"},}}>미니스커트</Link>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+            </div>
+            {/* cata종료 */}
           </Nav>
+
+          
+          
 
           <Nav>
           {

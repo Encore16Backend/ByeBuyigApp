@@ -19,6 +19,12 @@
     width: 100%;
     margin: auto;
     overflow-x: hidden;
+    -ms-user-select: none; 
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+
   }
   .imageSlide .slideBox .slideList {
     width: 2800px;
@@ -80,7 +86,7 @@
   }
   .imageSlide .paginationBox picture img {
     width: 100%;
-    cursor: pointer;
+    /* cursor: pointer; */
   }
   .faArrow{
     margin-bottom: 1rem;

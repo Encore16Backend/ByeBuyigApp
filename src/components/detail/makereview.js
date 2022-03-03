@@ -13,7 +13,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
 
     const USERID = useSelector(state => state.user.ID)
 
-    const pdtId = pdtState.itemid
+    // const pdtId = pdtState.itemid
     const pdtName = pdtState.itemname
     const userId = localStorage.getItem('id')
     const [content , setContent] = useState('')
@@ -22,10 +22,6 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
 
     const makeContent = (e)=>{
         setContent(e.target.value)
-    }
-    const makeScore = (e)=>{
-        setScore(e.target.value)
-        alert(e.target.value)
     }
     const ratingChanged = (newRating)=>{
         setScore(newRating)

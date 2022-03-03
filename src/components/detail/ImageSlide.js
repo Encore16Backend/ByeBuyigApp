@@ -1,5 +1,5 @@
 import React from 'react';
-import imgcss from "../../css/imgslide.css"
+import "../../css/imgslide.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faArrowRight} from "@fortawesome/free-solid-svg-icons"
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons"
@@ -21,7 +21,6 @@ class ImageSlide extends React.Component {
   };
 
   render() {
-    console.log(this.props , "이미지에 들어옴")
     const { images, itemname } = this.props;
     return (
       <>
@@ -58,7 +57,7 @@ class ImageSlide extends React.Component {
           <div
             className="buttonNext"
             onClick={() => this.onChangeImage(this.state.imageCurrentNo + 1)}
-          >
+            >
             <FontAwesomeIcon icon={faArrowRight} className="faArrow" id="faArrowRight"/>
           </div>
         </div>
@@ -67,11 +66,12 @@ class ImageSlide extends React.Component {
             <div
               key={no}
               onClick={() => {
+
                 this.onChangeImage(no);
               }}
             >
               <picture>
-                <img src={image.imgpath} />
+                <img src={(image.imgpath)} />
               </picture>
             </div>
           ))}

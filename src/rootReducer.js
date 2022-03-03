@@ -1,7 +1,5 @@
 import { combineReducers } from "redux";
 import userReducer from "./redux/user/reducer";
-import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import itemReducer from "./redux/items/reducer";
 import bestItemReducer from "./redux/bestItem/reducer";
 import cateItemReducer from "./redux/CateItem/reducer";

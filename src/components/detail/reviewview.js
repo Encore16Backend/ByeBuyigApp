@@ -3,14 +3,10 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import postRefresh from "../../hooks/postRefresh";
 import { useState } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
 import { FormControl } from "react-bootstrap";
 import ReactPaginate from "react-paginate"
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, InputGroup } from "react-bootstrap";
 import ReactStars from "react-stars"
-import lodash, { cond } from 'lodash'
-import Page from "../Base/main/Page";
 
 const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, pdtState })=>{
 
@@ -136,7 +132,7 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
     }
     // 문자열로 정렬할떄 함수
     const orderReview = (e)=>{
-        if (reviewMsg == "높은 별점 순"){
+        if (reviewMsg === "높은 별점 순"){
             setReviewMsg("낮은 별점 순")
             setDate("score")
             setPage(1)
@@ -150,7 +146,7 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
         }
     }
     const orderDate = (e)=>{
-        if (dateMsg == "최근 댓글"){
+        if (dateMsg === "최근 댓글"){
             setDateMsg("오래된 댓글")
             setDate("date")
             setPage(1)
@@ -167,7 +163,6 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
 
     {/* 댓글들 받아와서 반복문 돌림*/}
     const render = reviews.map((review,index)  =>{
-        let forReviewContent = lodash.cloneDeep(review.content)
         return(
             
             <div key={"review"+review.id} className="reviewDiv" id={review.id}>
