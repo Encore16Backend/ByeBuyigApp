@@ -1,12 +1,8 @@
 import { useState } from "react";
 import { Modal, Button, Form,Nav} from "react-bootstrap";
 import axios from "axios";
-import postRefresh from "../hooks/postRefresh";
-import { BrowserRouter as Router, Switch, Route,Link
-} from 'react-router-dom';
 import React from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { type } from "@testing-library/user-event/dist/type";
 
 
 function CheckModal (){

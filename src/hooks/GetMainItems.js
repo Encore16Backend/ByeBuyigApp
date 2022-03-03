@@ -1,9 +1,6 @@
 import axios from "axios";
-import { connect } from "react-redux";
-import { add_main_items } from "../redux/items/types";
 import { addMainItems } from "../redux/items/actions";
 import { useDispatch } from "react-redux";
-import React, { useEffect, useState } from "react";
 
 
 const GetMainItem = async () =>{

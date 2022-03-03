@@ -77,3 +77,14 @@ a:hover{
   text-decoration: underline;
   color: black;
  }
+
+
+ /* navBar */
+ .navBarCate{
+   padding-right: 2rem;
+   padding-left: 3rem;
+ }
+ .NavBarCataForm{
+   padding-top: 7px;
+ }
+ 

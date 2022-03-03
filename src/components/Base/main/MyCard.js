@@ -1,9 +1,8 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { Carousel } from "bootstrap";
 import Carsol from "./Carsol";
-import cardComponent from "../../../css/mycard.css"
-import { Link, NavLink, Route } from 'react-router-dom';
+import "../../../css/mycard.css"
+import { Link } from 'react-router-dom';
 
 const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, images, reviewmean,  setHomeLandering ,
     HomeLandering})=>{

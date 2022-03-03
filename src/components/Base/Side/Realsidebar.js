@@ -1,57 +1,50 @@
 import React from "react"
-import sidebarcss from "../../../css/sidebar.css"
+import "../../../css/sidebar.css"
 import { Link } from "react-router-dom"
 
 
 const Realsidebar = ()=>{
-
     return(
         <div>
-   <div className="homeSideBar"> 
+            <div className="homeSideBar"> 
                 <nav className="sidebar-nav">
                     <ul>
                         <li>
-                        <div className="dropdown homesidebarTitle">
-                        <i className="ion-bag"></i> <span className="dropbtn" >
-                        <Link to={{pathname:"/category",
-                                    state : {
-                                id:'1',
-                                cataname:"상의",
-                                },
-                        }}> 
-                            상의 
-                        </Link>
-                        </span>
-                        <div className="dropdown-content">
-                        <ul className="nav-flyout">
-                            <li>
-                            <span ><i className="ion-ios-color-filter-outline"></i>
-                            <Link to={{pathname:"/category",
-                                    state : {
-                                id:'5',
-                                cataname:"반팔"
-                                },
-                            }}>
-                                반팔
-                            </Link>
-                            
-                            </span>
-                            </li>
-                            <li>
-                            <span ><i className="ion-ios-clock-outline"></i>
-                            <Link to={{pathname:"/category",
-                                    state : {
-                                id:'6',
-                                cataname:"긴팔"
-                                },
-                            }}>
-                                긴팔 
-                            </Link>
-                            </span>
-                            </li>
-                        </ul>
-                        </div>
-                        </div>
+                            <div className="dropdown ">
+                                <i className="ion-bag"></i> <span className="dropbtn" >
+                                    <Link to={{pathname:"/category",state : {id:'1',cataname:"상의",},}}> 
+                                        상의</Link>
+                                    </span>
+                                <div className="dropdown-content">
+                                    <ul className="nav-flyout">
+                                        <li>
+                                        <span ><i className="ion-ios-color-filter-outline"></i>
+                                        <Link to={{pathname:"/category",
+                                                state : {
+                                            id:'5',
+                                            cataname:"반팔"
+                                            },
+                                        }}>
+                                            반팔
+                                        </Link>
+                                        
+                                        </span>
+                                        </li>
+                                        <li>
+                                        <span ><i className="ion-ios-clock-outline"></i>
+                                        <Link to={{pathname:"/category",
+                                                state : {
+                                            id:'6',
+                                            cataname:"긴팔"
+                                            },
+                                        }}>
+                                            긴팔 
+                                        </Link>
+                                        </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </li>
                         <li>
                         <div className="dropdown">
@@ -248,8 +241,7 @@ const Realsidebar = ()=>{
                 </ul>
             </nav>
         </div>
-
-        </div>
+    </div>
     )
 }
 

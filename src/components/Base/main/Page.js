@@ -34,7 +34,7 @@ const Page = ({setPage, totalPage, selected, reviewNum})=>{
                 newArr.map(page=>{
                     // 페이지 변경함수
                     let Func = ()=>{setPage(page)}
-                    if (page == selected){
+                    if (page === selected){
                         page = <b>{page}</b>
                         Func = ()=>{
                         }

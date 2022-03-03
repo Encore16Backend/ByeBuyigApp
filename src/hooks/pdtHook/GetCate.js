@@ -1,7 +1,6 @@
 import axios from "axios";
 import { addCateItems } from "../../redux/CateItem/actions";
 import { useDispatch } from "react-redux";
-import { setTotalPage } from "../../redux/CateItem/actions";
 
 
 

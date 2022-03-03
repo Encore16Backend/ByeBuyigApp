@@ -1,10 +1,7 @@
 import React, { useCallback } from "react";
 import { Modal, Button, Form, Container } from "react-bootstrap";
 import {useState, useEffect, useRef} from "react";
-import Test from "../components/auth/Test";
-import {useForm} from "react-hook-form"
 import axios from "axios";
-import setAuthorizationToken from "../utils/setAuthorizationToken";
 import { connect } from 'react-redux';
 import {logIn} from '../redux/user/actions'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';

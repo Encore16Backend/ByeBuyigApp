@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Carousel, Card, Button, Offcanvas, ButtonToolbar, ButtonGroup, Form } from "react-bootstrap";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { Container, Row, Col } from "react-bootstrap";
 import CateCardWrapper from "../components/Base/main/pdt/CateCardWrapper";
-import ReactPaginate from 'react-paginate'
-import {useDispatch, useSelector} from 'react-redux'
-import { addNum } from "../redux/cataNum/actions";
+import {useSelector} from 'react-redux'
 import GetTotalPage from "../hooks/pdtHook/GetTotalPage";
 import { useHistory } from "react-router-dom";
 import { useRouteMatch } from "react-router-dom/cjs/react-router-dom.min";
 import GetCate from "../hooks/pdtHook/GetCate";
-import Realsidebar from "../components/Base/Side/Realsidebar";
 import Page from "../components/Base/main/Page";
 
 

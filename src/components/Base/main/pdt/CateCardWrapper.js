@@ -28,7 +28,7 @@ const CateCardWrapper = ({cata})=>{
     return(
         <>
         {
-            (cateItem.length != 0 ? pdtRendering() : <h4 className="centered">해당 상품이 없습니다</h4>)
+            (cateItem.length !== 0 ? pdtRendering() : <h4 className="centered">해당 상품이 없습니다</h4>)
         }
         </>
     )

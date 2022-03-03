@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { logOut } from '../redux/user/actions';
-import { Dispatch } from 'redux';
 
 export default function setAuthorizationToken(token){
     // 토큰이 있으면 header에 포함시키고, 없으면 그 부분을 지우는 함수

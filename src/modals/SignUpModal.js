@@ -3,8 +3,7 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { useState, useEffect, useRef } from "react";
 import Test from "../components/auth/Test";
 import axios from "axios";
-import join from "../css/join.css" 
-import {connect} from 'react-redux'
+import "../css/join.css" 
 
 function SingUpModal({ show, onHide }) {
   // id(pk) ,pwd, 이름?, 주소, 관심패션, 이메일

@@ -1,11 +1,8 @@
 import React from "react";
 import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import MyCard from "./MyCard";
 import { Row, Col } from "react-bootstrap";
-import { useState } from "react";
-import GetBestItems from "../../../hooks/GetBestItems";
 
 const BestCardWrapper = ({cata,  setHomeLandering, HomeLandering})=>{
     // 받아온 값들을 렌더링하는 컴포넌
