@@ -183,7 +183,11 @@ const Update= () => {
     };
 
     return(
-        <div className="centered">
+        <>
+        <div>
+        <h1>개인 정보 수정</h1>    
+        </div>
+        <div className="centered" style={{'paddingTop':0}}>
         <Container>
             <br />
             <Form onSubmit={update}>
@@ -248,6 +252,7 @@ const Update= () => {
             </Form>
         </Container>
     </div>
+    </>
     )
 }
 export default Update;

@@ -9,7 +9,7 @@ import ReactStars from "react-stars"
 const MakeReview = ({pdtState, lendering, setLandering}) =>{
 
 
-
+    
 
     const USERID = useSelector(state => state.user.ID)
 
@@ -39,6 +39,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
         }
         await axios.post('http://127.0.0.1:8081/review/save',{
                 // body
+                itemid: pdtId,
                 itemname : pdtName,
                 username : userId,
                 content: content,
@@ -50,6 +51,8 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token')
             }
         }).then(res =>{
+            setContent('');
+            setScore(0);
             console.log(res, "댓글 등록 완료")
             setLandering(!lendering)
             alert('댓글 등록 완료')

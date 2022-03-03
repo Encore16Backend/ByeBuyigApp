@@ -84,7 +84,6 @@ const NavB = ({ID, logOut})=>{
     }
 
    
-
  
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
@@ -117,6 +116,8 @@ const NavB = ({ID, logOut})=>{
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
           
+
+
                 <Offcanvas show={show} onHide={handleClose}>
                     <Offcanvas.Header closeButton>
                     <Offcanvas.Title>상품목록</Offcanvas.Title>
