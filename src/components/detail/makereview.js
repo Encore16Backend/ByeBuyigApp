@@ -8,12 +8,11 @@ import ReactStars from "react-stars"
 
 const MakeReview = ({pdtState, lendering, setLandering}) =>{
 
-
-    
-
     const USERID = useSelector(state => state.user.ID)
 
-    // const pdtId = pdtState.itemid
+    const image = pdtState.images[0].imgpath
+    console.log(image)
+    const pdtId = pdtState.itemid
     const pdtName = pdtState.itemname
     const userId = localStorage.getItem('id')
     const [content , setContent] = useState('')
@@ -41,6 +40,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
                 // body
                 itemid: pdtId,
                 itemname : pdtName,
+                itemimage : image,
                 username : userId,
                 content: content,
                 score : parseFloat(score)
