@@ -287,7 +287,7 @@ const NavB = ({ID, logOut})=>{
                         </li>
                         <li>
                           <span ><i className="ion-ios-color-filter-outline"></i>
-                          <Link >리뷰 관리</Link>
+                          <Link to={{pathname:"/MyReview"}}>리뷰 관리</Link>
                           </span>
                         </li>
                       </ul>

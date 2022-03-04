@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Form, Container, Table } from "react-bootstrap";
+import { Form, Table } from "react-bootstrap";
 
 
 const MyReview = () => {
@@ -10,7 +10,11 @@ const MyReview = () => {
     const [review, setReview] = useState([]);
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8081/review/all?page="+pageNo, {
+        axios.get("http://127.0.0.1:8081/review/byUsername", {
+            params: {
+                username:localStorage.getItem('id'),
+                page:pageNo,
+            },
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
@@ -24,20 +28,6 @@ const MyReview = () => {
         })
     }, [pageNo])
 
-    const getImagePath = (itemid) => {
-        axios.get('http://127.0.0.1:8081/main/itemImg', {
-            params: {
-                itemid:itemid
-            }
-        }).then(res => {
-            return (
-            <img src={res.data} width="80" height="96" style={{marginRight:"5px"}}/>
-            );
-        })
-    }
-
-    
-
     return (
         <>
         <div><h1>마이리뷰</h1></div>
@@ -50,6 +40,7 @@ const MyReview = () => {
                             <div className="checkBox"><Form.Check type='checkbox' id='checkbox'/></div>
                         </Form>
                         </th>
+                        <th></th>
                         <th>상품정보</th>
                         <th>작성일자</th>
                         <th colSpan={2}>후기</th>
@@ -59,10 +50,9 @@ const MyReview = () => {
                 <tbody>
                     {
                         review.map((data) => {
-                            let itemid = data.itemid;
                             let reviewid = data.id
-                            // let itemid = data.itemid
                             let itemname = data.itemname
+                            let itemimage = data.itemimage
                             let score = data.score
                             let tmp = data.date.split('-')
                             let dateArr = tmp.slice(0, 2).concat(tmp[2].split('T')[0])
@@ -74,12 +64,17 @@ const MyReview = () => {
                                             <div className="checkBox"><Form.Check type='checkbox' className={`checkbox-${reviewid}`}/></div>
                                         </Form>
                                     </td>
+                                    <td>
+                                        <img src={itemimage} width="80" height="96" style={{marginRight:"5px"}}/>
+                                    </td>
                                     <td>  {/* colSpan={2} */}
-                                        {getImagePath(itemid)}
+                                        
                                         {itemname}
                                     </td>
                                     <td>{dateArr.join('-')}</td>
-                                    <td colSpan={2}>{content}</td>
+                                    <td colSpan={2}>
+                                        {content}
+                                    </td>
                                     <td>{score}</td>
                                 </tr>
                             return ( reviewData )
