@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Form, Table } from "react-bootstrap";
-
+import { Form, Table, Button } from "react-bootstrap";
+import "../css/myreview.css";
+import Page from "../components/Base/main/Page";
 
 const MyReview = () => {
 
     let [pageNo, setPathNo] = useState(1);
     let [totalPageNo, setTotalPageNo] = useState();
     const [review, setReview] = useState([]);
+    const [checkReviews, setCheckReviews] = useState([]);
+    const [checkItems, setCheckItems] = useState([]);
 
     useEffect(() => {
         axios.get("http://127.0.0.1:8081/review/byUsername", {
@@ -28,21 +31,89 @@ const MyReview = () => {
         })
     }, [pageNo])
 
+    const onSubmit = async () => {
+        await axios.delete("http://127.0.0.1:8081/review/delete", {
+            params: {
+                reviewid:checkReviews,
+                itemid:checkItems
+            },
+        }).then(res => {
+            if (res === "FAIL") {
+                alert("리뷰 삭제 실패");
+            }
+            setCheckReviews([]);
+            setCheckItems([]);
+        }).catch(err => {
+            console.log(err)
+        }) 
+    }
+
+    const reviewCheck = (checked, reviewid, itemid) => {
+        if (checked) {
+            setCheckReviews([...checkReviews, reviewid]);
+            setCheckItems([...checkItems, itemid]);
+        } else {
+            // 체크 해제
+            setCheckReviews(checkReviews.filter((x) => x !== reviewid));
+            setCheckItems(checkItems.filter((x) => x != itemid));
+        }
+    }
+
+    const allReviewCheck = (checked) => {
+        if (checked) {
+            const reviewid = []; // `checkbox-${reviewid}`
+            const itemid = [];
+            review.forEach((res) => {
+                reviewid.push(res.id);
+                itemid.push(res.itemid);
+            });
+            setCheckReviews(reviewid);
+            setCheckItems(itemid);
+        } else {
+            // 전체 체크 박스 제거
+            setCheckReviews([]);
+            setCheckItems([]);
+        }
+    }
+    
+    const handlePage = (value)=>{
+        setPathNo(value);
+    }
+    
     return (
         <>
-        <div><h1>마이리뷰</h1></div>
-        <div className='centered'>
+        <Form className='review' onSubmit={onSubmit}>
+        <div className='title'>마이리뷰</div>
+        <div className="page">
+            {
+                totalPageNo != 0 ? <Page
+                    setPage = {handlePage}
+                    totalPage = {totalPageNo}
+                    selected = {pageNo}
+                /> : ""
+            }
+
+        </div>
+        <div>
+            <Button type="submit" className="remove" variant="secondary" size="sm">삭제</Button>
+        </div>
+        <div>
             <Table>
                 <thead>
                     <tr>
-                        <th>
-                        <Form>
-                            <div className="checkBox"><Form.Check type='checkbox' id='checkbox'/></div>
-                        </Form>
+                        <th className="checkBox">
+                        
+                            <div >
+                                <Form.Check 
+                                    type='checkbox' id='checkbox'
+                                    onChange={(e) => allReviewCheck(e.target.checked)}
+                                    checked={checkReviews.length === 5 ? true : false}
+                                    />
+                            </div>
                         </th>
                         <th></th>
                         <th>상품정보</th>
-                        <th>작성일자</th>
+                        <th className='date'>작성일자</th>
                         <th colSpan={2}>후기</th>
                         <th>별점</th>
                     </tr>
@@ -51,6 +122,7 @@ const MyReview = () => {
                     {
                         review.map((data) => {
                             let reviewid = data.id
+                            let itemid = data.itemid
                             let itemname = data.itemname
                             let itemimage = data.itemimage
                             let score = data.score
@@ -59,9 +131,15 @@ const MyReview = () => {
                             let content = data.content
                             let reviewData = 
                                 <tr key={reviewid}>
-                                    <td>
+                                    <td className="checkBox">
                                         <Form>
-                                            <div className="checkBox"><Form.Check type='checkbox' className={`checkbox-${reviewid}`}/></div>
+                                            <div className="checkBox">
+                                                <Form.Check 
+                                                    type='checkbox' className={`checkbox-${reviewid}`}
+                                                    onChange={(e) => reviewCheck(e.target.checked, reviewid, itemid)}
+                                                    checked={checkReviews.includes(reviewid) ? true : false}
+                                                    />
+                                            </div>
                                         </Form>
                                     </td>
                                     <td>
@@ -84,6 +162,7 @@ const MyReview = () => {
                 
             </Table>
         </div>
+        </Form>
         </>
     )
 }
