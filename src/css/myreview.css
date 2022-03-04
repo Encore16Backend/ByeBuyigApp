@@ -1,0 +1,30 @@
+td, td {
+    vertical-align : middle;
+    min-width: 50px;
+}
+
+.review {
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px 10px 10px;
+}
+
+.checkBox {
+    width: 5px;
+}
+
+.date {
+    width: 100px;
+}
+
+.title {
+    float: left;
+    font-size: 32px;
+}
+
+.remove, .page {
+    float: right;
+    /* padding: 5px 5px 5px 10px !important; */
+}
