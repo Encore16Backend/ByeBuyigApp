@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Modal, Button, Form, Container} from "react-bootstrap";
 import axios from "axios";
-import MyPage from "./MyPage";
 import Test from "../components/auth/Test";
 import React from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
