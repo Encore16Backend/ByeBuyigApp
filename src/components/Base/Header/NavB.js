@@ -20,7 +20,6 @@ const NavB = ({ID, logOut})=>{
   useEffect(()=>{
     setCataName(cataId)
   },[cataId])
-
   // select박스가 변할떄마다 cataName set
   const onCataChange = (e)=>{
     setCataName(e.target.value)
@@ -29,7 +28,6 @@ const NavB = ({ID, logOut})=>{
     "전체","상의","반팔","긴팔","바지","반바지","슬랙스","데님팬츠","아우터","코트","트렌치 코트",
     "롱패딩","숏패딩","스커트","롱스커트","미니스커트"
   ]
-
 
   // 사이드바 용 hook
   const [show, setShow] = useState(false);

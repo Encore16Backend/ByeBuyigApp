@@ -18,7 +18,6 @@ const GetBestItems = async (url) =>{
         let top = temp[1] // top
         let outer = temp[3] // bottom
         let pants = temp[2] // outer
-        console.log(temp , " bestItem res temp")
         dispatch(addBestItems(all[1]))
         dispatch(addTop(top[1]))
         dispatch(addOuter(outer[1]))
