@@ -143,14 +143,18 @@ const NavB = ({ID, logOut})=>{
                 </Offcanvas> 
           <Nav className="me-auto">
              {/* 검색폼 */}
-             <Form className="d-flex" onSubmit={onSubmit}>
-                <select
+             <Form className="d-flex" onSubmit={onSubmit} style={{paddingLeft:"30px"}}>
+               <div id="selectBox">
+               <div className='custom-dropdown small'> 
+                <select id='selectbox' style={{height:"38px"}}
                   value={cataName}
                   onChange={onCataChange}>
                   {
-                      cataArr.map(name =>((<option value={name}>{name}</option>)))
+                      cataArr.map(name =>((<option selected="selected" value={name}>{name}</option>)))
                   }
                 </select>
+                </div>
+                </div>
                 <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search"
                   value={keyword} onChange={changeKeyword}
                 />
