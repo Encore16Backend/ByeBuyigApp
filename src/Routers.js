@@ -1,7 +1,7 @@
 import CateList from "./pages/CateList";
 import DetailPage from "./pages/DetailPage";
 import Home from "./pages/Home";
-import MyPage from "./pages/MyPage";
+import Review from "./pages/Review";
 import Update from "./pages/Update";
 import SearchList from "./pages/SearchPage";
 import ImgSearchPage from "./pages/ImgSearchPage";
@@ -13,8 +13,8 @@ export default [
         component : Home
     },
     {
-        path:'/mypage',
-        component:MyPage
+        path:'/Review',
+        component:Review
     },
     {
         path : '/Update',

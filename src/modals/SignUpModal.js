@@ -149,10 +149,13 @@ function SingUpModal({ show, onHide }) {
   
   // 이메일 관련
   const [email, setEmail] = useState('')
+  const [chkMail,setChkMail]=useState('')
   const [valemail, setvalemail] = useState(0) // 0 기본상태 1성공 -1실패
   const [emailMsg , setEmailMsg] = useState('')
   const [emailStyle, setEmailStyle]= useState('')
+  const keycode = window.sessionStorage.getItem("code")
 
+ 
   // 이메일 검증 함수
   const onEmail = (e)=>{
     setEmail(e.target.value)
@@ -210,6 +213,54 @@ function SingUpModal({ show, onHide }) {
     onHide()
   }
   
+  //이메일 인증
+  const checkMail = async (e)=>{
+    e.preventDefault();
+    await axios.get('http://127.0.0.1:8081/api/checkMail', {
+        params :{
+            email:email
+        }
+
+    }, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    }).then(res => {
+      console.log(res.data)
+      if (res.data ==="EXIST"){
+        alert("중복된 이메일입니다")
+        setvalemail(0)
+      } else{
+        window.sessionStorage.setItem("code",res.data)
+      }
+
+    }).catch(error => {
+      console.log(error)
+    })
+};
+
+    const onchkMail =(e)=>{
+      setChkMail(e.target.value)
+      // const chkMail1=e.target.value
+    
+    }
+   
+    const okmail =(e)=> {
+      console.log(keycode)
+      console.log(chkMail)
+      if (keycode ===chkMail){
+        console.log("good")
+        setvalemail(1)
+        console.log(valemail)
+
+      }else {
+        console.log("bad")
+        setvalemail(0)
+        console.log(valemail)
+      }
+    }
+
+    
   return (
     <Modal
       show={show}
@@ -298,10 +349,17 @@ function SingUpModal({ show, onHide }) {
             <Form.Group className="mb-3">
               <Form.Label>E-mail</Form.Label>
               <Form.Control type="text" placeholder="E-mail을 입력하세요" onChange={onEmail} value={email} />
+              <Button onClick={checkMail}>이메일 인증</Button>
               {<div className={emailStyle}>{emailMsg}</div>}
-              
-              
             </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>인증코드입력 </Form.Label>
+              <Form.Control  placeholder="전송된 코드를 입력하세요"
+              onChange={onchkMail} value={chkMail} />
+              <Button onClick={okmail}>코드 인증</Button>
+            </Form.Group>
+
             {
               checkID ?
               <>

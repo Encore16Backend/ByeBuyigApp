@@ -1,7 +1,7 @@
 import React from "react";
 
 
-const MyPage = ()=>{
+const Review = ()=>{
 
 
     return(
@@ -14,4 +14,4 @@ const MyPage = ()=>{
     )
 }
 
-export default MyPage
+export default Review
