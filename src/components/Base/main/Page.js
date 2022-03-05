@@ -6,7 +6,6 @@ const Page = ({setPage, totalPage, selected, reviewNum})=>{
         totalPage = Math.ceil(reviewNum/5)
     }
 
-
     // 화면에 보여질 페이지
     // 화면에 보여질 마지막 페이지 (화면에 보여질 페이지 그룹*한 화면에 나타낼 페이지)
     // const lastPage = pageGroup*showedPage

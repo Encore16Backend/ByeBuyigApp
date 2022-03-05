@@ -7,6 +7,7 @@ import { FormControl } from "react-bootstrap";
 import ReactPaginate from "react-paginate"
 import { Button, InputGroup } from "react-bootstrap";
 import ReactStars from "react-stars"
+import Page from "../Base/main/Page";
 
 const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, pdtState })=>{
 
@@ -206,7 +207,7 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
             <br/>
            {render}
            <div className="myPage centered">
-               {
+               {/* {
                    allReviewNums != 0 ?  <ReactPaginate 
                    pageCount={Math.ceil(allReviewNums / 5)}
                    pageRangeDisplayed={2}
@@ -217,15 +218,15 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
                    activeClassName={"currentPage"}
                    previousClassName={"pageLabel-btn"}
                    nextClassName={"pageLabel-btn"}/> : ""
-               }
+               } */}
 
-               {/* {
+               {
                     allReviewNums != 0 ? <Page
                     setPage = {handlePage}
                     reviewNum = {allReviewNums}
                     selected = {page}
                 /> : ""
-                } */}
+                }
 
              </div>
         </div>

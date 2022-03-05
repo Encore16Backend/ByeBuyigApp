@@ -318,6 +318,11 @@ const NavB = ({ID, logOut})=>{
                           <Link to={{pathname:"/MyReview"}}>리뷰 관리</Link>
                           </span>
                         </li>
+                        <li>
+                          <span onClick={out}><i className="ion-ios-color-filter-outline"></i>
+                          <Link to={{pathname:"/"}}>로그아웃</Link>
+                          </span>
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -327,7 +332,7 @@ const NavB = ({ID, logOut})=>{
 
               {isOpen == true ? <List/> : null}
               
-              <Nav.Link onClick={out}>로그아웃</Nav.Link>
+              {/* <Nav.Link onClick={out}>로그아웃</Nav.Link> */}
               </>
                :
               <>
