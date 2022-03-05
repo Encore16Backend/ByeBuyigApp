@@ -16,6 +16,9 @@
 
 
 /* select박스 */
+#selectBox{
+  margin-right: 9px;
+}
 #selectBox select{
   appearance: none;
 }
