@@ -15,7 +15,10 @@
 }
 
 
-
+/* select박스 */
+#selectBox select{
+  appearance: none;
+}
 .small {
   font-size: .7em;
 }
@@ -26,7 +29,6 @@
   margin: .5em;
   display: inline-block;
 }
-
 /* Custom dropdown */
 .custom-dropdown {
   position: relative;

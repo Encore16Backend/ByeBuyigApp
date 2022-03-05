@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap";
 import Carsol from "./Carsol";
 import "../../../css/mycard.css"
 import { Link } from 'react-router-dom';
+import ReactStars from "react-stars";
 
 const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, images, reviewmean,  setHomeLandering ,
     HomeLandering})=>{
@@ -34,7 +35,8 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
                            
                         </Card.Text>
                         <Card.Text>
-                           평점 : {reviewmean}
+                            <ReactStars edit={false} value={reviewmean}/>
+                           
                         </Card.Text>
                 </Card.Body>
         </Card>
