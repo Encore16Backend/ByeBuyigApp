@@ -146,7 +146,7 @@ const NavB = ({ID, logOut})=>{
              <Form className="d-flex" onSubmit={onSubmit} style={{paddingLeft:"30px"}}>
                <div id="selectBox">
                <div className='custom-dropdown small'> 
-                <select id='selectbox' style={{height:"38px"}}
+                <select id='selectbox' style={{height:"38px", width:"112px"}}
                   value={cataName}
                   onChange={onCataChange}>
                   {
@@ -238,7 +238,7 @@ const NavB = ({ID, logOut})=>{
 
                             <li>
                               <span ><i className="ion-ios-color-filter-outline"></i>
-                              <Link to={{pathname:"/category",state : {id:'16',cataname:"코트"},}}>트렌치 코트 </Link>
+                              <Link to={{pathname:"/category",state : {id:'16',cataname:"트렌치 코트"},}}>트렌치 코트 </Link>
                               </span>
                             </li>
                             
