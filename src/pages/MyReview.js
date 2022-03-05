@@ -3,6 +3,7 @@ import axios from "axios";
 import { Form, Table, Button } from "react-bootstrap";
 import "../css/myreview.css";
 import Page from "../components/Base/main/Page";
+import { Container } from "react-bootstrap";
 
 const MyReview = () => {
 
@@ -82,18 +83,10 @@ const MyReview = () => {
     
     return (
         <>
+        <Container>
         <Form className='review' onSubmit={onSubmit}>
         <div className='title'>마이리뷰</div>
-        <div className="page">
-            {
-                totalPageNo != 0 ? <Page
-                    setPage = {handlePage}
-                    totalPage = {totalPageNo}
-                    selected = {pageNo}
-                /> : ""
-            }
-
-        </div>
+       
         <div>
             <Button type="submit" className="remove" variant="secondary" size="sm">삭제</Button>
         </div>
@@ -163,6 +156,16 @@ const MyReview = () => {
             </Table>
         </div>
         </Form>
+        <div className="centered">
+            {
+                totalPageNo != 0 ? <Page
+                    setPage = {handlePage}
+                    totalPage = {totalPageNo}
+                    selected = {pageNo}
+                /> : ""
+            }
+        </div>
+        </Container>
         </>
     )
 }

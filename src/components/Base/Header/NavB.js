@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route,Link, NavLink
 } from 'react-router-dom';
 import { Navbar, Container, Nav, Button , Offcanvas, Form, FormControl} from "react-bootstrap";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import SingUpModal from '../../../modals/SignUpModal';
 import SingInModal from '../../../modals/SignInModal';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -11,6 +11,25 @@ import "../../../css/drop.css";
 import CheckModal from "../../../modals/CheckModal";
 
 const NavB = ({ID, logOut})=>{
+
+  // 검색 시 사용할 카테고리명을 리덕스로 받아오고
+  let cataId = useSelector(state=>state.cataNum.items)
+  // navBar의 카테고리명 지역변수 만듬
+  const [cataName, setCataName] = useState("")
+  // 리덕스로 받아온 값이 변할때마다 cataName에 넣어줌
+  useEffect(()=>{
+    setCataName(cataId)
+  },[cataId])
+
+  // select박스가 변할떄마다 cataName set
+  const onCataChange = (e)=>{
+    setCataName(e.target.value)
+  }  
+  const cataArr = [
+    "전체","상의","반팔","긴팔","바지","반바지","슬랙스","데님팬츠","아우터","코트","트렌치 코트",
+    "롱패딩","숏패딩","스커트","롱스커트","미니스커트"
+  ]
+
 
   // 사이드바 용 hook
   const [show, setShow] = useState(false);
@@ -32,12 +51,9 @@ const NavB = ({ID, logOut})=>{
       sessionStorage.removeItem('refresh_token')
       window.location.replace("/")
     }
-
     const toMyPage = ()=>{
         history.push('/mypage') 
     }
-
-
 
     const [isOpen, setMenu] = useState(false);  
   
@@ -96,11 +112,13 @@ const NavB = ({ID, logOut})=>{
     }
     const onSubmit = (e)=>{
       e.preventDefault();
+      const sendCataName = cataName == "전체" ? "" : cataName
       history.push({
         pathname: "/searchlist",
         search : "?searchName="+keyword,
         state: {
-            keyword:keyword
+            keyword:keyword,
+            cataName:sendCataName,
         }
     })   
     }
@@ -128,11 +146,19 @@ const NavB = ({ID, logOut})=>{
           <Nav className="me-auto">
              {/* 검색폼 */}
              <Form className="d-flex" onSubmit={onSubmit}>
+                <select
+                  value={cataName}
+                  onChange={onCataChange}>
+                  {
+                      cataArr.map(name =>((<option value={name}>{name}</option>)))
+                  }
+                </select>
                 <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search"
                   value={keyword} onChange={changeKeyword}
                 />
              <Button type="submit" variant="outline-success">Search</Button>
             </Form>
+            {/* 이미지 검색 링크 */}
             <Link to={{pathname:"/imgsearch"}} >이미지검색</Link>
 
 

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 
 const GetCate = async (url) =>{
     const dispatch = useDispatch()
+    console.log(url , "GetCataAxios")
     
 
     await axios.get('http://127.0.0.1:8081'+url, {

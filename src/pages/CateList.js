@@ -36,8 +36,8 @@ const CateList = ()=>{
     }) 
 
     useEffect(()=>{
-        dispatch(addNum(id))
-    },[id])
+        dispatch(addNum(cataname))
+    },[cataname])
 
     useEffect(()=>{ 
         const category = location.state.cataname

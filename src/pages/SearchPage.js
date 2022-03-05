@@ -7,17 +7,21 @@ import { useHistory } from "react-router-dom";
 import { useRouteMatch } from "react-router-dom/cjs/react-router-dom.min";
 import GetCate from "../hooks/pdtHook/GetCate";
 import Page from "../components/Base/main/Page";
+import { useDispatch } from "react-redux";
+import { addNum } from "../redux/cataNum/actions";
 
 
 const SearchList = ()=>{
     var history=useHistory();
     var match = useRouteMatch(); // url정보를 가지고있는 state
+    var dispatch = useDispatch();
     
     // url에 사용될 변수들
     const [Homelendering , setHomeLandering] = useState(false)
     const [sortName , setSortName] = useState('reviewmean')
     const [asc, setAsc] = useState('DESC')
     const [page, setPage] = useState(1)
+    const [cataNameState, setCataNameState] = useState("")
 
     // order에 따른 MSG
     const [reviewMsg, setReviewMsg] = useState('높은 별점순')
@@ -27,28 +31,28 @@ const SearchList = ()=>{
     // 검색어와 총 페이지 수
     const totalPage = useSelector(state=>state.totalPage.pages)
     const keyword = history.location.state.keyword
+    const cataName = history.location.state.cataName
 
     // 검색url과 페이지 수를 받아올 url
-    const [searchUrl ,setSearchUrl] = useState('/main/search?searchName='+keyword);
-    const [searchPageUrl, setSearchPageUrl] = useState('/main/search?searchName='+keyword)
+    const [searchUrl ,setSearchUrl] = useState('/main/search?searchName='+keyword+" "+cataName);
+    const [searchPageUrl, setSearchPageUrl] = useState('/main/search?searchName='+keyword+" "+cataName)
 
     // 검색어 바뀌면 실행 (page들과 값들을 받아옴)
     useEffect(()=>{
         const keyword = history.location.state.keyword
-        console.log(keyword, "useStat키워드")
+        const cataName = history.location.state.cataName 
+        setCataNameState(cataName)
+        dispatch(addNum(cataName))
         setPage(1)
-        setSearchPageUrl('/main/search?searchName='+keyword)
-        setSearchUrl('/main/search?searchName='+keyword+"&asc="+asc+"&sortname="+sortName);
+        setSearchPageUrl('/main/search?searchName='+keyword+ " "+ cataName)
+        setSearchUrl('/main/search?asc='+asc+"&sortname="+sortName+"&searchName="+keyword+" "+cataName);
         handlePage(1)
-    }, [match, asc, sortName])
+    }, [match, asc, sortName, cataName])
 
-    // 페이징 버튼 클릭시 사용할 함수
-    const handlePageChange = (e)=>{
-        setSearchUrl('/main/search?searchName='+keyword+"&asc="+asc+"&sortname="+sortName+"&page="+(e.selected+1));
-    }
     const handlePage = (value)=>{
         setPage(value)
-        setSearchUrl('/main/search?searchName='+keyword+"&asc="+asc+"&sortname="+sortName+"&page="+value);
+        // setSearchUrl('/main/search?searchName='+keyword+"&asc="+asc+"&sortname="+sortName+"&page="+value);
+        setSearchUrl('/main/search?asc='+asc+"&sortname="+sortName+"&page="+value+"&searchName="+keyword+" "+cataName);
     }
       // select로 리뷰 정렬값들을 받을 state 
       const [conditionSelect,setConditionSelect ] = useState('')
