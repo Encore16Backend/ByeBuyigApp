@@ -142,7 +142,8 @@ const Update= () => {
     
 
     const del = async (e)=>{
-        e.preventDefault();
+        // e.preventDefault();
+        console.log("삭제");
         await axios.delete('http://127.0.0.1:8081/api/user/delete', {
             params :{
                 username: sessionStorage.getItem('id')
@@ -154,7 +155,7 @@ const Update= () => {
                 "Authorization": "Bearer " + localStorage.getItem('access_token'),
             },
         }).then(res => {
-            alert('삭제성공')
+            alert("삭제되었습니다.")
             sessionStorage.removeItem('id');
             sessionStorage.removeItem('access_token')
             sessionStorage.removeItem('refresh_token')
@@ -165,8 +166,12 @@ const Update= () => {
         })
     };
 
-    const delok =(e)=>{
-        
+    const delok = async ()=>{
+        if(window.confirm("회원탈퇴하시겠습니까?")){
+            await del();
+        }else {
+            alert("취소");
+        }
     }
     
     const update = async (e)=>{
