@@ -28,7 +28,7 @@ const Update= () => {
     const [valisAddress, setvalisAddress] = useState(false);
 
     const [fashion, setFashion] = useState('')
-
+    const [detailAddress,setdetailAddress] = useState('')
 
     useEffect(() => {
         console.log("!")
@@ -43,18 +43,20 @@ const Update= () => {
         }).then(res => {
             setEmail(res.data.email);
             const location = res.data.location.split(' ');
+            setdetailAddress(location.pop());
             setIsZoneCode(location.pop());
             setIsAddress(location.join(' '));
             setFashion(res.data.style);
             setPwd('')
-            setChkPwd('') 
+            setChkPwd('')
+            console.log(location) 
         }).catch(error => {
             console.log(error);
         })
     }, [data])
    
 
-    // 상세 주소관련 
+    //주소관련 
     const onIsAddress = (e)=>{
         setIsAddress(e.target.value)
         const Addr = e.target.value
@@ -64,6 +66,12 @@ const Update= () => {
             setvalisAddress(false)
         }
     }
+
+    //상세주소 
+    const ondetailAddress =(e) =>{
+        setdetailAddress(e.target.value)
+        const test =e.target.value
+      }
 
     // 우편번호 관련  
     const [isZoneCode, setIsZoneCode] = useState('');
@@ -157,12 +165,15 @@ const Update= () => {
         })
     };
 
-
+    const delok =(e)=>{
+        
+    }
+    
     const update = async (e)=>{
         e.preventDefault();
         await axios.put('http://127.0.0.1:8081/api/user/update', {
             username: sessionStorage.getItem('id'),
-            location : isAddress + ' ' + isZoneCode,
+            location : isAddress + ' ' + isZoneCode+' '+detailAddress,
             password : pwd,
             style : fashion,
             email : email
@@ -174,7 +185,7 @@ const Update= () => {
             },
         }).then(res => {
             alert('정보수정 성공')
-            window.location.replace("/")
+            window.location.replace("/update")
 
         }).catch(error => {
             alert("비밀번호를 확인해주세요.");
@@ -184,15 +195,19 @@ const Update= () => {
     return(
         <>
         <div>
-        <h1>개인 정보 수정</h1>    
         </div>
         <div className="centered" style={{'paddingTop':0}}>
         <Container>
+        <h1>개인 정보 수정</h1>    
             <br />
             <Form onSubmit={update}>
                 <Form.Group className="mb-3" >
                     <Form.Label>ID :</Form.Label> &nbsp;
                     <Form.Label>{localStorage.getItem('id')}</Form.Label>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                <Form.Label>E-mail :</Form.Label> &nbsp;
+                <Form.Label>{email}</Form.Label>
                 </Form.Group>
                 <Form.Group className="mb-3" >
                     <Form.Label>password</Form.Label>
@@ -213,18 +228,24 @@ const Update= () => {
                 <br></br>
 
                 <Form.Group className="mb-3">
-                    <Form.Label>상세주소</Form.Label>
-                    <Form.Control type="text" placeholder="상세주소입력" onChange={
-                        onIsAddress
-                    } value={isAddress} />
-                </Form.Group>
-
-                <Form.Group className="mb-3">
                     <Form.Label>우편번호</Form.Label>
                     <Form.Control type="text" placeholder="우편번호입력" onChange={
                         onIsZoneCode
                     } value={isZoneCode} />
                 </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>주소</Form.Label>
+                    <Form.Control type="text" placeholder="주소입력" onChange={
+                        onIsAddress
+                    } value={isAddress} />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>상세주소</Form.Label>
+                    <Form.Control type="text" placeholder="상세주소입력" onChange={
+                        ondetailAddress
+                    } value={detailAddress} />
+                </Form.Group>
+
 
                 <Form.Group className="mb-3">
                 <Form.Label>선호하는 스타일</Form.Label>
@@ -240,14 +261,11 @@ const Update= () => {
                 </Form.Select>
                 </Form.Group>
 
-                <Form.Group className="mb-3">
-                <Form.Label>E-mail :</Form.Label> &nbsp;
-                <Form.Label>{email}</Form.Label>
-                </Form.Group>
+              
 
 
                 {valchkPwd == true ? <Button type="submit">회원수정</Button>:<Button disabled={true}>회원수정</Button>} &nbsp;
-                <Button  onClick={del}> 회원탈퇴 </Button>
+                <Button  onClick={delok}> 회원탈퇴 </Button>
             </Form>
         </Container>
     </div>

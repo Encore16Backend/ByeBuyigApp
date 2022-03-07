@@ -14,7 +14,7 @@ function SingUpModal({ show, onHide }) {
     await axios.post('http://127.0.0.1:8081/api/user/save',{
       username : id,
       password : pwd, 
-      location : isAddress + ' ' + isZoneCode,
+      location : isAddress + ' ' + isZoneCode+' '+detailAddress,
       style : fashion,
       email : email,
     },{
@@ -35,6 +35,7 @@ function SingUpModal({ show, onHide }) {
   // id관련
   const [id, setID] = useState('')
   const [checkID, setCheckID] = useState(false)
+  const [idmsgStyle,setidmsgStyle] =useState('invalid-input')
   
   const onIdValid = (e) => {
     setCheckID(false);
@@ -47,22 +48,32 @@ function SingUpModal({ show, onHide }) {
   }
 
   const duplicateId = async () => {
-    await axios.get("http://127.0.0.1:8081/api/checkUser", {
+    if(id === ''){
+      alert("아이디를 입력하세요");
+    }
+    else if(id.length < 6){
+      alert("아이디는 6자 이상이어야 합니다.");
+    } else {
+      await axios.get("http://127.0.0.1:8081/api/checkUser", {
       params: {
         username: id
       }
-    }, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(res => {
-      if(res.data === 'FAIL') {
-        alert("중복된 아이디입니다.");
-      } else {
-        alert("사용 가능한 아이디입니다.");
-        setCheckID(true);
-      }
-    })
+      }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => {
+
+        if(res.data === 'FAIL') {
+            alert("중복된 아이디입니다")
+        }
+        else {
+          alert("사용 가능한 아이디입니다.");
+          setCheckID(true);
+        }
+      })
+    }
+    
   }
 
   // pwd관련
@@ -91,6 +102,7 @@ function SingUpModal({ show, onHide }) {
     }
   }
 
+
   const onChkPwdValid = (e)=>{
     setChkPwd(e.target.value)         
     if ( e.target.value === pwd && pwd != "") {
@@ -111,9 +123,11 @@ function SingUpModal({ show, onHide }) {
   }
 
   
-  // 상세 주소관련
+  // 주소관련
   const [isAddress, setIsAddress] = useState('');
   const [valisAddress, setvalisAddress] = useState(false)
+  const [detailAddress,setdetailAddress] = useState('')
+
   const onIsAddress = (e)=>{
     setIsAddress(e.target.value)
     const Addr = e.target.value
@@ -123,6 +137,14 @@ function SingUpModal({ show, onHide }) {
       setvalisAddress(false)
     }
   }
+
+  const ondetailAddress =(e) =>{
+    setdetailAddress(e.target.value)
+    const test =e.target.value
+    console.log(test)
+  }
+
+
 
   // 우편번호 관련  
   const [isZoneCode, setIsZoneCode] = useState('');
@@ -150,39 +172,53 @@ function SingUpModal({ show, onHide }) {
   // 이메일 관련
   const [email, setEmail] = useState('')
   const [chkMail,setChkMail]=useState('')
-  const [valemail, setvalemail] = useState(0) // 0 기본상태 1성공 -1실패
+  const [valemail, setvalemail] = useState(-1) // 0 기본상태 1성공 -1실패
   const [emailMsg , setEmailMsg] = useState('')
   const [emailStyle, setEmailStyle]= useState('')
-  const keycode = window.sessionStorage.getItem("code")
+  const [keycode,setKeycode] = useState('')
+  const [valkeycode,setvalKeycode] = useState(-1)
+
 
  
   // 이메일 검증 함수
   const onEmail = (e)=>{
+    setvalemail(-1);
     setEmail(e.target.value)
+    const test = e.target.value
+    setKeycode('')
     var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
     const valMyEmail = regExp.test(e.target.value)
-    if (valMyEmail && email != '') {
-      setvalemail(1)
+    if (valMyEmail && test != '') {
       setEmailMsg('※ 이메일 형식 일치')
+      setvalemail(1)
+      console.log(valemail)
       setEmailStyle('valid-input')
     } 
-    else if (!(valMyEmail)){ // 이메일이 형식에 맞지 않으면
-      if (e.target.value === ""){ // 이메일이 형식에 맞지 않고 input이 빈값이면
-        setvalemail(0)
+    else if (valMyEmail != test){ // 이메일이 형식에 맞지 않으면
+      if (test === ""){ // 이메일이 형식에 맞지 않고 input이 빈값이면
+        setvalemail(-1)
+        console.log(valemail)
         setEmailMsg('')
       }else{
-        setvalemail(-1) // 이메일이 형식에 맞지 않고 input이 빈값이 아니면
+        // 이메일이 형식에 맞지 않고 input이 빈값이 아니면
         setEmailMsg('※ 이메일 형식 불일치')
+        setvalemail(-1)
+        console.log(valemail)
         setEmailStyle('invalid-input')
       }
     }
+    
   }
 
+
+  
+ 
   const [buttonRef, setButtonRef] = useState(false); // 버튼을 disable을 toggle하기 위해 만든 Ref
 
   // 유효성 체크값들이 모두true가 되면 true를 리턴하여 회원가입 버튼을 활성화 시키는 함수
   const getActivate = () => {
-    return (checkID === true && valchkPwd === 1 && valisAddress === true && valisZoneCode === true && valemail === 1) // valname === true
+    
+    return (checkID === true && valchkPwd === 1 && valisAddress === true && valisZoneCode === true && valemail === 1 && valkeycode===1) // valname === true
   }
   // getActivate함수가 활성화되면 자동으로 회원가입 버튼을 활성화시킴
   useEffect(() => { 
@@ -191,7 +227,7 @@ function SingUpModal({ show, onHide }) {
     } else {
       setButtonRef(false);
     }
-  }, [checkID, valchkPwd, valisAddress, valisZoneCode, valemail]) // valname
+  }, [checkID, valchkPwd, valisAddress, valisZoneCode, valemail,valkeycode]) // valname
 
 
   // 모달창을 닫고 state들을 초기화 시키는 함수
@@ -211,6 +247,7 @@ function SingUpModal({ show, onHide }) {
     setEmailMsg('')
     setPwdMsg('')
     onHide()
+    setvalKeycode(-1)
   }
   
   //이메일 인증
@@ -229,9 +266,9 @@ function SingUpModal({ show, onHide }) {
       console.log(res.data)
       if (res.data ==="EXIST"){
         alert("중복된 이메일입니다")
-        setvalemail(0)
+        setvalemail(-1)
       } else{
-        window.sessionStorage.setItem("code",res.data)
+        setKeycode(res.data)
       }
 
     }).catch(error => {
@@ -241,25 +278,21 @@ function SingUpModal({ show, onHide }) {
 
     const onchkMail =(e)=>{
       setChkMail(e.target.value)
-      // const chkMail1=e.target.value
-    
+      setvalKeycode(-1)
     }
    
     const okmail =(e)=> {
-      console.log(keycode)
-      console.log(chkMail)
       if (keycode ===chkMail){
-        console.log("good")
-        setvalemail(1)
-        console.log(valemail)
-
+        alert("인증코드가 일치합니다")
+        setvalKeycode(1)
+        console.log(valkeycode)
+        
       }else {
-        console.log("bad")
-        setvalemail(0)
-        console.log(valemail)
+        alert("인증코드가 틀렸습니다")
+        setvalKeycode(-1)
+        console.log(valkeycode)
       }
     }
-
     
   return (
     <Modal
@@ -281,6 +314,8 @@ function SingUpModal({ show, onHide }) {
             <Form.Group className="mb-3" >
               <Form.Label>ID</Form.Label>
               <Form.Control type="text" placeholder="영문자로 시작하는 영문자 또는 숫자 6~20자" onChange={onIdValid} minLength={6} maxLength={20} value={id}/>
+              <br></br>
+              <Button  onClick={duplicateId}> 중복확인 </Button>
             </Form.Group>
 
               {/* PWD */}
@@ -314,14 +349,6 @@ function SingUpModal({ show, onHide }) {
             </a>
             <br></br>
 
-            {/* ADDR */}
-            <Form.Group className="mb-3">
-              <Form.Label>상세주소</Form.Label>
-              <Form.Control type="text" placeholder="상세주소입력" onChange={
-                onIsAddress
-              } value={isAddress} />
-            </Form.Group>
-
             {/* ZIP */}
             <Form.Group className="mb-3">
               <Form.Label>우편번호</Form.Label>
@@ -329,6 +356,19 @@ function SingUpModal({ show, onHide }) {
                 onIsZoneCode
               } value={isZoneCode} />
             </Form.Group>
+
+            {/* ADDR */}
+            <Form.Group className="mb-3">
+              <Form.Label>주소</Form.Label>
+              <Form.Control type="text" placeholder="상세주소입력" onChange={
+                onIsAddress
+              } value={isAddress} /><br></br>
+              <Form.Label>상세주소</Form.Label>
+              <Form.Control type="text" placeholder="상세주소입력" onChange={
+                ondetailAddress
+              } value={detailAddress} />
+            </Form.Group>
+
 
             {/* 관심패션 */}
             <Form.Group className="mb-3">
@@ -349,6 +389,7 @@ function SingUpModal({ show, onHide }) {
             <Form.Group className="mb-3">
               <Form.Label>E-mail</Form.Label>
               <Form.Control type="text" placeholder="E-mail을 입력하세요" onChange={onEmail} value={email} />
+              <br></br>
               <Button onClick={checkMail}>이메일 인증</Button>
               {<div className={emailStyle}>{emailMsg}</div>}
             </Form.Group>
@@ -357,24 +398,20 @@ function SingUpModal({ show, onHide }) {
               <Form.Label>인증코드입력 </Form.Label>
               <Form.Control  placeholder="전송된 코드를 입력하세요"
               onChange={onchkMail} value={chkMail} />
-              <Button onClick={okmail}>코드 인증</Button>
+              <br></br>
+              {/* <Button onClick={okmail}>코드 인증</Button> */}
+              {valemail === 1 ? <Button onClick={okmail}>코드 인증</Button>:<Button disabled={true}>코드 인증</Button>}
             </Form.Group>
 
-            {
-              checkID ?
-              <>
                 <Button type="submit" disabled={buttonRef} >회원가입</Button>
-              </> :
-              <>
-                <Button  onClick={duplicateId}> 중복확인 </Button>
-              </>
-            }
+                {checkID === true ? null:<p className={idmsgStyle}>※ ID 중복확인 해주세요</p>}
           </Form>
+  
           {/* </form> */}
         </>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={closeHander}>Close</Button>
+        <Button onClick={closeHander}>닫기</Button>
       </Modal.Footer>
     </Modal>
   );
