@@ -20,10 +20,10 @@ const DetailPage = ()=>{
     const [page, setPage] = useState(1)
     
      // 리뷰값 받아오기
-     const GetReviewItem = async (name, asc, sort, page) =>{
-        await axios.get('http://127.0.0.1:8081/review/byItemname',{
+     const GetReviewItem = async (itmeid, asc, sort, page) =>{
+        await axios.get('http://127.0.0.1:8081/review/byItemid',{
            params:{
-            itemname:name,
+            itemid:itmeid,
             asc:asc,
             sortname:sort,
             page:page
@@ -50,10 +50,9 @@ const DetailPage = ()=>{
     const [lendering , setLandering] = useState(false)
 
     const imgs = locationState.images
-    const itemname = locationState.itemname
+    const itemId = locationState.itemid
 
-
-    GetReviewItem(itemname, desc, data, page)
+    GetReviewItem(itemId, desc, data, page)
 
 
     return(
@@ -66,7 +65,7 @@ const DetailPage = ()=>{
             </Row>
             <Row>
                 <Col xs={6} md={6}>
-                    <ImageSlide images={imgs} itemname={itemname} />
+                    <ImageSlide images={imgs}/>
                 </Col>
                 <Col xs={6} md={6}>
                     <DetailDesc pdtState={locationState} lendering={lendering} setLandering={setLandering}/>

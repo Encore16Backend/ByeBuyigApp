@@ -5,8 +5,6 @@ import {Carousel} from "react-bootstrap"
 const Carsol = ({images})=>{
 
     // console.log(images, "imgs")
-    // 배열안에 .imgid .imgpath
-
     
     {/* 댓글들 받아와서 반복문 돌림*/}
     const render = images.map((img,index)  =>{

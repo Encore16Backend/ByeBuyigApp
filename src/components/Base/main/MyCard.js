@@ -35,8 +35,7 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
                            
                         </Card.Text>
                         <Card.Text>
-                            <ReactStars edit={false} value={reviewmean}/>
-                           
+                            <ReactStars edit={false} value={reviewmean}/>  
                         </Card.Text>
                 </Card.Body>
         </Card>
