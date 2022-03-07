@@ -150,7 +150,7 @@ const NavB = ({ID, logOut})=>{
                     value={cataName}
                     onChange={onCataChange}>
                     {
-                        cataArr.map(name =>((<option selected="selected" value={name}>{name}</option>)))
+                        cataArr.map(name =>((<option key={name} value={name}>{name}</option>)))
                     }
                   </select>
                   </div>
@@ -310,7 +310,9 @@ const NavB = ({ID, logOut})=>{
                         </li>
                         <li>
                           <span ><i className="ion-ios-color-filter-outline"></i>
-                          <Link >장바구니</Link>
+                          <Link to={{
+                            pathname:"/basket"
+                          }}>장바구니</Link>
                           </span>
                         </li>
                         <li>

@@ -21,7 +21,7 @@ class ImageSlide extends React.Component {
   };
 
   render() {
-    const { images, itemname } = this.props;
+    const { images } = this.props;
     return (
       <>
       <div className="imageSlide">

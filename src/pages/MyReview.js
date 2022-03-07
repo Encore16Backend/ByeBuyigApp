@@ -16,7 +16,7 @@ const MyReview = () => {
     useEffect(() => {
         axios.get("http://127.0.0.1:8081/review/byUsername", {
             params: {
-                username:localStorage.getItem('id'),
+                username:sessionStorage.getItem('id'),
                 page:pageNo,
             },
             headers: {
