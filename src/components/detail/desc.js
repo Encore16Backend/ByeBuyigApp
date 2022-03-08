@@ -1,25 +1,91 @@
-import React from "react";
+import React, { useDebugValue, useState } from "react";
+import { Button, InputGroup } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ReactStars from "react-stars"
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import axios from "axios";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import postRefresh from "../../hooks/postRefresh"
+import "../../css/desc.css"
 
 const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
+    const history = useHistory();
+
      // 들어온 카테고리의 상세 품목 길이
      const allItem = useSelector(state => state.Item.items)
-     
 
-    // const desc = pdtState.description
-    // const itemname = pdtState.itemname
-    // const purchasecnt = pdtState.purchasecnt
-    // const price = pdtState.price
-    // const reviewmean = pdtState.reviewmean
+     
+    const desc = pdtState.description
+    const itemname = pdtState.itemname
+    const purchasecnt = pdtState.purchasecnt
+    const price = pdtState.price
+    const reviewmean = pdtState.reviewmean
     const itemid = pdtState.itemid
-    // const temp = pdtState.reviewcount
+    const reviewcount = pdtState.reviewcount
+    const img1 = pdtState.images[0].imgpath
+
+    const [bcount, setBcount] = useState(1);
+    
+    const decreaseNum = ()=>{
+        const Upbcount = bcount + 1
+        setBcount(Upbcount)
+    }
+
+    const increaseNum = ()=>{
+        const Downbcount = bcount - 1
+        if (Downbcount < 1) {
+            Downbcount = 0
+        }
+        setBcount(Downbcount)
+    }
+
+
+    // 장바구니에 담는 함수
+    const addBasket = async (username,itemid,itemimg,itemname,itemprice,bcount)=>{
+        console.log(itemimg, "itemImg")
+        await axios.post('http://127.0.0.1:8081/basket/add',{
+            // body
+            username : username,
+            itemid : itemid,
+            itemimg : itemimg,
+            itemname : itemname,
+            itemprice : itemprice,
+            bcount : bcount
+        },{
+            // header
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+            }
+        }).then(res =>{
+            setLandering(!lendering)
+            if (window.confirm('장바구니에 담겼습니다 장바구니로 이동하시겠습니까')){
+                history.push({
+                    pathname : "/basket",
+                    
+                })
+            }
+
+        }).catch(error =>{
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+            postRefresh() // 토큰이 없으면 재발행시키는 함수
+            addBasket(username,itemid,itemimg,itemname,itemprice) //  토큰을 받고 실행하고 싶은 함수 다시 실행
+        })
+    }
+
+    
 
     const render = allItem.filter(item => item.itemid === itemid)
-    const renderedItem = render[0]
+    const renderedItem = render[0] ? render[0] : ""
+
+    console.log(renderedItem, "render")
+
     const rendering = ()=>{
         return(
+            <>
         <div>
             <h1>Product Info</h1>
             <br/><br/>
@@ -31,7 +97,36 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
             <p> 가격 : <b>{renderedItem.price}</b> </p>
             <p> 구매수 : <b>{renderedItem.purchasecnt}</b> </p>
             <p> 리뷰 수 : {renderedItem.reviewcount}</p>
+            {/* username,itemid,itemimg,itemname,itemprice,bcount*/}
+            {/* 장바구니 주문 갯수 정하기 */}
+            <div>
+                <form>
+                <div class="value-button" id="decrease" onClick={increaseNum} value="Decrease Value"><div className="plusminus">-</div></div>
+                    <input type="number" id="number" value={bcount}/>
+                <div class="value-button" id="increase" onClick={decreaseNum} value="Increase Value"> <div className="plusminus">+</div></div>
+                </form>
+            </div>
+            {/* 장바구니 담기 버튼 */}
+            <Button onClick={() => addBasket(
+                sessionStorage.getItem("id") , renderedItem.itemid, img1, renderedItem.itemname,
+                renderedItem.price,bcount
+            )}>장바구니 담기</Button>
         </div>
+
+        {/* <div>
+            <h1>Product Info</h1>
+            <br/><br/>
+            <p> 상품명/품번 : <b>{itemname}/{itemid}</b> </p>
+            <div className="descStar">
+                <div>평점 : {reviewmean} </div>
+                <div><ReactStars edit={false} value={reviewmean}/></div>
+            </div>
+            <p> 가격 : <b>{price}</b> </p>
+            <p> 구매수 : <b>{purchasecnt}</b> </p>
+            <p> 리뷰 수 : {reviewcount}</p>
+            <Button >장바구니 담기</Button>
+        </div> */}
+            </>
         )
     }
     
@@ -40,7 +135,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     return(
         <> 
         {
-            (renderedItem !== undefined) ? rendering() : ""
+            (pdtState !== undefined) ? rendering() : ""
         }
             
         </>

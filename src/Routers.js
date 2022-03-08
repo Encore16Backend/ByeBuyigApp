@@ -6,6 +6,7 @@ import Update from "./pages/Update";
 import SearchList from "./pages/SearchPage";
 import ImgSearchPage from "./pages/ImgSearchPage";
 import MyReview from "./pages/MyReview";
+import ShoppingBasket from "./pages/ShoppingBasket";
 
 export default [
     {
@@ -39,5 +40,9 @@ export default [
     {
         path:"/myReview",
         component:MyReview
+    },
+    {
+        path:"/basket",
+        component:ShoppingBasket
     }
 ]

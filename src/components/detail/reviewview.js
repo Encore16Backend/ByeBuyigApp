@@ -14,11 +14,15 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
     // 해당 item을 받아옴
     const allItem = useSelector(state => state.Item.items)
     const rendered = allItem.filter(item => item.itemid === pdtState.itemid)
-    const renderedItem = rendered[0]
+    const renderedItem = rendered[0] ? rendered[0] : ""
     let allReviewNums = 0
     if (renderedItem){  
         allReviewNums = renderedItem.reviewcount
     }
+
+
+
+    console.log(renderedItem, "댓글댓글")
 
     // 댓글의 점수와 내용
     const [content , setContent] = useState('')
@@ -58,6 +62,8 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
                     id : reviewid,
                     content: content,
                     score : parseFloat(score)
+                    // 수정시 itemid를 보내기
+                    // pdtState.itemid
             },{
                 // header
                 headers:{
@@ -165,7 +171,6 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
     {/* 댓글들 받아와서 반복문 돌림*/}
     const render = reviews.map((review,index)  =>{
         return(
-            
             <div key={"review"+review.id} className="reviewDiv" id={review.id}>
                     <div key={'reviewcontent'+review.id}>{review.username} / 등록날짜 : {review.date.substring(0,10)}
                         <ReactStars key={'starScore'+review.id} edit={false} value={review.score}/> 
