@@ -43,7 +43,8 @@ const BestCardWrapper = ({cata,  setHomeLandering, HomeLandering})=>{
                 price = {all[i]['price']} 
                 purchasecnt = {all[i]['purchasecnt']} 
                 images = {all[i]['images']} 
-                reviewmean = {all[i]['reviewmean']} 
+                reviewmean = {all[i]['reviewmean']}
+                reviewcount={all[i]['reviewcount']} 
                 />);
         }
         return result;
@@ -63,6 +64,7 @@ const BestCardWrapper = ({cata,  setHomeLandering, HomeLandering})=>{
                 purchasecnt = {outer[i]['purchasecnt']} 
                 images = {outer[i]['images']} 
                 reviewmean = {outer[i]['reviewmean']} 
+                reviewcount={outer[i]['reviewcount']} 
                 />);
         }
         return result;
@@ -82,6 +84,8 @@ const BestCardWrapper = ({cata,  setHomeLandering, HomeLandering})=>{
                 purchasecnt = {bottom[i]['purchasecnt']} 
                 images = {bottom[i]['images']} 
                 reviewmean = {bottom[i]['reviewmean']} 
+                reviewcount={bottom[i]['reviewcount']} 
+
                 />);
         }
         return result;
@@ -101,6 +105,8 @@ const BestCardWrapper = ({cata,  setHomeLandering, HomeLandering})=>{
                 purchasecnt = {top[i]['purchasecnt']} 
                 images = {top[i]['images']} 
                 reviewmean = {top[i]['reviewmean']} 
+                reviewcount={top[i]['reviewcount']} 
+
                 />);
         }
         return result;
