@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
@@ -6,10 +6,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addBasket } from "../redux/basket/actions"
 import Page from "../components/Base/main/Page";
 import { Form, Button, Table } from "react-bootstrap";
-import { cond } from "lodash";
+import _ from 'lodash'
+
 
 
 const ShoppingBasket = () => {
+
+
     const location = useLocation();
     const locationState = location.state;
     const userid = sessionStorage.getItem("id");
@@ -23,6 +26,9 @@ const ShoppingBasket = () => {
     const [checkBaskets, setCheckBaskets] = useState([]);
     const [checkItems, setCheckItems] = useState([]);
     const [AllBasketNum, setAllBasketNum] = useState(0);
+    // 업데이트로 보내기 위해 조작할 배열
+    const [updateItem, setUpdateItem] = useState([]);
+    // const tempBasket = _.cloneDeep(basketItem)
 
 
 
@@ -40,12 +46,37 @@ const ShoppingBasket = () => {
             }
         }).then(res => {
             const data = res.data
+            console.log(data);
+            // data.content[0].bcount = 3;
             setTotalPageNo(data.totalPages);
             setBasketItem(data.content)
+            setUpdateItem(data.content)
             setAllBasketNum(data.content.length)
-            // dispatch(addBasket(res.data.content))
+            dispatch(addBasket(res.data.content))
         }).catch(error => {
             console.log(error, ' GetBasketItem 에러');
+        })
+    }
+
+    // 수정하는 axios
+    const update = async (idx)=>{
+        const data = updateItem[idx] 
+        await axios.put('http://127.0.0.1:8081/basket/update',{
+            id : data.id,
+            username : data.username,
+            bcount : data.bcount,
+            itemid : data.itemid
+            
+        },{
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+            }
+        }).then(res => {
+            console.log(res);
+            window.location.reload()
+        }).catch(error => {
+            console.log(error, ' updateBasket 에러');
         })
     }
 
@@ -103,10 +134,26 @@ const ShoppingBasket = () => {
         })
     }
 
-    // 장바구니에서 수량 변경
-    const changeBcount = () => {
+   
 
+    // update axios 로 보낼 배열들을 조작하는 함수들
+    const decreaseNum = (idx)=>{
+        const temp = [...updateItem]
+        temp[idx].bcount = temp[idx].bcount -1 
+        if (temp[idx].bcount < 1){
+            temp[idx].bcount = 0
+        }
+        setUpdateItem(
+            temp
+        )
     }
+    const increaseNum = (idx)=>{
+        const temp = [...updateItem]
+        temp[idx].bcount = temp[idx].bcount + 1 
+        setUpdateItem(
+            temp
+        )
+    }   
 
 
 
@@ -116,15 +163,15 @@ const ShoppingBasket = () => {
                 <div className='title'>장바구니</div>
 
                 <div>
-                    <Button type="submit" className="remove" variant="secondary" size="sm">삭제</Button>
+                    {/* <Button type="button" className="remove" variant="secondary" size="sm" onClick={update}>수정 </Button> */}
+                    <Button type="submit" className="remove" variant="secondary" size="sm" style={{position:"relative", right:"5px"}} >삭제</Button>
                 </div>
                 <div>
                     <Table>
                         <thead>
                             <tr>
                                 <th className="checkBox">
-
-                                    <div >
+                                    <div>
                                         <Form.Check
                                             type='checkbox' id='checkbox'
                                             onChange={(e) => allBasketCheck(e.target.checked)}
@@ -136,23 +183,16 @@ const ShoppingBasket = () => {
                                 <th>상품정보</th>
                                 <th>가격</th>
                                 <th colSpan={2}>수량</th>
-                                {/* <th>별점</th> */}
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {/* 
-                bcount: 1
-                id: 2
-                itemid: 5
-                itemimg: "./상품이미지/바지/데님팬츠/BUCKLE WIDE DENIM PANTS BLACK1.jpg"
-                itemname: "BUCKLE WIDE DENIM PANTS BLACK"
-                itemprice: 41400
-                username: "qwerqwer" */
-                            }
-                            {
-                                basketItem.map((data) => {
-                                    let bcount = data.bcount
+                            {   
 
+                                (updateItem.length != 0) ? basketItem.map((data, idx) => {
+                                    
+                                    let bcount = data.bcount
+                                    let showBcount = _.cloneDeep(bcount)
                                     let id = data.id
                                     let itemid = data.itemid
                                     let itemimg = data.itemimg
@@ -178,23 +218,22 @@ const ShoppingBasket = () => {
                                                 {itemname}
                                             </td>
                                             <td>{itemprice}</td>
-                                            <td colSpan={2}>
-                                                {bcount}
-                                                {/* <div>
-                                            <form>
-                                            <div class="value-button" id="decrease"  value="Decrease Value"><div className="plusminus">-</div></div>
-                                                <input type="number" id="number" value={bcount}/>
-                                            <div class="value-button" id="increase"  value="Increase Value"> <div className="plusminus">+</div></div>
-                                            </form>
-                                        </div> */}
+                                            <td colSpan={2} style={{paddingLeft:"20px"}}>
+                                                {showBcount}
                                             </td>
-                                            {/* <td>?</td> */}
+                                            <td>
+                                            <form>
+                                                <div className="value-button" id="decrease" onClick={()=>{decreaseNum(idx); }} value="Decrease Value"><div className="plusminus">-</div></div>
+                                                    {/* <input type="number" id="number" value={updateItem[idx].bcount} /> */}
+                                                <div className="value-button" id="increase" onClick={()=>{increaseNum(idx); }} value="Increase Value"> <div className="plusminus">+</div></div>
+                                                <Button type="button" className="remove" variant="secondary" size="sm" onClick={()=> {update(idx); }}>수정 </Button>
+                                            </form>
+                                            </td>
                                         </tr>
                                     return (reviewData)
-                                })
+                                }) : ""
                             }
                         </tbody>
-
                     </Table>
                 </div>
             </Form>
