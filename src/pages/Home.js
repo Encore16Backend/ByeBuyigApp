@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import BestCardWrapper from "../components/Base/main/BestCarpWrapper";
 import GetBestItems from "../hooks/GetBestItems";
@@ -15,6 +15,7 @@ const Home = ()=>{
 
     // 베스트 아이템들 (기본 url 후기Best) 전체 Best
     GetBestItems(BestItemUrl)
+
 
     // 일반 모든 상품
     // GetMainItems()
