@@ -39,9 +39,6 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
                             <textField>리뷰 : {reviewcount}</textField>
                         </div>
                            
-                        <Card.Text>
-                            <ReactStars edit={false} value={reviewmean}/>  
-                        </Card.Text>
                 </Card.Body>
         </Card>
         </div>
