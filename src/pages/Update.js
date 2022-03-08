@@ -143,7 +143,6 @@ const Update= () => {
 
     const del = async (e)=>{
         // e.preventDefault();
-        console.log("삭제");
         await axios.delete('http://127.0.0.1:8081/api/user/delete', {
             params :{
                 username: sessionStorage.getItem('id')

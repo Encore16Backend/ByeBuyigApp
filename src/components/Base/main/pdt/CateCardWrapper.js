@@ -19,7 +19,8 @@ const CateCardWrapper = ({cata})=>{
                 price = {cateItem[i]['price']} 
                 purchasecnt = {cateItem[i]['purchasecnt']} 
                 images = {cateItem[i]['images']} 
-                reviewmean = {cateItem[i]['reviewmean']} 
+                reviewmean = {cateItem[i]['reviewmean']}
+                reviewcount={cateItem[i]['reviewcount']}
                 />);
         }
         return result;
