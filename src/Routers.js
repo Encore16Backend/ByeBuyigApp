@@ -7,6 +7,9 @@ import SearchList from "./pages/SearchPage";
 import ImgSearchPage from "./pages/ImgSearchPage";
 import MyReview from "./pages/MyReview";
 import ShoppingBasket from "./pages/ShoppingBasket";
+import Order from "./pages/Order";
+import BeforeOrder from "./pages/BeforeOrder";
+import ShowOrderResult from "./pages/OrderResult";
 
 export default [
     {
@@ -44,5 +47,17 @@ export default [
     {
         path:"/basket",
         component:ShoppingBasket
+    },
+    {
+        path:"/order",
+        component:Order
+    },
+    {
+        path:"/beforeorder",
+        component:BeforeOrder
+    },
+    {
+        path:"/orderresult",
+        component:ShowOrderResult
     }
 ]

@@ -63,7 +63,6 @@ const MyReview = () => {
         else {
             formTd.style['display'] = 'none'
             form.style['display'] = 'none'
-            
         }
     }
 
@@ -209,10 +208,12 @@ const MyReview = () => {
                                     <td colSpan={2}>
                                         {content}
                                     </td>
-                                    <td>{score}</td>
+                                    <td>
+                                        <ReactStars key={'starScore'+reviewid} edit={false} value={score}/> 
+                                    </td>
                                     <td>
                                     {
-                                    <Button key={'modifyText'+reviewid} onClick={()=>{modify(reviewid, content, score)}} >수정</Button>
+                                    <Button key={'modifyText'+reviewid} onClick={()=>{modify(reviewid, content, score)}} className="remove" variant="secondary" size="sm" >수정</Button>
                                     }
                                     </td>
                                 </tr>

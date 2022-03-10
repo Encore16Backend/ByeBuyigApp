@@ -11,9 +11,12 @@ import "../../css/desc.css"
 const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
     const history = useHistory();
-
      // 들어온 카테고리의 상세 품목 길이
      const allItem = useSelector(state => state.Item.items)
+
+    // 해당 페이지 받아오기
+    const oneItem = useSelector(state=>state.oneItem.item)
+    
 
      
     const desc = pdtState.description
@@ -43,7 +46,6 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
     // 장바구니에 담는 함수
     const addBasket = async (username,itemid,itemimg,itemname,itemprice,bcount)=>{
-        console.log(itemimg, "itemImg")
         await axios.post('http://127.0.0.1:8081/basket/add',{
             // body
             username : username,
@@ -81,22 +83,20 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     const render = allItem.filter(item => item.itemid === itemid)
     const renderedItem = render[0] ? render[0] : ""
 
-    console.log(renderedItem, "render")
-
     const rendering = ()=>{
         return(
             <>
         <div>
             <h1>Product Info</h1>
             <br/><br/>
-            <p> 상품명/품번 : <b>{renderedItem.itemname}/{renderedItem.itemid}</b> </p>
+            <p> 상품명/품번 : <b>{oneItem.itemname}/{oneItem.itemid}</b> </p>
             <div className="descStar">
-                <div>평점 : {renderedItem.reviewmean} </div>
-                <div><ReactStars edit={false} value={renderedItem.reviewmean}/></div>
+                <div>평점 : {oneItem.reviewmean} </div>
+                <div><ReactStars edit={false} value={oneItem.reviewmean}/></div>
             </div>
-            <p> 가격 : <b>{renderedItem.price}</b> </p>
-            <p> 구매수 : <b>{renderedItem.purchasecnt}</b> </p>
-            <p> 리뷰 수 : {renderedItem.reviewcount}</p>
+            <p> 가격 : <b>{oneItem.price}</b> </p>
+            <p> 구매수 : <b>{oneItem.purchasecnt}</b> </p>
+            <p> 리뷰 수 : {oneItem.reviewcount}</p>
             {/* username,itemid,itemimg,itemname,itemprice,bcount*/}
             {/* 장바구니 주문 갯수 정하기 */}
             <div>
@@ -108,24 +108,10 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
             </div>
             {/* 장바구니 담기 버튼 */}
             <Button onClick={() => addBasket(
-                sessionStorage.getItem("id") , renderedItem.itemid, img1, renderedItem.itemname,
-                renderedItem.price,bcount
+                sessionStorage.getItem("id") , oneItem.itemid, img1, oneItem.itemname,
+                oneItem.price,bcount
             )}>장바구니 담기</Button>
         </div>
-
-        {/* <div>
-            <h1>Product Info</h1>
-            <br/><br/>
-            <p> 상품명/품번 : <b>{itemname}/{itemid}</b> </p>
-            <div className="descStar">
-                <div>평점 : {reviewmean} </div>
-                <div><ReactStars edit={false} value={reviewmean}/></div>
-            </div>
-            <p> 가격 : <b>{price}</b> </p>
-            <p> 구매수 : <b>{purchasecnt}</b> </p>
-            <p> 리뷰 수 : {reviewcount}</p>
-            <Button >장바구니 담기</Button>
-        </div> */}
             </>
         )
     }
