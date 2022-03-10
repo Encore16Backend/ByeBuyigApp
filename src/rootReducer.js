@@ -7,7 +7,8 @@ import reviewReducer from "./redux/reviews/reducer";
 import cataNumReducer from "./redux/cataNum/reducer";
 import pageReducer from "./redux/pages/reducer";
 import basketReducer from "./redux/basket/reducer";
-
+import oneItemReducer from "./redux/oneItem/reducer";
+import orderListReducer from "./redux/OrderItems/reducer";
 
 const rootReducer = combineReducers({
     user:userReducer, // 유저정보
@@ -17,7 +18,9 @@ const rootReducer = combineReducers({
     reviews : reviewReducer, // 리뷰
     cataNum : cataNumReducer, // 검색과 cata 상품들 관련
     totalPage : pageReducer, // 페이지관련
-    basket : basketReducer
+    basket : basketReducer,
+    oneItem : oneItemReducer,
+    order:orderListReducer
 })
 
 export default rootReducer

@@ -277,7 +277,6 @@ const NavB = ({ID, logOut})=>{
                 </div>
             </div>
             </div>
-            {/* cata종료 */}
           </Nav>
 
           
@@ -305,11 +304,6 @@ const NavB = ({ID, logOut})=>{
                         </li>
                         <li>
                           <span ><i className="ion-ios-color-filter-outline"></i>
-                          <Link >구매목록</Link>
-                          </span>
-                        </li>
-                        <li>
-                          <span ><i className="ion-ios-color-filter-outline"></i>
                           <Link to={{
                             pathname:"/basket"
                           }}>장바구니</Link>
@@ -318,6 +312,11 @@ const NavB = ({ID, logOut})=>{
                         <li>
                           <span ><i className="ion-ios-color-filter-outline"></i>
                           <Link to={{pathname:"/MyReview"}}>리뷰 관리</Link>
+                          </span>
+                        </li>
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link to={{pathname:"/order"}}>구매내역</Link>
                           </span>
                         </li>
                         <li>

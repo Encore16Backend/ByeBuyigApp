@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import DetailDesc from "../components/detail/desc";
 import MakeReview from "../components/detail/makereview";
 import ReviewView from "../components/detail/reviewview";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GetBestItems from "../hooks/GetBestItems";
 import axios from "axios";
 import { addReview } from "../redux/reviews/actions";
-import GetMainItems from "../hooks/GetMainItems";
 import ImageSlide from "../components/detail/ImageSlide";
+import {addOneItems} from "../redux/oneItem/actions"
 
 
 const DetailPage = ()=>{
     const dispatch = useDispatch()
-
     const [desc , setDesc] = useState('DESC')
     const [data, setDate] = useState('date')
     const [page, setPage] = useState(1)
+
     
      // 리뷰값 받아오기
      const GetReviewItem = async (itmeid, asc, sort, page) =>{
@@ -39,21 +39,45 @@ const DetailPage = ()=>{
         })
       }
 
+    // 상품 하나 검색해서 받아오기
+    const GetOneItem = async (itmeid) =>{
+        await axios.get('http://127.0.0.1:8081/main/item',{
+           params:{
+            itemid:itmeid,
+           }
+        },{
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            console.log(res, "getOneItem")
+            dispatch(addOneItems(res.data))
+        }).catch(error => {
+            console.log(error, ' GetOneItem 에러');
+        })
+      }
+
 
     const location = useLocation()
     const locationState = location.state
     
 
     GetBestItems("/main/bestItem")
-    GetMainItems()
+    // GetMainItems()
 
     const [lendering , setLandering] = useState(false)
 
-    const imgs = locationState.images
+    // 이미지를 받아오기
     const itemId = locationState.itemid
 
+    // 리뷰 가져오는 hook
     GetReviewItem(itemId, desc, data, page)
-
+    // 최초한번 들어왔을떄 이미지를 가지고있음
+    useEffect(()=>{
+        GetOneItem(itemId)
+    },[])
+    const locationsStateHook = useSelector(state => state.oneItem.item);
+    const imgs = useSelector(state => state.oneItem.item.images);
 
     return(
         <>
@@ -65,7 +89,7 @@ const DetailPage = ()=>{
             </Row>
             <Row>
                 <Col xs={6} md={6}>
-                    <ImageSlide images={imgs}/>
+                    <ImageSlide images={imgs} />
                 </Col>
                 <Col xs={6} md={6}>
                     <DetailDesc pdtState={locationState} lendering={lendering} setLandering={setLandering}/>

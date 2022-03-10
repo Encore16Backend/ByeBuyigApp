@@ -7,6 +7,7 @@ import { addBasket } from "../redux/basket/actions"
 import Page from "../components/Base/main/Page";
 import { Form, Button, Table } from "react-bootstrap";
 import _ from 'lodash'
+import {addOrderList} from "../redux/OrderItems/actions"
 
 
 
@@ -28,13 +29,13 @@ const ShoppingBasket = () => {
     const [AllBasketNum, setAllBasketNum] = useState(0);
     // 업데이트로 보내기 위해 조작할 배열
     const [updateItem, setUpdateItem] = useState([]);
-    // const tempBasket = _.cloneDeep(basketItem)
+    // 주문할떄 보낼 배열들
+    const [orderItems, setOrderItems] = useState([]);
 
 
 
     // 장바구니 받아오는 axios
     const GetBasketItem = async (userid, pageNo) => {
-        console.log("Get")
         await axios.get('http://127.0.0.1:8081/basket/byUsername', {
             params: {
                 username: userid,
@@ -90,31 +91,39 @@ const ShoppingBasket = () => {
         setPathNo(value);
     }
 
-    const reviewCheck = (checked, basketid, itemid) => {
+    // 체크박스 체크하면
+    const reviewCheck = (checked, basketid, itemid, data) => {
         if (checked) {
             setCheckBaskets([...checkBaskets, basketid]);
             setCheckItems([...checkItems, itemid]);
+            setOrderItems([...orderItems, data]);
         } else {
             // 체크 해제
             setCheckBaskets(checkBaskets.filter((x) => x !== basketid));
             setCheckItems(checkItems.filter((x) => x != itemid));
+            setOrderItems(orderItems.filter((x) => x.itemid != itemid));
         }
     }
 
+    // 모두 체크하는 함수
     const allBasketCheck = (checked) => {
         if (checked) {
             const basketid = []; // `checkbox-${reviewid}`
             const itemid = [];
+            const orderid = [];
             basketItem.forEach((res) => {
                 basketid.push(res.id);
                 itemid.push(res.itemid);
+                orderid.push(res)
             });
             setCheckBaskets(basketid);
             setCheckItems(itemid);
+            setOrderItems(orderid)
         } else {
             // 전체 체크 박스 제거
             setCheckBaskets([]);
             setCheckItems([]);
+            setOrderItems([]);
         }
     }
 
@@ -131,6 +140,36 @@ const ShoppingBasket = () => {
             window.location.reload()
         }).catch(err => {
             console.log(err)
+        })
+    }
+
+    // 구매요청 계속 오류나는 곳
+    const makeOrder = async ()=>{
+        // 필요없는 리뷰아이디 삭제
+        for (let i =0; i< orderItems.length; i++){
+            delete orderItems[i].id
+        }
+        console.log(orderItems, "makeOrder로 보내는 값")
+        console.log([{1:"하나",2:"둘"}])
+        dispatch(addOrderList(orderItems))
+
+
+        //주소
+        await axios.post("http://127.0.0.1:8081/orderHistory/add",{
+            // body ,2번째 괄호
+            orderItems
+        },{
+            // header ,3번째 괄호
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+            },
+        }).then(res => {
+            const data = res.data
+            console.log(data);
+            
+        }).catch(error => {
+            console.log(error, ' makeOrder 에러');
         })
     }
 
@@ -165,6 +204,7 @@ const ShoppingBasket = () => {
                 <div>
                     {/* <Button type="button" className="remove" variant="secondary" size="sm" onClick={update}>수정 </Button> */}
                     <Button type="submit" className="remove" variant="secondary" size="sm" style={{position:"relative", right:"5px"}} >삭제</Button>
+                    <Button type="button" className="remove" variant="secondary" size="sm" onClick={()=> {makeOrder() }}>구매 </Button>
                 </div>
                 <div>
                     <Table>
@@ -205,7 +245,7 @@ const ShoppingBasket = () => {
                                                     <div className="checkBox">
                                                         <Form.Check
                                                             type='checkbox' className={`checkbox-${id}`}
-                                                            onChange={(e) => reviewCheck(e.target.checked, id, itemid)}
+                                                            onChange={(e) => reviewCheck(e.target.checked, id, itemid, data)}
                                                             checked={checkBaskets.includes(id) ? true : false}
                                                         />
                                                     </div>
@@ -217,14 +257,13 @@ const ShoppingBasket = () => {
                                             <td>
                                                 {itemname}
                                             </td>
-                                            <td>{itemprice}</td>
+                                            <td>{itemprice*bcount}</td>
                                             <td colSpan={2} style={{paddingLeft:"20px"}}>
                                                 {showBcount}
                                             </td>
                                             <td>
                                             <form>
                                                 <div className="value-button" id="decrease" onClick={()=>{decreaseNum(idx); }} value="Decrease Value"><div className="plusminus">-</div></div>
-                                                    {/* <input type="number" id="number" value={updateItem[idx].bcount} /> */}
                                                 <div className="value-button" id="increase" onClick={()=>{increaseNum(idx); }} value="Increase Value"> <div className="plusminus">+</div></div>
                                                 <Button type="button" className="remove" variant="secondary" size="sm" onClick={()=> {update(idx); }}>수정 </Button>
                                             </form>
