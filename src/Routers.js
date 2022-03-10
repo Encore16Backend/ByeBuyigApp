@@ -14,7 +14,7 @@ import ShowOrderResult from "./pages/OrderResult";
 export default [
     {
         path:'/',
-        component : Home
+        component:Home
     },
     {
         path:'/Review',

@@ -9,14 +9,18 @@ import ReactStars from "react-stars"
 const MakeReview = ({pdtState, lendering, setLandering}) =>{
 
     const USERID = useSelector(state => state.user.ID)
+    const oneItem = useSelector(state=>state.oneItem.item)
 
-    const image = pdtState.images[0].imgpath
-    console.log(image)
-    const pdtId = pdtState.itemid
-    const pdtName = pdtState.itemname
-    const userId = localStorage.getItem('id')
+    const imgArr = oneItem.images ? oneItem.images : []
+    const temp = imgArr[0] ? imgArr[0] : [] 
+    const image = temp.imgpath ? temp.imgpath : ""
+
+    const pdtId = oneItem.itemid ? oneItem.itemid : null
+    const pdtName = oneItem.itemname ? oneItem.itemname : null
+    const userId = sessionStorage.getItem('id')
     const [content , setContent] = useState('')
     const [score, setScore] = useState(1)
+
 
 
     const makeContent = (e)=>{
@@ -32,7 +36,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
         if (content === ""){
             alert("내용을 입력하세요")
             return
-        }else if (USERID === ""){
+        }else if (userId === ""){
             alert("로그인 후에 작성 할 수 있습니다")
             return
         }

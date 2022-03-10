@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useState } from "react";
 import {Form, Button, Table} from 'react-bootstrap'
@@ -7,6 +7,8 @@ import Page from "../components/Base/main/Page";
 
 const Order = ()=>{
 
+    // 내 주문내역들
+    
     const userid = sessionStorage.getItem("id");
     let [pageNo, setPathNo] = useState(1);
     let [totalPageNo, setTotalPageNo] = useState();
@@ -75,7 +77,7 @@ const Order = ()=>{
             const data = res.data
             console.log(data);
             setTotalPageNo(data.totalPages);
-            // setBasketItem(data.content)
+            setMyOrderItems(data.content)
             // setUpdateItem(data.content)
             setAllOrderNum(data.content.length)
             // dispatch(addBasket(res.data.content))
@@ -100,7 +102,9 @@ const Order = ()=>{
         })
     }
 
-    GetOrderItem(userid, pageNo)
+    useEffect(()=>{
+        GetOrderItem(userid, pageNo)
+    }, [pageNo])
 
 
 
@@ -138,9 +142,7 @@ const Order = ()=>{
                         </thead>
                         <tbody>
                             {   
-
                                 (myOrderItems.length != 0) ? myOrderItems.map((data, idx) => {
-                                    
                                     let bcount = data.bcount
                                     let id = data.id
                                     let itemid = data.itemid

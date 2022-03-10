@@ -12,21 +12,17 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
     const history = useHistory();
      // 들어온 카테고리의 상세 품목 길이
-     const allItem = useSelector(state => state.Item.items)
+    // const allItem = useSelector(state => state.Item.items)
 
     // 해당 페이지 받아오기
     const oneItem = useSelector(state=>state.oneItem.item)
-    
+    console.log(oneItem , "one")
 
-     
-    const desc = pdtState.description
-    const itemname = pdtState.itemname
-    const purchasecnt = pdtState.purchasecnt
-    const price = pdtState.price
-    const reviewmean = pdtState.reviewmean
-    const itemid = pdtState.itemid
-    const reviewcount = pdtState.reviewcount
-    const img1 = pdtState.images[0].imgpath
+    
+    const imgArr = oneItem.images ? oneItem.images : []
+    const temp = imgArr[0] ? imgArr[0] : [] 
+    const img1 = temp.imgpath ? temp.imgpath : ""
+    
 
     const [bcount, setBcount] = useState(1);
     
@@ -80,8 +76,8 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
     
 
-    const render = allItem.filter(item => item.itemid === itemid)
-    const renderedItem = render[0] ? render[0] : ""
+    // const render = allItem.filter(item => item.itemid === itemid)
+    // const renderedItem = render[0] ? render[0] : ""
 
     const rendering = ()=>{
         return(
@@ -121,7 +117,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     return(
         <> 
         {
-            (pdtState !== undefined) ? rendering() : ""
+            (!!oneItem) ? rendering() : ""
         }
             
         </>
