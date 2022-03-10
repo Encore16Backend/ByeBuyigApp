@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal,Form, Button } from "react-bootstrap";
 
-const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
+const BeforeOrder = ({ show, onHide, orderItems, makeOrder, oneOrder })=>{
 
 
     const closeHander = ()=>{
@@ -12,6 +12,8 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
         makeOrder()
     }
 
+    console.log(orderItems,"ttt")
+
     const render = orderItems.map((data,idx)=>{
         let bcount = data.bcount
         let id = data.id
@@ -19,7 +21,6 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
         let itemimg = data.itemimg
         let itemname = data.itemname
         let itemprice = data.itemprice
-
         // bcount: 3
         // id: 47
         // itemid: 365
@@ -60,21 +61,12 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
       </Modal.Header>
       <Modal.Body>
         <>
-          {/* <Form onSubmit={onSubmit}>
-                <Form.Group className="mb-3" >
-                <Form.Label>ID</Form.Label>
-                <Form.Control type="text"  />
-                <br></br>
-                <Button > 중복확인 </Button>
-                </Form.Group>
-                
-          </Form> */}
 
           {render}
 
+
+
           <Button onClick={onSubmit}>주문하기</Button>
-  
-          
         </>
       </Modal.Body>
       <Modal.Footer>
