@@ -8,11 +8,13 @@ import Page from "../components/Base/main/Page";
 import { Form, Button, Table } from "react-bootstrap";
 import _ from 'lodash'
 import {addOrderList} from "../redux/OrderItems/actions"
+import postRefresh from "../hooks/postRefresh";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import BeforeOrder from "../modals/BeforeOrder";
 
 
 
 const ShoppingBasket = () => {
-
 
     const location = useLocation();
     const locationState = location.state;
@@ -32,6 +34,8 @@ const ShoppingBasket = () => {
     // 주문할떄 보낼 배열들
     const [orderItems, setOrderItems] = useState([]);
 
+    const [ModalOn, setModalOn] =useState(false) // 구매모달창
+
 
 
     // 장바구니 받아오는 axios
@@ -48,7 +52,6 @@ const ShoppingBasket = () => {
         }).then(res => {
             const data = res.data
             console.log(data);
-            // data.content[0].bcount = 3;
             setTotalPageNo(data.totalPages);
             setBasketItem(data.content)
             setUpdateItem(data.content)
@@ -56,6 +59,8 @@ const ShoppingBasket = () => {
             dispatch(addBasket(res.data.content))
         }).catch(error => {
             console.log(error, ' GetBasketItem 에러');
+            postRefresh()
+            GetBasketItem(userid, pageNo)
         })
     }
 
@@ -67,7 +72,6 @@ const ShoppingBasket = () => {
             username : data.username,
             bcount : data.bcount,
             itemid : data.itemid
-            
         },{
             headers: {
                 "Content-Type": "application/json",
@@ -83,11 +87,11 @@ const ShoppingBasket = () => {
 
     useEffect(() => {
         GetBasketItem(userid, pageNo)
+        postRefresh()
     }, [pageNo])
 
     // 페이징함수
     const handlePage = (value) => {
-        // GetBasketItem(userid, value)
         setPathNo(value);
     }
 
@@ -143,21 +147,19 @@ const ShoppingBasket = () => {
         })
     }
 
-    // 구매요청 계속 오류나는 곳
+    // 구매요청
     const makeOrder = async ()=>{
-        // 필요없는 리뷰아이디 삭제
+        window.confirm("정말 구매하시겠습니까?")
+        
         for (let i =0; i< orderItems.length; i++){
             delete orderItems[i].id
         }
-        console.log(orderItems, "makeOrder로 보내는 값")
-        console.log([{1:"하나",2:"둘"}])
         dispatch(addOrderList(orderItems))
-
-
+        
         //주소
         await axios.post("http://127.0.0.1:8081/orderHistory/add",{
             // body ,2번째 괄호
-            orderItems
+            OrderHistory:orderItems
         },{
             // header ,3번째 괄호
             headers: {
@@ -167,11 +169,18 @@ const ShoppingBasket = () => {
         }).then(res => {
             const data = res.data
             console.log(data);
-            
+            setModalOn(false)
+            histroy.push({
+                pathname:"/orderresult",
+                state : orderItems
+            })
+
         }).catch(error => {
             console.log(error, ' makeOrder 에러');
         })
     }
+
+    
 
    
 
@@ -204,7 +213,17 @@ const ShoppingBasket = () => {
                 <div>
                     {/* <Button type="button" className="remove" variant="secondary" size="sm" onClick={update}>수정 </Button> */}
                     <Button type="submit" className="remove" variant="secondary" size="sm" style={{position:"relative", right:"5px"}} >삭제</Button>
-                    <Button type="button" className="remove" variant="secondary" size="sm" onClick={()=> {makeOrder() }}>구매 </Button>
+                    {/* <Button type="button" className="remove" variant="secondary" size="sm" onClick={()=> {makeOrder() }}>구매 </Button> */}
+                    <Button  type="button" className="remove" variant="secondary" size="sm" onClick={()=>{
+                        if (orderItems.length != 0){
+                            setModalOn(true)
+                        }else{
+                            alert("구매할 상품을 선택하세요")
+                        }
+                    }}>구매</Button>
+
+                    <BeforeOrder makeOrder={makeOrder} orderItems={orderItems} show={ModalOn} onHide = {()=>{setModalOn(false)}} />
+
                 </div>
                 <div>
                     <Table>
@@ -255,7 +274,13 @@ const ShoppingBasket = () => {
                                                 <img src={itemimg} width="80" height="96" style={{ marginRight: "5px" }} />
                                             </td>
                                             <td>
-                                                {itemname}
+                                            <Link to={{ pathname:"/detail", search : "?itemid="+itemid,
+                                                state : {
+                                                    itemid : itemid,
+                                                },
+                                                }} >
+                                            {itemname}
+                                            </Link>
                                             </td>
                                             <td>{itemprice*bcount}</td>
                                             <td colSpan={2} style={{paddingLeft:"20px"}}>

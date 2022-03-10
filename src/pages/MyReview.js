@@ -6,6 +6,7 @@ import Page from "../components/Base/main/Page";
 import { Container } from "react-bootstrap";
 import ReactStars from "react-stars";
 import postRefresh from "../hooks/postRefresh";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const MyReview = () => {
 
@@ -88,6 +89,7 @@ const MyReview = () => {
             setReview(data.content)
         }).catch(err => {
             console.log(err);
+            postRefresh()
         })
     }, [pageNo])
 
@@ -106,6 +108,8 @@ const MyReview = () => {
             setCheckItems([]);
         }).catch(err => {
             console.log(err)
+            postRefresh()
+            onSubmit()
         }) 
     }
 
@@ -200,9 +204,14 @@ const MyReview = () => {
                                     <td>
                                         <img src={itemimage} width="80" height="96" style={{marginRight:"5px"}}/>
                                     </td>
-                                    <td>  {/* colSpan={2} */}
-                                        
+                                    <td>
+                                        <Link to={{ pathname:"/detail", search : "?itemid="+itemid,
+                                        state : {
+                                            itemid : itemid,
+                                        },
+                                        }} >
                                         {itemname}
+                                        </Link>
                                     </td>
                                     <td>{dateArr.join('-')}</td>
                                     <td colSpan={2}>

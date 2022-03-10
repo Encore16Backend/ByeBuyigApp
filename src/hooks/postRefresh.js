@@ -8,10 +8,9 @@ const postRefresh = async ()=>{
             "Authorization": "Bearer " + sessionStorage.getItem('refresh_token')
         }
     }).then(res => {
-        console.log(res);
         sessionStorage.setItem('access_token', res.data.access_token);
     }).catch(error => {
-        console.log(error, ' 토큰 재발행 에러');
+        
     })
 }
 

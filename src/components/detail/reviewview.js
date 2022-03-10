@@ -11,18 +11,18 @@ import Page from "../Base/main/Page";
 
 const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, pdtState })=>{
 
-    // 해당 item을 받아옴
-    const allItem = useSelector(state => state.Item.items)
-    const rendered = allItem.filter(item => item.itemid === pdtState.itemid)
-    const renderedItem = rendered[0] ? rendered[0] : ""
+    // // 해당 item을 받아옴
+    // const allItem = useSelector(state => state.Item.items)
+    // const rendered = allItem.filter(item => item.itemid === pdtState.itemid)
+    // const renderedItem = rendered[0] ? rendered[0] : ""
+    
+
+    const renderedItem = useSelector(state=>state.oneItem.item)
     let allReviewNums = 0
     if (renderedItem){  
         allReviewNums = renderedItem.reviewcount
     }
 
-
-
-    console.log(renderedItem, "댓글댓글")
 
     // 댓글의 점수와 내용
     const [content , setContent] = useState('')
@@ -212,18 +212,6 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
             <br/>
            {render}
            <div className="myPage centered">
-               {/* {
-                   allReviewNums != 0 ?  <ReactPaginate 
-                   pageCount={Math.ceil(allReviewNums / 5)}
-                   pageRangeDisplayed={2}
-                   marginPagesDisplayed={0}
-                   breakLabel={""}
-                   onPageChange={handlePageChange}
-                   containerClassName={"pagination-ul"}
-                   activeClassName={"currentPage"}
-                   previousClassName={"pageLabel-btn"}
-                   nextClassName={"pageLabel-btn"}/> : ""
-               } */}
 
                {
                     allReviewNums != 0 ? <Page
