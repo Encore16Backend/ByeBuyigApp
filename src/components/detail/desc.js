@@ -7,6 +7,8 @@ import axios from "axios";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import postRefresh from "../../hooks/postRefresh"
 import "../../css/desc.css"
+import BeforeOrder from "../../modals/BeforeOrder";
+import session from "redux-persist/lib/storage/session";
 
 const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
@@ -17,6 +19,8 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     // 해당 페이지 받아오기
     const oneItem = useSelector(state=>state.oneItem.item)
     console.log(oneItem , "one")
+    const [modalOn, setModalOn] = useState(false)
+    const [forOrder,setForOrder] = useState([])
 
     
     const imgArr = oneItem.images ? oneItem.images : []
@@ -74,8 +78,55 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
         })
     }
 
-    
+// categories: (2) [{…}, {…}]
+// count: 200
+// images: (3) [{…}, {…}, {…}]
+// itemid: 3
+// itemname: "CONA 9154 기모옵션추가 커버밴드 와이드 루즈 데미지워싱 데님 블랙그레이"
+// price: 48600
+// purchasecnt: 0
+// reviewcount: 4
+// reviewmean: 4.25
 
+    // const order = {
+    //     "username": sessionStorage.getItem("id"),
+    //     "itemid":oneItem.itemid,
+    //     "itemname":oneItem.itemname,
+    //     "itemprice":oneItem.price,
+    //     "itemimg":oneItem.images[0].imgpath,
+    //     "bcount":bcount
+    // }
+    // setForOrder(...forOrder, order)
+
+    // 구매요청 단일 품목
+    const makeOrder = async ()=>{
+        window.confirm("정말 구매하시겠습니까?")
+       
+
+        await axios.post("http://127.0.0.1:8081/orderHistory/add",{
+            // body ,2번째 괄호
+            OrderHistory:forOrder
+        },{
+            // header ,3번째 괄호
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+            },
+        }).then(res => {
+            const data = res.data
+            setModalOn(false)
+            history.push({
+                pathname:"/orderresult",
+                state : forOrder
+            })
+
+        }).catch(error => {
+            console.log(error, ' makeOrder 에러');
+        })
+    }
+
+    
+    
     // const render = allItem.filter(item => item.itemid === itemid)
     // const renderedItem = render[0] ? render[0] : ""
 
@@ -102,11 +153,19 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
                 <div class="value-button" id="increase" onClick={decreaseNum} value="Increase Value"> <div className="plusminus">+</div></div>
                 </form>
             </div>
+            {/* 모달창 */}
+            <BeforeOrder makeOrder={makeOrder} orderItems={forOrder} show={modalOn} onHide = {()=>{setModalOn(false)}} />
+
             {/* 장바구니 담기 버튼 */}
             <Button onClick={() => addBasket(
-                sessionStorage.getItem("id") , oneItem.itemid, img1, oneItem.itemname,
-                oneItem.price,bcount
+                sessionStorage.getItem("id") , oneItem.itemid, img1, oneItem.itemname, oneItem.price,bcount
             )}>장바구니 담기</Button>
+            <Button onClick={()=>{
+                
+                setModalOn(true)
+            }}>
+                즉시구매
+            </Button>
         </div>
             </>
         )
