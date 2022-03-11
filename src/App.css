@@ -88,4 +88,10 @@ a:hover{
  .NavBarCataForm{
    padding-top: 7px;
  }
+
+ /* mypageTable */
+ tbody > tr:hover {
+  background-color:gainsboro;
+  transition: background-color .3s;
+ }
  

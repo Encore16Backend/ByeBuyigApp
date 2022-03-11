@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import {logIn} from '../redux/user/actions'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
+import cookie from 'react-cookies'
+
 function SingInModal({show, onHide, logIn}){
         var history = useHistory();
 
@@ -20,9 +22,11 @@ function SingInModal({show, onHide, logIn}){
                     "Content-Type": "application/json",
                   },
             }).then(res => {
-                // setAuthorizationToken(res.data.access_token)
-                sessionStorage.setItem('refresh_token', res.data.refresh_token)
+                // sessionStorage.setItem('refresh_token', res.data.refresh_token)
                 sessionStorage.setItem('access_token', res.data.access_token) 
+                cookie.save('refreshCookie',res.data.refresh_token,{
+                    path:"/",
+                })
                 closeHander();
             }).then(res =>{
                 logIn(id)

@@ -123,7 +123,7 @@ const Order = ()=>{
                     <Table>
                         <thead>
                             <tr>
-                                <th className="checkBox">
+                                {/* <th className="checkBox">
                                     <div>
                                         <Form.Check
                                             type='checkbox' id='checkbox'
@@ -131,7 +131,7 @@ const Order = ()=>{
                                             checked={checkBaskets.length === AllOrderNum ? (AllOrderNum === 0 ? false : true) : false}
                                         />
                                     </div>
-                                </th>
+                                </th> */}
                                 <th></th>
                                 <th>상품정보</th>
                                 <th>가격</th>
@@ -150,7 +150,7 @@ const Order = ()=>{
                                     let itemprice = data.itemprice
                                     let reviewData =
                                         <tr key={id}>
-                                            <td className="checkBox">
+                                            {/* <td className="checkBox">
                                                 <Form>
                                                     <div className="checkBox">
                                                         <Form.Check
@@ -160,7 +160,7 @@ const Order = ()=>{
                                                         />
                                                     </div>
                                                 </Form>
-                                            </td>
+                                            </td> */}
                                             <td>
                                                 <img src={itemimg} width="80" height="96" style={{ marginRight: "5px" }} />
                                             </td>

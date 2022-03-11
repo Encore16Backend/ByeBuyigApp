@@ -18,6 +18,7 @@ const DetailPage = ()=>{
     const [data, setDate] = useState('date')
     const [page, setPage] = useState(1)
 
+
     
      // 리뷰값 받아오기
      const GetReviewItem = async (itmeid, asc, sort, page) =>{
