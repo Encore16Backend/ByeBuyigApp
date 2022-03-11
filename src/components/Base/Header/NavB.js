@@ -34,10 +34,10 @@ const NavB = ({ID, logOut})=>{
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // login용 hook
+    // login용 hook
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
-    const [checkModalOn,setCheckModalOn] = useState(false) // pwd check
+    const [checkModalOn, setCheckModalOn] = useState(false) // pwd check
 
     var history = useHistory();
     const id = sessionStorage.getItem('id')

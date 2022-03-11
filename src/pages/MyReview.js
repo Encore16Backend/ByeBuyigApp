@@ -52,17 +52,23 @@ const MyReview = () => {
     }
     
 
+    const [beforeform , setBeforeFrom] = useState('');
+    const [beforeFromTd, setBeforeFormTd] = useState('');
     // 수정폼 나오게한다
     const modify = (id,content,score)=>{
         let form = document.querySelector('#modify'+id);
         let formTd = document.querySelector('#td'+id);
-
+        setBeforeFrom(form)
+        setBeforeFormTd(formTd)
         if (formTd.style['display'] === 'none'){
             formTd.style['display'] = 'table-cell'
             form.style['display'] = 'block'
+            if ( !!beforeform &&  !!beforeFromTd){
+                beforeform.style['display'] = 'none'
+                beforeFromTd.style['display'] = 'none'
+            } 
             setContent(content)
             setScore(score)
-
         }
         else {
             formTd.style['display'] = 'none'
@@ -208,11 +214,7 @@ const MyReview = () => {
                                         <img src={itemimage} width="80" height="96" style={{marginRight:"5px"}}/>
                                     </td>
                                     <td>
-                                        <Link to={{ pathname:"/detail", search : "?itemid="+itemid,
-                                        state : {
-                                            itemid : itemid,
-                                        },
-                                        }} >
+                                        <Link to={{ pathname:"/detail", search : "?itemid="+itemid,state : {itemid : itemid,},}} >
                                         {itemname}
                                         </Link>
                                     </td>

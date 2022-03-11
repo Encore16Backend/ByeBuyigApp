@@ -43,10 +43,18 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
     // 리뷰배열과 아이디
     const reviews = useSelector(state => state.reviews.reviews)
     const userID = sessionStorage.getItem('id')
+
+
+
+    const [beforeform , setBeforeFrom] = useState('');
     // 수정폼 나오게한다
     const modify = (id,content,score)=>{
         let form = document.querySelector('#modify'+id);
+        setBeforeFrom(form)
         if (form.style['display'] === 'none'){
+            if ( !!beforeform ){
+                beforeform.style['display'] = 'none'
+            } 
             setContent(content)
             setScore(score)
             form.style['display'] = 'block'
