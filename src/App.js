@@ -12,9 +12,10 @@ import postRefresh from './hooks/postRefresh';
 
 
 function App() {
+  
   if ( sessionStorage.getItem('id') ){
     setInterval(() => 
-    postRefresh(),  10 * 60 * 800);
+    postRefresh(),   60*60*8000);
     // 8분 간격으로 토큰 받아옴
   }
 
