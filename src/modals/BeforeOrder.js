@@ -3,7 +3,7 @@ import { Modal,Form, Button } from "react-bootstrap";
 
 const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
 
-
+    let sum = 0
 
     const closeHander = ()=>{
         onHide()
@@ -30,15 +30,19 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
         // itemprice: 21000
         // username: "qwerqwer"
 
+        sum += itemprice*bcount
+
        
         return (
             <>
             
-            <div>
-                 <img src={itemimg} width="auto" height="300" style={{ marginRight: "5px" , display:"inline" }} />
-                 <h3> {itemname}</h3>
-                 <p>가격 : {itemprice} , 주문수량 : {bcount} </p>
-                 <p >총 가격 : {itemprice*bcount}</p>
+            <div style={{display:"inline-block"}} >
+                 <img src={itemimg} width="140px" height="140px" style={{ marginRight: "5px" , display:"inline" }} />
+                 <div style={{display:"inline-block", paddingLeft:"1rem", verticalAlign:"top"}}>
+                 <p> <b>{itemname}</b></p>
+                 <p>가격 : {itemprice} 주문수량 : {bcount} </p>
+                 <p >주문 가격 : {itemprice*bcount}</p>
+                 </div>
             </div>
             <hr/>
             </>
@@ -57,17 +61,14 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
-          주문
+          주문확인
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <>
-
           {render}
-
-
-
-          <Button onClick={onSubmit}>주문하기</Button>
+          <Button onClick={onSubmit}>주문하기</Button> 
+          <span style={{paddingLeft:"31.5rem"}}><b>총 결제금액</b> : {sum} </span>
         </>
       </Modal.Body>
       <Modal.Footer>

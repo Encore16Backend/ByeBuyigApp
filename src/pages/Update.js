@@ -25,8 +25,6 @@ const Update= () => {
     const [isAddress, setIsAddress] = useState('');
     const [valisAddress, setvalisAddress] = useState(false);
     const [detailAddress,setdetailAddress] = useState('')
-    
-
     const [fashion, setFashion] = useState('')
     
     //test 
