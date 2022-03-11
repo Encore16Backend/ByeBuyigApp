@@ -8,12 +8,30 @@ const postRefresh = async ()=>{
         headers: {
             "Content-Type": "application/json",
             // "Authorization": "Bearer " + sessionStorage.getItem('refresh_token')
-            "Authorization": "Bearer " + cookie.load('refresh')
+            "Authorization": "Bearer " + cookie.load('refreshCookie')
         }
     }).then(res => {
+        console.log("suecess")
         sessionStorage.setItem('access_token', res.data.access_token);
     }).catch(error => {
-        
+        if (error.response.status === 403) {
+            const { data } = error.response;
+            if (data['error_message'].indexOf("The Token has expired") != -1) {
+                axios.get('http://127.0.0.1:8081/api/token/refresh', {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + cookie.load('refreshCookie'),
+                    }
+                }).then(res => {
+                    sessionStorage.setItem('access_token', res.data.access_token);
+                    postRefresh()
+                })
+            }
+        }
+        else {
+            console.log("tokenerror")
+        }  
+
     })
 }
 

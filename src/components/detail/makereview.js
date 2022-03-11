@@ -56,7 +56,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
             }
         }).then(res =>{
             setContent('');
-            setScore(0);
+            setScore(1);
             console.log(res, "댓글 등록 완료")
             setLandering(!lendering)
             alert('댓글 등록 완료')

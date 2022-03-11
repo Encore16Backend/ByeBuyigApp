@@ -19,10 +19,12 @@ const NavB = ({ID, logOut})=>{
   // 리덕스로 받아온 값이 변할때마다 cataName에 넣어줌
   useEffect(()=>{
     setCataName(cataId)
+    setKeyword('')
   },[cataId])
   // select박스가 변할떄마다 cataName set
   const onCataChange = (e)=>{
     setCataName(e.target.value)
+    setKeyword("")
   }  
   const cataArr = [
     "전체","상의","반팔","긴팔","바지","반바지","슬랙스","데님팬츠","아우터","코트","트렌치 코트",
@@ -287,13 +289,12 @@ const NavB = ({ID, logOut})=>{
               (!!id) // !! (null undefined '' 등 모든 false형 값이면)
               ? 
               <>
-              <Nav.Link onClick={toMyPage}>{id}</Nav.Link>
-              {/* <Nav.Link onClick={()=>toggleMenu()}>마이샵</Nav.Link> */}
+              <Nav.Link onClick={toMyPage}></Nav.Link>
               
                 <div className='NavBarCataForm'>
                   <div className='navBarCate dropdown' style={{display:"inline"}}>
                   <span className='dropbtn'>
-                    <Link style={{color:"white"}}>마이샵</Link> 
+                    <Link style={{color:"white"}}>{id}</Link> 
                     </span>
                   <div className="dropdown-content" style={{position:"absolute", left:"1rem", textAlign:'left',zIndex:5}}>
                     <ul className="nav-flyout">

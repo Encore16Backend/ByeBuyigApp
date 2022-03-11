@@ -14,7 +14,8 @@
   float : left;
 }
 .BestButtons {
-  padding-bottom: 1rem;
+  position: relative;
+  top:4rem;
   text-align:right
 }
 .sortAndOrder{

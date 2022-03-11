@@ -222,6 +222,7 @@ function SingUpModal({ show, onHide }) {
   }
   // getActivate함수가 활성화되면 자동으로 회원가입 버튼을 활성화시킴
   useEffect(() => { 
+    console.log(getActivate())
     if (!getActivate() ) {
       setButtonRef(true);
     } else {

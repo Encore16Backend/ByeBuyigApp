@@ -136,7 +136,7 @@ const Order = ()=>{
                                 <th>상품정보</th>
                                 <th>가격</th>
                                 <th colSpan={2}>수량</th>
-                                <th></th>
+                                <th>결제가격</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -167,15 +167,12 @@ const Order = ()=>{
                                             <td>
                                                 {itemname}
                                             </td>
-                                            <td>{itemprice*bcount}</td>
+                                            <td>{itemprice}</td>
                                             <td colSpan={2} style={{paddingLeft:"20px"}}>
                                                 {bcount}
                                             </td>
                                             <td>
-                                            <form>
-                                                
-                                                
-                                            </form>
+                                            {itemprice*bcount}
                                             </td>
                                         </tr>
                                     return (reviewData)

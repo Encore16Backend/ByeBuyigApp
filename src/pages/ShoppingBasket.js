@@ -242,6 +242,7 @@ const ShoppingBasket = () => {
                                 <th>상품정보</th>
                                 <th>가격</th>
                                 <th colSpan={2}>수량</th>
+                                <th>총가격</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -282,9 +283,12 @@ const ShoppingBasket = () => {
                                             {itemname}
                                             </Link>
                                             </td>
-                                            <td>{itemprice*bcount}</td>
+                                            <td>{itemprice}</td>
                                             <td colSpan={2} style={{paddingLeft:"20px"}}>
                                                 {showBcount}
+                                            </td>
+                                            <td>
+                                                {itemprice*bcount}
                                             </td>
                                             <td>
                                             <form>

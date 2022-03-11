@@ -119,8 +119,8 @@ const CateList = ()=>{
                 <Col sm={12}>
                     <Row>
                         <br/><br/><br/><br/> 
-                        <h1 className="centered" >{cataname}</h1>
-                        <div className="BestButtons centered">
+                        {/* <h1 className="centered" >{cataname}</h1> */}
+                        <div className="BestButtons">
                             <span onClick={() => {
                                 changeOrderNum('4')
                                 changeBestItemUrl("/main/category/order?category="+cataname+"&order=4")
@@ -143,6 +143,8 @@ const CateList = ()=>{
                              
                             }} variant="secondary">판매량</span>
                         </div>
+                        <hr></hr>
+
                         <div className="bestpdts">
                             <CateCardWrapper cata = {"catapdt"} setHomeLandering={setHomeLandering} HomeLandering={Homelendering}/>
                         </div>
