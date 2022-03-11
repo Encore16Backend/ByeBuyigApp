@@ -89,9 +89,14 @@ a:hover{
    padding-top: 7px;
  }
 
- /* mypageTable */
+ /* mypageTable 마우스 오버시 색상 변경*/
  tbody > tr:hover {
   background-color:gainsboro;
   transition: background-color .3s;
  }
+ a:link, a:visited,  a:hover, a:active
+{
+    color: #000000;
+    text-decoration: none;
+}
  

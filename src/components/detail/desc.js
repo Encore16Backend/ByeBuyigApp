@@ -138,10 +138,13 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
             <BeforeOrder makeOrder={makeOrder} orderItems={[order]} show={modalOn} onHide = {()=>{setModalOn(false)}} />
 
             {/* 장바구니 담기 버튼 */}
+            <div style={{position:"relative", left:"25rem"}}>
             <Button onClick={() => addBasket(
                 sessionStorage.getItem("id") , oneItem.itemid, img1, oneItem.itemname, oneItem.price,bcount
             )}>장바구니 담기</Button>
+            &nbsp;
             <Button onClick={()=>{setModalOn(true)}}>즉시구매</Button>
+            </div>
         </div>
             </>
         )

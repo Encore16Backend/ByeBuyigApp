@@ -5,7 +5,6 @@ import axios from "axios";
 import { connect } from 'react-redux';
 import {logIn} from '../redux/user/actions'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-
 import cookie from 'react-cookies'
 
 function SingInModal({show, onHide, logIn}){
