@@ -26,7 +26,6 @@ function SingInModal({show, onHide, logIn}){
                 cookie.save('refreshCookie',res.data.refresh_token,{
                     path:"/",
                 })
-                alert(res.data.refresh_token)
                 closeHander();
             }).then(res =>{
                 logIn(id)
