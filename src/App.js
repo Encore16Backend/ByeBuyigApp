@@ -6,11 +6,16 @@ import NavB from './components/Base/Header/NavB';
 import {Provider} from 'react-redux'
 import store from './store';
 import React from "react";
+import postRefresh from './hooks/postRefresh';
 
 
 
 function App() {
-  // 메인페이지 상품렌더링
+  if ( sessionStorage.getItem('id') ){
+    setInterval(() => 
+    postRefresh(), 10 * 60 * 800);
+    // 8분 간격으로 토큰 받아옴
+  }
 
   return (
     <Router>
