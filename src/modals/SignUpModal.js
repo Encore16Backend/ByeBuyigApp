@@ -7,14 +7,15 @@ import "../css/join.css"
 
 function SingUpModal({ show, onHide }) {
   // id(pk) ,pwd, 이름?, 주소, 관심패션, 이메일
-
+  // const location =[isAddress , isZoneCode,detailAddress]
   // 회원가입 실행 함수
   const onSubmit = async (e) => {
     e.preventDefault();
     await axios.post('http://127.0.0.1:8081/api/user/save',{
       username : id,
       password : pwd, 
-      location : isAddress + ' ' + isZoneCode+' '+detailAddress,
+      // location : isAddress + ' ' + isZoneCode+' '+detailAddress,
+      locations : [{location:isAddress+'/'+isZoneCode+'/'+detailAddress}],
       style : fashion,
       email : email,
     },{
@@ -27,6 +28,8 @@ function SingUpModal({ show, onHide }) {
     }).catch(error =>{
       console.log(error)
       alert("회원가입 오류")
+      alert(error)
+      alert(typeof(isZoneCode))
     })
     setEmailMsg('');
     setPwdMsg('');
@@ -125,18 +128,8 @@ function SingUpModal({ show, onHide }) {
   
   // 주소관련
   const [isAddress, setIsAddress] = useState('');
-  const [valisAddress, setvalisAddress] = useState(false)
   const [detailAddress,setdetailAddress] = useState('')
 
-  const onIsAddress = (e)=>{
-    setIsAddress(e.target.value)
-    const Addr = e.target.value
-    if (Addr === true) {
-      setvalisAddress(true)
-    } else {
-      setvalisAddress(false)
-    }
-  }
 
   const ondetailAddress =(e) =>{
     setdetailAddress(e.target.value)
@@ -148,23 +141,6 @@ function SingUpModal({ show, onHide }) {
 
   // 우편번호 관련  
   const [isZoneCode, setIsZoneCode] = useState('');
-  const [valisZoneCode, setvalisZoneCode] = useState(false)
-
-  const onIsZoneCode = (e)=>{
-    setIsZoneCode(e.target.value)
-    const zip = e.target.value
-    if (zip === true) {
-      setvalisZoneCode(true)
-    } else {
-      setvalisZoneCode(false)
-    }
-  }
-
-  // 우편번호 검색으로 값이 생기면 유효성검사를 통과시키는 함수
-  const OnAddr = ()=>{
-      setvalisAddress(true)
-      setvalisZoneCode(true) 
-  }
 
   // 패션관련
   const [fashion, setFashion] = useState('')
@@ -217,8 +193,8 @@ function SingUpModal({ show, onHide }) {
 
   // 유효성 체크값들이 모두true가 되면 true를 리턴하여 회원가입 버튼을 활성화 시키는 함수
   const getActivate = () => {
-    
-    return (checkID === true && valchkPwd === 1 && valisAddress === true && valisZoneCode === true && valemail === 1 && valkeycode===1) // valname === true
+    console.log(checkID, valchkPwd, valemail, valkeycode);
+    return (checkID === true && valchkPwd === 1 && valemail === 1 && valkeycode===1) // valname === true
   }
   // getActivate함수가 활성화되면 자동으로 회원가입 버튼을 활성화시킴
   useEffect(() => { 
@@ -227,7 +203,7 @@ function SingUpModal({ show, onHide }) {
     } else {
       setButtonRef(false);
     }
-  }, [checkID, valchkPwd, valisAddress, valisZoneCode, valemail,valkeycode]) // valname
+  }, [checkID, valchkPwd, valemail,valkeycode]) // valname
 
 
   // 모달창을 닫고 state들을 초기화 시키는 함수
@@ -238,9 +214,7 @@ function SingUpModal({ show, onHide }) {
     setvalchkPwd(0)
     setChkPwd('')
     setIsAddress('')
-    setvalisAddress(false)
     setIsZoneCode('')
-    setvalisZoneCode(false)
     setFashion('')
     setEmail('')
     setvalemail(0)
@@ -344,30 +318,26 @@ function SingUpModal({ show, onHide }) {
             */}
 
             {/* 주소 API */}
-            <a onClick={OnAddr}>
-            <Test setIsAddress={setIsAddress} setIsZoneCode={setIsZoneCode}/>
-            </a>
-            <br></br>
+            <Form.Group >
+                        <Form.Label>우편번호</Form.Label>
+                        <div style={{display: 'flex'}}> 
+                            <Form.Control type="text" value={isZoneCode}  style={{width:"80px",textAlign:"center"}} />&nbsp; &nbsp; 
+                            <Test setIsAddress={setIsAddress} setIsZoneCode={setIsZoneCode}/>
+                            </div>
+                </Form.Group>
 
-            {/* ZIP */}
-            <Form.Group className="mb-3">
-              <Form.Label>우편번호</Form.Label>
-              <Form.Control type="text" placeholder="우편번호입력" onChange={
-                onIsZoneCode
-              } value={isZoneCode} />
-            </Form.Group>
-
-            {/* ADDR */}
-            <Form.Group className="mb-3">
-              <Form.Label>주소</Form.Label>
-              <Form.Control type="text" placeholder="상세주소입력" onChange={
-                onIsAddress
-              } value={isAddress} /><br></br>
-              <Form.Label>상세주소</Form.Label>
-              <Form.Control type="text" placeholder="상세주소입력" onChange={
-                ondetailAddress
-              } value={detailAddress} />
-            </Form.Group>
+                <br></br>
+                <Form.Group className="mb-3">
+                    <Form.Label>주소</Form.Label>
+                    <Form.Control type="text" placeholder="주소입력" value={isAddress} />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>상세주소</Form.Label>
+                    <Form.Control type="text" placeholder="상세주소입력" onChange={
+                        ondetailAddress
+                    } value={detailAddress} />
+                    
+                </Form.Group>
 
 
             {/* 관심패션 */}
@@ -404,6 +374,7 @@ function SingUpModal({ show, onHide }) {
             </Form.Group>
 
                 <Button type="submit" disabled={buttonRef} >회원가입</Button>
+                {/* <Button type="submit"  >회원가입</Button> */}
                 {checkID === true ? null:<p className={idmsgStyle}>※ ID 중복확인 해주세요</p>}
           </Form>
   
