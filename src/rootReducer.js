@@ -9,6 +9,7 @@ import pageReducer from "./redux/pages/reducer";
 import basketReducer from "./redux/basket/reducer";
 import oneItemReducer from "./redux/oneItem/reducer";
 import orderListReducer from "./redux/OrderItems/reducer";
+import locReducer from "./redux/addr/reducer";
 
 const rootReducer = combineReducers({
     user:userReducer, // 유저정보
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     totalPage : pageReducer, // 페이지관련
     basket : basketReducer,
     oneItem : oneItemReducer,
-    order:orderListReducer
+    order:orderListReducer,
+    loc :locReducer
 })
 
 export default rootReducer

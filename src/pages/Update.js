@@ -6,10 +6,13 @@ import React from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import '../css/join.css';
+import { useDispatch } from "react-redux";
+import { addLoc1, addLoc2, addLoc3 } from "../redux/addr/actions";
 
 const Update= () => {
     var history=useHistory();
     const data = useLocation();
+    const dispatch = useDispatch();
     // const id = localStorage.getItem('id');
 
 
@@ -222,6 +225,10 @@ const Update= () => {
             window.location.replace("/update")
             setTapname(posttitle)
             setTapname1(posttitle1)
+            dispatch(addLoc1(isAddress+'/'+isZoneCode+'/'+detailAddress))
+            dispatch(addLoc2(isAddress1+'/'+isZoneCode1+'/'+detailAddress1+'/'+posttitle))
+            dispatch(addLoc3(isAddress2+'/'+isZoneCode2+'/'+detailAddress2+'/'+posttitle1))
+            
         }).catch(error => {
             alert("비밀번호를 확인해주세요.");
             alert(error);
