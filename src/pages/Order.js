@@ -8,7 +8,6 @@ import Page from "../components/Base/main/Page";
 const Order = ()=>{
 
     // 내 주문내역들
-    
     const userid = sessionStorage.getItem("id");
     let [pageNo, setPathNo] = useState(1);
     let [totalPageNo, setTotalPageNo] = useState();
@@ -168,7 +167,7 @@ const Order = ()=>{
                                             <td>
                                                 {itemname}
                                             </td>
-                                            <td>{itemprice}</td>
+                                            <td>{itemprice*bcount}</td>
                                             <td colSpan={2} style={{paddingLeft:"20px"}}>
                                                 {bcount}
                                             </td>
