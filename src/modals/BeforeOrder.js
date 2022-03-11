@@ -1,7 +1,16 @@
 import React from "react";
 import { Modal,Form, Button } from "react-bootstrap";
 
-const BeforeOrder = ({ show, onHide, orderItems, makeOrder, oneOrder })=>{
+const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
+
+
+// [{…}]
+// 0: {id: 47, username: 'qwerqwer', bcount: 3, itemid: 365, itemimg: './상품이미지/상의/반팔/S t Bear Tee Black1.jpg', …}
+// length: 1
+
+
+// [{…}]0: {username: 'qwerqwer', bcount: 3, itemid: 184, itemimg: './상품이미지/바지/슬랙스/우먼즈 플루이드 슬림 스트레이트 슬랙스 블랙1.jpg', itemname: '우먼즈 플루이드 슬림 스트레이트 슬랙스 블랙', …}length: 1[[Prototype]]: Array(0) '모달창에 들어온 items'
+    // 이게 정답
 
 
     const closeHander = ()=>{
@@ -12,7 +21,7 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder, oneOrder })=>{
         makeOrder()
     }
 
-    console.log(orderItems,"ttt")
+    console.log(orderItems,"모달창에 들어온 items")
 
     const render = orderItems.map((data,idx)=>{
         let bcount = data.bcount

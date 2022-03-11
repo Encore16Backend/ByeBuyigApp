@@ -22,6 +22,7 @@ const MyReview = () => {
     const makeContent = (e)=>{
         setContent(e.target.value)
     }
+
     // 리뷰수정
     const modifyReview = async (reviewid,score,content)=>{
         await axios.put('http://127.0.0.1:8081/review/update',{
@@ -49,6 +50,7 @@ const MyReview = () => {
             modifyReview(reviewid,score,content) //  토큰을 받고 실행하고 싶은 함수 다시 실행
         })
     }
+    
 
     // 수정폼 나오게한다
     const modify = (id,content,score)=>{

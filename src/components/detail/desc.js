@@ -1,5 +1,5 @@
 import React, { useDebugValue, useState } from "react";
-import { Button, InputGroup } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import ReactStars from "react-stars"
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
@@ -8,21 +8,18 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import postRefresh from "../../hooks/postRefresh"
 import "../../css/desc.css"
 import BeforeOrder from "../../modals/BeforeOrder";
-import session from "redux-persist/lib/storage/session";
 
 const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
     const history = useHistory();
-     // 들어온 카테고리의 상세 품목 길이
-    // const allItem = useSelector(state => state.Item.items)
 
     // 해당 페이지 받아오기
     const oneItem = useSelector(state=>state.oneItem.item)
     console.log(oneItem , "one")
     const [modalOn, setModalOn] = useState(false)
-    const [forOrder,setForOrder] = useState([])
-
     
+
+    // 이미지를 받아오기 위한 과정들
     const imgArr = oneItem.images ? oneItem.images : []
     const temp = imgArr[0] ? imgArr[0] : [] 
     const img1 = temp.imgpath ? temp.imgpath : ""
@@ -78,34 +75,24 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
         })
     }
 
-// categories: (2) [{…}, {…}]
-// count: 200
-// images: (3) [{…}, {…}, {…}]
-// itemid: 3
-// itemname: "CONA 9154 기모옵션추가 커버밴드 와이드 루즈 데미지워싱 데님 블랙그레이"
-// price: 48600
-// purchasecnt: 0
-// reviewcount: 4
-// reviewmean: 4.25
 
-    // const order = {
-    //     "username": sessionStorage.getItem("id"),
-    //     "itemid":oneItem.itemid,
-    //     "itemname":oneItem.itemname,
-    //     "itemprice":oneItem.price,
-    //     "itemimg":oneItem.images[0].imgpath,
-    //     "bcount":bcount
-    // }
-    // setForOrder(...forOrder, order)
+    // 모달창에 보낼 변수
+    const order = {
+        "username": sessionStorage.getItem("id"),
+        "itemid":oneItem.itemid,
+        "itemname":oneItem.itemname,
+        "itemprice":oneItem.price,
+        "itemimg":img1,
+        "bcount":bcount
+    }
 
     // 구매요청 단일 품목
     const makeOrder = async ()=>{
         window.confirm("정말 구매하시겠습니까?")
-       
-
+        console.log([order], "orderFunc")
         await axios.post("http://127.0.0.1:8081/orderHistory/add",{
             // body ,2번째 괄호
-            OrderHistory:forOrder
+            OrderHistory:[order]
         },{
             // header ,3번째 괄호
             headers: {
@@ -117,18 +104,13 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
             setModalOn(false)
             history.push({
                 pathname:"/orderresult",
-                state : forOrder
+                state : [order]
             })
-
         }).catch(error => {
             console.log(error, ' makeOrder 에러');
         })
     }
 
-    
-    
-    // const render = allItem.filter(item => item.itemid === itemid)
-    // const renderedItem = render[0] ? render[0] : ""
 
     const rendering = ()=>{
         return(
@@ -144,7 +126,6 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
             <p> 가격 : <b>{oneItem.price}</b> </p>
             <p> 구매수 : <b>{oneItem.purchasecnt}</b> </p>
             <p> 리뷰 수 : {oneItem.reviewcount}</p>
-            {/* username,itemid,itemimg,itemname,itemprice,bcount*/}
             {/* 장바구니 주문 갯수 정하기 */}
             <div>
                 <form>
@@ -154,25 +135,19 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
                 </form>
             </div>
             {/* 모달창 */}
-            <BeforeOrder makeOrder={makeOrder} orderItems={forOrder} show={modalOn} onHide = {()=>{setModalOn(false)}} />
+            <BeforeOrder makeOrder={makeOrder} orderItems={[order]} show={modalOn} onHide = {()=>{setModalOn(false)}} />
 
             {/* 장바구니 담기 버튼 */}
             <Button onClick={() => addBasket(
                 sessionStorage.getItem("id") , oneItem.itemid, img1, oneItem.itemname, oneItem.price,bcount
             )}>장바구니 담기</Button>
-            <Button onClick={()=>{
-                
-                setModalOn(true)
-            }}>
-                즉시구매
-            </Button>
+            <Button onClick={()=>{setModalOn(true)}}>즉시구매</Button>
         </div>
             </>
         )
     }
     
     
-
     return(
         <> 
         {
