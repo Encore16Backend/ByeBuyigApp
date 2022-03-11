@@ -258,7 +258,7 @@ const ShoppingBasket = () => {
                                     let itemname = data.itemname
                                     let itemprice = data.itemprice
                                     let reviewData =
-                                        <tr key={id}>
+                                        <tr key={id} className="myTableTr">
                                             <td className="checkBox">
                                                 <Form>
                                                     <div className="checkBox">

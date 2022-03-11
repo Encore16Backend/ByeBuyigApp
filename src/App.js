@@ -10,21 +10,20 @@ import postRefresh from './hooks/postRefresh';
 
 
 
+
 function App() {
   if ( sessionStorage.getItem('id') ){
     setInterval(() => 
-    postRefresh(), 10 * 60 * 800);
+    postRefresh(),  10 * 60 * 800);
     // 8분 간격으로 토큰 받아옴
   }
 
   return (
     <Router>
       <Provider store={store}>
-        
     <div className="App">
       <NavB/>
         <div>
-          {/* <Realsidebar/> */}
           <Switch>
             {Routers.map(route =>{
                 return(

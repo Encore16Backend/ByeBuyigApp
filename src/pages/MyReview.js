@@ -62,6 +62,7 @@ const MyReview = () => {
             form.style['display'] = 'block'
             setContent(content)
             setScore(score)
+
         }
         else {
             formTd.style['display'] = 'none'
@@ -224,7 +225,7 @@ const MyReview = () => {
                                     </td>
                                     <td>
                                     {
-                                    <Button key={'modifyText'+reviewid} onClick={()=>{modify(reviewid, content, score)}} className="remove" variant="secondary" size="sm" >수정</Button>
+                                    <Button key={'modifyText'+reviewid} onClick={()=>{modify(reviewid, content, score)}} className="remove modifyButton" variant="secondary" size="sm" >수정</Button>
                                     }
                                     </td>
                                 </tr>
