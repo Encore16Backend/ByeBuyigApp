@@ -87,7 +87,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     }
 
     // 구매요청 단일 품목
-    const makeOrder = async ()=>{
+    const makeOrder = async (addr)=>{
         window.confirm("정말 구매하시겠습니까?")
         console.log([order], "orderFunc")
         await axios.post("http://127.0.0.1:8081/orderHistory/add",{
@@ -104,7 +104,10 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
             setModalOn(false)
             history.push({
                 pathname:"/orderresult",
-                state : [order]
+                state :{
+                    orderItems: [order],
+                    addr : addr,
+                },
             })
         }).catch(error => {
             console.log(error, ' makeOrder 에러');

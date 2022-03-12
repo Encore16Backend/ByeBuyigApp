@@ -153,22 +153,6 @@ const CateList = ()=>{
             </Row>
         </Container>
                     <div className="myPage centered">
-                        {/* {
-                            totalPage != 0 ?  <ReactPaginate 
-                            pageCount={Math.ceil(totalPage)}
-                            pageRangeDisplayed={2}
-                            marginPagesDisplayed={0}
-                            breakLabel={""}
-                            previousLabel={"이전"}
-                            nextLabel={"다음"}
-                            onPageChange={handlePageChange}
-                            containerClassName={"pagination-ul"}
-                            activeClassName={"currentPage"}
-                            previousClassName={"pageLabel-btn"}
-                            nextClassName={"pageLabel-btn"}
-                            /> : ""
-                        } */}
-
                         {
                             totalPage != 0 ? <Page
                                 setPage = {handlePage}

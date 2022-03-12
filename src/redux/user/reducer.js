@@ -1,9 +1,11 @@
 import { LogIn } from "./types"
 import { LogOut } from "./types"
+import { setPwd } from "./types"
 
 
 const initState = {
     ID : '',
+    pwd : '',
     location:'',
     username:'',
     style:'',
@@ -27,6 +29,12 @@ const userReducer = (state=initState, action)=>{
                 email:'',
                 role:''
             }
+        case setPwd : 
+            return{
+                ...state,
+                pwd : action.payload
+            }
+        
         default : return state
     }
 }

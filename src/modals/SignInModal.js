@@ -4,8 +4,10 @@ import {useState, useEffect, useRef} from "react";
 import axios from "axios";
 import { connect } from 'react-redux';
 import {logIn} from '../redux/user/actions'
+import {Pwd} from '../redux/user/actions'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import cookie from 'react-cookies'
+import session from "redux-persist/lib/storage/session";
 
 function SingInModal({show, onHide, logIn}){
         var history = useHistory();
@@ -23,6 +25,9 @@ function SingInModal({show, onHide, logIn}){
             }).then(res => {
                 // sessionStorage.setItem('refresh_token', res.data.refresh_token)
                 sessionStorage.setItem('access_token', res.data.access_token) 
+                cookie.save('pwd', pwd,{
+                    path:"/",
+                })
                 cookie.save('refreshCookie',res.data.refresh_token,{
                     path:"/",
                 })

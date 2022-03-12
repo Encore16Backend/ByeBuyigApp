@@ -148,7 +148,7 @@ const ShoppingBasket = () => {
     }
 
     // 구매요청
-    const makeOrder = async ()=>{
+    const makeOrder = async (addr)=>{
         window.confirm("정말 구매하시겠습니까?")
         
         for (let i =0; i< orderItems.length; i++){
@@ -172,7 +172,11 @@ const ShoppingBasket = () => {
             setModalOn(false)
             histroy.push({
                 pathname:"/orderresult",
-                state : orderItems
+                state : {
+                    orderItems:orderItems,
+                    addr : addr
+                },
+                
             })
 
         }).catch(error => {
@@ -211,7 +215,6 @@ const ShoppingBasket = () => {
                 <div className='title'>장바구니</div>
 
                 <div>
-                    {/* <Button type="button" className="remove" variant="secondary" size="sm" onClick={update}>수정 </Button> */}
                     <Button type="submit" className="remove" variant="secondary" size="sm" style={{position:"relative", right:"5px"}} >삭제</Button>
                     {/* <Button type="button" className="remove" variant="secondary" size="sm" onClick={()=> {makeOrder() }}>구매 </Button> */}
                     <Button  type="button" className="remove" variant="secondary" size="sm" onClick={()=>{

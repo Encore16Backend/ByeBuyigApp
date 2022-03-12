@@ -10,6 +10,14 @@ import basketReducer from "./redux/basket/reducer";
 import oneItemReducer from "./redux/oneItem/reducer";
 import orderListReducer from "./redux/OrderItems/reducer";
 import locReducer from "./redux/addr/reducer";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+const persistConfig = {
+    key : "root",
+    storage,
+    whitelist : ['locReducer']
+}
 
 const rootReducer = combineReducers({
     user:userReducer, // 유저정보

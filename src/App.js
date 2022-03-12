@@ -15,8 +15,8 @@ function App() {
   
   if ( sessionStorage.getItem('id') ){
     setInterval(() => 
-    postRefresh(),   60*60*8000);
-    // 8분 간격으로 토큰 받아옴
+    postRefresh(), 60*2000);
+    
   }
 
   return (
