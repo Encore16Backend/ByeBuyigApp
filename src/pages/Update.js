@@ -225,9 +225,6 @@ const Update= () => {
             window.location.replace("/update")
             setTapname(posttitle)
             setTapname1(posttitle1)
-            dispatch(addLoc1(isAddress+'/'+isZoneCode+'/'+detailAddress))
-            dispatch(addLoc2(isAddress1+'/'+isZoneCode1+'/'+detailAddress1+'/'+posttitle))
-            dispatch(addLoc3(isAddress2+'/'+isZoneCode2+'/'+detailAddress2+'/'+posttitle1))
             
         }).catch(error => {
             alert("비밀번호를 확인해주세요.");

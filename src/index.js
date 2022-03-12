@@ -13,7 +13,6 @@ import {CookiesProvider} from 'react-cookie'
 //  reload시에도 저장 가능하도록 index.js에 추가
 if (sessionStorage.getItem('access_token')){
   const token = sessionStorage.getItem('access_token')
-  // const refreshToken = sessionStorage.getItem('refresh_token')
   const id = sessionStorage.getItem('id')
   store.dispatch(logIn(id))
   
