@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import cookie from 'react-cookies'
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import '../axiosproperties'
 
 
 const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
@@ -14,7 +15,7 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
 
 // 배송지 받아오는 함수
       useEffect(() => {
-        axios.post('http://127.0.0.1:8081/api/user/getUser', {
+        axios.post('/api/user/getUser', {
             username: sessionStorage.getItem('id'),
             password:cookie.load('pwd')
         }, {

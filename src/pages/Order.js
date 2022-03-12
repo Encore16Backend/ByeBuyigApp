@@ -4,8 +4,30 @@ import { Container } from "react-bootstrap";
 import { useState } from "react";
 import {Form, Button, Table} from 'react-bootstrap'
 import Page from "../components/Base/main/Page";
+// import Calendar from "react-calendar";
+import moment from "moment";
+// import 'react-calendar/dist/Calendar.css';
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import '../axiosproperties'
+import MyCalendar from "../components/etc/MyCalendar";
+
+
 
 const Order = ()=>{
+
+
+    // 2중 선택 달력
+    // const [startDate, setStartDate] = useState(new Date());
+    // const [endDate, setEndDate] = useState(null);
+    // const onChangeCal = (dates) => {
+    //     const [start, end] = dates;
+    //     setStartDate(start);
+    //     setEndDate(end);
+    //     alert(startDate)
+    //     alert(endDate)
+    // };
+
 
     // 내 주문내역들
     const userid = sessionStorage.getItem("id");
@@ -63,7 +85,7 @@ const Order = ()=>{
 
     // 장바구니 받아오는 axios
     const GetOrderItem = async (userid, pageNo) => {
-        await axios.get('http://127.0.0.1:8081/orderHistory/byUsername', {
+        await axios.get('/orderHistory/byUsername', {
             params: {
                 username: userid,
                 page: pageNo
@@ -89,7 +111,7 @@ const Order = ()=>{
     const onSubmit = async (e) => {
         e.preventDefault();
         console.log(checkBaskets, "checkBaskets")
-        await axios.delete("http://127.0.0.1:8081/orderHistory/delete", {
+        await axios.delete("/orderHistory/delete", {
             params: {
                 basketid: checkBaskets
             }
@@ -113,6 +135,18 @@ const Order = ()=>{
                 
             <Form className='review' onSubmit={onSubmit}>
                 <div className='title'>구매내역</div>
+
+                <MyCalendar style={{position:"relative", left:"100px"}}/>
+
+                {/* <ReactDatePicker
+                    selected={startDate}
+                    onChange={onChangeCal}
+                    startDate={startDate}
+                    endDate={endDate}
+                    selectsRange
+                    inline
+                /> */}
+                
                 {
                     !!myOrderItems ? "" : <div>
                     <Button type="submit" className="remove" variant="secondary" size="sm" style={{position:"relative", right:"5px"}} >삭제</Button>

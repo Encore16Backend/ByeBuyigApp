@@ -4,18 +4,17 @@ import {useState, useEffect, useRef} from "react";
 import axios from "axios";
 import { connect } from 'react-redux';
 import {logIn} from '../redux/user/actions'
-import {Pwd} from '../redux/user/actions'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import cookie from 'react-cookies'
-import session from "redux-persist/lib/storage/session";
+import '../axiosproperties'
 
 function SingInModal({show, onHide, logIn}){
         var history = useHistory();
-
+        
         // 로그인 실행 함수
         const onSubmit = async (e)=>{
             e.preventDefault();            
-            await axios.post('http://127.0.0.1:8081/api/login', {
+            await axios.post('/api/login', {
                 username: id,
                 password:pwd
             }, {
@@ -37,7 +36,6 @@ function SingInModal({show, onHide, logIn}){
                 localStorage.setItem('id', id)
                 sessionStorage.setItem('id', id)
                 window.location.replace("/")
-                
             }).catch(error => {
                 alert("아이디 혹은 비밀번호를 확인해주세요.")
             })
@@ -52,8 +50,6 @@ function SingInModal({show, onHide, logIn}){
             setPwd('')
             onHide()
         }
-
-        
 
         return (
             <Modal

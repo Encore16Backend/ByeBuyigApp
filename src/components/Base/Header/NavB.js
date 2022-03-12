@@ -4,6 +4,7 @@ import { Navbar, Container, Nav, Button , Offcanvas, Form, FormControl} from "re
 import React, {useEffect, useState} from 'react';
 import SingUpModal from '../../../modals/SignUpModal';
 import SingInModal from '../../../modals/SignInModal';
+import ImgSearchPage from '../../../pages/ImgSearchPage'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { logOut } from '../../../redux/user/actions';
 import { connect, useSelector } from 'react-redux';
@@ -40,6 +41,9 @@ const NavB = ({ID, logOut})=>{
     const [singUpModalOn, setSingUpModalOn]= useState(false) // 회원가입
     const [SingInModalOn, setSingInModalOn] =useState(false) // 로그인
     const [checkModalOn, setCheckModalOn] = useState(false) // pwd check
+
+    // 이미지 검색용
+    const [imgSearchModalOn, setImgSearchModalOn] = useState(false)
 
     var history = useHistory();
     const id = sessionStorage.getItem('id')
@@ -95,6 +99,7 @@ const NavB = ({ID, logOut})=>{
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
+          <ImgSearchPage show={imgSearchModalOn} onHide = {()=>{setImgSearchModalOn(false)}}/>
           
 
 
@@ -127,7 +132,8 @@ const NavB = ({ID, logOut})=>{
              <Button type="submit" variant="outline-success">Search</Button>
             </Form>
             {/* 이미지 검색 링크 */}
-            <Link to={{pathname:"/imgsearch"}} >이미지검색</Link>
+            {/* <Link to={{pathname:"/imgsearch"}} >이미지검색</Link> */}
+            <Nav.Link onClick={()=>{setImgSearchModalOn(true)}}>이미지검색</Nav.Link>
 
 
             {/* cate */}

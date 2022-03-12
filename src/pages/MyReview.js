@@ -7,6 +7,7 @@ import { Container } from "react-bootstrap";
 import ReactStars from "react-stars";
 import postRefresh from "../hooks/postRefresh";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import '../axiosproperties'
 
 const MyReview = () => {
 
@@ -25,7 +26,7 @@ const MyReview = () => {
 
     // 리뷰수정
     const modifyReview = async (reviewid,score,content)=>{
-        await axios.put('http://127.0.0.1:8081/review/update',{
+        await axios.put('/review/update',{
                 // body
                 id : reviewid,
                 content: content,
@@ -83,7 +84,7 @@ const MyReview = () => {
     const [checkItems, setCheckItems] = useState([]);
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8081/review/byUsername", {
+        axios.get("/review/byUsername", {
             params: {
                 username:sessionStorage.getItem('id'),
                 page:pageNo,
@@ -104,7 +105,7 @@ const MyReview = () => {
 
     // 리뷰삭제
     const onSubmit = async () => {
-        await axios.delete("http://127.0.0.1:8081/review/delete", {
+        await axios.delete("/review/delete", {
             params: {
                 reviewid:checkReviews,
                 itemid:checkItems

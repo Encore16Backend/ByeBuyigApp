@@ -5,6 +5,7 @@ import React from 'react';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { BrowserRouter as Router, Switch, Route,Link, NavLink
 } from 'react-router-dom';
+import '../axiosproperties'
 
 function CheckModal (){
 
@@ -33,7 +34,7 @@ function CheckModal (){
 
     const pwdCheck = async (e)=>{
         //e.preventDefault();
-        await axios.post('http://127.0.0.1:8081/api/user/getUser', {
+        await axios.post('/api/user/getUser', {
             username: id,
             password:pwd
         }, {
@@ -57,7 +58,7 @@ function CheckModal (){
             if (error.response.status === 403) {
                 const { data } = error.response;
                 if (data['error_message'].indexOf("The Token has expired") != -1) {
-                    axios.get('http://127.0.0.1:8081/api/token/refresh', {
+                    axios.get('/api/token/refresh', {
                         headers: {
                             "Content-Type": "application/json",
                             "Authorization": "Bearer " + sessionStorage.getItem('refresh_token'),
