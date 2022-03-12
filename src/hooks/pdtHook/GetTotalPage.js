@@ -1,13 +1,14 @@
 import axios from "axios";
 import { setTotalPage } from "../../redux/pages/actions";
 import { useDispatch } from "react-redux";
+import '../../axiosproperties'
 
 
 
 const GetTotalPage = async (url) =>{
     const dispatch = useDispatch()
 
-    await axios.get('http://127.0.0.1:8081'+url, {
+    await axios.get(url, {
         headers: {
             "Content-Type": "application/json",
         }

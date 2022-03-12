@@ -4,11 +4,12 @@ import { addTop } from "../redux/bestItem/actions";
 import { addOuter } from "../redux/bestItem/actions";
 import { addPants } from "../redux/bestItem/actions";
 import { useDispatch } from "react-redux";
+import "../axiosproperties"
 
 
 const GetBestItems = async (url) =>{
     const dispatch = useDispatch()
-    await axios.get('http://127.0.0.1:8081'+url, {
+    await axios.get(url, {
         headers: {
             "Content-Type": "application/json",
         }

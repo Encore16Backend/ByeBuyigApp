@@ -84,7 +84,6 @@ a:hover{
  .navBarCate{
    padding-right: 1rem;
    padding-left: 1rem;
-
  }
  .NavBarCataForm{
    padding-top: 7px;
@@ -95,9 +94,7 @@ a:hover{
   background-color:gainsboro;
   transition: background-color .3s;
  }
- a:link, a:visited,  a:hover, a:active
-{
+ a:link, a:visited,  a:hover, a:active{
     color: #000000;
     text-decoration: none;
 }
- 

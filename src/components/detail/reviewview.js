@@ -8,6 +8,7 @@ import ReactPaginate from "react-paginate"
 import { Button, InputGroup } from "react-bootstrap";
 import ReactStars from "react-stars"
 import Page from "../Base/main/Page";
+import "../../axiosproperties"
 
 const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, pdtState })=>{
 
@@ -65,7 +66,7 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
     }
     // 리뷰수정
     const modifyReview = async (reviewid,score,content)=>{
-            await axios.put('http://127.0.0.1:8081/review/update',{
+            await axios.put('/review/update',{
                     // body
                     id : reviewid,
                     content: content,
@@ -91,10 +92,10 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
                 modifyReview(reviewid,score,content) //  토큰을 받고 실행하고 싶은 함수 다시 실행
             })
     }
-    // 리뷰삭제 안댐
+    // 리뷰삭제
     const delReview = async (id, itemname)=>{
         alert(id+"/"+itemname)
-        await axios.delete('http://127.0.0.1:8081/review/delete',{
+        await axios.delete('/review/delete',{
                 params:{
                     id:id,
                     itemname:itemname

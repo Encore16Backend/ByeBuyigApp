@@ -5,6 +5,7 @@ import { Form } from "react-bootstrap";
 import postRefresh from "../../hooks/postRefresh";
 import { useSelector } from "react-redux";
 import ReactStars from "react-stars"
+import "../../axiosproperties"
 
 const MakeReview = ({pdtState, lendering, setLandering}) =>{
 
@@ -40,7 +41,7 @@ const MakeReview = ({pdtState, lendering, setLandering}) =>{
             alert("로그인 후에 작성 할 수 있습니다")
             return
         }
-        await axios.post('http://127.0.0.1:8081/review/save',{
+        await axios.post('/review/save',{
                 // body
                 itemid: pdtId,
                 itemname : pdtName,

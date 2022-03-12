@@ -1,13 +1,14 @@
 import axios from "axios";
 import { addCateItems } from "../../redux/CateItem/actions";
 import { useDispatch } from "react-redux";
+import '../../axiosproperties'
 
 
 const GetReviewItem = async (id) =>{
     const dispatch = useDispatch()
     
 
-    await axios.get('http://127.0.0.1:8081'+url, {
+    await axios.get(url, {
         headers: {
             "Content-Type": "application/json",
         }

@@ -1,12 +1,12 @@
 import axios from "axios";
 import { addMainItems } from "../redux/items/actions";
 import { useDispatch } from "react-redux";
+import '../axiosproperties'
 
 
 const GetMainItem = async () =>{
     const dispatch = useDispatch()
-    console.log( "getMainItem 시작")
-    await axios.get('http://127.0.0.1:8081/main/items', {
+    await axios.get('/main/items', {
         headers: {
             "Content-Type": "application/json",
         }

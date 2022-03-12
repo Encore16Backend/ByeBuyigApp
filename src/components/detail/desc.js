@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import postRefresh from "../../hooks/postRefresh"
 import "../../css/desc.css"
 import BeforeOrder from "../../modals/BeforeOrder";
+import "../../axiosproperties"
 
 const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
@@ -43,7 +44,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
     // 장바구니에 담는 함수
     const addBasket = async (username,itemid,itemimg,itemname,itemprice,bcount)=>{
-        await axios.post('http://127.0.0.1:8081/basket/add',{
+        await axios.post('/basket/add',{
             // body
             username : username,
             itemid : itemid,
@@ -90,7 +91,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     const makeOrder = async (addr)=>{
         window.confirm("정말 구매하시겠습니까?")
         console.log([order], "orderFunc")
-        await axios.post("http://127.0.0.1:8081/orderHistory/add",{
+        await axios.post("/orderHistory/add",{
             // body ,2번째 괄호
             OrderHistory:[order]
         },{

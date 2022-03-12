@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import '../css/join.css';
 import { useDispatch } from "react-redux";
 import { addLoc1, addLoc2, addLoc3 } from "../redux/addr/actions";
+import '../axiosproperties'
 
 const Update= () => {
     var history=useHistory();
@@ -35,7 +36,7 @@ const Update= () => {
     useEffect(() => {
         console.log("!")
         console.log(addpost)
-        axios.post('http://127.0.0.1:8081/api/user/getUser', {
+        axios.post('/api/user/getUser', {
             username: sessionStorage.getItem('id'),
             password:data.state.pwd
         }, {
@@ -171,7 +172,7 @@ const Update= () => {
 
     const del = async (e)=>{
         // e.preventDefault();
-        await axios.delete('http://127.0.0.1:8081/api/user/delete', {
+        await axios.delete('/api/user/delete', {
             params :{
                 username: sessionStorage.getItem('id')
             }
@@ -205,7 +206,7 @@ const Update= () => {
 
     const update = async (e)=>{
         e.preventDefault();
-        await axios.put('http://127.0.0.1:8081/api/user/update', {
+        await axios.put('/api/user/update', {
             username: sessionStorage.getItem('id'),
             locations : [
                 {location:isAddress+'/'+isZoneCode+'/'+detailAddress},

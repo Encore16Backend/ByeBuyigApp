@@ -11,6 +11,7 @@ import {addOrderList} from "../redux/OrderItems/actions"
 import postRefresh from "../hooks/postRefresh";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import BeforeOrder from "../modals/BeforeOrder";
+import '../axiosproperties'
 
 
 
@@ -40,7 +41,7 @@ const ShoppingBasket = () => {
 
     // 장바구니 받아오는 axios
     const GetBasketItem = async (userid, pageNo) => {
-        await axios.get('http://127.0.0.1:8081/basket/byUsername', {
+        await axios.get('/basket/byUsername', {
             params: {
                 username: userid,
                 page: pageNo
@@ -67,7 +68,7 @@ const ShoppingBasket = () => {
     // 수정하는 axios
     const update = async (idx)=>{
         const data = updateItem[idx] 
-        await axios.put('http://127.0.0.1:8081/basket/update',{
+        await axios.put('/basket/update',{
             id : data.id,
             username : data.username,
             bcount : data.bcount,
@@ -135,7 +136,7 @@ const ShoppingBasket = () => {
     const onSubmit = async (e) => {
         e.preventDefault();
         console.log(checkBaskets, "checkBaskets")
-        await axios.delete("http://127.0.0.1:8081/basket/delete", {
+        await axios.delete("/basket/delete", {
             params: {
                 basketid: checkBaskets
             }
@@ -157,7 +158,7 @@ const ShoppingBasket = () => {
         dispatch(addOrderList(orderItems))
         
         //주소
-        await axios.post("http://127.0.0.1:8081/orderHistory/add",{
+        await axios.post("/orderHistory/add",{
             // body ,2번째 괄호
             OrderHistory:orderItems
         },{

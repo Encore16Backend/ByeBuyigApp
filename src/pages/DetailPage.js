@@ -10,9 +10,12 @@ import axios from "axios";
 import { addReview } from "../redux/reviews/actions";
 import ImageSlide from "../components/detail/ImageSlide";
 import {addOneItems} from "../redux/oneItem/actions"
+import "../axiosproperties"
 
 
 const DetailPage = ()=>{
+
+
     const dispatch = useDispatch()
     const [desc , setDesc] = useState('DESC')
     const [data, setDate] = useState('date')
@@ -22,7 +25,7 @@ const DetailPage = ()=>{
     
      // 리뷰값 받아오기
      const GetReviewItem = async (itmeid, asc, sort, page) =>{
-        await axios.get('http://127.0.0.1:8081/review/byItemid',{
+        await axios.get('/review/byItemid',{
            params:{
             itemid:itmeid,
             asc:asc,
@@ -42,7 +45,7 @@ const DetailPage = ()=>{
 
     // 상품 하나 검색해서 받아오기
     const GetOneItem = async (itmeid) =>{
-        await axios.get('http://127.0.0.1:8081/main/item',{
+        await axios.get('/main/item',{
            params:{
             itemid:itmeid,
            }
@@ -61,13 +64,9 @@ const DetailPage = ()=>{
 
     const location = useLocation()
     const locationState = location.state
-
-    console.log(locationState, "locationState")
     
 
     GetBestItems("/main/bestItem")
-    // GetMainItems()
-
     const [lendering , setLandering] = useState(false)
 
     // 이미지를 받아오기

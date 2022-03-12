@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Test from "../components/auth/Test";
 import axios from "axios";
 import "../css/join.css" 
+import '../axiosproperties'
 
 function SingUpModal({ show, onHide }) {
   // id(pk) ,pwd, 이름?, 주소, 관심패션, 이메일
@@ -11,7 +12,7 @@ function SingUpModal({ show, onHide }) {
   // 회원가입 실행 함수
   const onSubmit = async (e) => {
     e.preventDefault();
-    await axios.post('http://127.0.0.1:8081/api/user/save',{
+    await axios.post('/api/user/save',{
       username : id,
       password : pwd, 
       // location : isAddress + ' ' + isZoneCode+' '+detailAddress,
@@ -57,7 +58,7 @@ function SingUpModal({ show, onHide }) {
     else if(id.length < 6){
       alert("아이디는 6자 이상이어야 합니다.");
     } else {
-      await axios.get("http://127.0.0.1:8081/api/checkUser", {
+      await axios.get("/api/checkUser", {
       params: {
         username: id
       }
@@ -228,7 +229,7 @@ function SingUpModal({ show, onHide }) {
   //이메일 인증
   const checkMail = async (e)=>{
     e.preventDefault();
-    await axios.get('http://127.0.0.1:8081/api/checkMail', {
+    await axios.get('/api/checkMail', {
         params :{
             email:email
         }
