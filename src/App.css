@@ -9,6 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 .bestpdts {
   float : left;
@@ -16,7 +17,8 @@
 .BestButtons {
   position: relative;
   top:4rem;
-  text-align:right
+  text-align:right;
+  cursor: pointer;
 }
 .sortAndOrder{
   text-align: right;
