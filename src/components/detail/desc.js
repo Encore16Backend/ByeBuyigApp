@@ -23,7 +23,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     const imgArr = oneItem.images ? oneItem.images : []
     const temp = imgArr[0] ? imgArr[0] : [] 
     const img1 = temp.imgpath ? temp.imgpath : ""
-    
+
 
     const [bcount, setBcount] = useState(1);
     

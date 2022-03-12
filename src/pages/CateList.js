@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Carousel, Card, Button, Offcanvas, ButtonToolbar, ButtonGroup } from "react-bootstrap";
+import { Container, Row, Col, Carousel, Card, Button, Offcanvas, ButtonToolbar, ButtonGroup, Nav } from "react-bootstrap";
 import GetCate from "../hooks/pdtHook/GetCate"
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import CateCardWrapper from "../components/Base/main/pdt/CateCardWrapper";
@@ -120,29 +120,27 @@ const CateList = ()=>{
                     <Row>
                         <br/><br/><br/><br/> 
                         {/* <h1 className="centered" >{cataname}</h1> */}
-                        <div className="BestButtons">
+                            <div className="BestButtons" >
+                            <span onClick={() => {
+                                changeOrderNum('3')
+                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=3")
+                            }}  variant="secondary">높은가격순</span>&nbsp;| &nbsp;
+                            <span onClick={() => {
+                                changeOrderNum('2')
+                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=2")
+                            }}  variant="secondary">낮은가격순</span>&nbsp;| &nbsp;
+                            <span onClick={() => {
+                                changeOrderNum('1')
+                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=1")
+                            }} variant="secondary">판매량</span>&nbsp;| &nbsp;
                             <span onClick={() => {
                                 changeOrderNum('4')
                                 changeBestItemUrl("/main/category/order?category="+cataname+"&order=4")
                             }} variant="secondary">
                                 후기
-                            </span>&nbsp;&nbsp;
-                            <span onClick={() => {
-                                changeOrderNum('3')
-                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=3")
-                            
-                            }}  variant="secondary">높은가격순</span>&nbsp;&nbsp;
-                            <span onClick={() => {
-                                changeOrderNum('2')
-                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=2")
-                             
-                            }}  variant="secondary">낮은가격순</span>&nbsp;&nbsp;
-                            <span onClick={() => {
-                                changeOrderNum('1')
-                                changeBestItemUrl("/main/category/order?category="+cataname+"&order=1")
-                             
-                            }} variant="secondary">판매량</span>
+                            </span>
                         </div>
+
                         <hr></hr>
 
                         <div className="bestpdts">

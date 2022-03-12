@@ -9,6 +9,10 @@ import MyReview from "./pages/MyReview";
 import ShoppingBasket from "./pages/ShoppingBasket";
 import Order from "./pages/Order";
 import ShowOrderResult from "./pages/OrderResult";
+import ManageUser from "./pages/ManageUser";
+import ManageReview from "./pages/ManageReview";
+import ManageComent from "./pages/ManageComent";
+
 
 export default [
     {
@@ -54,5 +58,18 @@ export default [
     {
         path:"/orderresult",
         component:ShowOrderResult
+    },
+    {
+        path:"/manageuser",
+        component:ManageUser
+    },
+    {
+        path:"/managereview",
+        component:ManageReview
+    },
+    {
+        path:"/managecoment",
+        component:ManageComent
     }
+
 ]

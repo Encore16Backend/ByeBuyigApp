@@ -63,42 +63,6 @@ const NavB = ({ID, logOut})=>{
     }
 
 
-
-
-
-    const List = () =>{
-      return(
-        <div style={{position:'relateve'}}>
-          <div className="content">
-            <ul className="dropdown">
-              <CheckModal show={checkModalOn} onHide = {()=>{setCheckModalOn(false)}}  />
-              <a>구매목록</a>
-              <a>장바구니</a>
-            </ul>
-          </div>
-        </div>
-      )
-    }
-
-    const Test = () =>{
-      return(
-        <div>
-          <input className = "dropdown" type="checkbox"></input>
-          <label className="dropdownLabel" for ="dropdown">
-          </label>
-          <div className="content">
-            <ul>
-              <li>개인정보수정</li>
-              <li>구매목록</li>
-              <li>장바구니</li>
-            </ul>
-          </div>
-        </div>
-      )
-    }
-
-   
- 
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
 
@@ -287,10 +251,46 @@ const NavB = ({ID, logOut})=>{
           <Nav>
           {
               (!!id) // !! (null undefined '' 등 모든 false형 값이면)
-              ? 
+              ?
+              (id ==='testadmin')?
               <>
               <Nav.Link onClick={toMyPage}></Nav.Link>
-              
+                <div className='NavBarCataForm'>
+                  <div className='navBarCate dropdown' style={{display:"inline"}}>
+                  <span className='dropbtn'>
+                    <Link style={{color:"white"}}>{id}</Link> 
+                    </span>
+                  <div className="dropdown-content" style={{position:"absolute", left:"1rem", textAlign:'left',zIndex:5}}>
+                    <ul className="nav-flyout">
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link to={{
+                            pathname:"/manageuser"
+                          }}>회원 관리 </Link>
+                          </span>
+                        </li>
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link to={{pathname:"/managereview"}}>리뷰 관리</Link>
+                          </span>
+                        </li>
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link to={{pathname:"/managecoment"}}>문의 사항</Link>
+                          </span>
+                        </li>
+                        <li>
+                          <span onClick={out}><i className="ion-ios-color-filter-outline"></i>
+                          <Link to={{pathname:"/"}}>로그아웃</Link>
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                </>:
+              <>
+              <Nav.Link onClick={toMyPage}></Nav.Link>
                 <div className='NavBarCataForm'>
                   <div className='navBarCate dropdown' style={{display:"inline"}}>
                   <span className='dropbtn'>
@@ -330,9 +330,6 @@ const NavB = ({ID, logOut})=>{
                   </div>
                 </div>
               
-
-
-              {isOpen == true ? <List/> : null}
               
               {/* <Nav.Link onClick={out}>로그아웃</Nav.Link> */}
               </>

@@ -168,7 +168,8 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
                  <img src={itemimg} width="140px" height="140px" style={{ marginRight: "5px" , display:"inline" }} />
                  <div style={{display:"inline-block", paddingLeft:"1rem", verticalAlign:"top"}}>
                  <p> <b>{itemname}</b></p>
-                 <p>가격 : {itemprice} 주문수량 : {bcount} </p>
+                 <p>가격 : {itemprice} </p>
+                 <p>주문수량 : {bcount} </p>
                  <p >주문 가격 : {itemprice*bcount}</p>
                  </div>
             </div>
