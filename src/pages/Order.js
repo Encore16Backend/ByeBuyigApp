@@ -123,10 +123,63 @@ const Order = ()=>{
         })
     }
 
-    useEffect(()=>{
-        GetOrderItem(userid, pageNo)
-    }, [pageNo])
+    // 날짜검색
+    const searchDate = async (userid, pageNo, startDate, endDate) => {
+        await axios.get('/orderHistory/byDate', {
+            params: {
+                username: userid,
+                page: pageNo,
+                start : getStringDate(startDate),
+                end : getStringDate(endDate)
+                
+                
+            },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+            }
+        }).then(res => {
+            const data = res.data
 
+            setTotalPageNo(data.totalPages);
+            setAllOrderNum(data.content.length)
+            setMyOrderItems(data.content)
+            setPathNo(1)
+
+        }).catch(error => {
+            console.log(error, ' searchDate 에러');
+        })
+    }
+
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+    const isSameDay = (target1, target2) => 
+    { return target1.getFullYear() === target2.getFullYear() && target1.getMonth() === target2.getMonth() && target1.getDate()=== target2.getDate(); }
+
+
+    useEffect(()=>{
+        if ( isSameDay(startDate, new Date()) && isSameDay(endDate, new Date())){
+            GetOrderItem(userid, pageNo)
+        }else{
+            searchDate(userid, pageNo, startDate, endDate)
+        }
+    }, [pageNo, startDate, endDate])
+
+
+
+
+    const getStringDate = (localeDate)=>{
+        // Wed Mar 23 2022 10:21:20 GMT+0900 (한국 표준시)
+        const tmp = JSON.stringify(localeDate)
+        const strDate = tmp.slice(1, 11)
+        return strDate
+    }
+
+
+
+    
 
 
     return(
@@ -136,16 +189,8 @@ const Order = ()=>{
             <Form className='review' onSubmit={onSubmit}>
                 <div className='title'>구매내역</div>
 
-                <MyCalendar style={{position:"relative", left:"100px"}}/>
-
-                {/* <ReactDatePicker
-                    selected={startDate}
-                    onChange={onChangeCal}
-                    startDate={startDate}
-                    endDate={endDate}
-                    selectsRange
-                    inline
-                /> */}
+                
+                <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />                
                 
                 {
                     !!myOrderItems ? "" : <div>

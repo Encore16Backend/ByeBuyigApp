@@ -5,13 +5,15 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 
 
-const MyCalendar = ()=>{
+const MyCalendar = ({startDate,setStartDate, endDate, setEndDate})=>{
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+
+
+    // const [startDate, setStartDate] = useState(new Date());
+    // const [endDate, setEndDate] = useState(new Date());
 
     return(
-    <div>
+    <div style={{display:"inline-flex absolute" , left:"10rem"}}>
         <div>
         <DatePicker
         selected={startDate}
@@ -20,7 +22,7 @@ const MyCalendar = ()=>{
         startDate={startDate}
         endDate={endDate}/>
         </div>
-
+        
         <div>
         <DatePicker
         selected={endDate}

@@ -7,7 +7,6 @@ import {Provider} from 'react-redux'
 import store from './store';
 import React from "react";
 import postRefresh from './hooks/postRefresh';
-import create from 'zustand'
 
 
 
@@ -18,7 +17,7 @@ function App() {
   
   if ( sessionStorage.getItem('id') ){
     setInterval(() => 
-    postRefresh(), 60*2000);
+    postRefresh(), 60*1000);
     
   }
 
