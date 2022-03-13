@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Form, Table, Button, InputGroup, FormControl} from "react-bootstrap";
+import { Form, Table, Button, InputGroup, FormControl, Row, Col} from "react-bootstrap";
 import "../css/myreview.css";
 import Page from "../components/Base/main/Page";
 import { Container } from "react-bootstrap";
@@ -8,6 +8,8 @@ import ReactStars from "react-stars";
 import postRefresh from "../hooks/postRefresh";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import '../axiosproperties'
+import MyCalendar from "../components/etc/MyCalendar";
+
 
 const MyReview = () => {
 
@@ -22,6 +24,20 @@ const MyReview = () => {
     // 댓글 수정시 값
     const makeContent = (e)=>{
         setContent(e.target.value)
+    }
+
+
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+    const isSameDay = (target1, target2) => 
+    { return target1.getFullYear() === target2.getFullYear() && target1.getMonth() === target2.getMonth() && target1.getDate()=== target2.getDate(); }
+
+    const getStringDate = (localeDate)=>{
+        // Wed Mar 23 2022 10:21:20 GMT+0900 (한국 표준시)
+        const tmp = JSON.stringify(localeDate)
+        const strDate = tmp.slice(1, 11)
+        return strDate
     }
 
     // 리뷰수정
@@ -83,25 +99,65 @@ const MyReview = () => {
     const [checkReviews, setCheckReviews] = useState([]);
     const [checkItems, setCheckItems] = useState([]);
 
-    useEffect(() => {
-        axios.get("/review/byUsername", {
+
+     // 날짜로 리뷰검색
+     const searchReviewDate = async (userid, pageNo, startDate, endDate) => {
+        await axios.get('/review/byDate', {
             params: {
-                username:sessionStorage.getItem('id'),
-                page:pageNo,
+                username: userid,
+                page: pageNo,
+                start : getStringDate(startDate),
+                end : getStringDate(endDate)  
             },
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
             }
         }).then(res => {
-            const data = res.data;
+            const data = res.data
+
             setTotalPageNo(data.totalPages);
             setReview(data.content)
-        }).catch(err => {
-            console.log(err);
-            postRefresh()
+            setPathNo(1)
+
+        }).catch(error => {
+            console.log(error, ' searchReviewDate 에러');
         })
-    }, [pageNo])
+    }
+
+    useEffect(() => {
+        if ( isSameDay(startDate, new Date()) && isSameDay(endDate, new Date())){
+            axios.get("/review/byUsername", {
+                params: {
+                    username:sessionStorage.getItem('id'),
+                    page:pageNo,
+                },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
+                }
+            }).then(res => {
+                const data = res.data;
+                setTotalPageNo(data.totalPages);
+                setReview(data.content)
+            }).catch(err => {
+                console.log(err);
+                postRefresh()
+            })
+        }else{
+          searchReviewDate(sessionStorage.getItem('id'), pageNo, startDate, endDate)
+        }
+        
+    }, [pageNo, startDate, endDate])
+
+    // useEffect(()=>{
+    //     if ( isSameDay(startDate, new Date()) && isSameDay(endDate, new Date())){
+    //         GetOrderItem(userid, pageNo)
+    //     }else{
+    //         searchDate(userid, pageNo, startDate, endDate)
+    //     }
+    // }, [pageNo, startDate, endDate])
+
 
     // 리뷰삭제
     const onSubmit = async () => {
@@ -154,12 +210,22 @@ const MyReview = () => {
     const handlePage = (value)=>{
         setPathNo(value);
     }
+
+
+
     
     return (
         <>
         <Container>
         <Form className='review' onSubmit={onSubmit}>
-        <div className='title'>마이리뷰</div>
+        <Row>
+                 <Col xs={12} md={8}>
+                 <div className='title'>마이리뷰</div>
+                </Col>
+                <Col xs={6} md={4}>
+                <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />                
+                </Col>
+            </Row>
        
         <div>
             <Button type="submit" className="remove" variant="secondary" size="sm">삭제</Button>
