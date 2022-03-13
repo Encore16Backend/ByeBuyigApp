@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useState } from "react";
-import {Form, Button, Table} from 'react-bootstrap'
+import {Form, Button, Table, Row, Col} from 'react-bootstrap'
 import Page from "../components/Base/main/Page";
 // import Calendar from "react-calendar";
 import moment from "moment";
@@ -187,10 +187,14 @@ const Order = ()=>{
             <Container>
                 
             <Form className='review' onSubmit={onSubmit}>
-                <div className='title'>구매내역</div>
-
-                
+            <Row>
+                 <Col xs={12} md={8}>
+                 <div className='title'>구매내역</div>
+                </Col>
+                <Col xs={6} md={4}>
                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />                
+                </Col>
+            </Row>
                 
                 {
                     !!myOrderItems ? "" : <div>

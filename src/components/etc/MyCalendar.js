@@ -13,8 +13,8 @@ const MyCalendar = ({startDate,setStartDate, endDate, setEndDate})=>{
     // const [endDate, setEndDate] = useState(new Date());
 
     return(
-    <div style={{display:"inline-flex absolute" , left:"10rem"}}>
-        <div>
+    <div style={{display:"inline"}}>
+        <div style={{width:"200px", display:"inline-flex"}}>
         <DatePicker
         selected={startDate}
         onChange={(date) => setStartDate(date)}
@@ -22,8 +22,7 @@ const MyCalendar = ({startDate,setStartDate, endDate, setEndDate})=>{
         startDate={startDate}
         endDate={endDate}/>
         </div>
-        
-        <div>
+        <div style={{width:"200px", display:"inline-block"}}>
         <DatePicker
         selected={endDate}
         onChange={(date) => setEndDate(date)}
