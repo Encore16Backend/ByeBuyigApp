@@ -10,6 +10,8 @@ import { logOut } from '../../../redux/user/actions';
 import { connect, useSelector } from 'react-redux';
 import "../../../css/drop.css";
 import CheckModal from "../../../modals/CheckModal";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 const NavB = ({ID, logOut})=>{
 
@@ -131,9 +133,10 @@ const NavB = ({ID, logOut})=>{
                 />
              <Button type="submit" variant="outline-success">Search</Button>
             </Form>
-            {/* 이미지 검색 링크 */}
-            {/* <Link to={{pathname:"/imgsearch"}} >이미지검색</Link> */}
-            <Nav.Link onClick={()=>{setImgSearchModalOn(true)}}>이미지검색</Nav.Link>
+            {/* 이미지 검색 */}
+            <Nav.Link onClick={()=>{setImgSearchModalOn(true)}}>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </Nav.Link>
 
 
             {/* cate */}
