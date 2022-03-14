@@ -9,9 +9,11 @@ import { Button, InputGroup } from "react-bootstrap";
 import ReactStars from "react-stars"
 import Page from "../Base/main/Page";
 import "../../axiosproperties"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, setIsReview, isReview  })=>{
 
+    const history = useHistory();
     const renderedItem = useSelector(state=>state.oneItem.item)
     let allReviewNums = 0
     if (renderedItem){  
@@ -184,18 +186,30 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
         )
     })
 
-    // INSERT INTO inquiry VALUES (
-    //     'qwerqwer',  ,'CONA 9085 기모옵션추가 딥워싱 브러쉬 루즈핏 와이드 스트레이트 데님 진청',
-    //     '문의사항이 있습니다', '사이즈가 어떻게 되나요?'
-    //    )
+    // 글쓴이가 본인인지 확인하고 상세문의사항 페이지로 이동하는 함수
+    const getDetailInquiry = (Q)=>{
+        history.push({
+            pathname:"/inquiryDetail",
+            state:Q
+        })
+    }
 
     // 문의사항 받아와서 돌린다
     const inQRender = inquirys.map(Q =>{
+// answer: ""
+// chkanswer: 0
+// content: "문의사항이 있습니다"
+// date: "2022-03-14"
+// id: 1
+// itemid: 2
+// itemname: "CONA 9085 기모옵션추가 딥워싱 브러쉬 루즈핏 와이드 스트레이트 데님 진청"
+// title: "문의사항입니다"
+// username: "qewrqwer"
         
-        const inQ = Q.username === sessionStorage.getItem('id') ? <tr>
+        const inQ = <tr onClick={()=>{getDetailInquiry(Q)}}>
                         <td>{Q.title}</td>
                         <td>{Q.chkanswer == 0 ? "답변예정" : "답변완료"}</td>
-                    </tr> : null
+                    </tr> 
         return(
             inQ
         )
