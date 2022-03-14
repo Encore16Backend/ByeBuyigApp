@@ -330,6 +330,11 @@ const NavB = ({ID, logOut})=>{
                           </span>
                         </li>
                         <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link to={{pathname:"/myInquiry"}}>내 문의 내역</Link>
+                          </span>
+                        </li>
+                        <li>
                           <span onClick={out}><i className="ion-ios-color-filter-outline"></i>
                           <Link to={{pathname:"/"}}>로그아웃</Link>
                           </span>

@@ -12,6 +12,8 @@ import ShowOrderResult from "./pages/OrderResult";
 import ManageUser from "./pages/ManageUser";
 import ManageReview from "./pages/ManageReview";
 import ManageComent from "./pages/ManageComent";
+import InquiryDetail from "./pages/InquiryDetail";
+import MyInquiry from "./pages/MyInquiry";
 
 
 export default [
@@ -70,6 +72,14 @@ export default [
     {
         path:"/managecoment",
         component:ManageComent
+    },
+    {
+        path:"/inquiryDetail",
+        component:InquiryDetail
+    },
+    {
+        path:"/myInquiry",
+        component:MyInquiry
     }
 
 ]
