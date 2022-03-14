@@ -102,6 +102,7 @@ const MyReview = () => {
 
      // 날짜로 리뷰검색
      const searchReviewDate = async (userid, pageNo, startDate, endDate) => {
+        setIsDate(true)
         await axios.get('/review/byDate', {
             params: {
                 username: userid,
@@ -115,49 +116,62 @@ const MyReview = () => {
             }
         }).then(res => {
             const data = res.data
-
+            console.log(res, "src")
             setTotalPageNo(data.totalPages);
             setReview(data.content)
-            setPathNo(1)
-
         }).catch(error => {
             console.log(error, ' searchReviewDate 에러');
         })
     }
 
-    useEffect(() => {
-        if ( isSameDay(startDate, new Date()) && isSameDay(endDate, new Date())){
-            axios.get("/review/byUsername", {
-                params: {
-                    username:sessionStorage.getItem('id'),
-                    page:pageNo,
-                },
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
-                }
-            }).then(res => {
-                const data = res.data;
-                setTotalPageNo(data.totalPages);
-                setReview(data.content)
-            }).catch(err => {
-                console.log(err);
-                postRefresh()
-            })
+    const AllReview = async ()=>{
+        setIsDate(false)
+        axios.get("/review/byUsername", {
+            params: {
+                username:sessionStorage.getItem('id'),
+                page:pageNo,
+            },
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
+            }
+        }).then(res => {
+            const data = res.data;
+            console.log(res, "reviewgetRes")
+            setTotalPageNo(data.totalPages);
+            setReview(data.content)
+        }).catch(err => {
+            console.log(err);
+            postRefresh()
+        })
+    }
+
+     // 최초 들어올때는 전체조회 useEffect
+     useEffect(()=>{
+        AllReview(pageNo)
+    }, [])
+
+    // 날짜가 바뀌면 날짜검색으로 useEffect (startDate, endDate)
+    useEffect(()=>{
+        setPathNo(1)
+        searchReviewDate(sessionStorage.getItem('id'), pageNo, startDate, endDate)
+    }, [startDate, endDate])
+
+    // 전체검색 버튼을 누르면 다시 전체조회
+    const getAllReview = ()=>{
+        setPathNo(1)
+        AllReview(pageNo)
+    }
+
+    // 페이징 번호가 바뀌면 .. 날짜상태인기 전체상태인지 확인하는 state를 만들어 state확인 후 
+    const [isDate, setIsDate] = useState(false)
+    useEffect(()=>{
+        if (isDate){    
+            searchReviewDate(sessionStorage.getItem('id'), pageNo, startDate, endDate)
         }else{
-          searchReviewDate(sessionStorage.getItem('id'), pageNo, startDate, endDate)
+            AllReview(pageNo)
         }
-        
-    }, [pageNo, startDate, endDate])
-
-    // useEffect(()=>{
-    //     if ( isSameDay(startDate, new Date()) && isSameDay(endDate, new Date())){
-    //         GetOrderItem(userid, pageNo)
-    //     }else{
-    //         searchDate(userid, pageNo, startDate, endDate)
-    //     }
-    // }, [pageNo, startDate, endDate])
-
+    }, [pageNo])
 
     // 리뷰삭제
     const onSubmit = async () => {
@@ -222,13 +236,15 @@ const MyReview = () => {
                  <Col xs={12} md={8}>
                  <div className='title'>마이리뷰</div>
                 </Col>
-                <Col xs={6} md={4}>
+                <Col xs={6} md={4} style={{paddingTop:"10px"}}> 
                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />                
+                <Button onClick={getAllReview}>전체조회</Button>
                 </Col>
-            </Row>
-       
+        </Row>
+       <br/>
         <div>
             <Button type="submit" className="remove" variant="secondary" size="sm">삭제</Button>
+
         </div>
         <div>
             <Table>

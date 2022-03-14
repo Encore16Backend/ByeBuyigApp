@@ -17,18 +17,6 @@ import MyCalendar from "../components/etc/MyCalendar";
 const Order = ()=>{
 
 
-    // 2중 선택 달력
-    // const [startDate, setStartDate] = useState(new Date());
-    // const [endDate, setEndDate] = useState(null);
-    // const onChangeCal = (dates) => {
-    //     const [start, end] = dates;
-    //     setStartDate(start);
-    //     setEndDate(end);
-    //     alert(startDate)
-    //     alert(endDate)
-    // };
-
-
     // 내 주문내역들
     const userid = sessionStorage.getItem("id");
     let [pageNo, setPathNo] = useState(1);
@@ -85,6 +73,7 @@ const Order = ()=>{
 
     // 장바구니 받아오는 axios
     const GetOrderItem = async (userid, pageNo) => {
+        setIsDate(false)
         await axios.get('/orderHistory/byUsername', {
             params: {
                 username: userid,
@@ -125,6 +114,7 @@ const Order = ()=>{
 
     // 날짜검색
     const searchDate = async (userid, pageNo, startDate, endDate) => {
+        setIsDate(true)
         await axios.get('/orderHistory/byDate', {
             params: {
                 username: userid,
@@ -144,7 +134,7 @@ const Order = ()=>{
             setTotalPageNo(data.totalPages);
             setAllOrderNum(data.content.length)
             setMyOrderItems(data.content)
-            setPathNo(1)
+            
 
         }).catch(error => {
             console.log(error, ' searchDate 에러');
@@ -159,14 +149,44 @@ const Order = ()=>{
     { return target1.getFullYear() === target2.getFullYear() && target1.getMonth() === target2.getMonth() && target1.getDate()=== target2.getDate(); }
 
 
-    useEffect(()=>{
-        if ( isSameDay(startDate, new Date()) && isSameDay(endDate, new Date())){
-            GetOrderItem(userid, pageNo)
-        }else{
-            searchDate(userid, pageNo, startDate, endDate)
-        }
-    }, [pageNo, startDate, endDate])
+    // useEffect(()=>{
+    //     if ( isSameDay(startDate, new Date()) && isSameDay(endDate, new Date())){
+            
+    //         GetOrderItem(userid, pageNo)
+    //     }else{
+            
+    //         searchDate(userid, pageNo, startDate, endDate)
+    //     }
+    // }, [pageNo, startDate, endDate])
 
+
+
+    // 최초 들어올때는 전체조회 useEffect
+    useEffect(()=>{
+        GetOrderItem(userid, pageNo)
+    }, [])
+
+    // 날짜가 바뀌면 날짜검색으로 useEffect (startDate, endDate)
+    useEffect(()=>{
+        setPathNo(1)
+        searchDate(userid, pageNo, startDate, endDate)
+    }, [startDate, endDate])
+
+    // 전체검색 버튼을 누르면 다시 전체조회
+    const getAllOrder = ()=>{
+        setPathNo(1)
+        GetOrderItem(userid, pageNo)
+    }
+
+    // 페이징 번호가 바뀌면 .. 날짜상태인기 전체상태인지 확인하는 state를 만들어 state확인 후 
+    const [isDate, setIsDate] = useState(false)
+    useEffect(()=>{
+        if (isDate){    
+            searchDate(userid, pageNo, startDate, endDate)
+        }else{
+            GetOrderItem(userid, pageNo)
+        }
+    }, [pageNo])
 
 
 
@@ -191,30 +211,21 @@ const Order = ()=>{
                  <Col xs={12} md={8}>
                  <div className='title'>구매내역</div>
                 </Col>
-                <Col xs={6} md={4}>
-                <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />                
+                < Col xs={6} md={4} style={{paddingTop:"10px"}} >
+                <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />      
+                <Button onClick={getAllOrder}>전체조회</Button>
                 </Col>
             </Row>
                 
                 {
                     !!myOrderItems ? "" : <div>
                     <Button type="submit" className="remove" variant="secondary" size="sm" style={{position:"relative", right:"5px"}} >삭제</Button>
-                    <Button type="button" className="remove" variant="secondary" size="sm" >구매 </Button>
                 </div>
                 }
                 <div>
                     <Table>
                         <thead>
                             <tr>
-                                {/* <th className="checkBox">
-                                    <div>
-                                        <Form.Check
-                                            type='checkbox' id='checkbox'
-                                            onChange={(e) => allBasketCheck(e.target.checked)}
-                                            checked={checkBaskets.length === AllOrderNum ? (AllOrderNum === 0 ? false : true) : false}
-                                        />
-                                    </div>
-                                </th> */}
                                 <th></th>
                                 <th>상품정보</th>
                                 <th>가격</th>
@@ -233,17 +244,6 @@ const Order = ()=>{
                                     let itemprice = data.itemprice
                                     let reviewData =
                                         <tr key={id}>
-                                            {/* <td className="checkBox">
-                                                <Form>
-                                                    <div className="checkBox">
-                                                        <Form.Check
-                                                            type='checkbox' className={`checkbox-${id}`}
-                                                            onChange={(e) => reviewCheck(e.target.checked, id, itemid)}
-                                                            checked={checkBaskets.includes(id) ? true : false}
-                                                        />
-                                                    </div>
-                                                </Form>
-                                            </td> */}
                                             <td>
                                                 <img src={itemimg} width="80" height="96" style={{ marginRight: "5px" }} />
                                             </td>

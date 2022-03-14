@@ -3,20 +3,14 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import postRefresh from "../../hooks/postRefresh";
 import { useState } from "react";
-import { FormControl } from "react-bootstrap";
+import { FormControl, Table } from "react-bootstrap";
 import ReactPaginate from "react-paginate"
 import { Button, InputGroup } from "react-bootstrap";
 import ReactStars from "react-stars"
 import Page from "../Base/main/Page";
 import "../../axiosproperties"
 
-const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, pdtState })=>{
-
-    // // 해당 item을 받아옴
-    // const allItem = useSelector(state => state.Item.items)
-    // const rendered = allItem.filter(item => item.itemid === pdtState.itemid)
-    // const renderedItem = rendered[0] ? rendered[0] : ""
-    
+const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, setIsReview, isReview  })=>{
 
     const renderedItem = useSelector(state=>state.oneItem.item)
     let allReviewNums = 0
@@ -44,6 +38,11 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
     // 리뷰배열과 아이디
     const reviews = useSelector(state => state.reviews.reviews)
     const userID = sessionStorage.getItem('id')
+    // 문의사항 배열
+    const inquirys = useSelector(state=> state.inquiry.inquirys)
+    const inquirysPage = useSelector(state=> state.inquiry.pages)
+    console.log(inquirys, "inq")
+    console.log(inquirysPage, "inqPage")
 
 
 
@@ -122,30 +121,7 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
         setScore(newRating)
     }
 
-    // 리뷰 정렬값들을 받을 state
-    const [conditionSelect,setConditionSelect ] = useState('date')
-    const [sortSelect, setSortSelect] = useState('desc')
-    const makeCondition = (e)=>{
-        setConditionSelect(e.target.value)
-        if (e.target.value === "date"){
-            setDate('date')
-            setPage(1)
-        }else if (e.target.value === "score"){
-            setDate('score')
-            setPage(1)
-        }
-    }
-    const makeSort = (e)=>{
-        alert(e.target.value)
-        setSortSelect(e.target.value)
-        if (e.target.value === "DESC"){
-            setDesc("DESC")
-            setPage(1)
-        }else if (e.target.value === "ASC"){
-            setDesc("ASC")
-            setPage(1)
-        }
-    }
+    
     // 문자열로 정렬할떄 함수
     const orderReview = (e)=>{
         if (reviewMsg === "높은 별점 순"){
@@ -176,6 +152,8 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
         }
     }
 
+    
+
 
     {/* 댓글들 받아와서 반복문 돌림*/}
     const render = reviews.map((review,index)  =>{
@@ -197,40 +175,83 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
                         <div key={'modify'+review.id} id={'modify'+review.id} style={{display:"none"}}>
                             <ReactStars key={'starts'+review.id} count={5} onChange={ratingChanged} size={24} color2={'#ffd700'} value={score}  />
                             <InputGroup key={'InputGroup'+review.id}>
-                            {/* <FormControl key={'FormControl'+review.id} as="textarea" aria-label="With textarea" onChange={makeContent2(review.id,forReviewContent)} value={forReviewContent}></FormControl> */}
                             <FormControl key={'FormControl'+review.id} as="textarea" aria-label="With textarea" onChange={makeContent} value={content}></FormControl>
                             <Button type="submit" key={'button'+review.id} onClick={()=>{modifyReview(review.id, score, content )}}>리뷰 수정</Button>
                             </InputGroup>
                         </div> 
                     <br/>
             </div>
-             
+        )
+    })
+
+    // INSERT INTO inquiry VALUES (
+    //     'qwerqwer',  ,'CONA 9085 기모옵션추가 딥워싱 브러쉬 루즈핏 와이드 스트레이트 데님 진청',
+    //     '문의사항이 있습니다', '사이즈가 어떻게 되나요?'
+    //    )
+
+    // 문의사항 받아와서 돌린다
+    const inQRender = inquirys.map(Q =>{
+        
+        const inQ = Q.username === sessionStorage.getItem('id') ? <tr>
+                        <td>{Q.title}</td>
+                        <td>{Q.chkanswer == 0 ? "답변예정" : "답변완료"}</td>
+                    </tr> : null
+        return(
+            inQ
         )
     })
 
     return(
         <div className="reviews">
+            {/* 정렬용 버튼 */}
+            
             {
-                allReviewNums != 0 ?
-                <div className="BestButtons centered" >
-                {/* 후기 별점 .. 변경버튼 */}
-                <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
-                <span onClick={orderDate}  variant="secondary">{dateMsg}</span>&nbsp;&nbsp;
-                </div> : ""
+                allReviewNums != 0 ? ( isReview ?
+                    <div className="BestButtons centered" >
+                    {/* 후기 별점 .. 변경버튼 */}
+                    <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
+                    <span onClick={orderDate}  variant="secondary">{dateMsg}</span>&nbsp;&nbsp;
+                    </div> : ""
+                )
+                 : ""
             }
             <br/>
-           {render}
-           <div className="myPage centered">
 
-               {
+        {/* 댓글 랜더 */}
+        {
+          isReview ? render : (<div>
+                                    <Table style={{textAlign:"center"}}>
+                                        <thead>
+                                            <tr >
+                                                <th>제목</th>
+                                                <th>답변여부</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {inQRender}
+                                        </tbody>
+                                    </Table>
+                                </div>)
+        }
+           {/* 리뷰 페이지부분 */}
+           {
+               isReview ? (<div className="myPage centered">{
                     allReviewNums != 0 ? <Page
                     setPage = {handlePage}
                     reviewNum = {allReviewNums}
                     selected = {page}
                 /> : ""
-                }
-
-             </div>
+                }</div>) : <div className="myPage centered">
+                {
+                     inquirysPage != 0 ? <Page
+                     setPage = {handlePage}
+                     totalPage = {inquirysPage}
+                     selected = {page}
+                 /> : ""
+                 }
+            </div>
+           }
+           
         </div>
     )
 }
