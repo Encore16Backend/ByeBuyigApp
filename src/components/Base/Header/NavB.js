@@ -53,6 +53,7 @@ const NavB = ({ID, logOut})=>{
       sessionStorage.removeItem('id');
       sessionStorage.removeItem('access_token')
       sessionStorage.removeItem('refresh_token')
+      sessionStorage.removeItem('roles')
       window.location.replace("/")
     }
     const toMyPage = ()=>{
@@ -258,7 +259,7 @@ const NavB = ({ID, logOut})=>{
           {
               (!!id) // !! (null undefined '' 등 모든 false형 값이면)
               ?
-              (id ==='testadmin')?
+              (sessionStorage.getItem('roles') ==='ROLE_ADMIN')?
               <>
               <Nav.Link onClick={toMyPage}></Nav.Link>
                 <div className='NavBarCataForm'>
