@@ -35,11 +35,36 @@ function SingInModal({show, onHide, logIn}){
                 logIn(id)
                 localStorage.setItem('id', id)
                 sessionStorage.setItem('id', id)
+
+                
+                //겟ㅇ저
+                axios.post('/api/user/getUser', {
+                    username: sessionStorage.getItem('id'),
+                    password:pwd
+                }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
+                    },
+                }).then(res => {
+                    sessionStorage.setItem("roles",res.data.roles[0].name)
+                }).catch(error =>{
+                    // 권한 문제인것같다 - getuser 에서 어드민권한이 다른듯?
+                    sessionStorage.setItem("roles","ROLE_ADMIN")
+                })
+
                 window.location.replace("/")
+                
             }).catch(error => {
                 alert("아이디 혹은 비밀번호를 확인해주세요.")
             })
         };
+
+        // 로그인 직후 getUser호출
+
+
+
+        // getUser의 res에서 role을 찾아 세션에 저장
         
         const [id, setID] = useState('')
         const [pwd, setPwd] = useState('')

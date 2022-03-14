@@ -1,7 +1,13 @@
 import React from 'react'
+import '../axiosproperties'
+
+const Managereview =()=>{
+
+
 
 
 const Managereview =()=>{
+
     return(
         <>
         리뷰 관리
