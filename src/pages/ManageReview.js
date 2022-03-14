@@ -5,6 +5,9 @@ const Managereview =()=>{
 
 
 
+
+const Managereview =()=>{
+
     return(
         <>
         리뷰 관리

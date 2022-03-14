@@ -28,6 +28,9 @@ const ManageUser =()=>{
         })
     }, [])
 
+
+const ManageUser =()=>{
+
     return(
         <>
         회원 관리
@@ -65,5 +68,6 @@ const ManageUser =()=>{
         </>
     )
     }
+}
 
 export default ManageUser

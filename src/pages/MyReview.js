@@ -54,7 +54,6 @@ const MyReview = () => {
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token')
             }
         }).then(res =>{
-            console.log(res, "res")
             modify(reviewid)
             alert('댓글 수정 완료')
             setPathNo(1)
@@ -116,7 +115,6 @@ const MyReview = () => {
             }
         }).then(res => {
             const data = res.data
-            console.log(res, "src")
             setTotalPageNo(data.totalPages);
             setReview(data.content)
         }).catch(error => {
