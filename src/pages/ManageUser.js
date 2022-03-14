@@ -1,6 +1,6 @@
 import React from 'react'
 
-const manageUser =()=>{
+const ManageUser =()=>{
     return(
         <>
         회원 관리
@@ -8,4 +8,4 @@ const manageUser =()=>{
     )
 
 }
-export default manageUser
+export default ManageUser

@@ -254,7 +254,6 @@ const ShoppingBasket = () => {
                             {   
 
                                 (updateItem.length != 0) ? basketItem.map((data, idx) => {
-                                    
                                     let bcount = data.bcount
                                     let showBcount = _.cloneDeep(bcount)
                                     let id = data.id

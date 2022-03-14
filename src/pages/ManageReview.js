@@ -1,11 +1,11 @@
 import React from 'react'
 
 
-const managereview =()=>{
+const Managereview =()=>{
     return(
         <>
         리뷰 관리
         </>
     )
 }
-export default managereview
+export default Managereview
