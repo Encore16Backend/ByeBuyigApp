@@ -20,9 +20,9 @@ const MyCalendar = ({startDate,setStartDate, endDate, setEndDate})=>{
         onChange={(date) => setStartDate(date)}
         selectsStart
         startDate={startDate}
-        endDate={endDate}/>
+        endDate={endDate}/> ~ 
         </div>
-        <div style={{width:"200px", display:"inline-block"}}>
+        <div style={{width:"200px", display:"inline-block", paddingLeft:"5px"}}>
         <DatePicker
         selected={endDate}
         onChange={(date) => setEndDate(date)}

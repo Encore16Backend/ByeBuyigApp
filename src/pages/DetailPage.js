@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import GetBestItems from "../hooks/GetBestItems";
 import axios from "axios";
 import { addReview } from "../redux/reviews/actions";
+import { addInquiry } from "../redux/inquiry/actions";
+import {addInquiryPages} from "../redux/inquiry/actions"
 import ImageSlide from "../components/detail/ImageSlide";
 import {addOneItems} from "../redux/oneItem/actions"
 import "../axiosproperties"
@@ -43,6 +45,25 @@ const DetailPage = ()=>{
         })
       }
 
+    // 문의사항 받아오기
+    const GetInquiryItem = async (itmeid)=>{
+        await axios.get('/inquiry/byItemid',{
+           params:{
+            itemid : itmeid
+           }
+        },{
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            console.log(res, "문의사항")
+            dispatch(addInquiry(res.data.content))
+            dispatch(addInquiryPages(res.data.totalPages))
+        }).catch(error => {
+            console.log(error, ' GetInquiryItem 에러');
+        })
+    }
+
     // 상품 하나 검색해서 받아오기
     const GetOneItem = async (itmeid) =>{
         await axios.get('/main/item',{
@@ -74,12 +95,19 @@ const DetailPage = ()=>{
 
     // 리뷰 가져오는 hook
     GetReviewItem(itemId, desc, data, page)
+    // 문의사항 가져오는 hook
+    GetInquiryItem(itemId)
+
     // 최초한번 들어왔을떄 이미지를 가지고있음
     useEffect(()=>{
         GetOneItem(itemId)
     },[])
-    const locationsStateHook = useSelector(state => state.oneItem.item);
+    // const locationsStateHook = useSelector(state => state.oneItem.item);
     const imgs = useSelector(state => state.oneItem.item.images);
+
+
+    // 문의사항과 댓글 토글
+    const [isReview , setIsReview] = useState(true)
 
     return(
         <>
@@ -100,12 +128,12 @@ const DetailPage = ()=>{
             <br/><br/><br/><br/>
             <Row>
                 <Col sm={12}>
-                    <MakeReview pdtState = {locationState} lendering={lendering} setLandering={setLandering} />
+                    <MakeReview setIsReview={setIsReview} isReview={isReview} pdtState = {locationState} lendering={lendering} setLandering={setLandering} />
                 </Col>
             </Row>
             <Row>
                 <Col sm={12}>
-                <ReviewView page={page} pdtState = {locationState} lendering={lendering} setLandering={setLandering}  setPage={setPage} setDesc={setDesc}  setDate={setDate} />
+                <ReviewView setIsReview={setIsReview} isReview={isReview} page={page} lendering={lendering} setLandering={setLandering}  setPage={setPage} setDesc={setDesc}  setDate={setDate} />
                 </Col>
             </Row>
         </Container>

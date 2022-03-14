@@ -12,6 +12,7 @@ import orderListReducer from "./redux/OrderItems/reducer";
 import locReducer from "./redux/addr/reducer";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import inquiryReducer from "./redux/inquiry/reducer";
 
 const persistConfig = {
     key : "root",
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
     basket : basketReducer,
     oneItem : oneItemReducer,
     order:orderListReducer,
-    loc :locReducer
+    loc :locReducer,
+    inquiry :inquiryReducer
 })
 
 export default rootReducer
