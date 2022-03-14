@@ -1,6 +1,6 @@
 import React from 'react'
 
-const managecoment =()=>{
+const Managecoment =()=>{
     return(
         <>
         문의 사항 
@@ -8,4 +8,4 @@ const managecoment =()=>{
     )
 }
 
-export default managecoment
+export default Managecoment

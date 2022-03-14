@@ -1,11 +1,14 @@
 import React from 'react'
+import '../axiosproperties'
+
+const Managereview =()=>{
 
 
-const managereview =()=>{
+
     return(
         <>
         리뷰 관리
         </>
     )
 }
-export default managereview
+export default Managereview
