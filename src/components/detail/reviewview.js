@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 
+
 const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, setIsReview, isReview }) => {
 
     const history = useHistory();
@@ -219,7 +220,7 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
         const inQ = <tr onClick={()=>{getDetailInquiry(Q)}} id={"inQ"+Q.id}>
                         <td>{Q.title}</td>
                         <td>{ Q.username === sessionStorage.getItem('id') ?  (Q.chkanswer == 0 ? "답변예정" : "답변완료") : <FontAwesomeIcon icon={faLock} />}</td>
-                        
+                       
                     </tr> 
         return(
             inQ
