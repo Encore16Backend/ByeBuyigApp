@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { logIn } from './redux/user/actions';
 import store from './store';
 import {CookiesProvider} from 'react-cookie'
+import { createPopper } from '@popperjs/core';
+import { popperGenerator } from '@popperjs/core';
 
 
 
