@@ -23,10 +23,13 @@ const DetailPage = ()=>{
     const [data, setDate] = useState('date')
     const [page, setPage] = useState(1)
 
+    console.log(page, "전역")
+
 
     
      // 리뷰값 받아오기
      const GetReviewItem = async (itmeid, asc, sort, page) =>{
+        console.log(page, "리뷰")
         await axios.get('/review/byItemid',{
            params:{
             itemid:itmeid,
@@ -46,17 +49,20 @@ const DetailPage = ()=>{
       }
 
     // 문의사항 받아오기
-    const GetInquiryItem = async (itmeid)=>{
+    const GetInquiryItem = async (itmeid, page)=>{
+        console.log(page, "문의사항")
         await axios.get('/inquiry/byItemid',{
            params:{
-            itemid : itmeid
+            itemid : itmeid,
+            page:page
            }
         },{
             headers: {
                 "Content-Type": "application/json",
             }
         }).then(res => {
-            console.log(res, "문의사항")
+        
+            console.log(res.data.content, "문의사항"+page)
             dispatch(addInquiry(res.data.content))
             dispatch(addInquiryPages(res.data.totalPages))
         }).catch(error => {
@@ -96,7 +102,7 @@ const DetailPage = ()=>{
     // 리뷰 가져오는 hook
     GetReviewItem(itemId, desc, data, page)
     // 문의사항 가져오는 hook
-    GetInquiryItem(itemId)
+    GetInquiryItem(itemId,page)
 
     // 최초한번 들어왔을떄 이미지를 가지고있음
     useEffect(()=>{
