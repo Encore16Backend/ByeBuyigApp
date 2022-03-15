@@ -31,11 +31,10 @@ function SingInModal({show, onHide, logIn}){
                     path:"/",
                 })
                 closeHander();
-            }).then(res =>{
+            }).then(res => {
                 logIn(id)
                 localStorage.setItem('id', id)
                 sessionStorage.setItem('id', id)
-
                 
                 //겟ㅇ저
                 axios.post('/api/user/getUser', {
@@ -48,9 +47,10 @@ function SingInModal({show, onHide, logIn}){
                     },
                 }).then(res => {
                     sessionStorage.setItem("roles",res.data.roles[0].name)
+                    alert(sessionStorage.getItem('access_token'))
+                    alert(res.data.roles[0].name)
                 }).catch(error =>{
-                    // 권한 문제인것같다 - getuser 에서 어드민권한이 다른듯?
-                    sessionStorage.setItem("roles","ROLE_ADMIN")
+                    console.log(error)
                 })
 
                 window.location.replace("/")

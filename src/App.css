@@ -100,3 +100,10 @@ a:hover{
     color: #000000;
     text-decoration: none;
 }
+.userbox {
+  width: 100%;
+  display: block;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 50px 50px 50px;
+}
