@@ -35,6 +35,7 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
         setPage(e.selected+1)
     }
     const handlePage = (data)=>{
+        console.log("보낼때")
         setPage(data)
     }
     // 리뷰배열과 아이디
@@ -43,8 +44,10 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
     // 문의사항 배열
     const inquirys = useSelector(state=> state.inquiry.inquirys)
     const inquirysPage = useSelector(state=> state.inquiry.pages)
-    console.log(inquirys, "inq")
+    
+
     console.log(inquirysPage, "inqPage")
+    console.log(allReviewNums, "allReviewNums")
 
 
 
