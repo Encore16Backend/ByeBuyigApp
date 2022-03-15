@@ -1,9 +1,6 @@
 import React from 'react'
 import '../axiosproperties'
 
-const Managereview =()=>{
-
-
 
 
 const Managereview =()=>{
