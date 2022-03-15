@@ -12,6 +12,7 @@ import "../../../css/drop.css";
 import CheckModal from "../../../modals/CheckModal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 const NavB = ({ID, logOut})=>{
 
@@ -136,9 +137,8 @@ const NavB = ({ID, logOut})=>{
             </Form>
             {/* 이미지 검색 */}
             <Nav.Link onClick={()=>{setImgSearchModalOn(true)}}>
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
+              <FontAwesomeIcon icon={faCamera} />
             </Nav.Link>
-
 
             {/* cate */}
             <div className='NavBarCataForm'>
