@@ -42,4 +42,4 @@ jobs:
             build s3://byebuying
             
       - name : Invalidation
-        run : aws cloudfront create-invalidation --distribution-id EQDH36Z2NEI0H --paths "/*"
+        run : aws cloudfront create-invalidation --profile=kkc --distribution-id EQDH36Z2NEI0H --paths /*
