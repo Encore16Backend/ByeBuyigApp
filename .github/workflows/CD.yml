@@ -42,4 +42,7 @@ jobs:
             build s3://byebuying
             
       - name : Invalidation
-        run : aws cloudfront create-invalidation --profile=kkc --distribution-id EQDH36Z2NEI0H --paths /*
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run : aws cloudfront create-invalidation --distribution-id EQDH36Z2NEI0H --paths /*
