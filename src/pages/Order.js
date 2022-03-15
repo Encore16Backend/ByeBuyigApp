@@ -121,8 +121,6 @@ const Order = ()=>{
                 page: pageNo,
                 start : getStringDate(startDate),
                 end : getStringDate(endDate)
-                
-                
             },
             headers: {
                 "Content-Type": "application/json",
@@ -149,15 +147,6 @@ const Order = ()=>{
     { return target1.getFullYear() === target2.getFullYear() && target1.getMonth() === target2.getMonth() && target1.getDate()=== target2.getDate(); }
 
 
-    // useEffect(()=>{
-    //     if ( isSameDay(startDate, new Date()) && isSameDay(endDate, new Date())){
-            
-    //         GetOrderItem(userid, pageNo)
-    //     }else{
-            
-    //         searchDate(userid, pageNo, startDate, endDate)
-    //     }
-    // }, [pageNo, startDate, endDate])
 
 
 
@@ -228,6 +217,7 @@ const Order = ()=>{
                             <tr>
                                 <th></th>
                                 <th>상품정보</th>
+                                <th>배송지</th>
                                 <th>가격</th>
                                 <th colSpan={2}>수량</th>
                                 <th>결제가격</th>
@@ -242,13 +232,21 @@ const Order = ()=>{
                                     let itemimg = data.itemimg
                                     let itemname = data.itemname
                                     let itemprice = data.itemprice
+                                    let addr = data.location
+                                    console.log(typeof(addr))
+
                                     let reviewData =
                                         <tr key={id}>
                                             <td>
                                                 <img src={itemimg} width="80" height="96" style={{ marginRight: "5px" }} />
                                             </td>
                                             <td>
-                                                {itemname}
+                                                {
+                                                    itemname.length > 15 ? (itemname.substring(0,18)+"...") : itemname
+                                                }
+                                            </td>
+                                            <td>
+                                                {addr}
                                             </td>
                                             <td>{itemprice}</td>
                                             <td colSpan={2} style={{paddingLeft:"20px"}}>

@@ -10,6 +10,10 @@ import ReactStars from "react-stars"
 import Page from "../Base/main/Page";
 import "../../axiosproperties"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
 
 const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, setIsReview, isReview  })=>{
 
@@ -55,6 +59,7 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
     // 수정폼 나오게한다
     const modify = (id,content,score)=>{
         let form = document.querySelector('#modify'+id);
+        // 이전의 폼 상태 기억
         setBeforeFrom(form)
         if (form.style['display'] === 'none'){
             if ( !!beforeform ){
@@ -191,10 +196,12 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
 
     // 글쓴이가 본인인지 확인하고 상세문의사항 페이지로 이동하는 함수
     const getDetailInquiry = (Q)=>{
-        history.push({
-            pathname:"/inquiryDetail",
-            state:Q
-        })
+        if (Q.username === sessionStorage.getItem('id')){
+            history.push({
+                pathname:"/inquiryDetail",
+                state:Q
+            })
+        }
     }
 
     // 문의사항 받아와서 돌린다
@@ -208,10 +215,10 @@ const ReviewView = ({ lendering, page ,setLandering, setPage, setDesc, setDate, 
 // itemname: "CONA 9085 기모옵션추가 딥워싱 브러쉬 루즈핏 와이드 스트레이트 데님 진청"
 // title: "문의사항입니다"
 // username: "qewrqwer"
-        
-        const inQ = <tr onClick={()=>{getDetailInquiry(Q)}}>
+        const inQ = <tr onClick={()=>{getDetailInquiry(Q)}} id={"inQ"+Q.id}>
                         <td>{Q.title}</td>
-                        <td>{Q.chkanswer == 0 ? "답변예정" : "답변완료"}</td>
+                        <td>{ Q.username === sessionStorage.getItem('id') ?  (Q.chkanswer == 0 ? "답변예정" : "답변완료") : <FontAwesomeIcon icon={faLock} />}</td>
+                        {/* <td> {Q.username != sessionStorage.getItem('id') ? "자물쇠" : ''} </td> */}
                     </tr> 
         return(
             inQ

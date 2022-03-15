@@ -56,7 +56,7 @@ const MyReview = () => {
         }).then(res =>{
             modify(reviewid)
             alert('댓글 수정 완료')
-            setPathNo(1)
+            setPageNo(1)
         }).catch(error =>{
             alert("수정실패")
             console.log(error.response.data);
@@ -92,7 +92,7 @@ const MyReview = () => {
         }
     }
 
-    let [pageNo, setPathNo] = useState(1);
+    let [pageNo, setPageNo] = useState(1);
     let [totalPageNo, setTotalPageNo] = useState();
     const [review, setReview] = useState([]);
     const [checkReviews, setCheckReviews] = useState([]);
@@ -151,13 +151,13 @@ const MyReview = () => {
 
     // 날짜가 바뀌면 날짜검색으로 useEffect (startDate, endDate)
     useEffect(()=>{
-        setPathNo(1)
+        setPageNo(1)
         searchReviewDate(sessionStorage.getItem('id'), pageNo, startDate, endDate)
     }, [startDate, endDate])
 
     // 전체검색 버튼을 누르면 다시 전체조회
     const getAllReview = ()=>{
-        setPathNo(1)
+        setPageNo(1)
         AllReview(pageNo)
     }
 
@@ -220,7 +220,7 @@ const MyReview = () => {
     }
     
     const handlePage = (value)=>{
-        setPathNo(value);
+        setPageNo(value);
     }
 
 

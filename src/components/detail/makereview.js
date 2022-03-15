@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import ReactStars from "react-stars"
 import "../../axiosproperties"
 
+
 const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
 
     const USERID = useSelector(state => state.user.ID)
@@ -142,6 +143,7 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
                     <br />
                     <Form.Label>문의사항 내용</Form.Label>
                     <Form.Control placeholder="내용을 입력하세요"  as="textarea" aria-label="With textarea" onChange={(e)=>setInQContent(e.target.value)} value={inQContent} />    
+                    <br />
                     <Button type="submit">문의사항 작성</Button>
                 </Form.Group>
                 </Form> 
