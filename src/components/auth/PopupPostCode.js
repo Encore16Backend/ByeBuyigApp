@@ -17,8 +17,13 @@ const PopupPostCode = (props) => {
           fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
         }
         // 여기서 값을 전달해야댐
-        props.plz.setIsAddress(fullAddress)
-        props.plz.setIsZoneCode(data.zonecode)
+        if (props.plz.setIsAddress && props.plz.setIsZoneCode){
+            props.plz.setIsAddress(fullAddress)
+            props.plz.setIsZoneCode(data.zonecode)
+        }
+        if (props.plz.onAllAddr){
+          props.plz.onAllAddr(fullAddress, data.zonecode)
+        }
         props.onClose()
     }
  

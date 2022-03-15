@@ -82,6 +82,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
         "username": sessionStorage.getItem("id"),
         "itemid":oneItem.itemid,
         "itemname":oneItem.itemname,
+        "location":null,
         "itemprice":oneItem.price,
         "itemimg":img1,
         "bcount":bcount
@@ -90,7 +91,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
     // 구매요청 단일 품목
     const makeOrder = async (addr)=>{
         window.confirm("정말 구매하시겠습니까?")
-        console.log([order], "orderFunc")
+        order.location=addr;
         await axios.post("/orderHistory/add",{
             // body ,2번째 괄호
             OrderHistory:[order]

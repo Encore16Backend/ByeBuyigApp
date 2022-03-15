@@ -22,8 +22,10 @@ function SingInModal({show, onHide, logIn}){
                     "Content-Type": "application/json",
                   },
             }).then(res => {
-                // sessionStorage.setItem('refresh_token', res.data.refresh_token)
+                logIn(id)
                 sessionStorage.setItem('access_token', res.data.access_token) 
+                sessionStorage.setItem('roles', res.data.roles)
+                sessionStorage.setItem('id', id)
                 cookie.save('pwd', pwd,{
                     path:"/",
                 })
@@ -31,30 +33,6 @@ function SingInModal({show, onHide, logIn}){
                     path:"/",
                 })
                 closeHander();
-            }).then(res =>{
-                logIn(id)
-                localStorage.setItem('id', id)
-                sessionStorage.setItem('id', id)
-
-                
-                //겟ㅇ저
-                axios.post('/api/user/getUser', {
-                    username: sessionStorage.getItem('id'),
-                    password:pwd
-                }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
-                    },
-                }).then(res => {
-                    sessionStorage.setItem("roles",res.data.roles[0].name)
-                }).catch(error =>{
-                    // 권한 문제인것같다 - getuser 에서 어드민권한이 다른듯?
-                    sessionStorage.setItem("roles","ROLE_ADMIN")
-                })
-
-                window.location.replace("/")
-                
             }).catch(error => {
                 alert("아이디 혹은 비밀번호를 확인해주세요.")
             })

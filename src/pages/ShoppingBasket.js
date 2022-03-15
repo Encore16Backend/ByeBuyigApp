@@ -34,7 +34,6 @@ const ShoppingBasket = () => {
     const [updateItem, setUpdateItem] = useState([]);
     // 주문할떄 보낼 배열들
     const [orderItems, setOrderItems] = useState([]);
-
     const [ModalOn, setModalOn] =useState(false) // 구매모달창
 
 
@@ -85,6 +84,8 @@ const ShoppingBasket = () => {
             console.log(error, ' updateBasket 에러');
         })
     }
+
+    
 
     useEffect(() => {
         GetBasketItem(userid, pageNo)
@@ -151,12 +152,11 @@ const ShoppingBasket = () => {
     // 구매요청
     const makeOrder = async (addr)=>{
         window.confirm("정말 구매하시겠습니까?")
-        
         for (let i =0; i< orderItems.length; i++){
             delete orderItems[i].id
+            orderItems[i].location = addr
         }
         dispatch(addOrderList(orderItems))
-        
         //주소
         await axios.post("/orderHistory/add",{
             // body ,2번째 괄호
@@ -179,7 +179,6 @@ const ShoppingBasket = () => {
                 },
                 
             })
-
         }).catch(error => {
             console.log(error, ' makeOrder 에러');
         })
