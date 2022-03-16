@@ -257,11 +257,10 @@ function SingUpModal({ show, onHide }) {
     }
    
     const okmail =(e)=> {
-      if (keycode ===chkMail){
+      if (keycode != "" && keycode ===chkMail){
         alert("인증코드가 일치합니다")
         setvalKeycode(1)
         console.log(valkeycode)
-        
       }else {
         alert("인증코드가 틀렸습니다")
         setvalKeycode(-1)
