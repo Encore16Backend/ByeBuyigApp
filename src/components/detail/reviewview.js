@@ -50,7 +50,6 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
     const inquirys = useSelector(state => state.inquiry.inquirys)
     const inquirysPage = useSelector(state => state.inquiry.pages)
 
-
     console.log(inquirysPage, "inqPage")
     console.log(allReviewNums, "allReviewNums")
 
