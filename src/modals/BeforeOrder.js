@@ -31,8 +31,16 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
             let data = res.data;
             let locname = [];
             for (var i=0; i<res.data.length; i++){
+              
               data[i] = data[i].location.split('/');
-              locname.push(data[i][3]);
+              console.log(data[i], "dataLog")
+              if (data[i][3] != undefined){
+                console.log(data[i][3], "data[i][3]")
+                locname.push(data[i][3]);
+              }else{
+                locname.push("새 배송지");
+              }
+              
             }
             setLocName(locname);
             setLocation(data);
@@ -82,6 +90,8 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
       temp[addpost][2] = e.target.value;
       setLocation(temp)
     }
+
+
 
     // 아이템들 렌더링 시키는 함수
     const render = orderItems.map((data,idx)=>{
@@ -139,8 +149,8 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
                 <>
                 <Nav className="mt-5 mb-3" variant="tabs" defaultActiveKey="link-0">
                   <Nav.Item><Nav.Link eventKey="link-0" onClick={() => { setAddpost(0); } }>기본 배송지</Nav.Link></Nav.Item>
-                  <Nav.Item><Nav.Link eventKey="link-1" onClick={() => { setAddpost(1); } }>{locations[1][3]}</Nav.Link></Nav.Item>
-                  <Nav.Item><Nav.Link eventKey="link-2" onClick={() => { setAddpost(2); } }>{locations[2][3]}</Nav.Link></Nav.Item>
+                  <Nav.Item><Nav.Link eventKey="link-1" onClick={() => { setAddpost(1); } }>{ locations[1] === undefined ? "" : locations[1][3]  }</Nav.Link></Nav.Item>
+                  <Nav.Item><Nav.Link eventKey="link-2" onClick={() => { setAddpost(2); } }>{ locations[2] === undefined ? "" : locations[2][3]}</Nav.Link></Nav.Item>
                 </Nav>
                 </>
                 <>
