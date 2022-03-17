@@ -14,20 +14,23 @@ const ImgSearchedList = ()=>{
     const frm = new FormData();
     var location = useLocation();
     var dispatch = useDispatch();
-    const [file, setFile] = useState('');
+    const f = location.state.file
+    const [file, setFile] = useState(f);
     const [totalPage, setTotalPage] = useState(1)
     
     // 1안 state저장 후 사용 
-    console.log(file , "fileState")
     // 2, 3안 세션저장후 사용
     // console.log(sessionStorage.getItem('frm') , "frm")
     // console.log(sessionStorage.getItem('file') , "file")
 
-    const [page, setPage] = useState(1)
+    
 
     useEffect(()=>{
-        const f = location.state.file
-        setFile(f)
+        if (!!file) {
+            const f = location.state.file
+            setFile(f)
+        } 
+        console.log(file , "fileState")
         frm.append("file", file);
         axios.post('http://192.168.0.208:8081/flask/retrieval', frm ).then((res)=>{        
             setTotalPage(res.data.totalPage)
@@ -36,12 +39,8 @@ const ImgSearchedList = ()=>{
         }).catch(error =>{
             console.log(error)
         })
-    },[page,location])
+    },[location])
 
-
-    const handlePage = (value)=>{
-        setPage(value)
-    }
 
 
     
@@ -51,32 +50,15 @@ const ImgSearchedList = ()=>{
             <Row>
                 <Col sm={12}>
                     <Row>
-                        <br/><br/><br/><br/> 
-                        <div className="BestButtons" >
-                            {/* 후기 별점 .. 변경버튼 */}
-                            <span variant="secondary">정렬1</span>&nbsp;&nbsp;
-                            <span variant="secondary">정렬</span>&nbsp;&nbsp;
-                            <span variant="secondary">정렬3</span>
-                        </div>
-                        <hr></hr>
-
                         <div className="bestpdts">
                             <CateCardWrapper cata = {"imgsearchpdt"} />
-                            {/* id로 받은 상품을 렌더링 할 component */}
+                            
                         </div>
                     </Row>
                 </Col>
             </Row>
             </Container>
-            <div className="myPage centered">
-                {
-                    totalPage != 0 ? <Page
-                        setPage = {handlePage}
-                        totalPage = {totalPage}
-                        selected = {page}
-                    /> : ""
-                }
-            </div>
+            
         </div>
     )
 }
