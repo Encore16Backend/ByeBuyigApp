@@ -89,6 +89,7 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
             alert("로그인 후에 작성 할 수 있습니다")
             return
         }
+        console.log(userId, pdtId, pdtName, inQTitle, inQContent)
         await axios.post('/inquiry/save',{
                 // 답변여부, 날짜, 답변 빼고 보냄
                 username : userId,
@@ -109,8 +110,8 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
-            postRefresh() // 토큰이 없으면 재발행시키는 함수
-            inquirySave(e)
+            // postRefresh() // 토큰이 없으면 재발행시키는 함수
+            // inquirySave(e)
         })
     }
 

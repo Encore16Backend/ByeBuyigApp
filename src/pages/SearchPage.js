@@ -51,7 +51,6 @@ const SearchList = ()=>{
 
     const handlePage = (value)=>{
         setPage(value)
-        // setSearchUrl('/main/search?searchName='+keyword+"&asc="+asc+"&sortname="+sortName+"&page="+value);
         setSearchUrl('/main/search?asc='+asc+"&sortname="+sortName+"&page="+value+"&searchName="+keyword+" "+cataName);
     }
       // select로 리뷰 정렬값들을 받을 state 
@@ -172,22 +171,6 @@ const SearchList = ()=>{
         </Container>
        
                     <div className="myPage centered">
-                        {/* {
-                            totalPage != 0 ?   <ReactPaginate
-                            pageCount={Math.ceil(totalPage)}
-                            pageRangeDisplayed={2}
-                            marginPagesDisplayed={0}
-                            breakLabel={""}
-                            previousLabel={"이전"}
-                            nextLabel={"다음"}
-                            onPageChange={handlePageChange}
-                            containerClassName={"pagination-ul"}
-                            activeClassName={"currentPage"}
-                            previousClassName={"pageLabel-btn"}
-                            nextClassName={"pageLabel-btn"}
-                            /> : ""
-                        } */}
-
                         {
                             totalPage != 0 ? <Page
                                 setPage = {handlePage}
