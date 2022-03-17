@@ -74,25 +74,21 @@ const NavB = ({ID, logOut})=>{
     const [keyword, setKeyword] = useState('')
     const cataNum = useSelector(state => state.cataNum.items)
 
-    const toImgSearch = (e)=>{
-      history.push({
-        pathname:"/imgsearch",
-      })
-    }
+    
     const changeKeyword = (e)=>{
       setKeyword(e.target.value)
     }
     const onSubmit = (e)=>{
       e.preventDefault();
       const sendCataName = cataName == "전체" ? "" : cataName
-      history.push({
+      history.push({  
         pathname: "/searchlist",
         search : "?searchName="+keyword,
         state: {
             keyword:keyword,
             cataName:sendCataName,
         }
-    })   
+      })   
     }
 
     return(

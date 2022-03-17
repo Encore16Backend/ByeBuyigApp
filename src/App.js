@@ -17,7 +17,7 @@ function App() {
   
   if ( sessionStorage.getItem('id') ){
     setInterval(() => 
-    postRefresh(), 60*2000);
+    postRefresh(), 60*5000);
     
   }
 
