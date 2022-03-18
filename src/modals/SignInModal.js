@@ -23,6 +23,7 @@ function SingInModal({show, onHide, logIn}){
                   },
             }).then(res => {
                 logIn(id)
+                console.log(res.data.roles)
                 sessionStorage.setItem('access_token', res.data.access_token) 
                 sessionStorage.setItem('roles', res.data.roles)
                 sessionStorage.setItem('id', id)

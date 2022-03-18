@@ -16,6 +16,7 @@ const ManageInquiry =()=>{
     const [searchitem,setSearchitem] =useState();
     const [openedContentId, setOpenedContentId] = useState(-1);
     const [adminanswer,setAdminanswer] = useState('');
+    const [searchstate,setSearchstate] =useState(false)
 
 
     const onSubmit = (e)=>{
@@ -44,7 +45,13 @@ const ManageInquiry =()=>{
             const data =res.data.content
             console.log(res)
             setAlldata(data)
+            console.log(totalPage)
             setOpenedContentId(-1)
+            if (searchstate===false){
+                setSearchuser('')
+                setSearchitem('')
+                setTotalPage(res.data.totalPages)
+            }
 
         }).catch(error=>{
             console.log(error)
@@ -69,28 +76,6 @@ const ManageInquiry =()=>{
          axios.get('/inquiry/getInquiries', {
             params :{
                 username: searchuser,
-                page:pageNo
-            },
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
-            }
-        }).then(res => {
-            const data =res.data.content
-            console.log(searchuser)
-            setAlldata(data)
-            setOpenedContentId(-1)
-            console.log(data,"data")
-
-        }).catch(error => {
-            console.log(error)
-        })
-    };
-    
-
-    const getbyitemname =()=>{
-        axios.get('/inquiry/getInquiries', {
-            params :{
                 itemname: searchitem,
                 page:pageNo
             },
@@ -100,18 +85,20 @@ const ManageInquiry =()=>{
             }
         }).then(res => {
             const data =res.data.content
-            console.log(searchitem)
-            console.log(data,"data")
             setAlldata(data)
+            setTotalPage(res.data.totalPages)
             setOpenedContentId(-1)
-
+            // setPage(1)
+            setSearchstate(true)
         }).catch(error => {
             console.log(error)
         })
     };
-
     
+    const admin_answer =()=>{
+        axios.put('/inquiiry/answer')
 
+    }
 
     const handlePage = (value) => {
         setPage(value);
@@ -134,7 +121,8 @@ const ManageInquiry =()=>{
                    </>
                )
            }
-        
+    
+
 
 
     return(
@@ -142,13 +130,12 @@ const ManageInquiry =()=>{
         <h1> 회원 관리</h1>
         <Form className="review" onSubmit={onSubmit} style={{paddingLeft:"48px"}} >
         <div style={{display:"flex"}}>
-                <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search"
+                <FormControl type="search" placeholder="ID" className="me-2" aria-label="Search"
                   value={searchuser} onChange={onsearchuser} style={{width:"15%"}}/>&nbsp;
-             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >유저</Button>
              &nbsp;&nbsp;&nbsp;&nbsp;
-                <FormControl type="search" placeholder="Search" className="me-2" aria-label="Search"
+                <FormControl type="search" placeholder="상품" className="me-2" aria-label="Search"
                   value={searchitem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
-             <Button type="submit"style={{width:"70px"}} onClick={getbyitemname} >상품</Button>
+             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>
         </div>
         </Form>
 
@@ -209,7 +196,7 @@ const ManageInquiry =()=>{
                 {
                     totalPageNo != 0 ? <Page
                         setPage={handlePage}
-                        totalPage={totalPageNo}
+                        totalPage={totalPage}
                         selected={pageNo}
                     /> : ""
                 }
