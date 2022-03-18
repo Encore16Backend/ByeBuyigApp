@@ -22,7 +22,12 @@ const ManageInquiry =()=>{
     // const [startDate, setStartDate] = useState(new Date('2022-01-01'));
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
-    const [startState,setStartState] =useState(false)
+    const [startState,setStartState] =useState(false);
+    const [checkstate,setCheckstate] =useState(false);
+    const [answerstate,setAnswerstate] = useState(false);
+
+
+    const [finduser,setFinduser] =useState();
 
 
 
@@ -40,7 +45,6 @@ const ManageInquiry =()=>{
     
     useEffect(()=>{
         console.log("start")
-        console.log(startDate, endDate);
         const newStart = startDate != undefined ? JSON.stringify(startDate).slice(1, 11) : null
         const newEnd = endDate != undefined ? JSON.stringify(endDate).slice(1, 11) : null
         axios.get('/inquiry/getInquiries',
@@ -61,13 +65,20 @@ const ManageInquiry =()=>{
             setAlldata(data)
             setOpenedContentId(-1)
             setTotalPage(res.data.totalPages)
+            // const testname = Alldata.filter(data.chkanswer=> data.chkanswer===1)
+            // setFinduser(res.data[0])
+            // console.log(data,"test")
             if(!startState){
-                console.log("1")
                 setStartDate()
                 setEndDate()
                 setStartState(true)
             }
-           
+            if(checkstate){
+                setAnswerstate(true)
+            }else{
+                setAnswerstate(false)
+            }
+
         }).catch(error=>{
             console.log(error)
         })
@@ -111,7 +122,8 @@ const ManageInquiry =()=>{
                        <h5>문의 내용 </h5>
                         
                        <br/>
-                       <Form.Control as="textarea" aria-label="With textarea" value={content.content} style={{fontSize:"18px"}} rows="3"/>
+                       <Form.Control as="textarea" aria-label="With textarea" value={content.content} 
+                       style={{fontSize:"18px"}} rows="3"/>
                        <br/>
                    </div>
                    </>
@@ -134,12 +146,18 @@ const ManageInquiry =()=>{
         })
     }
     
-
-
+    const chkedhandler =()=>{
+        if(checkstate ===false){
+            setCheckstate(true)
+        }else{
+            setCheckstate(false)
+        }
+        console.log(checkstate)
+    }
 
     return(
         <>
-        <h1> 회원 관리</h1>
+        <h1> 문의 사항</h1>
         <Form className="review" onSubmit={onSubmit} style={{paddingLeft:"48px"}} >
         <div style={{display:"flex"}}>
                 <FormControl type="search" placeholder="ID" className="me-2" aria-label="Search"
@@ -148,6 +166,7 @@ const ManageInquiry =()=>{
                 <FormControl type="search" placeholder="상품" className="me-2" aria-label="Search"
                   value={searchitem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
                  <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}/>  &nbsp; &nbsp;
+                 <input type="checkbox" onChange={chkedhandler} style={{width:"37px",height:"37px"}}/>&nbsp;<h4>답변예정</h4>&nbsp;
              <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>
         </div>
         </Form>
@@ -175,6 +194,9 @@ const ManageInquiry =()=>{
                         let write_date = data.date
                         let answerok = data.chkanswer
 
+
+                        const testname = [Alldata.filter(answerok =>answerok===1)]
+                        console.log(testname,"name")
                         let Adata =
                         <>
                         <tr onClick={()=> {
@@ -188,9 +210,9 @@ const ManageInquiry =()=>{
                             <td>{byusername_itemname}</td>
                             <td>{byusername_title}</td>
                             <td>{byusername_name}</td>
-                            <td>{answerok === 1 ? "답변완료":"답변예정"}</td>
-                            
-                        
+                            {answerstate===true ?<td>{answerok === 0 && "답변예정"}</td>
+                            :<td>{answerok === 1 ? "답변완료":"답변예정"}</td>}
+                            {/* <td>{answerok === 1 ? "답변완료":"답변예정"}</td> */}
                         
                         </tr>
                         {openedContentId === data.id && <tr>

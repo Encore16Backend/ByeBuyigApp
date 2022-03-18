@@ -23,8 +23,9 @@ const ManageUser =()=>{
             },
         }).then(res => {
             const data = res.data
-            setTotalPage(data.totalPage);
+            setTotalPage(data.totalPages);
             setAlldata(data.content);
+            console.log(data)
         }).catch(error => {
             console.log(error);
         })
@@ -59,10 +60,10 @@ const ManageUser =()=>{
                         let Aemail =data.email
                         let Alocations= !!data.locations ? data.locations :null
                         let basicLocation = !!Alocations[0] ? Alocations[0] : null
-                        // let BasicAddr = !!basicLocation ? basicLocation.location : null
-                        let BasicAddr;
-                        if (BasicAddr)
-                            BasicAddr = basicLocation.location.split('/')[0]
+                        let BasicAddr = !!basicLocation ? basicLocation.location : null
+                        // let BasicAddr;
+                        // if (BasicAddr)
+                        //     BasicAddr = basicLocation.location.split('/')[0]
                         
                         const del = async (e)=>{
                             await axios.delete('/api/user/delete', {
@@ -101,9 +102,9 @@ const ManageUser =()=>{
         </div>
         <div className="centered">
                 {
-                    totalPageNo != 0 ? <Page
+                    totalPage != 0 ? <Page
                         setPage={handlePage}
-                        totalPage={totalPageNo}
+                        totalPage={totalPage}
                         selected={pageNo}
                     /> : ""
                 }
