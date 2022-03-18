@@ -61,7 +61,6 @@ const DetailPage = ()=>{
                 "Content-Type": "application/json",
             }
         }).then(res => {
-        
             console.log(res.data.content, "문의사항"+page)
             dispatch(addInquiry(res.data.content))
             dispatch(addInquiryPages(res.data.totalPages))

@@ -34,10 +34,11 @@ const ManageUser =()=>{
         setPage(value);
     }
 
+
+    // 유저 네임을 받는
     
 
 
-const ManageUser =()=>{
 
     return(
         <>
@@ -69,7 +70,7 @@ const ManageUser =()=>{
                             }, {
                                 headers: {
                                     "Content-Type": "application/json",
-                                    "Authorization": "Bearer " + localStorage.getItem('access_token'),
+                                    "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
                                 },
                             }).then(res => {
                                 alert("삭제되었습니다.")
@@ -77,6 +78,9 @@ const ManageUser =()=>{
                             }).catch(error => {
                             })
                         };
+
+                        
+
 
                         let Adata =
                         <tr>
@@ -105,6 +109,5 @@ const ManageUser =()=>{
         </>
     )
     }
-}
 
 export default ManageUser
