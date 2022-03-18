@@ -95,6 +95,7 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
                 username : userId,
                 itemid : pdtId,
                 itemname : pdtName,
+                itemimage : image,
                 title : inQTitle,
                 content : inQContent
         },{

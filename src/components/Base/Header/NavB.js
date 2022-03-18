@@ -301,17 +301,16 @@ const NavB = ({ID, logOut})=>{
                 </div>
                 </>:
               <>
-              <Nav.Link onClick={toMyPage}></Nav.Link>
                 <div className='NavBarCataForm'>
                   <div className='navBarCate dropdown' style={{display:"inline"}}>
                   <span className='dropbtn'>
-                    <Link style={{color:"white"}}>{id}</Link> 
+                    <span style={{color:"white"}}>{id}</span> 
                     </span>
                   <div className="dropdown-content" style={{position:"absolute", left:"1rem", textAlign:'left',zIndex:5}}>
                     <ul className="nav-flyout">
                         <li>
-                          <span ><i className="ion-ios-color-filter-outline"></i>
-                          <span><CheckModal show={checkModalOn} onHide = {()=>{setCheckModalOn(false)}}/></span>
+                          <span><i className="ion-ios-color-filter-outline"></i>
+                          <span ><CheckModal show={checkModalOn} onHide = {()=>{setCheckModalOn(false)}}/></span>
                           </span>
                         </li>
                         <li>
@@ -347,7 +346,7 @@ const NavB = ({ID, logOut})=>{
                 </div>
               
               
-              {/* <Nav.Link onClick={out}>로그아웃</Nav.Link> */}
+
               </>
                :
               <>

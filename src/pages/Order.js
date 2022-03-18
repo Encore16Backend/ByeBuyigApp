@@ -176,12 +176,12 @@ const Order = ()=>{
 
 
 
-    const getStringDate = (localeDate)=>{
-        // Wed Mar 23 2022 10:21:20 GMT+0900 (한국 표준시)
-        const tmp = JSON.stringify(localeDate)
-        const strDate = tmp.slice(1, 11)
-        return strDate
-    }
+   const getStringDate = (localeDate) => {
+    // Wed Mar 23 2022 10:21:20 GMT+0900 (한국 표준시)
+    const tmp = JSON.stringify(localeDate)
+    const strDate = tmp.slice(1, 11)
+    return strDate
+}
 
 
 
@@ -190,8 +190,7 @@ const Order = ()=>{
 
     return(
         <div>
-            <Container>
-                
+            <Container>     
             <Form className='review' onSubmit={onSubmit}>
             <Row>
                  <Col xs={12} md={8}>
@@ -202,7 +201,6 @@ const Order = ()=>{
                 <Button onClick={getAllOrder}  style={{position:"relative", left:"400px", bottom:"35px"}}>전체조회</Button>
                 </Col>
             </Row>
-                
                 {
                     !!myOrderItems ? "" : <div>
                     <Button type="submit" className="remove" variant="secondary" size="sm" style={{position:"relative", right:"5px"}} >삭제</Button>

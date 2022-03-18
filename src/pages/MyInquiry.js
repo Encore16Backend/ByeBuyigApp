@@ -47,6 +47,9 @@ const MyInquiry = ()=>{
 
     const inQRender = inquirys.map(Q =>{   
                 const inQ = <tr onClick={()=>{getDetailInquiry(Q)}}>
+                                <td>  {Q.itemimage ? <img src={Q.itemimage} width="80" height="96"/> : "예전꺼라 이미지 없었음"} </td>
+                                <td>{Q.itemname}</td>
+                                <td> {Q.date} </td>
                                 <td>{Q.title}</td>
                                 <td>{Q.chkanswer == 0 ? "답변예정" : "답변완료"}</td>
                             </tr> 
@@ -91,8 +94,11 @@ const MyInquiry = ()=>{
                     <Table style={{textAlign:"center"}}>
                         <thead>
                             <tr >
-                                <th>제목</th>
-                                <th>답변여부</th>
+                                <th style={{width:"10%"}}>상품이미지</th>
+                                <th style={{width:"*"}}>상품명</th>
+                                <th style={{width:"10"}}>날짜</th>
+                                <th style={{width:"15%"}}>제목</th>
+                                <th style={{width:"15%"}}>답변여부</th>
                             </tr>
                         </thead>
                         <tbody>

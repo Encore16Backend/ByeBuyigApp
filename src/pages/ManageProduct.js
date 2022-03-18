@@ -21,6 +21,7 @@ const ManageProduct = ()=>{
     const dispatch = useDispatch()
     const [startDate, setStartDate] = useState(new Date('start'))
     const [endDate, setEndDate] = useState(new Date('end'))
+    const [searchItem, setSearchItem] = useState('')
 
     // 모든 아이템 정보 받아옴
     useEffect(()=>{
@@ -49,13 +50,24 @@ const ManageProduct = ()=>{
     const delProduct = ()=>{
 
     }
-    
-
     // 상품 검색 (카테고리, 이름)
+    const onsearchitem = ()=>{
+
+    }
+    const onSubmit = (e)=>{
+        e.preventDefault();
+        
+    }
+    const getbyusername = ()=>{
+        
+    }
 
     // 상품 수정
 
     // 상품 등록
+    const productSave = ()=>{
+
+    }
 
     // 상품 삭제
 
@@ -152,19 +164,17 @@ const ManageProduct = ()=>{
     return(
         <>
         <h1 className='centered'> 상품 관리</h1>
-        {/* <Form className="review" onSubmit={onSubmit} style={{paddingLeft:"48px"}} >
-        <div style={{display:"flex"}}>
-                <FormControl type="search" placeholder="ID" className="me-2" aria-label="Search"
-                  value={searchuser} onChange={onsearchuser} style={{width:"15%"}}/>&nbsp;
-             &nbsp;&nbsp;&nbsp;&nbsp;
-                <FormControl type="search" placeholder="상품" className="me-2" aria-label="Search"
-                  value={searchitem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
-             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>
-        </div>
-        </Form> */}
 
-        <div>
+        {/* 검색 폼 */}
+        <Form className="review" onSubmit={onSubmit} style={{paddingLeft:"48px"}} >
+        <div style={{display:"flex"}}>
+                <FormControl type="search" placeholder="상품이름" className="me-2" aria-label="Search"
+                  value={searchItem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
+                <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>
+
+                
         </div>
+        </Form>
 
         <div className='userbox'>
         <Table>
