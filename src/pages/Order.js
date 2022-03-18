@@ -39,7 +39,6 @@ const Order = ()=>{
         if (checked) {
             setCheckBaskets([...checkBaskets, basketid]);
             setCheckItems([...checkItems, itemid]);
-            
         } else {
             // 체크 해제
             setCheckBaskets(checkBaskets.filter((x) => x !== basketid));
