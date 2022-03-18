@@ -2,7 +2,7 @@ import React from "react";
 
 const Page = ({setPage, totalPage, selected, reviewNum})=>{
     
-    if (reviewNum ){
+    if (reviewNum){
         totalPage = Math.ceil(reviewNum/5)
     }
 

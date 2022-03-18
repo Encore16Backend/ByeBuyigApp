@@ -89,7 +89,7 @@ const Order = ()=>{
             console.log(data);
             setTotalPageNo(data.totalPages);
             setMyOrderItems(data.content)
-            // setUpdateItem(data.content)
+            
             setAllOrderNum(data.content.length)
             // dispatch(addBasket(res.data.content))
         }).catch(error => {
@@ -143,10 +143,6 @@ const Order = ()=>{
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-
-    const isSameDay = (target1, target2) => 
-    { return target1.getFullYear() === target2.getFullYear() && target1.getMonth() === target2.getMonth() && target1.getDate()=== target2.getDate(); }
-
 
 
 
@@ -203,7 +199,7 @@ const Order = ()=>{
                 </Col>
                 < Col xs={6} md={4} style={{paddingTop:"10px"}} >
                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />      
-                <Button onClick={getAllOrder}>전체조회</Button>
+                <Button onClick={getAllOrder}  style={{position:"relative", left:"400px", bottom:"35px"}}>전체조회</Button>
                 </Col>
             </Row>
                 

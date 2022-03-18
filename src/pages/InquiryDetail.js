@@ -7,7 +7,6 @@ const InquiryDetail = ()=>{
 
     const location = useLocation()
     const Q = location.state
-    console.log(Q, "DetailQ")
 
     return(
         <div>

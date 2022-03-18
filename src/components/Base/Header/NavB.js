@@ -95,7 +95,7 @@ const NavB = ({ID, logOut})=>{
         <>
         <Navbar bg="dark" variant="dark">
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Navbar.Brand href={"/"} >BuyBuyingActionTEst</Navbar.Brand>
+          <Navbar.Brand href={"/"} >BuyBuying</Navbar.Brand>
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
@@ -283,6 +283,11 @@ const NavB = ({ID, logOut})=>{
                         <li>
                           <span ><i className="ion-ios-color-filter-outline"></i>
                           <Link to={{pathname:"/manageInquiry"}}>문의 사항</Link>
+                          </span>
+                        </li>
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link to={{pathname:"/manageproduct"}}>상품 관리</Link>
                           </span>
                         </li>
                         <li>

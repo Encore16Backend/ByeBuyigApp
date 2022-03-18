@@ -23,8 +23,6 @@ const DetailPage = ()=>{
     const [data, setDate] = useState('date')
     const [page, setPage] = useState(1)
 
-    console.log(page, "전역")
-
 
     
      // 리뷰값 받아오기
