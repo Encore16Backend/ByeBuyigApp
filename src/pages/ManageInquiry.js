@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const ManageInquiry =()=>{
     var history = useHistory();
-    let [totalPageNo, setTotalPageNo] = useState();
+    // let [totalPageNo, setTotalPageNo] = useState();
     const [Alldata,setAlldata] = useState([]);
     const [pageNo, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
@@ -16,7 +16,7 @@ const ManageInquiry =()=>{
     const [searchitem,setSearchitem] =useState();
     const [openedContentId, setOpenedContentId] = useState(-1);
     const [adminanswer,setAdminanswer] = useState('');
-    const [searchstate,setSearchstate] =useState(false)
+    const [searchstate,setSearchstate] =useState(1)
 
 
     const onSubmit = (e)=>{
@@ -35,6 +35,8 @@ const ManageInquiry =()=>{
         console.log("start")
         axios.get('/inquiry/getInquiries',
         {   params :{
+                username: searchuser,
+                itemname: searchitem,
                 page:pageNo
             },
             headers:{
@@ -47,16 +49,11 @@ const ManageInquiry =()=>{
             setAlldata(data)
             console.log(totalPage)
             setOpenedContentId(-1)
-            if (searchstate===false){
-                setSearchuser('')
-                setSearchitem('')
-                setTotalPage(res.data.totalPages)
-            }
-
+            setTotalPage(res.data.totalPages)
         }).catch(error=>{
             console.log(error)
         })
-    },[pageNo])
+    },[pageNo, searchstate])
 
 
 
@@ -73,26 +70,7 @@ const ManageInquiry =()=>{
     
     
     const getbyusername =()=>{
-         axios.get('/inquiry/getInquiries', {
-            params :{
-                username: searchuser,
-                itemname: searchitem,
-                page:pageNo
-            },
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
-            }
-        }).then(res => {
-            const data =res.data.content
-            setAlldata(data)
-            setTotalPage(res.data.totalPages)
-            setOpenedContentId(-1)
-            // setPage(1)
-            setSearchstate(true)
-        }).catch(error => {
-            console.log(error)
-        })
+        setSearchstate(searchstate*-1); // 1*-1 = -1 / -1 * -1 -1 , 1
     };
     
     const admin_answer =()=>{
@@ -194,7 +172,7 @@ const ManageInquiry =()=>{
         </div>
         <div className="centered">
                 {
-                    totalPageNo != 0 ? <Page
+                    totalPage != 0 ? <Page
                         setPage={handlePage}
                         totalPage={totalPage}
                         selected={pageNo}
