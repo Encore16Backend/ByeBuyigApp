@@ -36,7 +36,7 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
                             <ReactStars edit={false} value={reviewmean} style={{display:"inline-block"}} />
                         </div>
                         <div style={{position:"absolute",bottom:"15px"}}>
-                            <textField>리뷰 : {reviewcount}</textField>
+                            <Card.Text>리뷰 : {reviewcount}</Card.Text>
                         </div>
                            
                 </Card.Body>

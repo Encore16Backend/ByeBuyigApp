@@ -43,6 +43,7 @@ const ImgSearchPage = ({ show, onHide,})=>{
       pathname: "/imgsearchresult",
       state:{file:file}
     }) 
+    deleteFileImage()
     closeHander()
 
 
@@ -72,6 +73,7 @@ const ImgSearchPage = ({ show, onHide,})=>{
   }
 
   const closeHander = ()=>{
+    deleteFileImage()
     onHide()
   }
 
@@ -104,9 +106,7 @@ const ImgSearchPage = ({ show, onHide,})=>{
         <div className="centered">
         <input name="imgUpload" type="file"  accept="image/*" onChange={saveFileImage}/>
                 {/* 삭제버튼 */}
-                {/* <button
-                onClick={() => deleteFileImage()}>삭제
-                </button> */}
+                <Button onClick={() => deleteFileImage()}>삭제 </Button>
                 {/* 검색 */}
               <Button type="submit"> 검색 </Button>
           </div>
