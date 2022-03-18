@@ -16,14 +16,17 @@ const MyCalendar = ({startDate,setStartDate, endDate, setEndDate})=>{
     <div style={{display:"inline"}}>
         <div style={{width:"200px", display:"inline-flex"}}>
         <DatePicker
+        className="calender" placeholderText="Start"
         selected={startDate}
         onChange={(date) => setStartDate(date)}
         selectsStart
         startDate={startDate}
-        endDate={endDate}/> ~ 
+        endDate={endDate}/> &nbsp;-
         </div>
+        &nbsp;&nbsp;
         <div style={{width:"200px", display:"inline-block", paddingLeft:"5px"}}>
         <DatePicker
+        className="calender" placeholderText="End"
         selected={endDate}
         onChange={(date) => setEndDate(date)}
         selectsEnd
