@@ -65,8 +65,8 @@ const ManageInquiry =()=>{
     }
     
     
-    const getbyusername = async ()=>{
-        await axios.get('/inquiry/getInquiries', {
+    const getbyusername =()=>{
+         axios.get('/inquiry/getInquiries', {
             params :{
                 username: searchuser,
                 page:pageNo
@@ -79,6 +79,7 @@ const ManageInquiry =()=>{
             const data =res.data.content
             console.log(searchuser)
             setAlldata(data)
+            setOpenedContentId(-1)
             console.log(data,"data")
 
         }).catch(error => {
@@ -87,10 +88,10 @@ const ManageInquiry =()=>{
     };
     
 
-    const getbyitemname = async ()=>{
-        await axios.get('/inquiry/byItemid', {
+    const getbyitemname =()=>{
+        axios.get('/inquiry/getInquiries', {
             params :{
-                itemid: searchitem,
+                itemname: searchitem,
                 page:pageNo
             },
             headers: {
@@ -101,6 +102,9 @@ const ManageInquiry =()=>{
             const data =res.data.content
             console.log(searchitem)
             console.log(data,"data")
+            setAlldata(data)
+            setOpenedContentId(-1)
+
         }).catch(error => {
             console.log(error)
         })
