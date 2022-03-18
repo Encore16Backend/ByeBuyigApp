@@ -217,9 +217,10 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
 // title: "문의사항입니다"
 // username: "qewrqwer"
         const inQ = <tr onClick={()=>{getDetailInquiry(Q)}} id={"inQ"+Q.id}>
+                        <td> {Q.username} </td>
+                        <td> {Q.date} </td>
                         <td>{Q.title}</td>
                         <td>{ Q.username === sessionStorage.getItem('id') ?  (Q.chkanswer == 0 ? "답변예정" : "답변완료") : <FontAwesomeIcon icon={faLock} />}</td>
-                       
                     </tr> 
         return(
             inQ
@@ -244,19 +245,21 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
 
             {/* 댓글 랜더 */}
             {
-                isReview ? render : (<div>
+                isReview ? render : ( inquirys.length != 0 ? (<div>
                     <Table style={{ textAlign: "center" }}>
                         <thead>
-                            <tr >
-                                <th>제목</th>
-                                <th>답변여부</th>
+                            <tr>
+                                <th style={{width:"*"}}>아이디</th>
+                                <th style={{width:"10%"}}>날짜 </th>
+                                <th style={{width:"50%"}}>제목</th>
+                                <th style={{width:"20%"}}>답변여부</th>
                             </tr>
                         </thead>
                         <tbody>
                             {inQRender}
                         </tbody>
                     </Table>
-                </div>)
+                </div>) : "")
             }
             {/* 리뷰 페이지부분 */}
             {

@@ -16,6 +16,7 @@ import InquiryDetail from "./pages/InquiryDetail";
 import MyInquiry from "./pages/MyInquiry";
 import ImgSearchedList from "./pages/ImgSearchList";
 import ManageProduct from "./pages/ManageProduct";
+import SaveProduct from "./pages/SaveProduct";
 
 
 export default [
@@ -90,6 +91,10 @@ export default [
     {
         path : "/manageproduct",
         component:ManageProduct
+    },
+    {
+        path:"/saveproduct",
+        component:SaveProduct
     }
 
 ]
