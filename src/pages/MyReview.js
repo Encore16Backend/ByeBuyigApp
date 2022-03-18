@@ -30,9 +30,6 @@ const MyReview = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
-    const isSameDay = (target1, target2) => 
-    { return target1.getFullYear() === target2.getFullYear() && target1.getMonth() === target2.getMonth() && target1.getDate()=== target2.getDate(); }
-
     const getStringDate = (localeDate)=>{
         // Wed Mar 23 2022 10:21:20 GMT+0900 (한국 표준시)
         const tmp = JSON.stringify(localeDate)
@@ -70,6 +67,7 @@ const MyReview = () => {
 
     const [beforeform , setBeforeFrom] = useState('');
     const [beforeFromTd, setBeforeFormTd] = useState('');
+    
     // 수정폼 나오게한다
     const modify = (id,content,score)=>{
         let form = document.querySelector('#modify'+id);
@@ -100,9 +98,9 @@ const MyReview = () => {
 
 
      // 날짜로 리뷰검색
-     const searchReviewDate = async (userid, pageNo, startDate, endDate) => {
+     const searchReviewDate = (userid, pageNo, startDate, endDate) => {
         setIsDate(true)
-        await axios.get('/review/byDate', {
+        axios.get('/review/getReviews', {
             params: {
                 username: userid,
                 page: pageNo,
@@ -122,9 +120,9 @@ const MyReview = () => {
         })
     }
 
-    const AllReview = async ()=>{
+    const AllReview = ()=>{
         setIsDate(false)
-        axios.get("/review/byUsername", {
+        axios.get("/review/getReviews", {
             params: {
                 username:sessionStorage.getItem('id'),
                 page:pageNo,
@@ -236,7 +234,7 @@ const MyReview = () => {
                 </Col>
                 <Col xs={6} md={4} style={{paddingTop:"10px"}}> 
                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />                
-                <Button onClick={getAllReview}>전체조회</Button>
+                <Button onClick={getAllReview} style={{position:"relative", left:"400px", bottom:"35px"}}>전체조회</Button>
                 </Col>
         </Row>
        <br/>
@@ -321,10 +319,7 @@ const MyReview = () => {
                                             <Button type="submit" key={'button'+reviewid} onClick={()=>{modifyReview(reviewid, scoreChange, contentChange)}}>수정완료</Button>
                                         </div>
                                     </td> 
-                                </tr>
-                                
-                                
-                                
+                                </tr>  
                             </>
                             return ( reviewData )
                         })

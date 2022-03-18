@@ -163,11 +163,6 @@ const SearchList = ()=>{
                     </Row>
                 </Col>
             </Row>
-
-            <Row>
-                <Col>
-                </Col>
-            </Row>
         </Container>
        
                     <div className="myPage centered">

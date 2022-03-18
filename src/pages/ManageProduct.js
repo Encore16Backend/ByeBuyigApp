@@ -1,0 +1,248 @@
+import React from 'react'
+import '../axiosproperties'
+import axios from 'axios'
+import {useState,useEffect} from 'react'
+import {Table,Button,Form, FormControl, Row, Col,Accordion} from 'react-bootstrap'
+import Page from "../components/Base/main/Page";
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { addMainItems } from '../redux/items/actions'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min'
+import MyCalendar from '../components/etc/MyCalendar'
+
+
+const ManageProduct = ()=>{
+
+    var history = useHistory();
+    const [allPdt,setAllPdt] = useState([]);
+    const [pageNo, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState();
+    const dispatch = useDispatch()
+    const [startDate, setStartDate] = useState(new Date('start'))
+    const [endDate, setEndDate] = useState(new Date('end'))
+
+    // 모든 아이템 정보 받아옴
+    useEffect(()=>{
+        axios.get('/main/items', {
+            params:{
+                page : pageNo
+            },
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            setTotalPage(res.data.totalPages)
+            dispatch(addMainItems(res.data.content))
+        }).catch(error => {
+            console.log(error, ' getItem');
+        })
+        console.log( "getMainItem 종료") 
+    },[pageNo])
+
+
+    const allItem = useSelector(state=>state.Item.items)
+
+    console.log(allItem, "all")
+    console.log(totalPage, "totalPage")
+
+    const delProduct = ()=>{
+
+    }
+    
+
+    // 상품 검색 (카테고리, 이름)
+
+    // 상품 수정
+
+    // 상품 등록
+
+    // 상품 삭제
+
+
+
+
+
+
+
+
+    
+
+
+    // const onSubmit = (e)=>{
+    //     e.preventDefault();
+    //     history.push({
+    //       pathname: "/ManageInquiry",
+    //       search : "?searchName="+searchuser,
+    //       state: {
+    //         searchuser:searchuser,
+    //       }
+    //   })   
+    // }
+
+    
+    // useEffect(()=>{
+    //     console.log("start")
+    //     axios.get('/inquiry/getInquiries',
+    //     {   params :{
+    //             username: searchuser,
+    //             itemname: searchitem,
+    //             page:pageNo
+    //         },
+    //         headers:{
+    //             "Content-Type": "application/json",
+    //             "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
+    //         }
+    //     }).then(res=>{
+    //         setAllPdt(data)
+    //         setTotalPage(res.data.totalPages)
+    //     }).catch(error=>{
+    //         console.log(error)
+    //     })
+    // },[pageNo, searchstate])
+
+
+
+    // const onsearchuser=(e)=>{
+    //     setSearchuser(e.target.value)
+    // }
+    // const onsearchitem=(e)=>{
+    //     setSearchitem(e.target.value)
+    // }
+    // const onadminanswer=(e)=>{
+    //     setAdminanswer(e.target.value)
+    //     console.log(adminanswer)
+    // }
+    
+    
+    // const getbyusername =()=>{
+    //     setSearchstate(searchstate*-1); // 1*-1 = -1 / -1 * -1 -1 , 1
+    // };
+    
+    // const admin_answer =()=>{
+    //     axios.put('/inquiiry/answer')
+
+    // }
+
+    const handlePage = (value) => {
+        setPage(value);
+    }
+
+
+
+
+    //답변
+
+    // const Showcontent =(content)=>{
+    //     if(!content||content === '')
+    //     return <></>
+    //            return(
+    //                <>
+    //                <div style={{display:"flex",position:"static"}}>
+    //                    문의 제목 :{content.title}<br></br>
+    //                    문의 내용 :{content.content}
+    //                </div>
+    //                </>
+    //            )
+    //        }
+    
+
+
+
+    return(
+        <>
+        <h1 className='centered'> 상품 관리</h1>
+        {/* <Form className="review" onSubmit={onSubmit} style={{paddingLeft:"48px"}} >
+        <div style={{display:"flex"}}>
+                <FormControl type="search" placeholder="ID" className="me-2" aria-label="Search"
+                  value={searchuser} onChange={onsearchuser} style={{width:"15%"}}/>&nbsp;
+             &nbsp;&nbsp;&nbsp;&nbsp;
+                <FormControl type="search" placeholder="상품" className="me-2" aria-label="Search"
+                  value={searchitem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
+             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>
+        </div>
+        </Form> */}
+
+        <div>
+        </div>
+
+        <div className='userbox'>
+        <Table>
+        <thead>
+            <tr>
+                <th style={{width:"10%"}}>상품사진</th>
+                <th style={{width:"35%"}}>상품명</th>
+                <th style={{width:"15%"}}>카테고리</th>
+                <th style={{width:"15%"}}>가격</th>
+                <th style={{width:"10%"}}>리뷰평균</th>
+                <th style={{width:"10%"}}>구매수</th>
+                <th style={{width:"5%"}}>삭제</th>
+
+            </tr>
+        </thead>
+            <tbody>
+             { 
+                    (allItem.length != 0 ) ? allItem.map((data,idx)=>{
+                        let itemid = data.itemid;
+                        let itemname=data.itemname;
+                        let price=data.price;
+                        let reviewmean=data.reviewmean;
+                        let purchasecnt=data.purchasecnt;
+                        let pdtImg = data.images[0] != undefined ?  data.images[0].imgpath : "";
+                        let catasArr = data.categories[0] != undefined ? data.categories : "";
+                        let catas = []
+                        if (catasArr != ""){
+                            catasArr.map((cata)=>{
+                                catas.push(cata.catename)
+                            })
+                        }
+                        
+
+
+                        console.log(catas, "catas")
+
+                        let Adata =
+                        <>
+                        <tr>
+                            <td> <img src={pdtImg} width="80" height="96"/></td>
+                            
+                            <td>
+                            <Link to={{ pathname:"/detail", search : "?itemid="+itemid,
+                            state : {
+                                itemid : itemid,
+                            },
+                            }}>
+                            {itemname}
+                            </Link>
+                            </td>
+                            <td>
+                                {catas.join(', ')}
+                            </td>
+                            <td>{price}</td>
+                            <td>{reviewmean}</td>
+                            <td>{purchasecnt}</td>
+                            <td> <button onClick={()=>{delProduct()}}>삭제</button> </td>
+                        </tr>
+                        </>
+                        return (Adata)
+
+                    }):""
+            }
+
+            </tbody>
+        </Table>
+        </div>
+        <div className="centered">
+                {
+                    totalPage != 0 ? <Page
+                        setPage={handlePage}
+                        reviewNum={totalPage}
+                        selected={pageNo}
+                    /> : ""
+                }
+            </div>
+        </>
+    )
+}
+
+export default ManageProduct
