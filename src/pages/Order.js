@@ -11,6 +11,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import '../axiosproperties'
 import MyCalendar from "../components/etc/MyCalendar";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 
 
@@ -240,10 +241,11 @@ const Order = ()=>{
                                             <td>
                                                 <img src={itemimg} width="80" height="96" style={{ marginRight: "5px" }} />
                                             </td>
-                                            <td>
+                                            <td><Link to={{ pathname:"/detail", search : "?itemid="+itemid,state : {itemid : itemid,},}} >
                                                 {
                                                     itemname.length > 15 ? (itemname.substring(0,18)+"...") : itemname
                                                 }
+                                                </Link>
                                             </td>
                                             <td>
                                                 {addr}
