@@ -14,7 +14,7 @@ const MyInquiry = ()=>{
     const [totalPageNo, setTotalPageNo] = useState(1)
 
     const getMyInquiry = async (pageNo)=>{
-        await axios.get('/inquiry/byUsername',{
+        await axios.get('/inquiry/getInquiries',{
             params:{
                 username : sessionStorage.getItem('id'),
                 page : pageNo

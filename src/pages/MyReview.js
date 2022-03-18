@@ -124,7 +124,7 @@ const MyReview = () => {
 
     const AllReview = async ()=>{
         setIsDate(false)
-        axios.get("/review/byUsername", {
+        axios.get("/review/getReviews", {
             params: {
                 username:sessionStorage.getItem('id'),
                 page:pageNo,
