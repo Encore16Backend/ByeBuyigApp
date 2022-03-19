@@ -125,7 +125,7 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
         <div className="reviewMakeForm">
             {/* 리뷰 문의사항 토글 버튼 */}
         <Nav className="mt-5 mb-3" variant="tabs" defaultActiveKey="link-0">
-                <Nav.Item><Nav.Link eventKey="link-0" onClick={()=>{setIsReview(true); }}>댓글</Nav.Link></Nav.Item>
+                <Nav.Item><Nav.Link eventKey="link-0" onClick={()=>{setIsReview(true); }}>후기</Nav.Link></Nav.Item>
                 <Nav.Item><Nav.Link eventKey="link-1" onClick={()=>{setIsReview(false); }}>문의사항</Nav.Link></Nav.Item>
         </Nav>
 
@@ -136,7 +136,7 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
            </div>
            <InputGroup>
                <FormControl as="textarea" aria-label="With textarea" onChange={makeContent} value={content} />
-               <Button type="submit">리뷰작성</Button>
+               <Button type="submit">후기작성</Button>
            </InputGroup>
        </Form> : <Form onSubmit={inquirySave}>
                  <Form.Group>

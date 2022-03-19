@@ -127,6 +127,7 @@ const SearchList = ()=>{
     // axiosHook
     GetCate(searchUrl)
     GetTotalPage(searchPageUrl)
+    
     return(
         <>
         {/* <Realsidebar/> */}
@@ -135,23 +136,10 @@ const SearchList = ()=>{
                 <Col sm={12}>
                     <Row>
                         <br/><br/><br/><br/> 
-                        {/* <h1 className="centered" >PDTS</h1> */}
-                        {/* <div>
-                        <Form.Select size="sm" onChange={makeCondition} value={conditionSelect}>
-                            <option value="purchasecnt">판매수량순</option>
-                            <option value="reviewmean">별점순</option>
-                            <option value="price">가격순</option>
-                        </Form.Select>
-                        <Form.Select size="sm" onChange={makeSort} value={sortSelect}>
-                            <option value="DESC">내림차순</option>
-                            <option value="ASC">오름차순</option>
-                        </Form.Select>
-                        </div> */}
-
                         <div className="BestButtons" >
                             {/* 후기 별점 .. 변경버튼 */}
-                            <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
-                            <span onClick={orderPrice}  variant="secondary">{priceMsg}</span>&nbsp;&nbsp;
+                            <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;| &nbsp;
+                            <span onClick={orderPrice}  variant="secondary">{priceMsg}</span>&nbsp;| &nbsp;
                             <span onClick={orderSales} variant="secondary">{saleMsg}</span>
                         </div>
                         <hr></hr>
