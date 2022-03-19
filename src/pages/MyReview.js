@@ -229,13 +229,10 @@ const MyReview = () => {
         <Container>
         <Form className='review' onSubmit={onSubmit}>
         <Row>
-                 <Col xs={12} md={8}>
-                 <div className='title'>마이리뷰</div>
-                </Col>
-                <Col xs={6} md={4} style={{paddingTop:"10px"}}> 
+                
+                <h1 className='centered' >마이리뷰</h1>
                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />                
-                <Button onClick={getAllReview} style={{position:"relative", left:"400px", bottom:"35px"}}>전체조회</Button>
-                </Col>
+                {/* <Button onClick={getAllReview} style={{position:"relative"}}>전체조회</Button> */}
         </Row>
        <br/>
         <div>
@@ -261,7 +258,7 @@ const MyReview = () => {
                         <th className='date'>작성일자</th>
                         <th colSpan={2}>후기</th>
                         <th>별점</th>
-                        <th>리뷰수정</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

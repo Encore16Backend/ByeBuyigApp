@@ -228,19 +228,19 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
     })
 
     return (
-        <div className="reviews">
-            {/* 정렬용 버튼 */}
-
-            {
+        <>
+        {
                 allReviewNums != 0 ? (isReview ?
-                    <div className="BestButtons centered" >
+                    <div className="BestButtons" style={{position:"relative", top:"10px",marginBottom:"25px"}} >
                         {/* 후기 별점 .. 변경버튼 */}
-                        <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
+                        <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;|&nbsp;
                         <span onClick={orderDate} variant="secondary">{dateMsg}</span>&nbsp;&nbsp;
                     </div> : ""
                 )
                     : ""
-            }
+        }
+        <div className="reviews">
+            {/* 정렬용 버튼 */}
             <br />
 
             {/* 댓글 랜더 */}
@@ -281,6 +281,7 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
             }
 
         </div>
+        </>
     )
 }
 

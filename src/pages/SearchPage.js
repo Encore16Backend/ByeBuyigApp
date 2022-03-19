@@ -138,8 +138,8 @@ const SearchList = ()=>{
                         <br/><br/><br/><br/> 
                         <div className="BestButtons" >
                             {/* 후기 별점 .. 변경버튼 */}
-                            <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;&nbsp;
-                            <span onClick={orderPrice}  variant="secondary">{priceMsg}</span>&nbsp;&nbsp;
+                            <span onClick={orderReview} variant="secondary">{reviewMsg}</span>&nbsp;| &nbsp;
+                            <span onClick={orderPrice}  variant="secondary">{priceMsg}</span>&nbsp;| &nbsp;
                             <span onClick={orderSales} variant="secondary">{saleMsg}</span>
                         </div>
                         <hr></hr>

@@ -192,13 +192,13 @@ const Order = ()=>{
             <Container>     
             <Form className='review' onSubmit={onSubmit}>
             <Row>
-                 <Col xs={12} md={8}>
-                 <div className='title'>구매내역</div>
-                </Col>
-                < Col xs={6} md={4} style={{paddingTop:"10px"}} >
+                 
+                 <h1 className='centered'>구매내역</h1>
+                
+                
                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />      
-                <Button onClick={getAllOrder}  style={{position:"relative", left:"400px", bottom:"35px"}}>전체조회</Button>
-                </Col>
+                {/* <Button onClick={getAllOrder}  style={{position:"relative", left:"400px", bottom:"35px"}}>전체조회</Button> */}
+                
             </Row>
                 {
                     !!myOrderItems ? "" : <div>
