@@ -27,7 +27,7 @@ const ManageInquiry =()=>{
     const [answerstate,setAnswerstate] = useState(false);
 
 
-    const [finduser,setFinduser] =useState();
+    // const [finduser,setFinduser] =useState();
 
 
 
@@ -155,6 +155,20 @@ const ManageInquiry =()=>{
         console.log(checkstate)
     }
 
+
+
+
+    const pagereload=()=>{
+        setSearchitem('')
+        setSearchuser('')
+        if(startState){
+            setStartDate()
+            setEndDate()
+            setStartState(true)
+        }
+    }
+
+
     return(
         <>
         <h1> 문의 사항</h1>
@@ -167,7 +181,8 @@ const ManageInquiry =()=>{
                   value={searchitem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
                  <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}/>  &nbsp; &nbsp;
                  <input type="checkbox" onChange={chkedhandler} style={{width:"37px",height:"37px"}}/>&nbsp;<h4>답변예정</h4>&nbsp;
-             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>
+             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>&nbsp;
+             <Button style={{width:"75px"}} onClick={pagereload} >비우기</Button>
         </div>
         </Form>
 
@@ -176,6 +191,7 @@ const ManageInquiry =()=>{
         <thead>
             <tr>
                 <th style={{width:"10%"}}>작성 날짜</th>
+                <th style={{width:"10%"}}>상품 사진</th>
                 <th style={{width:"30%"}}>상품명</th>
                 <th style={{width:"15%"}}>제목 </th>
                 <th style={{width:"10%"}}>작성자</th>
@@ -193,10 +209,10 @@ const ManageInquiry =()=>{
                         let init_answer=data.answer
                         let write_date = data.date
                         let answerok = data.chkanswer
-
-
-                        const testname = [Alldata.filter(answerok =>answerok===1)]
-                        console.log(testname,"name")
+                        let pdtImg= data.itemimage
+                        // let okok =1
+                        // const testname = Alldata.filter(byusername_title =>data.chkanswer=okok)
+                        // console.log(testname)
                         let Adata =
                         <>
                         <tr onClick={()=> {
@@ -207,9 +223,11 @@ const ManageInquiry =()=>{
                                     setAdminanswer(init_answer);}}}>
 
                             <td>{write_date}</td>
+                            <td> <img src={pdtImg} width="80" height="96"/></td>
                             <td>{byusername_itemname}</td>
                             <td>{byusername_title}</td>
                             <td>{byusername_name}</td>
+
                             {answerstate===true ?<td>{answerok === 0 && "답변예정"}</td>
                             :<td>{answerok === 1 ? "답변완료":"답변예정"}</td>}
                             {/* <td>{answerok === 1 ? "답변완료":"답변예정"}</td> */}
