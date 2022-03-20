@@ -17,18 +17,12 @@ const Managereview =()=>{
     const [searchuser,setSearchuser] =useState();
     const [searchitem,setSearchitem] =useState();
     const [openedContentId, setOpenedContentId] = useState(-1);
-    const [adminanswer,setAdminanswer] = useState('');
     const [searchstate,setSearchstate] =useState(1)
-    // const [startDate, setStartDate] = useState(new Date('2022-01-01'));
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [startState,setStartState] =useState(false);
-    const [checkstate,setCheckstate] =useState(false);
-    const [answerstate,setAnswerstate] = useState(false);
-
-
-    // const [finduser,setFinduser] =useState();
-
+    const [checkReviews, setCheckReviews] = useState([]);
+    const [checkItems, setCheckItems] = useState([]);
 
 
     const onSubmit = (e)=>{
@@ -88,8 +82,6 @@ const Managereview =()=>{
     
     const getbyusername =()=>{
         setSearchstate(searchstate*-1); // 1*-1 = -1 / -1 * -1 -1 , 1
-        // setStartDate(startDate)
-        // setPage(1)
     };
     
     
@@ -107,49 +99,28 @@ const Managereview =()=>{
         }
     }
 
-
-    const Showcontent =(content)=>{
-        if(!content||content === '')
-        return <></>
-               return(
-                   <>
-                   {/* <div style={{display:"flex",position:"static"}}> */}
-                   <div >
-                       <h5>리뷰 내용 </h5>
-                       <br/>
-                       <Form.Control as="textarea" aria-label="With textarea" value={content.content} 
-                       style={{fontSize:"18px"}} rows="2"/>
-                       <br/>
-                   </div>
-                   </>
-               )
-           }
-
-    const deletereview =(id,itemname)=>{
-        axios.delete('/review/delete',{
-            params:{
-                id:id,
-                itemname:itemname
-
+    const delreview =  () => {
+        axios.delete("/review/delete", {
+            params: {
+                reviewid:checkReviews,
+                itemid:checkItems
             },
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
+        }).then(res => {
+            if (res === "FAIL") {
+                alert("리뷰 삭제 실패");
             }
-        }).then(res=>{
-            console.log(res)
-            alert("리뷰 삭제 완료")
-        }).catch(error=>{
-            console.log(error)
-        })
-            
+            setCheckReviews([]);
+            setCheckItems([]);
+        }).catch(err => {
+            console.log(err)
+        }) 
     }
-
-
+    
 
     return(
         <>
         <h1> 리뷰 관리</h1>
+        <Button className="remove" variant="secondary" size="sm" onClick={delreview}>삭제</Button>
         <Form className="review" onSubmit={onSubmit} style={{paddingLeft:"48px"}} >
         <div style={{display:"flex"}}>
                 <FormControl type="search" placeholder="ID" className="me-2" aria-label="Search"
@@ -160,7 +131,6 @@ const Managereview =()=>{
                  <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}/>  &nbsp; &nbsp;
              <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>&nbsp;
              <Button style={{width:"75px"}} onClick={pagereload} >비우기</Button>
-
         </div>
         </Form>
 
@@ -169,8 +139,9 @@ const Managereview =()=>{
         <thead>
             <tr>
                 <th style={{width:"10%"}}>작성 날짜</th>
-                <th style={{width:"15%"}}>상품 사진 </th>
+                <th style={{width:"10%"}}>상품 사진 </th>
                 <th style={{width:"30%"}}>상품명</th>
+                <th style={{width:"30%"}}>후기</th>
                 <th style={{width:"15%"}}>작성자 </th>
 
             </tr>
@@ -178,34 +149,21 @@ const Managereview =()=>{
             <tbody>
                 {
                     (Alldata != 0 ) ? Alldata.map((data,idx)=>{
-                        let byusername_name=data.username
-                        let byusername_itemname=data.itemname
+                        let byusername_name=[data.username]
+                        let byusername_itemname=[data.itemname]
                         let byusername_content=data.content
                         let write_date = data.date
                         let pdtImg=data.itemimage
                         let Adata =
                         <>
-                        <tr onClick={()=> {
-                               if(openedContentId === data.id){
-                                setOpenedContentId(-1);
-                            }else{
-                                setOpenedContentId(data.id);
-                                }}}>
-
-
+                        <tr>
                             <td>{write_date}</td>
                             <td> <img src={pdtImg} width="80" height="96"/></td>
                             <td>{byusername_itemname}</td>
+                            <td>{byusername_content}</td>
                             <td>{byusername_name}</td>
-                            {/* <td>{answerok === 1 ? "답변완료":"답변예정"}</td> */}
                         
                         </tr>
-                        {openedContentId === data.id && <tr>
-                                <td colSpan={5}>
-                                <Showcontent content={byusername_content}/>
-                                <Button onClick={()=>deletereview(data.id,byusername_itemname)}>리뷰 삭제</Button>
-                                </td>
-                            </tr>}
                         </>
                         return (Adata)
                         

@@ -10,7 +10,6 @@ import MyCalendar from "../components/etc/MyCalendar";
 
 const ManageInquiry =()=>{
     var history = useHistory();
-    // let [totalPageNo, setTotalPageNo] = useState();
     const [Alldata,setAlldata] = useState([]);
     const [pageNo, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
@@ -23,13 +22,7 @@ const ManageInquiry =()=>{
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
     const [startState,setStartState] =useState(false);
-    const [checkstate,setCheckstate] =useState(false);
-    const [answerstate,setAnswerstate] = useState(false);
-
-
-    // const [finduser,setFinduser] =useState();
-
-
+    const [checkstate,setCheckstate] =useState(-1);
 
     const onSubmit = (e)=>{
         e.preventDefault();
@@ -41,16 +34,17 @@ const ManageInquiry =()=>{
           }
       })   
     }
-
     
     useEffect(()=>{
         console.log("start")
+        console.log(checkstate);
         const newStart = startDate != undefined ? JSON.stringify(startDate).slice(1, 11) : null
         const newEnd = endDate != undefined ? JSON.stringify(endDate).slice(1, 11) : null
         axios.get('/inquiry/getInquiries',
         {   params :{
                 username: searchuser,
                 itemname: searchitem,
+                chkAnswer:checkstate,
                 start :newStart,
                 end: newEnd,
                 page:pageNo
@@ -65,26 +59,15 @@ const ManageInquiry =()=>{
             setAlldata(data)
             setOpenedContentId(-1)
             setTotalPage(res.data.totalPages)
-            // const testname = Alldata.filter(data.chkanswer=> data.chkanswer===1)
-            // setFinduser(res.data[0])
-            // console.log(data,"test")
             if(!startState){
                 setStartDate()
                 setEndDate()
                 setStartState(true)
             }
-            if(checkstate){
-                setAnswerstate(true)
-            }else{
-                setAnswerstate(false)
-            }
-
         }).catch(error=>{
             console.log(error)
         })
     },[pageNo, searchstate])
-
-
 
     const onsearchuser=(e)=>{
         setSearchuser(e.target.value)
@@ -96,20 +79,15 @@ const ManageInquiry =()=>{
         setAdminanswer(e.target.value)
     }
     
-    
     const getbyusername =()=>{
         setSearchstate(searchstate*-1); // 1*-1 = -1 / -1 * -1 -1 , 1
         // setStartDate(startDate)
         // setPage(1)
     };
     
-    
     const handlePage = (value) => {
         setPage(value);
     }
-    
-
-
 
     //답변
     const Showcontent =(content)=>{
@@ -146,17 +124,12 @@ const ManageInquiry =()=>{
         })
     }
     
-    const chkedhandler =()=>{
-        if(checkstate ===false){
-            setCheckstate(true)
-        }else{
-            setCheckstate(false)
-        }
-        console.log(checkstate)
+    const chkedhandler =(e)=>{
+        if(e.target.checked)
+            setCheckstate(0)
+        else
+            setCheckstate(-1)
     }
-
-
-
 
     const pagereload=()=>{
         setSearchitem('')
@@ -167,7 +140,6 @@ const ManageInquiry =()=>{
             setStartState(true)
         }
     }
-
 
     return(
         <>
@@ -209,10 +181,9 @@ const ManageInquiry =()=>{
                         let init_answer=data.answer
                         let write_date = data.date
                         let answerok = data.chkanswer
-                        let pdtImg= data.itemimage
-                        // let okok =1
-                        // const testname = Alldata.filter(byusername_title =>data.chkanswer=okok)
-                        // console.log(testname)
+                        let pdtImg=data.itemimage
+
+
                         let Adata =
                         <>
                         <tr onClick={()=> {
@@ -227,10 +198,9 @@ const ManageInquiry =()=>{
                             <td>{byusername_itemname}</td>
                             <td>{byusername_title}</td>
                             <td>{byusername_name}</td>
-
-                            {answerstate===true ?<td>{answerok === 0 && "답변예정"}</td>
-                            :<td>{answerok === 1 ? "답변완료":"답변예정"}</td>}
-                            {/* <td>{answerok === 1 ? "답변완료":"답변예정"}</td> */}
+                            {/* {answerstate===true ?<td>{answerok === 0 && "답변예정"}</td>
+                            :<td>{answerok === 1 ? "답변완료":"답변예정"}</td>} */}
+                            <td>{answerok === 1 ? "답변완료":"답변예정"}</td>
                         
                         </tr>
                         {openedContentId === data.id && <tr>

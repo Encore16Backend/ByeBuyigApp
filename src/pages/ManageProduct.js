@@ -18,15 +18,17 @@ const ManageProduct = ()=>{
     const [allPdt,setAllPdt] = useState([]);
     const [pageNo, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
-    const dispatch = useDispatch()
-    const [startDate, setStartDate] = useState(new Date('start'))
-    const [endDate, setEndDate] = useState(new Date('end'))
-    const [searchItem, setSearchItem] = useState('')
+    const dispatch = useDispatch();
+    const [searchItem, setSearchItem] = useState('');
+    const [allitem,setAllitem] =useState([]);
+    const [searchstate,setSearchState]=useState(-1);
 
     // 모든 아이템 정보 받아옴
+
     useEffect(()=>{
-        axios.get('/main/items', {
+        axios.get('/main/search', {
             params:{
+                searchName:searchItem,
                 page : pageNo
             },
             headers: {
@@ -35,129 +37,58 @@ const ManageProduct = ()=>{
         }).then(res => {
             setTotalPage(res.data.totalPages)
             dispatch(addMainItems(res.data.content))
+            setAllitem(res.data.content)
         }).catch(error => {
             console.log(error, ' getItem');
         })
         console.log( "getMainItem 종료") 
-    },[pageNo])
+    },[pageNo,searchstate])
 
 
-    const allItem = useSelector(state=>state.Item.items)
 
-    console.log(allItem, "all")
-    console.log(totalPage, "totalPage")
-
-    const delProduct = ()=>{
-
-    }
     // 상품 검색 (카테고리, 이름)
-    const onsearchitem = ()=>{
-
+    const onsearchitem = (e)=>{
+        setSearchItem(e.target.value);
     }
+
+
+    // const pdtname =()=>{
+    //     axios.get('/main/search',{
+    //         params:{
+    //             searchName:searchItem,
+    //             page : pageNo
+    //         }
+    //     }).then(res=>{
+    //         console.log(res,"test")
+    //         setAllitem(res.data.content)
+    //         setTotalPage(res.data.totalPages)
+    //         setSearchState(true)
+    //     }).catch(error=>{
+    //         console.log(error)
+    //     })
+
+    // }
+    console.log(totalPage, "여기는 컴포넌트")
+
+
     const onSubmit = (e)=>{
         e.preventDefault();
         
     }
-    const getbyusername = ()=>{
-        
-    }
-
-    // 상품 수정
-
-    // 상품 등록
-    const productSave = ()=>{
-
-    }
 
     // 상품 삭제
-
-
-
-
-
-
-
-
-    
-
-
-    // const onSubmit = (e)=>{
-    //     e.preventDefault();
-    //     history.push({
-    //       pathname: "/ManageInquiry",
-    //       search : "?searchName="+searchuser,
-    //       state: {
-    //         searchuser:searchuser,
-    //       }
-    //   })   
-    // }
-
-    
-    // useEffect(()=>{
-    //     console.log("start")
-    //     axios.get('/inquiry/getInquiries',
-    //     {   params :{
-    //             username: searchuser,
-    //             itemname: searchitem,
-    //             page:pageNo
-    //         },
-    //         headers:{
-    //             "Content-Type": "application/json",
-    //             "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
-    //         }
-    //     }).then(res=>{
-    //         setAllPdt(data)
-    //         setTotalPage(res.data.totalPages)
-    //     }).catch(error=>{
-    //         console.log(error)
-    //     })
-    // },[pageNo, searchstate])
-
-
-
-    // const onsearchuser=(e)=>{
-    //     setSearchuser(e.target.value)
-    // }
-    // const onsearchitem=(e)=>{
-    //     setSearchitem(e.target.value)
-    // }
-    // const onadminanswer=(e)=>{
-    //     setAdminanswer(e.target.value)
-    //     console.log(adminanswer)
-    // }
-    
-    
-    // const getbyusername =()=>{
-    //     setSearchstate(searchstate*-1); // 1*-1 = -1 / -1 * -1 -1 , 1
-    // };
-    
-    // const admin_answer =()=>{
-    //     axios.put('/inquiiry/answer')
-
-    // }
+    const delProduct = ()=>{
+        console.log(allitem)
+    }
 
     const handlePage = (value) => {
         setPage(value);
     }
 
 
-
-
-    //답변
-
-    // const Showcontent =(content)=>{
-    //     if(!content||content === '')
-    //     return <></>
-    //            return(
-    //                <>
-    //                <div style={{display:"flex",position:"static"}}>
-    //                    문의 제목 :{content.title}<br></br>
-    //                    문의 내용 :{content.content}
-    //                </div>
-    //                </>
-    //            )
-    //        }
-    
+    const pdtname =()=>{
+        setSearchState(searchstate*-1);
+    }
 
 
 
@@ -170,7 +101,7 @@ const ManageProduct = ()=>{
         <div style={{display:"flex"}}>
                 <FormControl type="search" placeholder="상품이름" className="me-2" aria-label="Search"
                   value={searchItem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
-                <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>
+                <Button type="submit"style={{width:"70px"}} onClick={pdtname}>조회</Button>
 
                 
         </div>
@@ -192,7 +123,7 @@ const ManageProduct = ()=>{
         </thead>
             <tbody>
              { 
-                    (allItem.length != 0 ) ? allItem.map((data,idx)=>{
+                    (allitem.length != 0 ) ? allitem.map((data,idx)=>{
                         let itemid = data.itemid;
                         let itemname=data.itemname;
                         let price=data.price;
@@ -231,7 +162,7 @@ const ManageProduct = ()=>{
                             <td>{price}</td>
                             <td>{reviewmean}</td>
                             <td>{purchasecnt}</td>
-                            <td> <button onClick={()=>{delProduct()}}>삭제</button> </td>
+                            <td> <button onClick={delProduct}>삭제</button> </td>
                         </tr>
                         </>
                         return (Adata)
@@ -246,7 +177,7 @@ const ManageProduct = ()=>{
                 {
                     totalPage != 0 ? <Page
                         setPage={handlePage}
-                        reviewNum={totalPage}
+                        totalPage={totalPage}
                         selected={pageNo}
                     /> : ""
                 }
