@@ -62,8 +62,8 @@ const ManageUser =()=>{
                         let basicLocation = !!Alocations[0] ? Alocations[0] : null
                         let BasicAddr = !!basicLocation ? basicLocation.location : null
                         // let BasicAddr;
-                        // if (BasicAddr)
-                        //     BasicAddr = basicLocation.location.split('/')[0]
+                        if (BasicAddr)
+                            BasicAddr = basicLocation.location.split('/')[0]
                         
                         const del = async (e)=>{
                             await axios.delete('/api/user/delete', {
