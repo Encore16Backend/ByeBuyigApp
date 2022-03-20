@@ -172,6 +172,17 @@ const NavB = ({ID, logOut})=>{
                           </Link>
                           </span>
                     </li>
+                    <li>
+                          <span ><i className="ion-ios-clock-outline"></i>
+                          <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=셔츠",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"셔츠",},
+                          }}>셔츠 
+                          </Link>
+                          </span>
+                    </li>
                  </ul>
               </div>
             </div>
@@ -339,6 +350,11 @@ const NavB = ({ID, logOut})=>{
                         <li>
                           <span ><i className="ion-ios-color-filter-outline"></i>
                           <Link to={{pathname:"/manageproduct"}}>상품 관리</Link>
+                          </span>
+                        </li>
+                        <li>
+                          <span ><i className="ion-ios-color-filter-outline"></i>
+                          <Link to={{pathname:"/saveproduct"}}>상품 등록</Link>
                           </span>
                         </li>
                         <li>

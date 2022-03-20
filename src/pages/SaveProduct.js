@@ -1,18 +1,15 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, InputGroup, FormControl, Container } from "react-bootstrap";
 import '../axiosproperties'
 import { ACCESS_KEY, SECRET_ACCESS_KEY, S3_BUCKET, REGION } from '../axiosproperties'
 import AWS from "aws-sdk"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const SaveProduct = () => {
 
     const frm = new FormData();
-
-    // const ACCESS_KEY = 'AKIA2TGTQPFYZOPMQYPK';
-    // const SECRET_ACCESS_KEY = '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';
-    // const REGION = 'ap-northeast-2';
-    // const S3_BUCKET = 'byebuying';
+    const history = useHistory();
 
     AWS.config.update({
         accessKeyId: ACCESS_KEY,
@@ -31,29 +28,28 @@ const SaveProduct = () => {
     const [fileImgs, setFileImgs] = useState([])
 
     // 파일 저장
-    const saveFileImage = (e, num) => {
+    const saveFileImage = (e, num, cataOne, cataTwo) => {
         // aws에 저장할 파일명
-        // console.log(e.target.files[0].name,num, "ddd")
-
         // 배열에 파일 저장
         setFiles([...files, e.target.files[0]])
-        // 배열에 파일이름 저장
-        setFileNames([...fileNames, e.target.files[0].name])
+        // 배열에 파일이름 저장, 다 정해줘야댐
+        // './상품이미지/바지/슬랙스/우먼즈 슬림 스트레이트 히든 밴딩 슬랙스 블랙1.jpg'
+        setFileNames([...fileNames,  e.target.files[0].name]) //'상품이미지/'+cata1+'/'+cata2 +'/'+
         // 로컬에 띄울 이미지 배열
         setFileImgs([...fileImgs, URL.createObjectURL(e.target.files[0])])
+        // 파일이름만 저장
 
-
-
+        
     };
+
+
+    // https://byebuying.s3.ap-northeast-2.amazonaws.com품이미지/상의/긴팔/키작은여성의류1.jpg
+    // 이렇게 db에서 받는다..
 
     console.log(files, 'files')
     console.log(fileNames, 'fileNames')
     console.log(fileImgs, "fileImgs")
 
-
-    //   0: "agsgasdsdsga.jpg"
-    // 1: "sefsfadsfa.jpg"
-    // 2: "sefsef.jpg"
 
     // 파일 삭제
     const deleteFileImage = () => {
@@ -63,13 +59,14 @@ const SaveProduct = () => {
         setFiles([])
         setFileNames([])
         setFileImgs([])
+        
     };
 
 
     const [cata1Arr, setCata1Arr] = useState(['바지', '상의', '스커트', '아우터'])
     const [cata2Pants, setCata2Pants] = useState(['데님팬츠', '반바지', '슬랙스'])
     const [cata2Top, setCata2Top] = useState(['긴팔', '반팔', '셔츠'])
-    const [cata2Skirt, setCata2Skirt] = useState(['롱스커츠', '미니스커트'])
+    const [cata2Skirt, setCata2Skirt] = useState(['롱스커트', '미니스커트'])
     const [cata2Outer, setCata2Outer] = useState(['롱패딩', '숏패딩', '코트', '트렌치 코트'])
 
     const [pdtName, setPdtName] = useState('')
@@ -77,20 +74,14 @@ const SaveProduct = () => {
     const [pdtCount, setPdtCount] = useState(200)
     const [pdtPrice, setPdtPrice] = useState(0)
     const [cata1, setCata1] = useState('상의')
-    const [cata2, setCata2] = useState('')
-
-
-    // {
-    //     item: {name, price, purchasecnt, count, reviewmean, reviewcount},
-    //     cate: [upper, lower], 상의, 반팔
-    //     images: [0, 1, 2] /test/test.jpg, /test/test2.jpg, /test/test3.jpg
-    // }
-
-    const iamgeSend = () => {
-
-    }
+    const [cata2, setCata2] = useState('긴팔')
 
     const tempSave = () => {
+        const imageFile = []
+        for(var i=0; i<fileNames.length;i++){
+            imageFile.push('상품이미지/'+cata1+'/'+cata2+'/'+fileNames[i]);
+        }
+        console.log(imageFile, "최종");
 
         const data = {
             "item": {
@@ -104,16 +95,16 @@ const SaveProduct = () => {
             "cate": [
                 cata1, cata2
             ],
-            "images": fileNames
+            "images": imageFile
         }
 
-        // file배열로 돌면서 s3업로드
+        // // file배열로 돌면서 s3업로드
         files.map((f, idx) => {
             const s3Obj = {
                 ACL: 'public-read',
                 Body: f,
                 Bucket: S3_BUCKET,
-                Key: "상품이미지/" + cata1 + "/" + cata2 + "/" + fileNames[idx]
+                Key: imageFile[idx]
             }
             myBucket.putObject(s3Obj)
                 .on('httpUploadProgress', (evt) => {
@@ -126,58 +117,51 @@ const SaveProduct = () => {
                 })
         })
 
-
-
-        // s3로 전달할 obj
-        // const s3Obj = {
-        //     ACL: 'public-read', 
-        //     Body: file1,
-        //     Bucket: S3_BUCKET,
-        //     Key: "상품이미지/"+cata1+"/"+cata2+"/"+ fileName1
-        // }
-        // myBucket.putObject(s3Obj)
-        // .on('httpUploadProgress', (evt) => {
-        //   setTimeout(() => {
-        //     setFile1(null);
-        //   }, 3000)
-        // })
-        // .send((err) => {
-        //   if (err) console.log(err)
-        // })
-
-
-        // 절대지우지마 테스트용
-        // axios.post('/main/item/save', {
-        //         itemSave: data
-        //     }, {
-        //         // header
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             "Authorization": "Bearer " + sessionStorage.getItem('access_token')
-        //         }
-        //     })
-        //     .then(res => {
-        //         console.log(res, "res")
-        //     })
-        //     .catch(error => {
-        //         console.log(error.response.data);
-        //         console.log(error.response.status);
-        //         console.log(error.response.headers);
-        //     })
-
-        setFiles([])
-        setFileNames([])
-        setFileImgs([])
-
+        // // 절대지우지마 테스트용
+        axios.post('/main/item/save', {
+            itemSave: data
+        }, {
+            // header
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+            }
+        })
+        .then(res => {
+            console.log(res, "res")
+            alert('등록완료')
+            setFiles([])
+            setFileNames([])
+            setFileImgs([])
+            history.push('/mypage')
+        })
+        .catch(error => {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+        })
     }
 
 
 
-    const onSubmit = () => {
-
+    const cataChange = (e) => {
+        // '바지', '상의', '스커트', '아우터'
+        setCata1(e)
+        if (e === '바지'){
+            setCata2(cata2Pants[0])
+        }else if (e === '상의'){
+            setCata2(cata2Top[0])
+        }else if (e === '스커트'){
+            setCata2(cata2Skirt[0])
+        }else if (e === '아우터'){
+            setCata2(cata2Outer[0])
+        }
     }
 
 
+    const onSubmit = ()=>{
+
+    }
     // 이미지 폼 반복을 위함
 
     const imgForms = () => {
@@ -193,7 +177,6 @@ const SaveProduct = () => {
     // 하위컴포넌트 랜더링
     const cata2Render = () => {
         let opt = ''
-        console.log(cata1, "cara1")
         if (cata1 === '상의') {
             opt = cata2Top.map((top) => {
                 return (<option value={top}>{top}</option>)
@@ -265,17 +248,17 @@ const SaveProduct = () => {
                         </div>
                     </div>
                     <Form.Label>상품명</Form.Label>
-                    <Form.Control placeholder="등록상품명을 입력하세요" value={pdtName} onChange={setPdtName} />
+                    <Form.Control placeholder="등록상품명을 입력하세요" value={pdtName} onChange={(e)=>setPdtName(e.currentTarget.value)} />
                     <br />
                     <Form.Label>가격</Form.Label>
-                    <Form.Control placeholder="등록상품가격을 입력하세요" value={pdtPrice} onChange={useState} />
+                    <Form.Control placeholder="등록상품가격을 입력하세요" value={pdtPrice} onChange={(e)=>setPdtPrice(e.currentTarget.value)} />
                     <br />
                     <Form.Label>수량</Form.Label>
-                    <Form.Control placeholder="등록상품수량을 입력하세요" value={pdtCount} onChange={setPdtPrice} />
+                    <Form.Control placeholder="등록상품수량을 입력하세요" value={pdtCount} onChange={(e)=>setPdtCount(e.currentTarget.value)} />
                     <br />
                     <Form.Label>상위 카테고리를 선택하시오</Form.Label>
                     <Form.Select aria-label="Default select example"
-                        onChange={(e) => { setCata1(e.target.value) }} value={cata1}
+                        onChange={(e) => { cataChange(e.target.value) }} value={cata1}
                     >
                         {
                             cata1Arr.map((cataBig) => {
@@ -302,7 +285,7 @@ const SaveProduct = () => {
             </Container>
             <Form>
                 <InputGroup>
-                    <Button onClick={tempSave}>등록</Button>
+                    <Button style={{marginLeft:"90rem"}} onClick={tempSave}>등록</Button>
                 </InputGroup>
             </Form>
         </div>

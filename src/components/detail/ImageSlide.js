@@ -22,7 +22,8 @@ class ImageSlide extends React.Component {
 
   render() {
     const { images } = this.props;
-    console.log(images)
+    // console.log(`https://byebuying.s3.ap-northeast-2.amazonaws.com`+images[0].imgpath.substring(1), "path")
+
     return (
 
 // src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/상품이미지/상의/반팔/84b481a403fcae53616aedc99a86d125696cc733fa481288ddf9c8c89b95.jpg`}
@@ -42,10 +43,9 @@ class ImageSlide extends React.Component {
             }}
           >
             {images?.map((image, no) => (
-              
               <div className="slideContent" key={image.imgid}>
                 <picture>
-                  <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com`+image.imgpath.substring(1)} />
+                  <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+image.imgpath} />
                 </picture>
               </div>
             ))}
@@ -75,7 +75,7 @@ class ImageSlide extends React.Component {
               }}
             >
               <picture>
-                <img src={(image.imgpath)} />
+                <img src={(`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+image.imgpath)} />
               </picture>
             </div>
           ))}
