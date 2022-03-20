@@ -141,17 +141,20 @@ const NavB = ({ID, logOut})=>{
             {/* 상의 */}
             <div className='navBarCate dropdown' style={{display:"inline", zIndex:2}}>
             <span className='dropbtn'>
-            <Link style={{color:"white"}} to={{pathname:"/category",state : {id:'1',cataname:"상의",},}}> 상의</Link></span>
+            <Link style={{color:"white"}} to={{pathname: "/searchlist",
+                                        search : "?searchName=상의",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"상의",},}}> 상의</Link></span>
                 <div className="dropdown-content" style={{position:"absolute", left:"1rem" ,zIndex:5}}>
                   <ul className="nav-flyout">
                         <li>
                             <span ><i className="ion-ios-color-filter-outline"></i>
-                            <Link to={{pathname:"/category",
-                                    state : {
-                                id:'5',
-                                cataname:"반팔"
-                                },
-                            }}>
+                            <Link to={{ pathname: "/searchlist",
+                                        search : "?searchName=반팔",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"반팔",}}}>
                                 반팔
                             </Link>
                             
@@ -159,11 +162,11 @@ const NavB = ({ID, logOut})=>{
                         </li>
                         <li>
                           <span ><i className="ion-ios-clock-outline"></i>
-                          <Link to={{pathname:"/category",
-                                  state : {
-                              id:'6',
-                              cataname:"긴팔"
-                              },
+                          <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=긴팔",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"긴팔",},
                           }}>
                               긴팔 
                           </Link>
@@ -175,22 +178,38 @@ const NavB = ({ID, logOut})=>{
             {/* 하의 */}
             <div className='navBarCate dropdown' style={{display:"inline"}}>
             <span className='dropbtn'>
-            <Link style={{color:"white"}} to={{pathname:"/category",state : {id:'2',cataname:"바지"},}}>바지 </Link></span>
+            <Link style={{color:"white"}} to={{pathname: "/searchlist",
+                                        search : "?searchName=바지",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"바지",},}}>바지 </Link></span>
                 <div className="dropdown-content" style={{position:"absolute", left:"1rem", zIndex:5}}>
                    <ul className="nav-flyout">
                       <li>
                         <span><i className="ion-ios-color-filter-outline"></i>
-                        <Link to={{pathname:"/category",state : {id:'8',cataname:"반바지"},}}>반바지 </Link>
+                        <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=반바지",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"반바지",},}}>반바지 </Link>
                         </span>
                       </li>
                       <li>
                         <span ><i className="ion-ios-clock-outline"></i>
-                      <Link to={{pathname:"/category",state : {id:'9',cataname:"슬랙스"},}}>슬랙스 </Link>
+                      <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=슬랙스",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"슬랙스",},}}>슬랙스 </Link>
                         </span>
                       </li>
                       <li>
                         <span ><i className="ion-ios-clock-outline"></i>
-                      <Link to={{pathname:"/category",state : {id:'10',cataname:"데님팬츠"},}}>데님팬츠 </Link>
+                      <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=데님팬츠",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"데님팬츠",},}}>데님팬츠 </Link>
                         </span>
                       </li>
                     </ul>
@@ -199,30 +218,50 @@ const NavB = ({ID, logOut})=>{
             {/* 아우터 */}
             <div className='navBarCate dropdown' style={{display:"inline"}}>
             <span  className='dropbtn'> 
-            <Link style={{color:"white"}} to={{pathname:"/category",state : {id:'4',cataname:"아우터"},}}>아우터</Link></span>
+            <Link style={{color:"white"}} to={{pathname: "/searchlist",
+                                        search : "?searchName=아우터",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"아우터",},}}>아우터</Link></span>
                 <div className="dropdown-content" style={{position:"absolute", left:"1rem", zIndex:5}}>
                         <ul className="nav-flyout">
                             <li>
                               <span ><i className="ion-ios-color-filter-outline"></i>
-                              <Link to={{pathname:"/category",state : {id:'15',cataname:"코트"},}}>코트 </Link>
+                              <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=코트",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"코트",},}}>코트 </Link>
                               </span>
                             </li>
 
                             <li>
                               <span ><i className="ion-ios-color-filter-outline"></i>
-                              <Link to={{pathname:"/category",state : {id:'16',cataname:"트렌치 코트"},}}>트렌치 코트 </Link>
+                              <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=트렌치 코트",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"트렌치 코트",},}}>트렌치 코트 </Link>
                               </span>
                             </li>
                             
                             <li>
                               <span ><i className="ion-ios-clock-outline"></i>
-                              <Link to={{pathname:"/category",state : {id:'13',cataname:"롱패딩"},}}>롱패딩</Link>
+                              <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=롱패딩",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"롱패딩",},}}>롱패딩</Link>
                               </span>
                             </li>
 
                             <li>
                             <span ><i className="ion-ios-clock-outline"></i>
-                            <Link to={{pathname:"/category",state : {id:'14',cataname:"숏패딩"},}}>숏패딩</Link>
+                            <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=숏패딩",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"숏패딩",},}}>숏패딩</Link>
                             </span>
                             </li>
                         </ul>
@@ -231,18 +270,30 @@ const NavB = ({ID, logOut})=>{
             {/* 스커트 */}
             <div className='navBarCate dropdown' style={{display:"inline"}}>
             <span className='dropbtn'>
-            <Link style={{color:"white"}} to={{pathname:"/category", state : {id:'3',cataname:"스커트"},}}>스커트</Link> 
+            <Link style={{color:"white"}} to={{pathname: "/searchlist",
+                                        search : "?searchName=스커트",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"스커트",},}}>스커트</Link> 
             </span>
               <div className="dropdown-content" style={{position:"absolute", left:"1rem", zIndex:5}}>
                 <ul className="nav-flyout">
                     <li>
                       <span ><i className="ion-ios-color-filter-outline"></i>
-                      <Link to={{pathname:"/category",state : {id:'12',cataname:"롱스커트"},}}>롱스커트</Link>
+                      <Link to={{pathname: "/searchlist",
+                                        search : "?searchName=롱스커트",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"롱스커트",},}}>롱스커트</Link>
                       </span>
                     </li>
                     <li>
                       <span ><i className="ion-ios-color-filter-outline"></i>
-                      <Link to={{pathname:"/category",state : {id:'11',cataname:"미니스커트"},}}>미니스커트</Link>
+                      <Link to={{pathname: "/searchlist", 
+                                        search : "?searchName=미니스커트",
+                                        state: {
+                                        keyword:"",
+                                        cataName:"미니스커트",},}}>미니스커트</Link>
                       </span>
                     </li>
                   </ul>
@@ -310,7 +361,7 @@ const NavB = ({ID, logOut})=>{
                     <ul className="nav-flyout">
                         <li>
                           <span><i className="ion-ios-color-filter-outline"></i>
-                          <span ><CheckModal show={checkModalOn} onHide = {()=>{setCheckModalOn(false)}}/></span>
+                          <span><CheckModal show={checkModalOn} onHide = {()=>{setCheckModalOn(false)}}/></span>
                           </span>
                         </li>
                         <li>

@@ -30,7 +30,7 @@ const SearchList = ()=>{
 
     // 검색어와 총 페이지 수
     const totalPage = useSelector(state=>state.totalPage.pages)
-    const keyword = history.location.state.keyword
+    const keyword = history ? history.location.state.keyword : ""
     const cataName = history.location.state.cataName
 
     // 검색url과 페이지 수를 받아올 url

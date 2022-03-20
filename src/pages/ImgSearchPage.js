@@ -11,6 +11,8 @@ const ImgSearchPage = ({ show, onHide,})=>{
   const [fileImage, setFileImage] = useState("");
   const [file, setFile] = useState();
 
+  console.log(fileImage, "modalImageFile")
+
   // 파일 저장
   const saveFileImage = (e) => {
     // console.log(e.target.files[0])
@@ -22,6 +24,7 @@ const ImgSearchPage = ({ show, onHide,})=>{
   const deleteFileImage = () => {
     URL.revokeObjectURL(fileImage);
     setFileImage("");
+    setFile()
   };
   
 
@@ -45,31 +48,6 @@ const ImgSearchPage = ({ show, onHide,})=>{
     }) 
     deleteFileImage()
     closeHander()
-
-
-
-    // axios.post('http://192.168.0.208:8081/flask/retrieval', frm ).then((res)=>{
-    //   console.log(res.data)
-    //   history.push({  
-    //     pathname: "/imgsearchresult",
-    //     state:{file:file, 
-    //             res:res.data}
-    //   }) 
-    //   alert("전송완료")
-
-    // }).catch(error =>{
-      
-    //   alert("실패")
-    //   console.log(error)
-    //   history.push({
-    //     pathname: "/imgsearchresult",
-    //     state:{file:file, error:error}
-    //   }) 
-    //   closeHander()
-    // })
-
-
-
   }
 
   const closeHander = ()=>{
@@ -95,25 +73,31 @@ const ImgSearchPage = ({ show, onHide,})=>{
         <div className="centered">
             {/* 이미지 미리보기 */}
             <div>
-            {fileImage ? ( <img alt="sample" src={fileImage} style={{ margin: "auto" ,width:"350px",height:"250px"}}/>):
-                <div style={{ margin: "auto", width:"350px", height:"250px", border:"1px solid black"}}>
-
-                </div>
+            {
+                fileImage ? ( <img alt="sample" src={fileImage} style={{ margin: "auto" ,width:"350px",height:"250px"}}/>):
+                <div style={{ margin: "auto", width:"350px", height:"250px", border:"1px solid black"}}></div>
             }
             </div>
         </div>
         {/* centered끝 */}
         <div className="centered">
-        <input name="imgUpload" type="file"  accept="image/*" onChange={saveFileImage}/>
-                {/* 삭제버튼 */}
-                <Button onClick={() => deleteFileImage()}>삭제 </Button>
-                {/* 검색 */}
-              <Button type="submit"> 검색 </Button>
-          </div>
+          {
+            fileImage === "" ? <input name="imgUpload" type="file" accept="image/*" onChange={saveFileImage}/>
+            : ""
+          }
+        </div>
+
+        <div style={{float:"right"}}>
+        <Button type="submit"> 검색 </Button>
+        </div>
+
       </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={closeHander}>닫기</Button>
+        {/* 삭제버튼 */}
+           <Button onClick={() => deleteFileImage()}>삭제 </Button>
+            {/* 검색 */}
+           <Button onClick={closeHander}>닫기</Button>
       </Modal.Footer>
       </Modal>
     </div>
