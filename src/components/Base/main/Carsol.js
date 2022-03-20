@@ -6,13 +6,12 @@ const Carsol = ({images})=>{
 
     // console.log(images, "imgs")
     
-    {/* 댓글들 받아와서 반복문 돌림*/}
     const render = images.map((img,index)  =>{
         return(
                 <Carousel.Item key={"imgItem"+img.imgid} >
-                    <img
+                    <img 
                         className="d-block w-100 main_img"
-                        src={img.imgpath}
+                        src={`https://byebuying.s3.ap-northeast-2.amazonaws.com`+img.imgpath.substring(1)}
                         alt="First slide"
                     />
                     <Carousel.Caption>

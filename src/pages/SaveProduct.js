@@ -1,48 +1,83 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Button, Form,InputGroup,FormControl, Container } from "react-bootstrap";
+import { Button, Form, InputGroup, FormControl, Container } from "react-bootstrap";
 import '../axiosproperties'
+import { ACCESS_KEY, SECRET_ACCESS_KEY, S3_BUCKET, REGION } from '../axiosproperties'
 import AWS from "aws-sdk"
 
-const SaveProduct = ()=>{
+const SaveProduct = () => {
+
+    const frm = new FormData();
+
+    // const ACCESS_KEY = 'AKIA2TGTQPFYZOPMQYPK';
+    // const SECRET_ACCESS_KEY = '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';
+    // const REGION = 'ap-northeast-2';
+    // const S3_BUCKET = 'byebuying';
+
     AWS.config.update({
-        region:"ap-northeast-2", // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
-        credentials: new AWS.CognitoIdentityCredentials({
-          IdentityPoolId: 'us-east-1:b9957654-fb46-4523-bfac-d5ce5b4a5cab', // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
-        }),
-      })
+        accessKeyId: ACCESS_KEY,
+        secretAccessKey: SECRET_ACCESS_KEY
+    });
+    const myBucket = new AWS.S3({
+        params: { Bucket: S3_BUCKET },
+        region: REGION,
+    });
 
 
-    // {
-    //     item: {name, price, purchasecnt, count, reviewmean, reviewcount},
-    //     cate: [upper, lower], 상의, 반팔
-    //     images: [0, 1, 2] /test/test.jpg, /test/test2.jpg, /test/test3.jpg
-    // }
 
 
-    // 파일 미리볼 url을 저장해줄 state
-    const [fileImage, setFileImage] = useState("");
-    const [file, setFile] = useState();
+    const [files, setFiles] = useState([])
+    const [fileNames, setFileNames] = useState([])
+    const [fileImgs, setFileImgs] = useState([])
 
-    // // 파일 저장
-    const saveFileImage = (e) => {
-        // console.log(e.target.files[0])
-        setFile(e.target.files[0]);
-        setFileImage(URL.createObjectURL(e.target.files[0]));
+    // 파일 저장
+    const saveFileImage = (e, num) => {
+        // aws에 저장할 파일명
+        // console.log(e.target.files[0].name,num, "ddd")
+
+        // 배열에 파일 저장
+        setFiles([...files, e.target.files[0]])
+        // 배열에 파일이름 저장
+        setFileNames([...fileNames, e.target.files[0].name])
+        // 로컬에 띄울 이미지 배열
+        setFileImgs([...fileImgs, URL.createObjectURL(e.target.files[0])])
+
+
+
     };
+
+    console.log(files, 'files')
+    console.log(fileNames, 'fileNames')
+    console.log(fileImgs, "fileImgs")
+
+
+    //   0: "agsgasdsdsga.jpg"
+    // 1: "sefsfadsfa.jpg"
+    // 2: "sefsef.jpg"
 
     // 파일 삭제
     const deleteFileImage = () => {
-        URL.revokeObjectURL(fileImage);
-        setFileImage("");
+        fileImgs.map((f) => {
+            URL.revokeObjectURL(f);
+        })
+        setFiles([])
+        setFileNames([])
+        setFileImgs([])
     };
 
 
+    const [cata1Arr, setCata1Arr] = useState(['바지', '상의', '스커트', '아우터'])
+    const [cata2Pants, setCata2Pants] = useState(['데님팬츠', '반바지', '슬랙스'])
+    const [cata2Top, setCata2Top] = useState(['긴팔', '반팔', '셔츠'])
+    const [cata2Skirt, setCata2Skirt] = useState(['롱스커츠', '미니스커트'])
+    const [cata2Outer, setCata2Outer] = useState(['롱패딩', '숏패딩', '코트', '트렌치 코트'])
 
-    const [pdtName  , setPdtName] = useState('')
-    const [pdtCate  , setPdtCate] = useState([])
+    const [pdtName, setPdtName] = useState('')
+    // const [pdtCate  , setPdtCate] = useState([])
     const [pdtCount, setPdtCount] = useState(200)
-    const [pdtPrice , setPdtPrice] = useState(0)
+    const [pdtPrice, setPdtPrice] = useState(0)
+    const [cata1, setCata1] = useState('상의')
+    const [cata2, setCata2] = useState('')
 
 
     // {
@@ -52,52 +87,102 @@ const SaveProduct = ()=>{
     // }
 
     const iamgeSend = () => {
-        
+
     }
 
     const tempSave = () => {
-    const data = {
-        "item": {
-            "itemname": "test상품",
-            "price": 10000,
-            "purchasecnt": 0,
-            "count": 200,
-            "reviewmean": 0,
-            "reviewcount": 0
-        },
-        "cate": [
-            "상의", "반팔"
-        ],
-        "images": ['/test/1.jpg', '/test/2.jpg', '/test/3.jpg']
-    }
-    axios.post('/main/item/save', {
-            itemSave: data
-        }, {
-            // header
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+
+        const data = {
+            "item": {
+                "itemname": pdtName,
+                "price": pdtPrice,
+                "purchasecnt": 0,
+                "count": pdtCount,
+                "reviewmean": 0,
+                "reviewcount": 0
+            },
+            "cate": [
+                cata1, cata2
+            ],
+            "images": fileNames
+        }
+
+        // file배열로 돌면서 s3업로드
+        files.map((f, idx) => {
+            const s3Obj = {
+                ACL: 'public-read',
+                Body: f,
+                Bucket: S3_BUCKET,
+                Key: "상품이미지/" + cata1 + "/" + cata2 + "/" + fileNames[idx]
             }
+            myBucket.putObject(s3Obj)
+                .on('httpUploadProgress', (evt) => {
+                    setTimeout(() => {
+                        // setFiles([]);
+                    }, 1000)
+                })
+                .send((err) => {
+                    if (err) console.log(err)
+                })
         })
-        .then(res => {
-            console.log(res, "res")
-        })
-        .catch(error => {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-        })
+
+
+
+        // s3로 전달할 obj
+        // const s3Obj = {
+        //     ACL: 'public-read', 
+        //     Body: file1,
+        //     Bucket: S3_BUCKET,
+        //     Key: "상품이미지/"+cata1+"/"+cata2+"/"+ fileName1
+        // }
+        // myBucket.putObject(s3Obj)
+        // .on('httpUploadProgress', (evt) => {
+        //   setTimeout(() => {
+        //     setFile1(null);
+        //   }, 3000)
+        // })
+        // .send((err) => {
+        //   if (err) console.log(err)
+        // })
+
+
+        // 절대지우지마 테스트용
+        // axios.post('/main/item/save', {
+        //         itemSave: data
+        //     }, {
+        //         // header
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //             "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+        //         }
+        //     })
+        //     .then(res => {
+        //         console.log(res, "res")
+        //     })
+        //     .catch(error => {
+        //         console.log(error.response.data);
+        //         console.log(error.response.status);
+        //         console.log(error.response.headers);
+        //     })
+
+        setFiles([])
+        setFileNames([])
+        setFileImgs([])
+
     }
-    const onSubmit = ()=>{
+
+
+
+    const onSubmit = () => {
 
     }
 
 
     // 이미지 폼 반복을 위함
 
-    const imgForms = ()=>{
+    const imgForms = () => {
 
-        return(
+        return (
             <div>
 
             </div>
@@ -105,70 +190,119 @@ const SaveProduct = ()=>{
     }
 
 
+    // 하위컴포넌트 랜더링
+    const cata2Render = () => {
+        let opt = ''
+        console.log(cata1, "cara1")
+        if (cata1 === '상의') {
+            opt = cata2Top.map((top) => {
+                return (<option value={top}>{top}</option>)
+            })
+        } else if (cata1 === '바지') {
+            opt = cata2Pants.map((pants) => {
+                return (<option value={pants}>{pants}</option>)
+            })
+        } else if (cata1 === '스커트') {
+            opt = cata2Skirt.map((skirt) => {
+                return (<option value={skirt}>{skirt}</option>)
+            })
+        } else if (cata1 === '아우터') {
+            opt = cata2Outer.map((outer) => {
+                return (<option value={outer}>{outer}</option>)
+            })
+        }
+        return (
+            opt
+        )
+    }
 
-    return(
+
+
+    return (
         <div>
+
+            {/* <label htmlFor="upload" className="image-upload-wrapper">
+            <img className="profile-img"
+            src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/상품이미지/바지/데님팬츠/22SS 컷팅 배색 와이드 데님 팬츠_LIGHT BLUE1.jpg`}/>
+            </label>  */}
+
             <Container>
                 <h2 className="centered">상품등록</h2>
-            <Form onSubmit={onSubmit} encType="multipart/form-data">
+                <Form onSubmit={onSubmit} encType="multipart/form-data">
 
-                {/* 이미지 미리보기 */}
-                <div style={{position:"relative", top:"10px", right:"30rem", paddingBottom:"4rem", paddingTop:"4rem"}}>
-                    <div>
-                    {
-                        fileImage ? ( <img alt="sample" src={fileImage} style={{ margin: "auto" ,width:"350px",height:"250px"}}/>):
-                        <div style={{ margin: "auto", width:"350px", height:"250px", border:"1px solid black"}}></div>
-                    }
-                    </div>
-                    <div className="centered">
-                            <input name="imgUpload" type="file"  accept="image/*" onChange={saveFileImage}/>
-                            {/* 삭제버튼 */} <Button onClick={() => deleteFileImage()}>삭제 </Button>
-                    </div>
-                </div>
+                    {/* 이미지 미리보기 */}
+                    <div style={{ position: "relative", top: "10px", paddingBottom: "4rem", paddingTop: "4rem" }}>
+                        <div className="centered">
+                            {
+                                fileImgs[0] ? <img alt="img" src={fileImgs[0]} style={{ margin: "auto", width: "350px", height: "250px" }} /> :
+                                    <div style={{ margin: "auto", width: "350px", height: "250px", border: "1px solid black" }}></div>
+                            }
+                            {
+                                fileImgs[1] ? <img alt="img" src={fileImgs[1]} style={{ margin: "auto", width: "350px", height: "250px" }} /> :
+                                    ""
+                            }
+                            {
+                                fileImgs[2] ? <img alt="img" src={fileImgs[2]} style={{ margin: "auto", width: "350px", height: "250px" }} /> :
+                                    ""
+                            }
+                        </div>
+                        <div className="centered">
+                            {
+                                files[0] === undefined ? <input name="imgUpload" type="file" accept="image/*" onChange={(e) => { saveFileImage(e, 1) }} />
+                                    : ""
+                            }
+                            {
+                                files[1] === undefined ? <input name="imgUpload" type="file" accept="image/*" onChange={(e) => { saveFileImage(e, 2) }} />
+                                    : ""
+                            }
+                            {
+                                files[2] === undefined ? <input name="imgUpload" type="file" accept="image/*" onChange={(e) => { saveFileImage(e, 3) }} />
+                                    : ""
+                            }
 
-                <Form.Group>
+                            <Button onClick={() => deleteFileImage()}>삭제 </Button>
+
+                        </div>
+                    </div>
                     <Form.Label>상품명</Form.Label>
-                    <Form.Control placeholder="등록상품명을 입력하세요"  />
+                    <Form.Control placeholder="등록상품명을 입력하세요" value={pdtName} onChange={setPdtName} />
                     <br />
                     <Form.Label>가격</Form.Label>
-                    <Form.Control placeholder="등록상품가격을 입력하세요"  />
+                    <Form.Control placeholder="등록상품가격을 입력하세요" value={pdtPrice} onChange={useState} />
                     <br />
                     <Form.Label>수량</Form.Label>
-                    <Form.Control placeholder="등록상품수량을 입력하세요"  />
+                    <Form.Control placeholder="등록상품수량을 입력하세요" value={pdtCount} onChange={setPdtPrice} />
                     <br />
                     <Form.Label>상위 카테고리를 선택하시오</Form.Label>
-                    <Form.Select aria-label="Default select example">
-                    {/* onChange={(e) => {setFashion(e.target.value)}} value={fashion} */}
-                        <option value="1" >없음</option>
-                        <option value="2" >캐주얼</option>
-                        <option value="3" >미니멀</option>
-                        <option value="4" >스트릿</option>
-                        <option value="5" >시티보이</option>
-                        <option value="6" >아메카지</option>
+                    <Form.Select aria-label="Default select example"
+                        onChange={(e) => { setCata1(e.target.value) }} value={cata1}
+                    >
+                        {
+                            cata1Arr.map((cataBig) => {
+                                return (
+                                    <option value={cataBig}>{cataBig}</option>
+                                )
+                            })
+                        }
                     </Form.Select>
                     <br />
                     <Form.Label>하위 카테고리를 선택하시오</Form.Label>
-                    <Form.Select aria-label="Default select example">
-                    {/* onChange={(e) => {setFashion(e.target.value)}} value={fashion} */}
-                        <option value="1" >없음</option>
-                        <option value="2" >캐주얼</option>
-                        <option value="3" >미니멀</option>
-                        <option value="4" >스트릿</option>
-                        <option value="5" >시티보이</option>
-                        <option value="6" >아메카지</option>
+                    <Form.Select aria-label="Default select example"
+                        onChange={(e) => { setCata2(e.target.value) }} value={cata2}>
+                        {cata2Render()}
                     </Form.Select>
                     <br />
-                </Form.Group>
 
-                
-                
 
-                <Button type="submit"> 등록 </Button>
-            </Form>
+
+
+
+                    {/* <Button type="submit"> 등록 </Button> */}
+                </Form>
             </Container>
             <Form>
                 <InputGroup>
-                    <Button onClick={tempSave}>temp</Button>
+                    <Button onClick={tempSave}>등록</Button>
                 </InputGroup>
             </Form>
         </div>
