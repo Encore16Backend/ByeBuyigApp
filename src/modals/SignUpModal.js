@@ -248,6 +248,7 @@ function SingUpModal({ show, onHide }) {
         setvalemail(-1)
       } else{
         setKeycode(res.data)
+        alert(email+ ' 메일로 인증코드를 전송했습니다')
       }
 
     }).catch(error => {

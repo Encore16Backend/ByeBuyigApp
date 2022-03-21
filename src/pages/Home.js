@@ -13,7 +13,6 @@ const Home = ()=>{
     GetBestItems(BestItemUrl)
 
     return(
-        <div>
         <Container className="pdtContainer centered" style={{width: "auto"}} >
             <Row>
                 <Col>
@@ -27,7 +26,6 @@ const Home = ()=>{
                 </Col>
             </Row>
         </Container>
-        </div>
     )
 }
 
