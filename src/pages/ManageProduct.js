@@ -67,8 +67,8 @@ const ManageProduct = ()=>{
     //     }).catch(error=>{
     //         console.log(error)
     //     })
-
     // }
+
     console.log(totalPage, "여기는 컴포넌트")
 
 
@@ -89,8 +89,14 @@ const ManageProduct = ()=>{
 
     const pdtname =()=>{
         setSearchState(searchstate*-1);
+        startpage()
     }
 
+    const startpage=()=>{
+        if(pageNo!==1){
+            setPage(1)
+        }
+    }
 
 
     return(
@@ -102,7 +108,7 @@ const ManageProduct = ()=>{
         <div style={{display:"flex"}}>
                 <FormControl type="search" placeholder="상품이름" className="me-2" aria-label="Search"
                   value={searchItem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
-                <Button type="submit"style={{width:"70px"}} onClick={pdtname}>조회</Button>
+                <Button type="submit"style={{width:"70px"}} onClick={pdtname}>Search</Button>
 
                 
         </div>

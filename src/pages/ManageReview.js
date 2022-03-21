@@ -164,8 +164,8 @@ const Managereview =()=>{
                 <FormControl type="search" placeholder="상품" className="me-2" aria-label="Search"
                   value={searchitem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
                  <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}/>  &nbsp; &nbsp;
-             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>&nbsp;
-             <Button style={{width:"75px"}} onClick={pagereload} >비우기</Button>
+             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >Search</Button>&nbsp;
+             <Button style={{width:"70px"}} onClick={pagereload} >Clean</Button>
         </div>
         </Form>
 

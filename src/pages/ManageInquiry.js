@@ -162,8 +162,8 @@ const ManageInquiry =()=>{
                   value={searchitem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
                  <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}/>  &nbsp; &nbsp;
                  <input type="checkbox" onChange={chkedhandler} style={{width:"37px",height:"37px"}}/>&nbsp;<h4>답변예정</h4>&nbsp;
-             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >조회</Button>&nbsp;
-             <Button style={{width:"75px"}} onClick={pagereload} >비우기</Button>
+             <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >Search</Button>&nbsp;
+             <Button style={{width:"70px"}} onClick={pagereload} >Clean</Button>
         </div>
         </Form>
 

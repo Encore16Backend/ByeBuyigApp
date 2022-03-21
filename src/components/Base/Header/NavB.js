@@ -322,7 +322,6 @@ const NavB = ({ID, logOut})=>{
               ?
               (sessionStorage.getItem('roles') ==='ROLE_ADMIN')?
               <>
-              <Nav.Link onClick={toMyPage}></Nav.Link>
                 <div className='NavBarCataForm'>
                   <div className='navBarCate dropdown' style={{display:"inline"}}>
                   <span className='dropbtn'>
