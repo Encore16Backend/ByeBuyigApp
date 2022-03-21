@@ -12,6 +12,7 @@ import postRefresh from "../hooks/postRefresh";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import BeforeOrder from "../modals/BeforeOrder";
 import '../axiosproperties'
+import {getStringPrice} from "../axiosproperties";
 
 
 
@@ -285,12 +286,12 @@ const ShoppingBasket = () => {
                                             {itemname}
                                             </Link>
                                             </td>
-                                            <td>{itemprice}</td>
+                                            <td>{getStringPrice(itemprice)}</td>
                                             <td colSpan={2} style={{paddingLeft:"20px"}}>
-                                                {showBcount}
+                                                {showBcount}개
                                             </td>
                                             <td>
-                                                {itemprice*bcount}
+                                                {getStringPrice(itemprice*bcount)}
                                             </td>
                                             <td>
                                             <form>

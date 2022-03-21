@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 import MyCalendar from '../components/etc/MyCalendar'
+import {getStringPrice} from "../axiosproperties";
 
 
 const ManageProduct = ()=>{
@@ -159,9 +160,9 @@ const ManageProduct = ()=>{
                             <td>
                                 {catas.join(', ')}
                             </td>
-                            <td>{price}</td>
-                            <td>{reviewmean}</td>
-                            <td>{purchasecnt}</td>
+                            <td>{getStringPrice(price)}</td>
+                            <td>{reviewmean}점</td>
+                            <td>{purchasecnt}개</td>
                             <td> <button onClick={delProduct}>삭제</button> </td>
                         </tr>
                         </>

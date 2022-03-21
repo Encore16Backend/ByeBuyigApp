@@ -8,6 +8,7 @@ import cookie from 'react-cookies'
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import '../axiosproperties'
 import { defaultEqualityCheck } from "reselect";
+import {getStringPrice} from "../axiosproperties";
 
 
 const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
@@ -115,9 +116,9 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
                  <img src={itemimg} width="140px" height="140px" style={{ marginRight: "5px" , display:"inline" }} />
                  <div style={{display:"inline-block", paddingLeft:"1rem", verticalAlign:"top"}}>
                  <p> <b>{itemname}</b></p>
-                 <p>가격 : {itemprice} </p>
+                 <p>가격 : {getStringPrice(itemprice)} </p>
                  <p>주문수량 : {bcount} </p>
-                 <p >주문 가격 : {itemprice*bcount}</p>
+                 <p >주문 가격 : {getStringPrice(itemprice*bcount)}</p>
                  </div>
             </div>
             <hr/>
@@ -180,7 +181,7 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
               </> 
             )
           }
-            <Button onClick={onSubmit}>주문하기</Button>   <span style={{paddingLeft:"31.5rem"}}><b>총 결제금액</b> : {sum} </span>
+            <Button onClick={onSubmit}>주문하기</Button>   <span style={{paddingLeft:"31.5rem"}}><b>총 결제금액</b> : {getStringPrice(sum)} </span>
         </>
       </Modal.Body>
       <Modal.Footer>

@@ -4,6 +4,7 @@ import {useSelector} from "react-redux";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Carsol from "../components/Base/main/Carsol";
+import {getStringPrice} from "../axiosproperties";
 
 
 const ShowOrderResult = ({})=>{
@@ -13,8 +14,7 @@ const ShowOrderResult = ({})=>{
     const orderList = location.state.orderItems;
 
 
-    // console.log(postNum,"postNum")
-    console.log(orderList,"orderList")
+  
 
     let sum = 0
 
@@ -27,7 +27,7 @@ const ShowOrderResult = ({})=>{
             <p> <b>  {order.itemname} </b> </p>
                 <img style={{display:"inline",width:"200px", height:"200px"}} src={order.itemimg}></img>
                 <div style={{display:"inline-block", paddingLeft:"1rem", verticalAlign:"top"}}>
-                    <p> 상품금액 : {order.itemprice}</p>
+                    <p> 상품금액 : {getStringPrice(order.itemprice)}</p>
                     <p> 주문수량 : {order.bcount}개</p>
                 </div>
             </div>
@@ -72,7 +72,7 @@ const ShowOrderResult = ({})=>{
                                 <b>총 결제 금액</b> 
                             </div>
                             <div style={{display:"inline"}}>
-                                {sum}원
+                                {getStringPrice(sum)}원
                                 <br/>
                             </div>
                         </div>
