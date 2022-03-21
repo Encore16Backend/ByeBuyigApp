@@ -86,7 +86,6 @@ const ManageProduct = ()=>{
         setPage(value);
     }
 
-
     const pdtname =()=>{
         setSearchState(searchstate*-1);
         startpage()

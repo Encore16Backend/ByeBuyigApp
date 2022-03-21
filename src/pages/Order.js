@@ -158,6 +158,8 @@ const Order = ()=>{
     // 전체검색 버튼을 누르면 다시 전체조회
     const getAllOrder = ()=>{
         setPathNo(1)
+        setStartDate()
+        setEndDate()
         GetOrderItem(userid, pageNo)
     }
 
@@ -190,13 +192,9 @@ const Order = ()=>{
             <Container>     
             <Form className='review' onSubmit={onSubmit}>
             <Row>
-                 
                  <h1 className='centered'>구매내역</h1>
-                
-                
                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />      
-                {/* <Button onClick={getAllOrder}  style={{position:"relative", left:"400px", bottom:"35px"}}>전체조회</Button> */}
-                
+                <Button onClick={getAllOrder}  style={{position:"relative",width:"70px", bottom: "38px",left: "450px"}}>Clean</Button>
             </Row>
                 {
                     !!myOrderItems ? "" : <div>

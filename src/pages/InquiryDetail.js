@@ -31,10 +31,10 @@ const InquiryDetail = ()=>{
                                 }} > */}
                             </td>
                         </tr>
-                        <tr style={{height:"400px"}}>
+                        <tr style={{height:"300px"}}>
                             <td colSpan={2}>{Q.content}</td>
                         </tr>
-                        <tr style={{height:"200px"}}>
+                        <tr style={{height:"100px"}}>
                             <td colSpan={2}>{Q.answer != "" ? Q.answer : "답변예정입니다"}</td>
                         </tr>
                     </tbody>
