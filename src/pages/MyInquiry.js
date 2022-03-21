@@ -47,7 +47,7 @@ const MyInquiry = ()=>{
 
     const inQRender = inquirys.map(Q =>{   
                 const inQ = <tr onClick={()=>{getDetailInquiry(Q)}}>
-                                <td>  {Q.itemimage ? <img src={Q.itemimage} width="80" height="96"/> : "예전꺼라 이미지 없었음"} </td>
+                                <td>  {Q.itemimage ? <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+Q.itemimage} width="80" height="96"/> : "예전꺼라 이미지 없었음"} </td>
                                 <td>{Q.itemname}</td>
                                 <td> {Q.date} </td>
                                 <td>{Q.title}</td>
