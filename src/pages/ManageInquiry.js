@@ -55,15 +55,17 @@ const ManageInquiry =()=>{
             }
         }).then(res=>{
             const data =res.data.content
-            console.log(res)
+            console.log(res,"img")
             setAlldata(data)
             setOpenedContentId(-1)
             setTotalPage(res.data.totalPages)
-            
             if(!startState){
                 setStartDate()
                 setEndDate()
                 setStartState(true)
+            }
+            if (checkstate ===-1){
+                setTotalPage(res.data.totalPages)
             }
         }).catch(error=>{
             console.log(error)
@@ -84,10 +86,16 @@ const ManageInquiry =()=>{
         setSearchstate(searchstate*-1); // 1*-1 = -1 / -1 * -1 -1 , 1
         // setStartDate(startDate)
         // setPage(1)
+        startpage();
     };
     
     const handlePage = (value) => {
         setPage(value);
+    }
+    const startpage=()=>{
+        if(pageNo!==1){
+            setPage(1)
+        }
     }
 
     //답변
