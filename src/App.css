@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 .bestpdts {
   float : left;

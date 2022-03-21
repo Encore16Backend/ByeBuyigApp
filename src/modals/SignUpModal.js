@@ -5,6 +5,7 @@ import Test from "../components/auth/Test";
 import axios from "axios";
 import "../css/join.css" 
 import '../axiosproperties'
+import { set } from "lodash";
 
 function SingUpModal({ show, onHide }) {
   // id(pk) ,pwd, 이름?, 주소, 관심패션, 이메일
@@ -223,6 +224,9 @@ function SingUpModal({ show, onHide }) {
     setPwdMsg('')
     onHide()
     setvalKeycode(-1)
+    setdetailAddress('')
+    setChkMail('')
+    
   }
   
   //이메일 인증

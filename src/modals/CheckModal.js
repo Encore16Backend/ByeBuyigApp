@@ -79,7 +79,7 @@ function CheckModal (){
         <>
         
           <div>
-            <Link to={{}} onClick={handleShow}>개인정보수정</Link>
+            <span style={{color:"black"}} onClick={handleShow}>개인정보수정</span>
                 <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title>비밀번호 확인</Modal.Title>

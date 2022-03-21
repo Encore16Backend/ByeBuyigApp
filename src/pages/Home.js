@@ -22,8 +22,8 @@ const Home = ()=>{
 
     return(
         <div>
-        <Container className="pdtContainer centered" style={{width: "auto"}} >
-            <Row>
+        <Container className="pdtContainer centered" style={{width: "auto",cursor:"auto"}} >
+            <Row >
                 <Col sm={12}>
                     <Row>
                         <br/><br/><br/><br/>
