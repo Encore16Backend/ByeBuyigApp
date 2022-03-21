@@ -24,7 +24,7 @@ const Page = ({setPage, totalPage, selected, reviewNum})=>{
     return(
         <div className="myPage">
             <ul>
-                <li style={{display:"inline-block", paddingRight:"1rem"}} onClick={()=>{setPage(1)}} > 처음으로 </li>
+                <li style={{display:"inline-block", paddingRight:"1rem"}} className="pageNumbers" onClick={()=>{setPage(1)}} > 처음으로 </li>
             {
                 newArr.map(page=>{
                     // 페이지 변경함수
@@ -35,11 +35,11 @@ const Page = ({setPage, totalPage, selected, reviewNum})=>{
                         }
                     }
                     return(
-                        <li key={page} style={{display:"inline-block", paddingRight:"1rem"}} onClick={Func} value={page}>{page}</li>
+                        <li   className="pageNumbers" key={page} style={{display:"inline-block", paddingRight:"1rem"}} onClick={Func} value={page}>{page}</li>
                     )
                 })
             }
-                <li style={{display:"inline-block", paddingRight:"1rem"}} onClick={()=>{setPage(totalPage)}}> 마지막 </li>
+                <li   className="pageNumbers" style={{display:"inline-block", paddingRight:"1rem"}} onClick={()=>{setPage(totalPage)}}> 마지막 </li>
             </ul>
         </div>
     )
