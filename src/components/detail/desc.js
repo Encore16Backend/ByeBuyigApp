@@ -11,7 +11,7 @@ import BeforeOrder from "../../modals/BeforeOrder";
 import "../../axiosproperties"
 import {getStringPrice} from "../../axiosproperties";
 
-const DetailDesc = ({pdtState, lendering, setLandering})=>{
+const DetailDesc = ({ lendering, setLandering})=>{
 
     const history = useHistory();
 

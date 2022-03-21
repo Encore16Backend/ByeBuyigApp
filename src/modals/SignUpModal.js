@@ -226,7 +226,6 @@ function SingUpModal({ show, onHide }) {
     setvalKeycode(-1)
     setdetailAddress('')
     setChkMail('')
-    
   }
   
   //이메일 인증
