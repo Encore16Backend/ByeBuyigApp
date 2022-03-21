@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Button, Form, InputGroup, FormControl, Container } from "react-bootstrap";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Form, InputGroup, FormControl, Container,Row, Col } from "react-bootstrap";
 import '../axiosproperties'
 import { ACCESS_KEY, SECRET_ACCESS_KEY, S3_BUCKET, REGION } from '../axiosproperties'
 import AWS from "aws-sdk"
@@ -28,7 +28,7 @@ const SaveProduct = () => {
     const [fileImgs, setFileImgs] = useState([])
 
     // 파일 저장
-    const saveFileImage = (e, num, cataOne, cataTwo) => {
+    const saveFileImage = (e) => {
         // aws에 저장할 파일명
         // 배열에 파일 저장
         setFiles([...files, e.target.files[0]])
@@ -54,6 +54,7 @@ const SaveProduct = () => {
     // 파일 삭제
     const deleteFileImage = () => {
         fileImgs.map((f) => {
+            console.log('들어옴')
             URL.revokeObjectURL(f);
         })
         setFiles([])
@@ -188,6 +189,7 @@ const SaveProduct = () => {
     }
 
 
+    const inputRef = useRef()
 
     return (
         <div>
@@ -199,42 +201,62 @@ const SaveProduct = () => {
 
             <Container>
                 <h2 className="centered">상품등록</h2>
+                <br/><br/>
                 <Form onSubmit={onSubmit} encType="multipart/form-data">
-
-                    {/* 이미지 미리보기 */}
-                    <div style={{ position: "relative", top: "10px", paddingBottom: "4rem", paddingTop: "4rem" }}>
-                        <div className="centered">
+                    <Row>
+                                {/* 상품이미지 input */}
+                    <div className="centered" style={{position:"relative"}}>
+                            {/* {
+                                files[0] === undefined ? <div className="filebox"><label className="input-file-button" htmlFor="input_file1">메인이미지 업로드</label>
+                                <input name="imgUpload" id="input_file1" type="file" accept="image/*"  style={{display:"none"}}  onChange={(e) => { saveFileImage(e) }} /></div>
+                                    : ""
+                            }
                             {
-                                fileImgs[0] ? <img alt="img" src={fileImgs[0]} style={{ margin: "auto", width: "350px", height: "250px" }} /> :
+                                files[1] === undefined ? <div className="filebox">
+                                <label className="input-file-button" htmlFor="input_file2">추가 이미지 업로드</label>
+                                <input name="imgUpload" id="input_file2" type="file" accept="image/*" style={{display:"none"}}  onChange={(e) => { saveFileImage(e) }} />
+                                </div>
+                                    : ""
+                            } */}
+    
+                    </div>
+                        <Col>
+                    {/* 이미지 미리보기 */}
+                    <div style={{ position: "relative", top: "-49px", paddingBottom: "4rem", paddingTop: "4rem" }}>
+                        <div className="centered" style={{display:"grid"}}>
+                            {
+                                fileImgs[0] ? <img alt="img" src={fileImgs[0]} style={{  width: "350px", height: "200px" }} /> :
                                     <div style={{ margin: "auto", width: "350px", height: "250px", border: "1px solid black" }}></div>
                             }
                             {
-                                fileImgs[1] ? <img alt="img" src={fileImgs[1]} style={{ margin: "auto", width: "350px", height: "250px" }} /> :
+                                fileImgs[1] ? <img alt="img" src={fileImgs[1]} style={{  width: "350px", height: "200px" }} /> :
                                     ""
                             }
                             {
-                                fileImgs[2] ? <img alt="img" src={fileImgs[2]} style={{ margin: "auto", width: "350px", height: "250px" }} /> :
+                                fileImgs[2] ? <img alt="img" src={fileImgs[2]} style={{  width: "350px", height: "200px" }} /> :
                                     ""
                             }
-                        </div>
-                        <div className="centered">
-                            {
-                                files[0] === undefined ? <input name="imgUpload" type="file" accept="image/*" onChange={(e) => { saveFileImage(e, 1) }} />
-                                    : ""
-                            }
-                            {
-                                files[1] === undefined ? <input name="imgUpload" type="file" accept="image/*" onChange={(e) => { saveFileImage(e, 2) }} />
-                                    : ""
-                            }
-                            {
-                                files[2] === undefined ? <input name="imgUpload" type="file" accept="image/*" onChange={(e) => { saveFileImage(e, 3) }} />
-                                    : ""
-                            }
-
-                            <Button onClick={() => deleteFileImage()}>삭제 </Button>
-
                         </div>
                     </div>
+                    </Col>
+                    <Col>
+                    <br/>
+                    <div>
+                    {
+                        files[2] === undefined ?  <div className="filebox" style={{display:"contents"}}>
+                        <label className="input-file-button" htmlFor="input_file3">이미지 업로드</label>
+                        <input name="imgUpload" id="input_file3" type="file" accept="image/*" style={{display:"none"}} onChange={(e) => { saveFileImage(e) }} />
+                        </div>
+                        : <div className="filebox" style={{display:"contents"}}>
+                        <label className="input-file-button" >업로드 완료 </label>
+                        <input name="imgUpload" id="input_file3" type="file" accept="image/*" style={{display:"none"}} onChange={(e) => { saveFileImage(e) }} />
+                        </div>
+                    }
+                    
+                    <Button style={{position:"relative", left:"34rem"}} onClick={() => deleteFileImage()}>삭제 </Button>
+                    </div>
+                    <br/>
+
                     <Form.Label>상품명</Form.Label>
                     <Form.Control placeholder="등록상품명을 입력하세요" value={pdtName} onChange={(e)=>setPdtName(e.currentTarget.value)} />
                     <br />
@@ -263,7 +285,10 @@ const SaveProduct = () => {
                         {cata2Render()}
                     </Form.Select>
                     <br />
+                    </Col>
+                    </Row>
                 </Form>
+                
             </Container>
             <Form>
                 <InputGroup>

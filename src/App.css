@@ -128,3 +128,15 @@ a:hover{
 .pageNumbers{
   cursor: pointer;
 }
+
+.input-file-button{
+  padding: 6px 15px;
+  background-color:orange;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.filebox label { 
+  display: inline-block; padding: .5em .75em; color: rgb(92, 55, 55); font-size: inherit; line-height: normal; vertical-align: middle; background-color: #fdfdfd; cursor: pointer; border: 1px solid #ebebeb; border-bottom-color: #e2e2e2; border-radius: .25em;
+}
