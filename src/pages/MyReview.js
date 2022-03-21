@@ -287,7 +287,7 @@ const MyReview = () => {
                                         </Form>
                                     </td>
                                     <td>
-                                        <img src={itemimage} width="80" height="96" style={{marginRight:"5px"}}/>
+                                        <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimage} width="80" height="96" style={{marginRight:"5px"}}/>
                                     </td>
                                     <td>
                                         <Link to={{ pathname:"/detail", search : "?itemid="+itemid,state : {itemid : itemid,},}} >

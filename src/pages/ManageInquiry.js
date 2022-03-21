@@ -54,6 +54,7 @@ const ManageInquiry =()=>{
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
             }
         }).then(res=>{
+            console.log(res, "res")
             const data =res.data.content
             console.log(res)
             setAlldata(data)
@@ -90,6 +91,7 @@ const ManageInquiry =()=>{
         setPage(value);
     }
 
+    console.log(Alldata, "all")
     //답변
     const Showcontent =(content)=>{
         if(!content||content === '')
@@ -183,6 +185,7 @@ const ManageInquiry =()=>{
                         let write_date = data.date
                         let answerok = data.chkanswer
                         let pdtImg=data.itemimage
+                        console.log(data, "D")
 
 
                         let Adata =
@@ -195,7 +198,7 @@ const ManageInquiry =()=>{
                                     setAdminanswer(init_answer);}}}>
 
                             <td>{write_date}</td>
-                            <td> <img src={pdtImg} width="80" height="96"/></td>
+                            <td> <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+pdtImg} width="80" height="96"/></td>
                             <td>{byusername_itemname}</td>
                             <td>{byusername_title}</td>
                             <td>{byusername_name}</td>

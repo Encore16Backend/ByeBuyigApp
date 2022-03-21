@@ -146,7 +146,7 @@ const ManageProduct = ()=>{
                         let Adata =
                         <>
                         <tr>
-                            <td> <img src={pdtImg} width="80" height="96"/></td>
+                            <td> <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+pdtImg} width="80" height="96"/></td>
                             
                             <td>
                             <Link to={{ pathname:"/detail", search : "?itemid="+itemid,

@@ -25,7 +25,7 @@ const ShowOrderResult = ({})=>{
             <>
             <div style={{display:"inline-block"}} className="centered">
             <p> <b>  {order.itemname} </b> </p>
-                <img style={{display:"inline",width:"200px", height:"200px"}} src={order.itemimg}></img>
+                <img style={{display:"inline",width:"200px", height:"200px"}} src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+order.itemimg}></img>
                 <div style={{display:"inline-block", paddingLeft:"1rem", verticalAlign:"top"}}>
                     <p> 상품금액 : {getStringPrice(order.itemprice)}</p>
                     <p> 주문수량 : {order.bcount}개</p>

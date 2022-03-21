@@ -209,7 +209,7 @@ const Managereview =()=>{
                             </Form>
                             </td>
                             <td>{write_date}</td>
-                            <td> <img src={pdtImg} width="80" height="96"/></td>
+                            <td> <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+pdtImg} width="80" height="96"/></td>
                             <td>{byusername_itemname}</td>
                             <td>{byusername_content}</td>
                             <td>{byusername_name}</td>
