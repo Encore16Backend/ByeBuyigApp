@@ -126,7 +126,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
             <br/><br/>
             <p> 상품명/품번 : <b>{oneItem.itemname}/{oneItem.itemid}</b> </p>
             <div className="descStar">
-                <div>평점 : {oneItem.reviewmean} </div>
+                <div>평점 : {oneItem.reviewmean ? JSON.stringify(oneItem.reviewmean).substring(0,4) : "등록된 상품평이 없습니다"} </div>
                 <div><ReactStars edit={false} value={oneItem.reviewmean}/></div>
             </div>
             <p> 가격 : <b>{getStringPrice(oneItem.price)}</b> </p>

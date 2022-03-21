@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import postRefresh from "../../hooks/postRefresh";
 import { useState } from "react";
-import { FormControl, Table } from "react-bootstrap";
-import ReactPaginate from "react-paginate"
-import { Button, InputGroup } from "react-bootstrap";
+import { FormControl, Table,Button, InputGroup } from "react-bootstrap";
 import ReactStars from "react-stars"
 import Page from "../Base/main/Page";
 import "../../axiosproperties"
@@ -102,29 +100,29 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
         })
     }
     // 리뷰삭제
-    const delReview = async (id, itemname) => {
-        alert(id + "/" + itemname)
-        await axios.delete('/review/delete', {
-            params: {
-                id: id,
-                itemname: itemname
-            }
-        }, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
-            }
-        }).then(res => {
-            console.log(res, "res")
-            setLandering(!lendering)
-            alert('댓글 삭제 완료')
-        }).catch(error => {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-            postRefresh() // 토큰이 없으면 재발행시키는 함수
-            delReview(id) //  토큰을 받고 실행하고 싶은 함수 다시 실행
-        })
+    const delReview = async (id, itemid) => {
+        if  (window.confirm('정말 삭제하시겠습니까?')){
+            await axios.delete('/review/delete', {
+                params: {
+                    reviewid:[id],
+                    itemid:[itemid]
+                    
+                }
+            }, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+                }
+            }).then(res => {
+                console.log(res, "res")
+                setLandering(!lendering)
+                alert('댓글 삭제 완료')
+            }).catch(error => {
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+            })
+        }
     }
     // 별점점수 바꾸는 함수
     const ratingChanged = (newRating) => {
@@ -176,7 +174,7 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
                             (userID === review.username) ? <span key={'modifyText' + review.id} onClick={() => { modify(review.id, review.content, review.score) }}>수정 /</span> : ""
                         }
                         {
-                            (userID === review.username) ? <span key={'delText' + review.id} onClick={() => { delReview(review.id, review.itemname) }}>삭제</span> : ""
+                            (userID === review.username) ? <span key={'delText' + review.id} onClick={() => { delReview(review.id, review.itemid) }}>삭제</span> : ""
                         }
                     </div>
                 </div>
