@@ -20,10 +20,6 @@ const Page = ({setPage, totalPage, selected, reviewNum})=>{
         newArr.push(i)
     }
 
-    console.log(firstPage, "firstPage")
-    console.log(lastPage, "lastPage")
-    console.log(totalPage, "totalPage")
-    console.log(selected, "selected")
 
     return(
         <div className="myPage">
