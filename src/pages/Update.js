@@ -180,7 +180,7 @@ const Update= () => {
         }, {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem('access_token'),
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
             },
         }).then(res => {
             alert("삭제되었습니다.")
@@ -285,7 +285,7 @@ const Update= () => {
             <Form onSubmit={update}>
                 <Form.Group className="mb-3" >
                     <Form.Label>ID :</Form.Label> &nbsp;
-                    <Form.Label>{localStorage.getItem('id')}</Form.Label>
+                    <Form.Label>{sessionStorage.getItem('id')}</Form.Label>
                 </Form.Group>
                 <Form.Group className="mb-3">
                 <Form.Label>E-mail :</Form.Label> &nbsp;
