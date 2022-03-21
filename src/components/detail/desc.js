@@ -45,36 +45,40 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
     // 장바구니에 담는 함수
     const addBasket = async (username,itemid,itemimg,itemname,itemprice,bcount)=>{
-        await axios.post('/basket/add',{
-            // body
-            username : username,
-            itemid : itemid,
-            itemimg : itemimg,
-            itemname : itemname,
-            itemprice : itemprice,
-            bcount : bcount
-        },{
-            // header
-            headers:{
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
-            }
-        }).then(res =>{
-            setLandering(!lendering)
-            if (window.confirm('장바구니에 담겼습니다 장바구니로 이동하시겠습니까')){
-                history.push({
-                    pathname : "/basket",
-                    
-                })
-            }
-
-        }).catch(error =>{
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-            postRefresh() // 토큰이 없으면 재발행시키는 함수
-            addBasket(username,itemid,itemimg,itemname,itemprice) //  토큰을 받고 실행하고 싶은 함수 다시 실행
-        })
+        if (sessionStorage.getItem('id')){
+            await axios.post('/basket/add',{
+                // body
+                username : username,
+                itemid : itemid,
+                itemimg : itemimg,
+                itemname : itemname,
+                itemprice : itemprice,
+                bcount : bcount
+            },{
+                // header
+                headers:{
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+                }
+            }).then(res =>{
+                setLandering(!lendering)
+                if (window.confirm('장바구니에 담겼습니다 장바구니로 이동하시겠습니까')){
+                    history.push({
+                        pathname : "/basket",
+                        
+                    })
+                }
+    
+            }).catch(error =>{
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+                postRefresh() // 토큰이 없으면 재발행시키는 함수
+                addBasket(username,itemid,itemimg,itemname,itemprice) //  토큰을 받고 실행하고 싶은 함수 다시 실행
+            })
+        }else{
+            alert('로그인 후 사용 가능 합니다')
+        }
     }
 
 
@@ -145,11 +149,21 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
             {/* 장바구니 담기 버튼 */}
             <div style={{position:"relative", left:"25rem"}}>
-            <Button onClick={() => addBasket(
-                sessionStorage.getItem("id") , oneItem.itemid, img1, oneItem.itemname, oneItem.price,bcount
-            )}>장바구니 담기</Button>
+            <Button onClick={() => {
+                
+                addBasket(sessionStorage.getItem("id") , oneItem.itemid, img1, oneItem.itemname, oneItem.price,bcount)
+                }}>
+                장바구니 담기
+            </Button>
             &nbsp;
-            <Button onClick={()=>{setModalOn(true)}}>즉시구매</Button>
+            <Button onClick={()=>{
+                if (sessionStorage.getItem('id')){
+                    setModalOn(true)
+                }else{
+                    alert('로그인 후 사용 가능합니다')
+                }
+                
+            }}>즉시구매</Button>
             </div>
         </div>
             </>
