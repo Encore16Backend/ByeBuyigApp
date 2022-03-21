@@ -39,11 +39,12 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
     // 댓글등록함수
     const onSubmit = async (e)=>{
         e.preventDefault();
-        if (content === ""){
-            alert("내용을 입력하세요")
-            return
-        }else if (userId === ""){
+        
+        if (userId === null || userId === ""){
             alert("로그인 후에 작성 할 수 있습니다")
+            return
+        }else if (content === ""){
+            alert("내용을 입력하세요")
             return
         }
         await axios.post('/review/save',{
@@ -70,25 +71,24 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
-            postRefresh() // 토큰이 없으면 재발행시키는 함수
-            onSubmit(e) //  토큰을 받고 실행하고 싶은 함수 다시 실행
         })
     }
 
     // 문의사항 작성
     const inquirySave = async (e) =>{
         e.preventDefault()
-        if (inQTitle === ""){
+        
+        if (userId === null || userId === ""){
+            alert("로그인 후에 작성 할 수 있습니다")
+            return
+        }else if (inQTitle === ""){
             alert("제목을 입력하세요")
             return
         }else if (inQContent === ""){
             alert("내용을 입력하세요")
             return
         }
-        else if (userId === ""){
-            alert("로그인 후에 작성 할 수 있습니다")
-            return
-        }
+        
         console.log(userId, pdtId, pdtName, inQTitle, inQContent)
         await axios.post('/inquiry/save',{
                 // 답변여부, 날짜, 답변 빼고 보냄
@@ -115,9 +115,6 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
             // inquirySave(e)
         })
     }
-
-    console.log(inQTitle)
-    console.log(inQContent)
 
 
     return(

@@ -70,7 +70,6 @@ const SaveProduct = () => {
     const [cata2Outer, setCata2Outer] = useState(['롱패딩', '숏패딩', '코트', '트렌치 코트'])
 
     const [pdtName, setPdtName] = useState('')
-    // const [pdtCate  , setPdtCate] = useState([])
     const [pdtCount, setPdtCount] = useState(200)
     const [pdtPrice, setPdtPrice] = useState(0)
     const [cata1, setCata1] = useState('상의')
@@ -116,8 +115,6 @@ const SaveProduct = () => {
                     if (err) console.log(err)
                 })
         })
-
-        // // 절대지우지마 테스트용
         axios.post('/main/item/save', {
             itemSave: data
         }, {
@@ -133,7 +130,7 @@ const SaveProduct = () => {
             setFiles([])
             setFileNames([])
             setFileImgs([])
-            history.push('/mypage')
+            history.push('/')
         })
         .catch(error => {
             console.log(error.response.data);
@@ -163,15 +160,6 @@ const SaveProduct = () => {
 
     }
     // 이미지 폼 반복을 위함
-
-    const imgForms = () => {
-
-        return (
-            <div>
-
-            </div>
-        )
-    }
 
 
     // 하위컴포넌트 랜더링
@@ -275,12 +263,6 @@ const SaveProduct = () => {
                         {cata2Render()}
                     </Form.Select>
                     <br />
-
-
-
-
-
-                    {/* <Button type="submit"> 등록 </Button> */}
                 </Form>
             </Container>
             <Form>

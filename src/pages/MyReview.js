@@ -27,8 +27,8 @@ const MyReview = () => {
     }
 
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
 
     const getStringDate = (localeDate)=>{
         // Wed Mar 23 2022 10:21:20 GMT+0900 (한국 표준시)
@@ -104,8 +104,8 @@ const MyReview = () => {
             params: {
                 username: userid,
                 page: pageNo,
-                start : getStringDate(startDate),
-                end : getStringDate(endDate)  
+                start : startDate != null ? getStringDate(startDate) : "",
+                end : endDate != null ? getStringDate(endDate) : "" 
             },
             headers: {
                 "Content-Type": "application/json",

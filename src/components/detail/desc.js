@@ -9,6 +9,7 @@ import postRefresh from "../../hooks/postRefresh"
 import "../../css/desc.css"
 import BeforeOrder from "../../modals/BeforeOrder";
 import "../../axiosproperties"
+import {getStringPrice} from "../../axiosproperties";
 
 const DetailDesc = ({pdtState, lendering, setLandering})=>{
 
@@ -128,7 +129,7 @@ const DetailDesc = ({pdtState, lendering, setLandering})=>{
                 <div>평점 : {oneItem.reviewmean} </div>
                 <div><ReactStars edit={false} value={oneItem.reviewmean}/></div>
             </div>
-            <p> 가격 : <b>{oneItem.price}</b> </p>
+            <p> 가격 : <b>{getStringPrice(oneItem.price)}</b> </p>
             <p> 구매수 : <b>{oneItem.purchasecnt}</b> </p>
             <p> 리뷰 수 : {oneItem.reviewcount}</p>
             {/* 장바구니 주문 갯수 정하기 */}

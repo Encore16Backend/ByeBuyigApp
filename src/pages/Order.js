@@ -4,15 +4,13 @@ import { Container } from "react-bootstrap";
 import { useState } from "react";
 import {Form, Button, Table, Row, Col} from 'react-bootstrap'
 import Page from "../components/Base/main/Page";
-// import Calendar from "react-calendar";
 import moment from "moment";
-// import 'react-calendar/dist/Calendar.css';
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import '../axiosproperties'
 import MyCalendar from "../components/etc/MyCalendar";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
-
+import {getStringPrice} from "../axiosproperties";
 
 
 const Order = ()=>{
@@ -119,8 +117,8 @@ const Order = ()=>{
             params: {
                 username: userid,
                 page: pageNo,
-                start : getStringDate(startDate),
-                end : getStringDate(endDate)
+                start : startDate != null ? getStringDate(startDate) : "",
+                end : endDate != null ? getStringDate(endDate) : "" 
             },
             headers: {
                 "Content-Type": "application/json",
@@ -140,8 +138,8 @@ const Order = ()=>{
     }
 
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
 
 
 
@@ -243,12 +241,12 @@ const Order = ()=>{
                                             <td>
                                                 {addr}
                                             </td>
-                                            <td>{itemprice}</td>
+                                            <td>{getStringPrice(itemprice)}</td>
                                             <td colSpan={2} style={{paddingLeft:"20px"}}>
                                                 {bcount}
                                             </td>
                                             <td>
-                                            {itemprice*bcount}
+                                            {getStringPrice(itemprice*bcount)}
                                             </td>
                                         </tr>
                                     return (reviewData)
