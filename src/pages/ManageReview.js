@@ -82,6 +82,7 @@ const Managereview =()=>{
     
     const getbyusername =()=>{
         setSearchstate(searchstate*-1); // 1*-1 = -1 / -1 * -1 -1 , 1
+        startpage();
     };
     
     
@@ -89,6 +90,11 @@ const Managereview =()=>{
         setPage(value);
     }
     
+    const startpage=()=>{
+        if(pageNo!==1){
+            setPage(1)
+        }
+    }
     const pagereload=()=>{
         setSearchitem('')
         setSearchuser('')
