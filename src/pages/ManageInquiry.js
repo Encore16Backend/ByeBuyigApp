@@ -54,7 +54,6 @@ const ManageInquiry =()=>{
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
             }
         }).then(res=>{
-            console.log(res, "res")
             const data =res.data.content
             console.log(res)
             setAlldata(data)
@@ -91,7 +90,6 @@ const ManageInquiry =()=>{
         setPage(value);
     }
 
-    console.log(Alldata, "all")
     //답변
     const Showcontent =(content)=>{
         if(!content||content === '')
@@ -185,9 +183,6 @@ const ManageInquiry =()=>{
                         let write_date = data.date
                         let answerok = data.chkanswer
                         let pdtImg=data.itemimage
-                        console.log(data, "D")
-
-
                         let Adata =
                         <>
                         <tr onClick={()=> {
