@@ -239,7 +239,7 @@ const SaveProduct = () => {
                     <Form.Control placeholder="등록상품명을 입력하세요" value={pdtName} onChange={(e)=>setPdtName(e.currentTarget.value)} />
                     <br />
                     <Form.Label>가격</Form.Label>
-                    <Form.Control placeholder="등록상품가격을 입력하세요" value={pdtPrice} onChange={(e)=>setPdtPrice(e.currentTarget.value)} />
+                    <Form.Control placeholder="등록상품가격을 입력하세요"   value={pdtPrice}  onChange={(e)=>setPdtPrice(e.currentTarget.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g, '$1'))} />
                     <br />
                     <Form.Label>수량</Form.Label>
                     <Form.Control placeholder="등록상품수량을 입력하세요" value={pdtCount} onChange={(e)=>setPdtCount(e.currentTarget.value)} />

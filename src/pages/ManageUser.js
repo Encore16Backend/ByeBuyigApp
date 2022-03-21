@@ -43,7 +43,7 @@ const ManageUser =()=>{
 
     return(
         <>
-        <h1> 회원 관리</h1>
+        <h1 className='centered'> 회원 관리</h1>
         <div className='userbox'>
         <Table >
         <thead>

@@ -111,15 +111,44 @@ const Managereview =()=>{
             }
             setCheckReviews([]);
             setCheckItems([]);
+            window.location.reload();
         }).catch(err => {
             console.log(err)
         }) 
     }
-    
+    //  chk함수
+    const reviewCheck = (checked, reviewid, itemid) => {
+        if (checked) {
+            setCheckReviews([...checkReviews, reviewid]);
+            setCheckItems([...checkItems, itemid]);
+        } else {
+            // 체크 해제
+            setCheckReviews(checkReviews.filter((x) => x !== reviewid));
+            setCheckItems(checkItems.filter((x) => x != itemid));
+        }
+    }
+
+    const allReviewCheck = (checked) => {
+        if (checked) {
+            const reviewid = []; // `checkbox-${reviewid}`
+            const itemid = [];
+            Alldata.forEach((res) => {
+                reviewid.push(res.id);
+                itemid.push(res.itemid);
+            });
+            setCheckReviews(reviewid);
+            setCheckItems(itemid);
+        } else {
+            // 전체 체크 박스 제거
+            setCheckReviews([]);
+            setCheckItems([]);
+        }
+    }
+    console.log(checkReviews, "reviewId")
 
     return(
         <>
-        <h1> 리뷰 관리</h1>
+        <h1 className='centered'> 리뷰 관리</h1>
         <Button className="remove" variant="secondary" size="sm" onClick={delreview}>삭제</Button>
         <Form className="review" onSubmit={onSubmit} style={{paddingLeft:"48px"}} >
         <div style={{display:"flex"}}>
@@ -138,9 +167,18 @@ const Managereview =()=>{
         <Table>
         <thead>
             <tr>
+                <th  className="checkBox" style={{width:"5%"}}>
+                <div>
+                    <Form.Check 
+                        type='checkbox' id='checkbox'
+                        onChange={(e) => allReviewCheck(e.target.checked)}
+                        checked={checkReviews.length === 5 ? true : false}
+                        />
+                </div>
+                </th>
                 <th style={{width:"10%"}}>작성 날짜</th>
                 <th style={{width:"10%"}}>상품 사진 </th>
-                <th style={{width:"30%"}}>상품명</th>
+                <th style={{width:"25%"}}>상품명</th>
                 <th style={{width:"30%"}}>후기</th>
                 <th style={{width:"15%"}}>작성자 </th>
 
@@ -154,9 +192,22 @@ const Managereview =()=>{
                         let byusername_content=data.content
                         let write_date = data.date
                         let pdtImg=data.itemimage
+                        let reviewid = data.id;
+                        let itemid = data.itemid;
                         let Adata =
                         <>
                         <tr>
+                            <td>
+                            <Form>
+                                <div className="checkBox">
+                                    <Form.Check 
+                                        type='checkbox' className={`checkbox-${reviewid}`}
+                                        onChange={(e) => reviewCheck(e.target.checked, reviewid, itemid)}
+                                        checked={checkReviews.includes(reviewid) ? true : false}
+                                        />
+                                </div>
+                            </Form>
+                            </td>
                             <td>{write_date}</td>
                             <td> <img src={pdtImg} width="80" height="96"/></td>
                             <td>{byusername_itemname}</td>

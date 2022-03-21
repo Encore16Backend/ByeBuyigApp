@@ -45,7 +45,7 @@ const ManageInquiry =()=>{
                 username: searchuser,
                 itemname: searchitem,
                 chkAnswer:checkstate,
-                start :newStart,
+                start:newStart,
                 end: newEnd,
                 page:pageNo
             },
@@ -59,6 +59,7 @@ const ManageInquiry =()=>{
             setAlldata(data)
             setOpenedContentId(-1)
             setTotalPage(res.data.totalPages)
+            
             if(!startState){
                 setStartDate()
                 setEndDate()
@@ -143,7 +144,7 @@ const ManageInquiry =()=>{
 
     return(
         <>
-        <h1> 문의 사항</h1>
+        <h1 className='centered'> 문의 사항</h1>
         <Form className="review" onSubmit={onSubmit} style={{paddingLeft:"48px"}} >
         <div style={{display:"flex"}}>
                 <FormControl type="search" placeholder="ID" className="me-2" aria-label="Search"
