@@ -156,6 +156,8 @@ const MyReview = () => {
     // 전체검색 버튼을 누르면 다시 전체조회
     const getAllReview = ()=>{
         setPageNo(1)
+        setStartDate()
+        setEndDate()
         AllReview(pageNo)
     }
 
@@ -232,7 +234,7 @@ const MyReview = () => {
                 
                 <h1 className='centered' >마이리뷰</h1>
                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />                
-                {/* <Button onClick={getAllReview} style={{position:"relative"}}>전체조회</Button> */}
+                <Button onClick={getAllReview} style={{position:"relative",width:"70px", bottom: "38px",left: "450px"}}>Clean</Button>
         </Row>
        <br/>
         <div>
