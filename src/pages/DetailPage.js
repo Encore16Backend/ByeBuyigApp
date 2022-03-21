@@ -17,11 +17,10 @@ import "../axiosproperties"
 
 const DetailPage = ()=>{
 
-
     const dispatch = useDispatch()
-    const [desc , setDesc] = useState('DESC')
-    const [data, setDate] = useState('date')
-    const [page, setPage] = useState(1)
+    const [desc,setDesc] = useState('DESC')
+    const [data,setDate] = useState('date')
+    const [page,setPage] = useState(1)
 
 
     
@@ -125,13 +124,13 @@ const DetailPage = ()=>{
                     <ImageSlide images={imgs} />
                 </Col>
                 <Col xs={6} md={6}>
-                    <DetailDesc pdtState={locationState} lendering={lendering} setLandering={setLandering}/>
+                    <DetailDesc lendering={lendering} setLandering={setLandering}/>
                 </Col>
             </Row>
             <br/><br/><br/><br/>
             <Row>
                 <Col sm={12}>
-                    <MakeReview setIsReview={setIsReview} isReview={isReview} pdtState = {locationState} lendering={lendering} setLandering={setLandering} />
+                    <MakeReview setIsReview={setIsReview} isReview={isReview}  lendering={lendering} setLandering={setLandering} />
                 </Col>
             </Row>
             <Row>

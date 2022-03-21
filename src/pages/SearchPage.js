@@ -53,33 +53,7 @@ const SearchList = ()=>{
         setPage(value)
         setSearchUrl('/main/search?asc='+asc+"&sortname="+sortName+"&page="+value+"&searchName="+keyword+" "+cataName);
     }
-      // select로 리뷰 정렬값들을 받을 state 
-      const [conditionSelect,setConditionSelect ] = useState('')
-      const [sortSelect, setSortSelect] = useState('')
-      const makeCondition = (e)=>{
-          setConditionSelect(e.target.value)
-          if (e.target.value === "purchasecnt"){
-              setPage(1)
-              setSortName('purchasecnt')
-          }else if (e.target.value === "reviewmean"){
-              setPage(1)
-              setSortName('reviewmean')
-          }else if (e.target.value === "price"){
-              setPage(1)
-              setSortName('price')
-        }
-      }
-      const makeSort = (e)=>{
-          alert(e.target.value)
-          setSortSelect(e.target.value)
-          if (e.target.value === "DESC"){
-              setPage(1)
-              setAsc("DESC")
-          }else if (e.target.value === "ASC"){
-              setPage(1)
-              setAsc("ASC")
-          }
-      }
+   
 
 
     // 문자로 정렬할때
