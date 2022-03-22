@@ -18,7 +18,6 @@ function SingUpModal({ show, onHide }) {
       password : pwd, 
       // location : isAddress + ' ' + isZoneCode+' '+detailAddress,
       locations : [{location:isAddress+'/'+isZoneCode+'/'+detailAddress}],
-      style : fashion,
       email : email,
     },{
       headers: {
@@ -143,9 +142,6 @@ function SingUpModal({ show, onHide }) {
 
   // 우편번호 관련  
   const [isZoneCode, setIsZoneCode] = useState('');
-
-  // 패션관련
-  const [fashion, setFashion] = useState('')
   
   // 이메일 관련
   const [email, setEmail] = useState('')
@@ -217,7 +213,6 @@ function SingUpModal({ show, onHide }) {
     setChkPwd('')
     setIsAddress('')
     setIsZoneCode('')
-    setFashion('')
     setEmail('')
     setvalemail(0)
     setEmailMsg('')
@@ -342,22 +337,6 @@ function SingUpModal({ show, onHide }) {
                     } value={detailAddress} />
                     
                 </Form.Group>
-
-
-            {/* 관심패션 */}
-            <Form.Group className="mb-3">
-              <Form.Label>선호하는 스타일 (미선택시 선호 스타일 없음으로 분류)</Form.Label>
-              <Form.Select aria-label="Default select example" onChange={(e) => {
-                setFashion(e.target.value)
-              }} value={fashion}>
-                <option value="1" >없음</option>
-                <option value="2" >캐주얼</option>
-                <option value="3" >미니멀</option>
-                <option value="4" >스트릿</option>
-                <option value="5" >시티보이</option>
-                <option value="6" >아메카지</option>
-              </Form.Select>
-            </Form.Group>
 
             {/* 이메일 */}
             <Form.Group className="mb-3">

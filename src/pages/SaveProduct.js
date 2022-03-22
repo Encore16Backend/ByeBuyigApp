@@ -179,11 +179,6 @@ const SaveProduct = () => {
             [filesQue[0], filesQue[idx]] = [filesQue[idx], filesQue[0]]
             setFiles(filesQue)
         }
-
-
-        // setFileImgs(fileImgQue)
-        // setFileNames(fileNamesQue)
-        // setFiles(filesQue)
         
     }
 
