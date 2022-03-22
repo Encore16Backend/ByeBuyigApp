@@ -17,6 +17,9 @@ const PopupPostCode = (props) => {
           }
           fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
         }
+
+        
+
         // 여기서 값을 전달해야댐
         if (props.plz.setIsAddress && props.plz.setIsZoneCode){
             props.plz.setIsAddress(fullAddress)
@@ -27,6 +30,21 @@ const PopupPostCode = (props) => {
         }
         props.onClose()
     }
+    let sty = {} 
+
+    if (props.plz.sty === 1){
+        sty = {
+          position:"relative", left:"32rem", top:"15rem", zIndex:"9999", top:"1rem"
+        }
+    }else if (props.plz.sty === 2) {
+      sty = {
+        position:"relative", left:"32rem", top:"15rem", zIndex:"9999", top:"-3rem"
+      }
+    }
+    else{
+        sty = {position:"relative", left:"32rem", top:"15rem", zIndex:"9999"}
+    }
+    
  
     const postCodeStyle = {
         display: "block",
@@ -40,7 +58,7 @@ const PopupPostCode = (props) => {
     return(
         <div>
             <DaumPostcode style={postCodeStyle} onComplete={handlePostCode} />
-            <Button type='button' style={{position:"relative", left:"32rem", top:"15rem", zIndex:"9999"}} onClick={() => {props.onClose()}} className='postCode_btn'>닫기</Button>
+            <Button type='button' style={sty}  onClick={() => {props.onClose()}} className='postCode_btn'>닫기</Button>
         </div>
     )
 }

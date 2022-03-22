@@ -45,18 +45,16 @@ const MyInquiry = ()=>{
         })
     }
 
-    const inQRender = inquirys.map(Q =>{   
-                const inQ = <tr onClick={()=>{getDetailInquiry(Q)}}>
-                                <td>  {Q.itemimage ? <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+Q.itemimage} width="80" height="96"/> : "예전꺼라 이미지 없었음"} </td>
-                                <td style={{textAlign:"left"}}>{Q.itemname}</td>
-                                <td> {Q.date} </td>
-                                <td>{Q.title}</td>
-                                <td>{Q.chkanswer == 0 ? "답변예정" : "답변완료"}</td>
-                            </tr> 
-                return(
-                    inQ
-                )
-            })
+    const inQRender = inquirys.map(Q =>{
+        const inQ = <tr onClick={()=>{getDetailInquiry(Q)}}>
+                        <td> {Q.itemimage ? <img style={{width:"30%"}} src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+Q.itemimage} width="80" height="96"/> : "예전꺼라 이미지 X"} </td>
+                        <td  style={{textAlign:"left",width:"*"}}>{Q.itemname.length > 32 ? Q.itemname.substring(0,32) + '...' : Q.itemname }</td>
+                        <td style={{width:"20%"}}> {Q.title.substring(0,10)} </td>
+                        <td style={{width:"10%"}}>{Q.date}</td>
+                        <td style={{width:"5%"}}  ><span style={ Q.chkanswer != 0 ? {color:'blue', fontStyle:"bold"} : {}}>{Q.chkanswer === 0 ? "답변예정" : "답변완료"}</span></td>
+                    </tr> 
+        return(inQ)
+    })
 
 // data:
 // content: (5) [{…}, {…}, {…}, {…}, {…}]
@@ -96,8 +94,8 @@ const MyInquiry = ()=>{
                             <tr >
                                 <th style={{width:"10%"}}>상품이미지</th>
                                 <th style={{width:"25%"}}>상품명</th>
-                                <th style={{width:"10%"}}>날짜</th>
-                                <th style={{width:"15%"}}>제목</th>
+                                <th style={{width:"10%"}}>제목</th>
+                                <th style={{width:"15%"}}>날짜</th>
                                 <th style={{width:"15%"}}>답변여부</th>
                             </tr>
                         </thead>
