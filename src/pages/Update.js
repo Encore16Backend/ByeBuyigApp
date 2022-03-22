@@ -29,12 +29,10 @@ const Update= () => {
     const [isAddress, setIsAddress] = useState('');
     const [valisAddress, setvalisAddress] = useState(false);
     const [detailAddress,setdetailAddress] = useState('')
-    const [fashion, setFashion] = useState('')
     
     //test 
 
     useEffect(() => {
-        console.log("!")
         console.log(addpost)
         axios.post('/api/user/getUser', {
             username: sessionStorage.getItem('id'),
@@ -71,8 +69,6 @@ const Update= () => {
             }
             
 
-
-            setFashion(res.data.style);
             setPwd('');
             setChkPwd('');
             // setAddpost(0);
@@ -164,9 +160,7 @@ const Update= () => {
     };
 
 
-    const onstlyeChange = (e) => {
-        setFashion(e.target.value);
-    };
+
 
     
 
@@ -213,7 +207,7 @@ const Update= () => {
                 {location:isAddress1+'/'+isZoneCode1+'/'+detailAddress1+'/'+posttitle},
                 {location:isAddress2+'/'+isZoneCode2+'/'+detailAddress2+'/'+posttitle1}],
             password : pwd,
-            style : fashion,
+            // style : fashion,
             email : email
 
         }, {
@@ -280,7 +274,7 @@ const Update= () => {
         </div>
         <div className="centered" style={{'paddingTop':0}}>
         <Container>
-        <h1>개인 정보 수정</h1>    
+        <h1 className="centered">개인 정보 수정</h1>    
             <br />
             <Form onSubmit={update}>
                 <Form.Group className="mb-3" >
@@ -344,20 +338,6 @@ const Update= () => {
             </Form.Group>
 
 
-
-                <Form.Group className="mb-3">
-                <Form.Label>선호하는 스타일</Form.Label>
-                <Form.Select aria-label="Default select example" onChange={(e) => {
-                    setFashion(e.target.value)
-                }} value={fashion}>
-                    <option value="1">없음</option>
-                    <option value="2">캐주얼</option>
-                    <option value="3">미니멀</option>
-                    <option value="4">스트릿</option>
-                    <option value="5">시티보이</option>
-                    <option value="6">아메카지</option>
-                </Form.Select>
-                </Form.Group>
 
                 {valchkPwd === true ? <Button type="submit">회원수정</Button>:<Button disabled={true}>회원수정</Button>} &nbsp;
                 <Button  onClick={delok}> 회원탈퇴 </Button>
