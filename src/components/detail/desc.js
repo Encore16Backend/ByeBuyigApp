@@ -121,12 +121,15 @@ const DetailDesc = ({ lendering, setLandering})=>{
         })
     }
 
+    const sweetTest = ()=>{
+         
+    }
 
     const rendering = ()=>{
         return(
             <>
         <div>
-            <h1>Product Info</h1>
+            <h1 onClick={sweetTest}>Product Info</h1>
             <br/><br/>
             <p> 상품명/품번 : <b>{oneItem.itemname}/{oneItem.itemid}</b> </p>
             <div className="descStar">
