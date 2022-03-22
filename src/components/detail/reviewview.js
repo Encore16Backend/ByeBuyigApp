@@ -10,12 +10,15 @@ import "../../axiosproperties"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import {Swal} from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 
 
 const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, setIsReview, isReview }) => {
 
+
+        
     const history = useHistory();
     const renderedItem = useSelector(state => state.oneItem.item)
     let allReviewNums = 0
@@ -101,7 +104,9 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
     }
     // 리뷰삭제
     const delReview = async (id, itemid) => {
-        if  (window.confirm('정말 삭제하시겠습니까?')){
+        if  (
+           window.confirm('정말 삭제하시겠습니까?')
+        ){
             await axios.delete('/review/delete', {
                 params: {
                     reviewid:[id],
