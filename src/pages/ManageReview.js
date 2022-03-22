@@ -150,7 +150,6 @@ const Managereview =()=>{
             setCheckItems([]);
         }
     }
-    console.log(checkReviews, "reviewId")
 
     return(
         <>
