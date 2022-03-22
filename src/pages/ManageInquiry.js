@@ -107,7 +107,6 @@ const ManageInquiry =()=>{
                    {/* <div style={{display:"flex",position:"static"}}> */}
                    <div >
                        <h5>문의 내용 </h5>
-                        
                        <br/>
                        <Form.Control as="textarea" aria-label="With textarea" value={content.content} 
                        style={{fontSize:"18px"}} rows="3"/>
