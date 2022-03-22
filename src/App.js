@@ -12,10 +12,11 @@ import postRefresh from './hooks/postRefresh';
 
 
 function App() {
-  if ( sessionStorage.getItem('id') ){
+  if ( sessionStorage.getItem('id') && sessionStorage.getItem('access_token')  ){
     setInterval(() => 
-    postRefresh(), 60*5000);
+    postRefresh(), 60*3000);
   }
+
   return (
     <Router>
       <Provider store={store}>

@@ -6,6 +6,9 @@ import { ACCESS_KEY, SECRET_ACCESS_KEY, S3_BUCKET, REGION } from '../axiosproper
 import AWS from "aws-sdk"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
+
+
+
 const SaveProduct = () => {
 
     const frm = new FormData();
@@ -19,8 +22,6 @@ const SaveProduct = () => {
         params: { Bucket: S3_BUCKET },
         region: REGION,
     });
-
-
 
 
     const [files, setFiles] = useState([])
@@ -38,8 +39,6 @@ const SaveProduct = () => {
         // 로컬에 띄울 이미지 배열
         setFileImgs([...fileImgs, URL.createObjectURL(e.target.files[0])])
         // 파일이름만 저장
-
-        
     };
 
 
@@ -53,14 +52,22 @@ const SaveProduct = () => {
 
     // 파일 삭제
     const deleteFileImage = () => {
-        fileImgs.map((f) => {
-            console.log('들어옴')
-            URL.revokeObjectURL(f);
-        })
-        setFiles([])
-        setFileNames([])
-        setFileImgs([])
-        
+        // que로 하나씩 뺌
+        const fileImgStack = [...fileImgs]
+        const fileNamesStack = [...fileNames]
+        const filesStack = [...files]
+        // fileImgs.map((f) => {
+        //     URL.revokeObjectURL(f);
+        // })
+
+        const shiftedImg = fileImgStack.shift()
+        URL.revokeObjectURL(shiftedImg)
+        fileNamesStack.shift()
+        filesStack.shift()
+
+        setFileImgs(fileImgStack)
+        setFileNames(fileNamesStack)
+        setFiles(filesStack)
     };
 
 
@@ -81,8 +88,6 @@ const SaveProduct = () => {
         for(var i=0; i<fileNames.length;i++){
             imageFile.push('상품이미지/'+cata1+'/'+cata2+'/'+fileNames[i]);
         }
-        console.log(imageFile, "최종");
-
         const data = {
             "item": {
                 "itemname": pdtName,
@@ -97,8 +102,7 @@ const SaveProduct = () => {
             ],
             "images": imageFile
         }
-
-        // // file배열로 돌면서 s3업로드
+        // file배열로 돌면서 s3업로드
         files.map((f, idx) => {
             const s3Obj = {
                 ACL: 'public-read',
@@ -140,8 +144,6 @@ const SaveProduct = () => {
         })
     }
 
-
-
     const cataChange = (e) => {
         // '바지', '상의', '스커트', '아우터'
         setCata1(e)
@@ -156,12 +158,39 @@ const SaveProduct = () => {
         }
     }
 
+    const imgSwap = (idx) =>{
+
+        // 가져온 인덱스의 파일과 0번 인덱스의 파일을 바꾸고 새로 배열에 넣어야함  
+
+        const fileImgQue = [...fileImgs]
+        const fileNamesQue = [...fileNames]
+        const filesQue = [...files]
+
+        // js의 구조분해 할당을 사용해보자
+        if (fileImgQue){
+            [fileImgQue[0], fileImgQue[idx]] = [fileImgQue[idx], fileImgQue[0]]
+            setFileImgs(fileImgQue)
+        }
+        if (fileNamesQue){
+            [fileNamesQue[0], fileNamesQue[idx]] = [fileNamesQue[idx], fileNamesQue[0]]
+            setFileNames(fileNamesQue)
+        }
+        if (filesQue){
+            [filesQue[0], filesQue[idx]] = [filesQue[idx], filesQue[0]]
+            setFiles(filesQue)
+        }
+
+
+        // setFileImgs(fileImgQue)
+        // setFileNames(fileNamesQue)
+        // setFiles(filesQue)
+        
+    }
+
 
     const onSubmit = ()=>{
 
     }
-    // 이미지 폼 반복을 위함
-
 
     // 하위컴포넌트 랜더링
     const cata2Render = () => {
@@ -201,11 +230,12 @@ const SaveProduct = () => {
 
             <Container>
                 <h2 className="centered">상품등록</h2>
-                <br/><br/>
+                
                 <Form onSubmit={onSubmit} encType="multipart/form-data">
                     <Row>
                                 {/* 상품이미지 input */}
                     <div className="centered" style={{position:"relative"}}>
+
                             {/* {
                                 files[0] === undefined ? <div className="filebox"><label className="input-file-button" htmlFor="input_file1">메인이미지 업로드</label>
                                 <input name="imgUpload" id="input_file1" type="file" accept="image/*"  style={{display:"none"}}  onChange={(e) => { saveFileImage(e) }} /></div>
@@ -225,17 +255,19 @@ const SaveProduct = () => {
                     <div style={{ position: "relative", top: "-49px", paddingBottom: "4rem", paddingTop: "4rem" }}>
                         <div className="centered" style={{display:"grid"}}>
                             {
-                                fileImgs[0] ? <img alt="img" src={fileImgs[0]} style={{  width: "350px", height: "200px" }} /> :
+                                fileImgs[0] ? <img alt="img" src={fileImgs[0]} style={{  width: "400px", height: "250px" , padding:"5px" }} /> :
                                     <div style={{ margin: "auto", width: "350px", height: "250px", border: "1px solid black" }}></div>
                             }
+                            <div>
                             {
-                                fileImgs[1] ? <img alt="img" src={fileImgs[1]} style={{  width: "350px", height: "200px" }} /> :
-                                    ""
+                                fileImgs[1] ?  <img alt="img" onClick={()=>{imgSwap(1)}}  src={fileImgs[1]} style={{  width: "200px", height: "100px", padding:"5px" }} /> :
+                                ""
                             }
                             {
-                                fileImgs[2] ? <img alt="img" src={fileImgs[2]} style={{  width: "350px", height: "200px" }} /> :
-                                    ""
+                                fileImgs[2] ?  <img alt="img" onClick={()=>{imgSwap(2)}}  src={fileImgs[2]} style={{  width: "200px", height: "100px", padding:"5px" }} /> :
+                                ""
                             }
+                            </div>
                         </div>
                     </div>
                     </Col>
@@ -251,9 +283,9 @@ const SaveProduct = () => {
                         <label className="input-file-button" >업로드 완료 </label>
                         <input name="imgUpload" id="input_file3" type="file" accept="image/*" style={{display:"none"}} onChange={(e) => { saveFileImage(e) }} />
                         </div>
+                        
                     }
-                    
-                    <Button style={{position:"relative", left:"34rem"}} onClick={() => deleteFileImage()}>삭제 </Button>
+                     <Button style={{  marginLeft:"34rem"}} onClick={() => deleteFileImage()}>삭제 </Button>
                     </div>
                     <br/>
 
@@ -291,8 +323,9 @@ const SaveProduct = () => {
                 
             </Container>
             <Form>
+            <br/>
                 <InputGroup>
-                    <Button style={{marginLeft:"90rem"}} onClick={tempSave}>등록</Button>
+                    <Button style={{ width:"100px", marginLeft:"45rem"}} onClick={tempSave}>등록</Button>
                 </InputGroup>
             </Form>
         </div>
