@@ -51,7 +51,6 @@ const MyReview = () => {
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token')
             }
         }).then(res =>{
-            modify(reviewid)
             alert('댓글 수정 완료')
             setPageNo(1)
         }).catch(error =>{
@@ -65,36 +64,14 @@ const MyReview = () => {
     }
     
 
-    const [beforeform , setBeforeFrom] = useState('');
-    const [beforeFromTd, setBeforeFormTd] = useState('');
-    
-    // 수정폼 나오게한다
-    const modify = (id,content,score)=>{
-        let form = document.querySelector('#modify'+id);
-        let formTd = document.querySelector('#td'+id);
-        setBeforeFrom(form)
-        setBeforeFormTd(formTd)
-        if (formTd.style['display'] === 'none'){
-            formTd.style['display'] = 'table-cell'
-            form.style['display'] = 'block'
-            if ( !!beforeform &&  !!beforeFromTd){
-                beforeform.style['display'] = 'none'
-                beforeFromTd.style['display'] = 'none'
-            } 
-            setContent(content)
-            setScore(score)
-        }
-        else {
-            formTd.style['display'] = 'none'
-            form.style['display'] = 'none'
-        }
-    }
-
     let [pageNo, setPageNo] = useState(1);
     let [totalPageNo, setTotalPageNo] = useState();
     const [review, setReview] = useState([]);
     const [checkReviews, setCheckReviews] = useState([]);
     const [checkItems, setCheckItems] = useState([]);
+
+    // 수정 창 나오게 할 state
+    const [openedContentId, setOpenedContentId] = useState(-1);
 
 
      // 날짜로 리뷰검색
@@ -236,17 +213,14 @@ const MyReview = () => {
                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}  />                
                 <Button onClick={getAllReview} style={{position:"relative",width:"70px", bottom: "38px",left: "450px"}}>Clean</Button>
         </Row>
-       <br/>
-        <div>
+        
             <Button type="submit" className="remove" variant="secondary" size="sm">삭제</Button>
-
-        </div>
+        
         <div>
             <Table>
                 <thead>
                     <tr>
                         <th className="checkBox">
-                        
                             <div >
                                 <Form.Check 
                                     type='checkbox' id='checkbox'
@@ -276,7 +250,14 @@ const MyReview = () => {
                             let content = data.content
                             let reviewData = 
                             <>
-                                <tr key={reviewid}>
+                                <tr key={reviewid}  onClick={()=> {
+                                if(openedContentId === reviewid){
+                                    setOpenedContentId(-1);
+                                }else{
+                                    setOpenedContentId(reviewid);
+                                    setContent(content)
+                                    setScore(score)
+                                }}}>
                                     <td className="checkBox">
                                         <Form>
                                             <div className="checkBox">
@@ -305,20 +286,29 @@ const MyReview = () => {
                                     </td>
                                     <td>
                                     {
-                                    <Button key={'modifyText'+reviewid} onClick={()=>{modify(reviewid, content, score)}} className="remove modifyButton" variant="secondary" size="sm" >수정</Button>
+                                    <Button key={'modifyText'+reviewid}   onClick={()=> {
+                                        if(openedContentId === reviewid){
+                                            setOpenedContentId(-1);
+                                        }else{
+                                            setOpenedContentId(reviewid);
+                                            setContent(content)
+                                            setScore(score)
+                                        }}} className="remove modifyButton" variant="secondary" size="sm" >수정</Button>
                                     }
                                     </td>
                                 </tr>
-                               
-                                <tr key={'trtr'+reviewid}>
-                                    <td colSpan={10} id={'td'+ reviewid} key={'td'+ reviewid} style={{display:"none"}}>
-                                        <div key={'modify'+reviewid} id={'modify'+reviewid} style={{display:"none", widht:"1276px" }}>
-                                            <FormControl key={'FormControl'+reviewid} as="textarea" aria-label="With textarea" onChange={makeContent} value={contentChange}></FormControl>
-                                            <ReactStars key={'starts'+reviewid} count={5} onChange={ratingChanged} size={24} color2={'#ffd700'} value={scoreChange}  />
-                                            <Button type="submit" key={'button'+reviewid} onClick={()=>{modifyReview(reviewid, scoreChange, contentChange)}}>수정완료</Button>
-                                        </div>
-                                    </td> 
-                                </tr>  
+                                {
+                                    openedContentId === reviewid &&
+                                    <tr key={'trtr'+reviewid}>
+                                        <td colSpan={10} id={'td'+ reviewid} key={'td'+ reviewid} > {/* style={{display:"none"}} */}
+                                            <div key={'modify'+reviewid} id={'modify'+reviewid} style={{ widht:"1276px" }}> {/* display:"none", */}
+                                                <FormControl key={'FormControl'+reviewid} as="textarea" aria-label="With textarea" onChange={makeContent} value={contentChange}></FormControl>
+                                                <ReactStars key={'starts'+reviewid} count={5} onChange={ratingChanged} size={24} color2={'#ffd700'} value={scoreChange}  />
+                                                <Button type="submit" key={'button'+reviewid} onClick={()=>{modifyReview(reviewid, scoreChange, contentChange)}}>수정완료</Button>
+                                            </div>
+                                        </td> 
+                                    </tr>  
+                                }
                             </>
                             return ( reviewData )
                         })

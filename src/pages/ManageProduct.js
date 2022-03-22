@@ -166,7 +166,7 @@ const ManageProduct = ()=>{
                                 {catas.join(', ')}
                             </td>
                             <td>{getStringPrice(price)}</td>
-                            <td>{reviewmean}점</td>
+                            <td>{reviewmean ? JSON.stringify(reviewmean).substring(0,4) : "0"} 점</td>
                             <td>{purchasecnt}개</td>
                             <td> <button onClick={delProduct}>삭제</button> </td>
                         </tr>
