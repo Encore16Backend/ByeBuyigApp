@@ -4,7 +4,7 @@ import { useState } from 'react'
 import ReactStars from "react-stars"
 import '../axiosproperties'
 
-const MakeReviewModal = ({ show, onHide, saveReview, itemid, itemimg,itemname })=>{
+const MakeReviewModal = ({ show, onHide, saveReview, itemid, itemimg,itemname, orderid })=>{
 
     // 리뷰 등록할 내용과 별점
     const [content , setContent] = useState('')
@@ -47,7 +47,7 @@ const MakeReviewModal = ({ show, onHide, saveReview, itemid, itemimg,itemname })
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={()=>{
-            saveReview(itemid,itemname,itemimg, content, score)
+            saveReview(itemid,itemname,itemimg, content, score, orderid)
             onHide()
         }}>리뷰등록</Button>  
         <Button onClick={closeHander}>닫기</Button>

@@ -231,12 +231,14 @@ function SingUpModal({ show, onHide }) {
             "Content-Type": "application/json",
         },
     }).then(res => {
+      console.log(res.data)
       if (res.data ==="EXIST"){
         alert("중복된 이메일입니다")
         setvalemail(-1)
       } else{
         setKeycode(res.data)
         alert(email+ ' 메일로 인증코드를 전송했습니다')
+        console.log()
       }
 
     }).catch(error => {
