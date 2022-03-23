@@ -17,9 +17,8 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
       let [locations, setLocation] = useState([]);
       let [locName, setLocName] = useState([]);
 
-// 배송지 받아오는 함수
+      // 배송지 받아오는 함수
       async function getUserinfo() {
-        console.log("getuserinfo")
         await axios.get('/api/user/getinfo', {
           params:{
             username: sessionStorage.getItem('id'),

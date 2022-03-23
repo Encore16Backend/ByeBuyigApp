@@ -225,7 +225,7 @@ const ManageProduct = () => {
                                             <td>{getStringPrice(price)}</td>
                                             <td>{reviewmean ? JSON.stringify(reviewmean).substring(0, 4) : "0"} 점</td>
                                             <td>{purchasecnt}개</td>
-                                            <td> <Button onClick={() => { delProduct(itemid) }}>삭제</Button> </td>
+                                            <td> <Button  onClick={() => { delProduct(itemid) }}>삭제</Button> </td>
                                         </tr>
                                     </>
                                 return (Adata)

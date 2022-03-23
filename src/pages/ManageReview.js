@@ -122,6 +122,7 @@ const Managereview =()=>{
             console.log(err)
         }) 
     }
+    
     //  chk함수
     const reviewCheck = (checked, reviewid, itemid) => {
         if (checked) {
