@@ -17,7 +17,6 @@ const DetailDesc = ({ lendering, setLandering})=>{
 
     // 해당 페이지 받아오기
     const oneItem = useSelector(state=>state.oneItem.item)
-    console.log(oneItem , "one")
     const [modalOn, setModalOn] = useState(false)
     
 
@@ -71,10 +70,8 @@ const DetailDesc = ({ lendering, setLandering})=>{
     
             }).catch(error =>{
                 console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-                postRefresh() // 토큰이 없으면 재발행시키는 함수
-                addBasket(username,itemid,itemimg,itemname,itemprice) //  토큰을 받고 실행하고 싶은 함수 다시 실행
+                // postRefresh() // 토큰이 없으면 재발행시키는 함수
+                // addBasket(username,itemid,itemimg,itemname,itemprice) //  토큰을 받고 실행하고 싶은 함수 다시 실행
             })
         }else{
             alert('로그인 후 사용 가능 합니다')
@@ -176,10 +173,7 @@ const DetailDesc = ({ lendering, setLandering})=>{
     
     return(
         <> 
-        {
-            (!!oneItem) ? rendering() : ""
-        }
-            
+        {(!!oneItem) ? rendering() : ""}  
         </>
     )
 }

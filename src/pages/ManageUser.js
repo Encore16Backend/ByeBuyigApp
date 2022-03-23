@@ -25,7 +25,6 @@ const ManageUser =()=>{
             const data = res.data
             setTotalPage(data.totalPages);
             setAlldata(data.content);
-            console.log(data)
         }).catch(error => {
             console.log(error);
         })

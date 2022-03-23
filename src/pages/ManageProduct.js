@@ -43,7 +43,6 @@ const ManageProduct = () => {
         }).catch(error => {
             console.log(error, ' getItem');
         })
-        console.log("getMainItem 종료")
     }, [pageNo, searchstate])
 
 
@@ -53,22 +52,6 @@ const ManageProduct = () => {
         setSearchItem(e.target.value);
     }
 
-
-    // const pdtname =()=>{
-    //     axios.get('/main/search',{
-    //         params:{
-    //             searchName:searchItem,
-    //             page : pageNo
-    //         }
-    //     }).then(res=>{
-    //         console.log(res,"test")
-    //         setAllitem(res.data.content)
-    //         setTotalPage(res.data.totalPages)
-    //         setSearchState(true)
-    //     }).catch(error=>{
-    //         console.log(error)
-    //     })
-    // }
 
 
     const onSubmit = (e) => {

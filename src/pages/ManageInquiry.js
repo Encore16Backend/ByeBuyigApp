@@ -36,8 +36,6 @@ const ManageInquiry =()=>{
     }
     
     useEffect(()=>{
-        console.log("start")
-        console.log(checkstate);
         const newStart = startDate != undefined ? JSON.stringify(startDate).slice(1, 11) : null
         const newEnd = endDate != undefined ? JSON.stringify(endDate).slice(1, 11) : null
         axios.get('/inquiry/getInquiries',

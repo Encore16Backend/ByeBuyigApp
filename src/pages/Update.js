@@ -32,7 +32,7 @@ const Update= () => {
     
 
     useEffect(() => {
-        console.log(addpost)
+        
         axios.post('/api/user/getUser', {
             username: sessionStorage.getItem('id'),
             password:data.state.pwd
@@ -42,7 +42,7 @@ const Update= () => {
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
             },
         }).then(res => {
-            console.log(res.data)
+            
             setEmail(res.data.email);
             const location = res.data.locations[0].location.split('/');
             setdetailAddress(location.pop());
@@ -72,8 +72,8 @@ const Update= () => {
             setChkPwd('');
             // setAddpost(0);
             //아이디 상세 우편 주소 
-            console.log(res)
-            console.log(res.data.locations[2].location)
+            
+            
         }).catch(error => {
             console.log(error);
         })
@@ -240,7 +240,7 @@ const Update= () => {
 
     const ondetailAddress1 =(e) => {
         setdetailAddress1(e.target.value)
-        console.log(e.target.value)
+        
     }
     const onposttitle =(e) => {
         setPosttitle(e.target.value)
@@ -257,7 +257,7 @@ const Update= () => {
     
     const ondetailAddress2 =(e) => {
         setdetailAddress2(e.target.value)
-        console.log(e.target.value)
+        
     }
 
     const onposttitle1 =(e) => {

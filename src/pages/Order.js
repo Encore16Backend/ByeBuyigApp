@@ -42,6 +42,7 @@ const Order = ()=>{
     // 구매내역 배열
     let [myOrderItems, setMyOrderItems] = useState([])
 
+
     // 체크박스 체크하면
     const reviewCheck = (checked, basketid, itemid) => {
         if (checked) {
@@ -93,8 +94,6 @@ const Order = ()=>{
             }
         }).then(res => {
             const data = res.data
-            console.log(res, "res")
-            console.log(data, "datadata");
             setTotalPageNo(data.totalPages);
             setMyOrderItems(data.content)
             setAllOrderNum(data.content.length)
@@ -107,7 +106,6 @@ const Order = ()=>{
     // 구매내역에서 삭제
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(checkBaskets, "checkBaskets")
         await axios.delete("/orderHistory/delete", {
             params: {
                 basketid: checkBaskets
@@ -206,7 +204,6 @@ const Order = ()=>{
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token')
             }
         }).then(res =>{
-            console.log(res, "리뷰작성완료")
             alert('리뷰작성완료')
         //   {{ pathname:"/detail", search : "?itemid="+itemid,state : {itemid : itemid,},}} >
             history.push({  

@@ -63,13 +63,10 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
         }).then(res =>{
             setContent('');
             setScore(1);
-            console.log(res, "댓글 등록 완료")
             setLandering(!lendering)
             alert('댓글 등록 완료')
         }).catch(error =>{
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            console.log(error);
         })
     }
 
@@ -87,8 +84,6 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
             alert("내용을 입력하세요")
             return
         }
-        
-        console.log(userId, pdtId, pdtName, inQTitle, inQContent)
         await axios.post('/inquiry/save',{
                 // 답변여부, 날짜, 답변 빼고 보냄
                 username : userId,
@@ -109,9 +104,7 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
             setInQContent('')
             alert('문의 사항 등록 완료')
         }).catch(error =>{
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            console.log(error);
             // postRefresh() // 토큰이 없으면 재발행시키는 함수
             // inquirySave(e)
         })

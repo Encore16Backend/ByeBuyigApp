@@ -45,9 +45,9 @@ const SaveProduct = () => {
     // https://byebuying.s3.ap-northeast-2.amazonaws.com품이미지/상의/긴팔/키작은여성의류1.jpg
     // 이렇게 db에서 받는다..
 
-    console.log(files, 'files')
-    console.log(fileNames, 'fileNames')
-    console.log(fileImgs, "fileImgs")
+    // console.log(files, 'files')
+    // console.log(fileNames, 'fileNames')
+    // console.log(fileImgs, "fileImgs")
 
 
     // 파일 삭제
@@ -138,9 +138,7 @@ const SaveProduct = () => {
             history.push('/')
         })
         .catch(error => {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            console.log(error);
         })
     }
 

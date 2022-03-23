@@ -52,7 +52,6 @@ const ShoppingBasket = () => {
             }
         }).then(res => {
             const data = res.data
-            console.log(data);
             setTotalPageNo(data.totalPages);
             setBasketItem(data.content)
             setUpdateItem(data.content)
@@ -79,7 +78,7 @@ const ShoppingBasket = () => {
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token')
             }
         }).then(res => {
-            console.log(res);
+            
             window.location.reload()
         }).catch(error => {
             console.log(error, ' updateBasket 에러');
@@ -137,7 +136,7 @@ const ShoppingBasket = () => {
     // 장바구니에서 삭제
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(checkBaskets, "checkBaskets")
+        
         await axios.delete("/basket/delete", {
             params: {
                 basketid: checkBaskets
@@ -170,7 +169,7 @@ const ShoppingBasket = () => {
             },
         }).then(res => {
             const data = res.data
-            console.log(data);
+            
             setModalOn(false)
             histroy.push({
                 pathname:"/orderresult",
