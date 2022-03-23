@@ -320,7 +320,7 @@ const NavB = ({ID, logOut})=>{
           {
               (!!id) // !! (null undefined '' 등 모든 false형 값이면)
               ?
-              (sessionStorage.getItem('roles') ==='ROLE_ADMIN')?
+              (['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'].includes(sessionStorage.getItem('roles')))?
               <>
                 <div className='NavBarCataForm'>
                   <div className='navBarCate dropdown' style={{display:"inline"}}>
