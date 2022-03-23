@@ -5,14 +5,14 @@ import GetBestItems from "../hooks/GetBestItems";
 
 
 const Home = ()=>{
-    const [Homelendering , setHomeLandering] = useState(false)
+    const [Homelendering , setHomeLandering] = useState(false);
     // 베스트 아이템들 url을 변경하기 위한 state
-    const [BestItemUrl , setBestItemUrl] = useState('/main/bestItem')
+    const [BestItemUrl , setBestItemUrl] = useState('/main/bestItem');
 
     // 베스트 아이템들 (기본 url 후기Best) 전체 Best
-    GetBestItems(BestItemUrl)
+    GetBestItems(BestItemUrl);
 
-    
+    console.log("home");    
 
     return(
         <Container className="pdtContainer centered" style={{width: "auto"}} >
