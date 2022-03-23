@@ -11,7 +11,8 @@ const Home = ()=>{
 
     // 베스트 아이템들 (기본 url 후기Best) 전체 Best
     GetBestItems(BestItemUrl)
-    console.log("test")
+
+    
 
     return(
         <Container className="pdtContainer centered" style={{width: "auto"}} >

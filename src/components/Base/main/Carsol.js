@@ -9,7 +9,7 @@ const Carsol = ({images})=>{
                 <Carousel.Item key={"imgItem"+img.imgid} >
                     <img 
                         className="d-block w-100 main_img"
-                        src={img.imgpath}
+                        // src={img.imgpath}
                         alt="First slide"
                     />
                     <Carousel.Caption>
