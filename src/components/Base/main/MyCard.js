@@ -5,11 +5,12 @@ import "../../../css/mycard.css"
 import { Link } from 'react-router-dom';
 import ReactStars from "react-stars";
 
-const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, images, reviewmean,  setHomeLandering ,
+const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, images, reviewmean,  setHomeLandering,
     HomeLandering,reviewcount})=>{
         const modiPrice =price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
         console.log("MyCard");
+        console.log("hihihi");
 
     return(
         <div className="cardComponent" >

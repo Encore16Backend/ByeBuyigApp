@@ -45,7 +45,7 @@ class ImageSlide extends React.Component {
             {images?.map((image, no) => (
               <div className="slideContent" key={image.imgid}>
                 <picture>
-                  <img src={image.imgpath} />
+                  <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+image.imgpath} />
                 </picture>
               </div>
             ))}

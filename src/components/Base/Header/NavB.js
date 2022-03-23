@@ -15,6 +15,8 @@ import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 const NavB = ({ID, logOut})=>{
 
+  console.log("NavBar")
+
   // 검색 시 사용할 카테고리명을 리덕스로 받아오고
   let cataId = useSelector(state=>state.cataNum.items)
   // navBar의 카테고리명 지역변수 만듬

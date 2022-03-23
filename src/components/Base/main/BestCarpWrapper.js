@@ -30,7 +30,6 @@ const BestCardWrapper = ({cata,  setHomeLandering, HomeLandering})=>{
         }
     )
 
-    
 
     const allpdtRendering = ()=>{
         const result = []
