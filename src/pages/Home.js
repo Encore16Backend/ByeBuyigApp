@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import BestCardWrapper from "../components/Base/main/BestCarpWrapper";
 import GetBestItems from "../hooks/GetBestItems";
 
-
+console.log('wtf');
 const Home = ()=>{
     const [Homelendering , setHomeLandering] = useState(false);
     // 베스트 아이템들 url을 변경하기 위한 state

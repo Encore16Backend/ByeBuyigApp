@@ -18,10 +18,11 @@ import ImgSearchedList from "./pages/ImgSearchList";
 import ManageProduct from "./pages/ManageProduct";
 import SaveProduct from "./pages/SaveProduct";
 
-
+// aws : index.html
+// local : /
 export default [
     {
-        path:'/',
+        path:'/index.html',
         component:Home
     },
     {

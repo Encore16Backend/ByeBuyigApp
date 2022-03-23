@@ -17,7 +17,7 @@ function App() {
     postRefresh(), 60*3000);
   }
 
-  console.log("App")
+  console.log("App");
 
   return (
     <Router>
@@ -35,7 +35,6 @@ function App() {
             })}
           </Switch>
         </div>
-      
     </div>
     
     </Provider>
