@@ -11,6 +11,7 @@ const Home = ()=>{
 
     // 베스트 아이템들 (기본 url 후기Best) 전체 Best
     GetBestItems(BestItemUrl)
+    console.log("test")
 
     return(
         <Container className="pdtContainer centered" style={{width: "auto"}} >
@@ -20,7 +21,6 @@ const Home = ()=>{
                         <br/><br/><br/><br/>
                         <div className="bestpdts">
                             <BestCardWrapper cata = {"bestPdt"} setHomeLandering={setHomeLandering} HomeLandering={Homelendering}/>
-                            {/* best상품을 렌더링 할 component */}
                         </div>
                     </Row>
                 </Col>
