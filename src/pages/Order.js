@@ -11,11 +11,13 @@ import '../axiosproperties'
 import MyCalendar from "../components/etc/MyCalendar";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import {getStringPrice} from "../axiosproperties";
-
+import MakeReviewModal from "../modals/MakeReviewModal"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const Order = ()=>{
 
-
+    const history = useHistory();
+    
     // 내 주문내역들
     const userid = sessionStorage.getItem("id");
     let [pageNo, setPathNo] = useState(1);
@@ -27,6 +29,14 @@ const Order = ()=>{
     const [checkItems, setCheckItems] = useState([]);
     // 받아온 구매목록 배열
     const [AllOrderNum, setAllOrderNum] = useState(0);
+
+    // 댓글 등록 모달 버튼   
+    const [modalOn, setModalOn] = useState(false)
+
+    // modal로 가져가기 위해 만든 state
+    const [itemid, setItemid] = useState('')
+    const [itemname, setItemname] = useState('')
+    const [itemimg, setItemimg] = useState('')
 
     
     // 구매내역 배열
@@ -83,10 +93,10 @@ const Order = ()=>{
             }
         }).then(res => {
             const data = res.data
-            console.log(data);
+            console.log(res, "res")
+            console.log(data, "datadata");
             setTotalPageNo(data.totalPages);
             setMyOrderItems(data.content)
-            
             setAllOrderNum(data.content.length)
             // dispatch(addBasket(res.data.content))
         }).catch(error => {
@@ -126,12 +136,9 @@ const Order = ()=>{
             }
         }).then(res => {
             const data = res.data
-
             setTotalPageNo(data.totalPages);
             setAllOrderNum(data.content.length)
             setMyOrderItems(data.content)
-            
-
         }).catch(error => {
             console.log(error, ' searchDate 에러');
         })
@@ -180,9 +187,37 @@ const Order = ()=>{
     const tmp = JSON.stringify(localeDate)
     const strDate = tmp.slice(1, 11)
     return strDate
-}
+    }
 
 
+    // 리뷰등록함수
+    const saveReview = (itemid, itemname, itemimg, content, score)=>{
+        axios.post('/review/save',{
+            itemid: itemid,
+            itemname : itemname,
+            itemimage : itemimg,
+            username : sessionStorage.getItem('id'),
+            content: content, 
+            score : score
+        },{
+            // header
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+            }
+        }).then(res =>{
+            console.log(res, "리뷰작성완료")
+            alert('리뷰작성완료')
+        //   {{ pathname:"/detail", search : "?itemid="+itemid,state : {itemid : itemid,},}} >
+            history.push({  
+                pathname: "/detail",
+                search : "?itemid="+itemid,
+                state : {itemid : itemid}
+            })                     
+        }).catch(error =>{
+            console.log(error, "saveErr");
+        })
+    }
 
     
 
@@ -211,9 +246,15 @@ const Order = ()=>{
                                 <th>가격</th>
                                 <th colSpan={2}>수량</th>
                                 <th>결제가격</th>
+                                <th>리뷰작성</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {/* 여기에 modal창 만들자 */}
+                            <MakeReviewModal show={modalOn} onHide = {()=>{setModalOn(false)}} saveReview={saveReview} 
+                            itemid = {itemid} itemimg= {itemimg} itemname = {itemname}
+                            />
+                            
                             {   
                                 (myOrderItems.length != 0) ? myOrderItems.map((data, idx) => {
                                     let bcount = data.bcount
@@ -223,8 +264,8 @@ const Order = ()=>{
                                     let itemname = data.itemname
                                     let itemprice = data.itemprice
                                     let addr = data.location
-                                    console.log(typeof(addr))
 
+                                    
                                     let reviewData =
                                         <tr key={id}>
                                             <td>
@@ -245,6 +286,14 @@ const Order = ()=>{
                                             </td>
                                             <td>
                                             {getStringPrice(itemprice*bcount)}
+                                            </td>
+                                            <td>
+                                                <Button onClick={() => {
+                                                    setModalOn(true)
+                                                    setItemid(itemid)
+                                                    setItemimg(itemimg)
+                                                    setItemname(itemname)
+                                                }}> 리뷰작성 </Button>
                                             </td>
                                         </tr>
                                     return (reviewData)

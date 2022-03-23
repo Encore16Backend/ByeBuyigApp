@@ -36,10 +36,9 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
         setScore(newRating)
     }
 
-    // 댓글등록함수
+    // 리뷰등록함수
     const onSubmit = async (e)=>{
         e.preventDefault();
-        
         if (userId === null || userId === ""){
             alert("로그인 후에 작성 할 수 있습니다")
             return
@@ -106,6 +105,8 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
             }
         }).then(res =>{
             setLandering(!lendering)
+            setInQTitle("")
+            setInQContent('')
             alert('문의 사항 등록 완료')
         }).catch(error =>{
             console.log(error.response.data);
@@ -128,14 +129,14 @@ const MakeReview = ({ lendering, setLandering, setIsReview, isReview}) =>{
 
         {
             isReview ?  <Form onSubmit={onSubmit}>
-            <div className="reviewMakeFormStar"> 
-               <ReactStars id="reviewMakeFormStarID" count={5} onChange={ratingChanged} size={30} color2={'#ffd700'} value={score}  />
-           </div>
-           <InputGroup>
-               <FormControl as="textarea" aria-label="With textarea" onChange={makeContent} value={content} />
-               <Button type="submit">후기작성</Button>
-           </InputGroup>
-       </Form> : <Form onSubmit={inquirySave}>
+                            {/* <div className="reviewMakeFormStar"> 
+                                <ReactStars id="reviewMakeFormStarID" count={5} onChange={ratingChanged} size={30} color2={'#ffd700'} value={score}  />
+                            </div>
+                            <InputGroup>
+                                <FormControl as="textarea" aria-label="With textarea" onChange={makeContent} value={content} />
+                                <Button type="submit">후기작성</Button>
+                            </InputGroup> */}
+                        </Form> : <Form onSubmit={inquirySave}>
                  <Form.Group>
                     <Form.Label>문의사항 제목</Form.Label>
                     <Form.Control placeholder="제목을 입력하세요" onChange={(e)=>setInQTitle(e.target.value)} value={inQTitle} />
