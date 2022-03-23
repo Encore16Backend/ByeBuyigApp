@@ -77,9 +77,27 @@ const ManageProduct = ()=>{
         
     }
 
-    // 상품 삭제
-    const delProduct = ()=>{
-        console.log(allitem)
+    const delProduct = (itemid)=>{
+        if  (
+            window.confirm('정말 삭제하시겠습니까?')
+         ){
+            axios.delete('/main/item/delete', {
+                 params: {
+                    itemid:itemid,
+                 }
+             }, {
+                 headers: {
+                     "Content-Type": "application/json",
+                     "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+                 }
+             }).then(res => {
+                 console.log(res, "res")
+                 pageNo(1)
+                 alert('상품 삭제 완료')
+             }).catch(error => {
+                 console.log(error);
+             })
+        }
     }
 
     const handlePage = (value) => {
