@@ -3,8 +3,8 @@ import {Carousel} from "react-bootstrap"
 
 
 const Carsol = ({images})=>{
-    
     const render = images.map((img,index)  =>{
+        console.log("여기 오나?");
         return(
                 <Carousel.Item key={"imgItem"+img.imgid} >
                     <img 
