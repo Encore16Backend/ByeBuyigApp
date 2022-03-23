@@ -11,7 +11,6 @@ import { connect, useSelector } from 'react-redux';
 import "../../../css/drop.css";
 import CheckModal from "../../../modals/CheckModal";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 const NavB = ({ID, logOut})=>{
@@ -59,16 +58,8 @@ const NavB = ({ID, logOut})=>{
       sessionStorage.removeItem('roles')
       window.location.replace("/")
     }
-    const toMyPage = ()=>{
-        history.push('/mypage') 
-    }
-
     const [isOpen, setMenu] = useState(false);  
   
-    const toggleMenu = () => {
-        setMenu(isOpen => !isOpen); 
-        console.log(isOpen)
-    }
 
 
     const [keyword, setKeyword] = useState('')

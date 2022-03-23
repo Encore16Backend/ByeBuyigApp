@@ -162,7 +162,6 @@ const DetailDesc = ({ lendering, setLandering})=>{
                 }else{
                     alert('로그인 후 사용 가능합니다')
                 }
-                
             }}>즉시구매</Button>
             </div>
         </div>

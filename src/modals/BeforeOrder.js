@@ -110,7 +110,7 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
         return (
             <>
             <div style={{display:"inline-block"}} >
-                 <img src={itemimg} width="140px" height="140px" style={{ marginRight: "5px" , display:"inline" }} />
+                 <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimg} width="140px" height="140px" style={{ marginRight: "5px" , display:"inline" }} />
                  <div style={{display:"inline-block", paddingLeft:"1rem", verticalAlign:"top"}}>
                  <p> <b>{itemname}</b></p>
                  <p>가격 : {getStringPrice(itemprice)} </p>

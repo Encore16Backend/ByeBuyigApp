@@ -152,8 +152,8 @@ const ManageProduct = () => {
                             </th>
                             <th style={{ width: "10%" }}>상품사진</th>
                             <th style={{ width: "35%" }}>상품명</th>
-                            <th style={{ width: "10%" }}>카테고리</th>
-                            <th style={{ width: "10%" }}>가격</th>
+                            <th style={{ width: "13%" }}>카테고리</th>
+                            <th style={{ width: "7%" }}>가격</th>
                             <th style={{ width: "10%" }}>리뷰평균</th>
                             <th style={{ width: "10%" }}>구매수</th>
                             <th style={{ width: "10%" }}>삭제</th>
