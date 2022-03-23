@@ -11,8 +11,6 @@ export const S3_BUCKET = 'byebuying';
 
 // aws
 // http://35.170.126.111:8081
-
-
 export const getStringPrice = (intPrice)=>{
     if (intPrice != null || intPrice != undefined){
         const StringPrice = intPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
