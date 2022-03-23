@@ -27,9 +27,8 @@ const MyInquiry = ()=>{
             setInquirys(res.data.content)
             setTotalPageNo(res.data.totalPages)
         }).catch(error =>{
-            console.log(error.response.data, "getMyInquiry");
-            console.log(error.response.status, "getMyInquiry");
-            console.log(error.response.headers, "getMyInquiry");
+            console.log(error, "getMyInquiry");
+  
         })
     }
 

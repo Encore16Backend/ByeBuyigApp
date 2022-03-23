@@ -38,7 +38,6 @@ const Managereview =()=>{
 
     
     useEffect(()=>{
-        console.log("start")
         const newStart = startDate != undefined ? JSON.stringify(startDate).slice(1, 11) : null
         const newEnd = endDate != undefined ? JSON.stringify(endDate).slice(1, 11) : null
         axios.get('/review/getReviews',
@@ -55,7 +54,6 @@ const Managereview =()=>{
             }
         }).then(res=>{
             const data =res.data.content
-            console.log(res)
             setAlldata(data)
             setOpenedContentId(-1)
             setTotalPage(res.data.totalPages)

@@ -33,9 +33,7 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
             for (var i=0; i<res.data.length; i++){
               
               data[i] = data[i].location.split('/');
-              console.log(data[i], "dataLog")
               if (data[i][3] != undefined){
-                console.log(data[i][3], "data[i][3]")
                 locname.push(data[i][3]);
               }else{
                 locname.push("새 배송지");

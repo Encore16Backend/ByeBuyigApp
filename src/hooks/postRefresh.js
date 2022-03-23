@@ -12,7 +12,6 @@ const postRefresh = async ()=>{
             "Authorization": "Bearer " + cookie.load('refreshCookie')
         }
     }).then(res => {
-        console.log("suecess")
         sessionStorage.setItem('access_token', res.data.access_token);
     }).catch(error => {
         if (error.response.status === 403) {

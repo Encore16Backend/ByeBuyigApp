@@ -26,7 +26,6 @@ const DetailPage = ()=>{
     
      // 리뷰값 받아오기
      const GetReviewItem = async (itmeid, asc, sort, page) =>{
-        console.log(page, "리뷰")
         await axios.get('/review/byItemid',{
            params:{
             itemid:itmeid,
@@ -47,7 +46,6 @@ const DetailPage = ()=>{
 
     // 문의사항 받아오기
     const GetInquiryItem = async (itmeid, page)=>{
-        console.log(page, "문의사항")
         await axios.get('/inquiry/byItemid',{
            params:{
             itemid : itmeid,
@@ -58,7 +56,6 @@ const DetailPage = ()=>{
                 "Content-Type": "application/json",
             }
         }).then(res => {
-            console.log(res.data.content, "문의사항"+page)
             dispatch(addInquiry(res.data.content))
             dispatch(addInquiryPages(res.data.totalPages))
         }).catch(error => {
@@ -77,7 +74,6 @@ const DetailPage = ()=>{
                 "Content-Type": "application/json",
             }
         }).then(res => {
-            console.log(res, "getOneItem")
             dispatch(addOneItems(res.data))
         }).catch(error => {
             console.log(error, ' GetOneItem 에러');
