@@ -43,7 +43,6 @@ const ManageProduct = () => {
         }).catch(error => {
             console.log(error, ' getItem');
         })
-        console.log("getMainItem 종료")
     }, [pageNo, searchstate])
 
 
@@ -53,22 +52,6 @@ const ManageProduct = () => {
         setSearchItem(e.target.value);
     }
 
-
-    // const pdtname =()=>{
-    //     axios.get('/main/search',{
-    //         params:{
-    //             searchName:searchItem,
-    //             page : pageNo
-    //         }
-    //     }).then(res=>{
-    //         console.log(res,"test")
-    //         setAllitem(res.data.content)
-    //         setTotalPage(res.data.totalPages)
-    //         setSearchState(true)
-    //     }).catch(error=>{
-    //         console.log(error)
-    //     })
-    // }
 
 
     const onSubmit = (e) => {
@@ -169,8 +152,8 @@ const ManageProduct = () => {
                             </th>
                             <th style={{ width: "10%" }}>상품사진</th>
                             <th style={{ width: "35%" }}>상품명</th>
-                            <th style={{ width: "10%" }}>카테고리</th>
-                            <th style={{ width: "10%" }}>가격</th>
+                            <th style={{ width: "13%" }}>카테고리</th>
+                            <th style={{ width: "7%" }}>가격</th>
                             <th style={{ width: "10%" }}>리뷰평균</th>
                             <th style={{ width: "10%" }}>구매수</th>
                             <th style={{ width: "10%" }}>삭제</th>
@@ -225,7 +208,7 @@ const ManageProduct = () => {
                                             <td>{getStringPrice(price)}</td>
                                             <td>{reviewmean ? JSON.stringify(reviewmean).substring(0, 4) : "0"} 점</td>
                                             <td>{purchasecnt}개</td>
-                                            <td> <Button onClick={() => { delProduct(itemid) }}>삭제</Button> </td>
+                                            <td> <Button  onClick={() => { delProduct(itemid) }}>삭제</Button> </td>
                                         </tr>
                                     </>
                                 return (Adata)

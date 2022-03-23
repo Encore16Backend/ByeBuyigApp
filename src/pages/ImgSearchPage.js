@@ -11,8 +11,6 @@ const ImgSearchPage = ({ show, onHide,})=>{
   const [fileImage, setFileImage] = useState("");
   const [file, setFile] = useState();
 
-  console.log(fileImage, "modalImageFile")
-
   // 파일 저장
   const saveFileImage = (e) => {
     // console.log(e.target.files[0])

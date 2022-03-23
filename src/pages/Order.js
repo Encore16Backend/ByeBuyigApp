@@ -11,11 +11,13 @@ import '../axiosproperties'
 import MyCalendar from "../components/etc/MyCalendar";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import {getStringPrice} from "../axiosproperties";
-
+import MakeReviewModal from "../modals/MakeReviewModal"
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const Order = ()=>{
 
-
+    const history = useHistory();
+    
     // 내 주문내역들
     const userid = sessionStorage.getItem("id");
     let [pageNo, setPathNo] = useState(1);
@@ -28,9 +30,18 @@ const Order = ()=>{
     // 받아온 구매목록 배열
     const [AllOrderNum, setAllOrderNum] = useState(0);
 
-    
+    // 댓글 등록 모달 버튼   
+    const [modalOn, setModalOn] = useState(false)
+
+    // modal로 가져가기 위해 만든 state
+    const [itemid, setItemid] = useState('')
+    const [itemname, setItemname] = useState('')
+    const [itemimg, setItemimg] = useState('')
+    const [orderid , setOrderid] = useState('')
+
     // 구매내역 배열
     let [myOrderItems, setMyOrderItems] = useState([])
+
 
     // 체크박스 체크하면
     const reviewCheck = (checked, basketid, itemid) => {
@@ -83,10 +94,9 @@ const Order = ()=>{
             }
         }).then(res => {
             const data = res.data
-            console.log(data);
+            console.log(data, "날짜")
             setTotalPageNo(data.totalPages);
             setMyOrderItems(data.content)
-            
             setAllOrderNum(data.content.length)
             // dispatch(addBasket(res.data.content))
         }).catch(error => {
@@ -97,7 +107,6 @@ const Order = ()=>{
     // 구매내역에서 삭제
     const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(checkBaskets, "checkBaskets")
         await axios.delete("/orderHistory/delete", {
             params: {
                 basketid: checkBaskets
@@ -111,14 +120,38 @@ const Order = ()=>{
     }
 
     // 날짜검색
+    // const searchDate = async (userid, pageNo, startDate, endDate) => {
+    //     setIsDate(true)
+    //     await axios.get('/orderHistory/byDate', {
+    //         params: {
+    //             username: userid,
+    //             page: pageNo,
+    //             start : startDate != null ? getStringDate(startDate) : "",
+    //             end : endDate != null ? ( endDate > new Date() ? getStringDate(new Date()) : getStringDate(endDate)) : "" 
+    //         },
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+    //         }
+    //     }).then(res => {
+    //         const data = res.data
+    //         setTotalPageNo(data.totalPages);
+    //         setAllOrderNum(data.content.length)
+    //         setMyOrderItems(data.content)
+    //     }).catch(error => {
+    //         console.log(error, ' searchDate 에러');
+    //     })
+    // }
+
     const searchDate = async (userid, pageNo, startDate, endDate) => {
         setIsDate(true)
-        await axios.get('/orderHistory/byDate', {
+        console.log(startDate, endDate);
+        await axios.get('/orderHistory/getOrderHistories', {
             params: {
                 username: userid,
                 page: pageNo,
-                start : startDate != null ? getStringDate(startDate) : "",
-                end : endDate != null ? getStringDate(endDate) : "" 
+                start : (startDate != null || startDate != undefined) ? getStringDate(startDate) : "",
+                end : (endDate != null || endDate != undefined) ? getStringDate(endDate) : "" 
             },
             headers: {
                 "Content-Type": "application/json",
@@ -126,12 +159,10 @@ const Order = ()=>{
             }
         }).then(res => {
             const data = res.data
-
+            console.log(data, "data");
             setTotalPageNo(data.totalPages);
             setAllOrderNum(data.content.length)
             setMyOrderItems(data.content)
-            
-
         }).catch(error => {
             console.log(error, ' searchDate 에러');
         })
@@ -146,7 +177,8 @@ const Order = ()=>{
 
     // 최초 들어올때는 전체조회 useEffect
     useEffect(()=>{
-        GetOrderItem(userid, pageNo)
+        // GetOrderItem(userid, pageNo)
+        searchDate(userid, pageNo)
     }, [])
 
     // 날짜가 바뀌면 날짜검색으로 useEffect (startDate, endDate)
@@ -160,7 +192,7 @@ const Order = ()=>{
         setPathNo(1)
         setStartDate()
         setEndDate()
-        GetOrderItem(userid, pageNo)
+        searchDate(userid, pageNo)
     }
 
     // 페이징 번호가 바뀌면 .. 날짜상태인기 전체상태인지 확인하는 state를 만들어 state확인 후 
@@ -169,7 +201,7 @@ const Order = ()=>{
         if (isDate){    
             searchDate(userid, pageNo, startDate, endDate)
         }else{
-            GetOrderItem(userid, pageNo)
+            searchDate(userid, pageNo)
         }
     }, [pageNo])
 
@@ -180,11 +212,69 @@ const Order = ()=>{
     const tmp = JSON.stringify(localeDate)
     const strDate = tmp.slice(1, 11)
     return strDate
-}
+    }
 
 
+    // 리뷰등록함수
+    // const saveReview = (itemid, itemname, itemimg, content, score, orderid)=>{
+    //     axios.post('/review/save',{
+    //         itemid: itemid,
+    //         itemname : itemname,
+    //         itemimage : itemimg,
+    //         username : sessionStorage.getItem('id'),
+    //         content: content, 
+    //         score : score,
+    //         id : orderid
+    //     },{
+    //         // header
+    //         headers:{
+    //             "Content-Type": "application/json",
+    //             "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+    //         }
+    //     }).then(res =>{
+    //         alert('리뷰작성완료')
+    //         history.push({  
+    //             pathname: "/detail",
+    //             search : "?itemid="+itemid,
+    //             state : {itemid : itemid}
+    //         })                     
+    //     }).catch(error =>{
+    //         console.log(error, "saveErr");
+    //     })
+    // }
 
-    
+    const saveReview = (itemid, itemname, itemimg, content, score, orderid)=>{
+        const data = {
+            "review": {
+                "itemid": itemid,
+                "itemname" : itemname,
+                "itemimage" : itemimg,
+                "username" : sessionStorage.getItem('id'),
+                "content": content, 
+                "score" : score,
+            },
+            "orderid":orderid
+        }
+        axios.post('/review/save',{
+            reviewSave:data
+        },{
+            // header
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + sessionStorage.getItem('access_token')
+            }
+        }).then(res =>{
+            alert('리뷰작성완료')
+            history.push({  
+                pathname: "/detail",
+                search : "?itemid="+itemid,
+                state : {itemid : itemid}
+            })                     
+        }).catch(error =>{
+            console.log(error, "saveErr");
+        })
+    }
+
 
 
     return(
@@ -211,22 +301,30 @@ const Order = ()=>{
                                 <th>가격</th>
                                 <th colSpan={2}>수량</th>
                                 <th>결제가격</th>
+                                <th>구매날짜</th>
+                                <th>리뷰작성</th>
                             </tr>
                         </thead>
                         <tbody>
+                            {/* 여기에 modal창 만들자 */}
+                            <MakeReviewModal show={modalOn} onHide = {()=>{setModalOn(false)}} saveReview={saveReview} 
+                            itemid = {itemid} itemimg= {itemimg} itemname = {itemname} orderid = {orderid}
+                            />
+                            
                             {   
                                 (myOrderItems.length != 0) ? myOrderItems.map((data, idx) => {
                                     let bcount = data.bcount
-                                    let id = data.id
+                                    let orderid = data.id
                                     let itemid = data.itemid
                                     let itemimg = data.itemimg
                                     let itemname = data.itemname
                                     let itemprice = data.itemprice
                                     let addr = data.location
-                                    console.log(typeof(addr))
+                                    let date = data.date
 
+                                    
                                     let reviewData =
-                                        <tr key={id}>
+                                        <tr key={orderid}>
                                             <td>
                                                 <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimg} width="80" height="96" style={{ marginRight: "5px" }} />
                                             </td>
@@ -245,6 +343,18 @@ const Order = ()=>{
                                             </td>
                                             <td>
                                             {getStringPrice(itemprice*bcount)}
+                                            </td>
+                                            <td>
+                                                {date}
+                                            </td>
+                                            <td>
+                                                <Button onClick={() => {
+                                                    setModalOn(true)
+                                                    setItemid(itemid)
+                                                    setItemimg(itemimg)
+                                                    setItemname(itemname)
+                                                    setOrderid(orderid)
+                                                }}> 리뷰작성 </Button>
                                             </td>
                                         </tr>
                                     return (reviewData)

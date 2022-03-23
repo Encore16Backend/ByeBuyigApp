@@ -17,9 +17,8 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
       let [locations, setLocation] = useState([]);
       let [locName, setLocName] = useState([]);
 
-// 배송지 받아오는 함수
+      // 배송지 받아오는 함수
       async function getUserinfo() {
-        console.log("getuserinfo")
         await axios.get('/api/user/getinfo', {
           params:{
             username: sessionStorage.getItem('id'),
@@ -34,9 +33,7 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
             for (var i=0; i<res.data.length; i++){
               
               data[i] = data[i].location.split('/');
-              console.log(data[i], "dataLog")
               if (data[i][3] != undefined){
-                console.log(data[i][3], "data[i][3]")
                 locname.push(data[i][3]);
               }else{
                 locname.push("새 배송지");
@@ -113,7 +110,7 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
         return (
             <>
             <div style={{display:"inline-block"}} >
-                 <img src={itemimg} width="140px" height="140px" style={{ marginRight: "5px" , display:"inline" }} />
+                 <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimg} width="140px" height="140px" style={{ marginRight: "5px" , display:"inline" }} />
                  <div style={{display:"inline-block", paddingLeft:"1rem", verticalAlign:"top"}}>
                  <p> <b>{itemname}</b></p>
                  <p>가격 : {getStringPrice(itemprice)} </p>

@@ -48,6 +48,7 @@ const ManageUser =()=>{
             setAlldata(data.content);
             console.log(data)
             setLoginid(sessionStorage.getItem('id'))
+
         }).catch(error => {
             console.log(error);
         })

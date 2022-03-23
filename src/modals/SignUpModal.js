@@ -135,7 +135,6 @@ function SingUpModal({ show, onHide }) {
   const ondetailAddress =(e) =>{
     setdetailAddress(e.target.value)
     const test =e.target.value
-    console.log(test)
   }
 
 
@@ -165,19 +164,16 @@ function SingUpModal({ show, onHide }) {
     if (valMyEmail && test != '') {
       setEmailMsg('※ 이메일 형식 일치')
       setvalemail(1)
-      console.log(valemail)
       setEmailStyle('valid-input')
     } 
     else if (valMyEmail != test){ // 이메일이 형식에 맞지 않으면
       if (test === ""){ // 이메일이 형식에 맞지 않고 input이 빈값이면
         setvalemail(-1)
-        console.log(valemail)
         setEmailMsg('')
       }else{
         // 이메일이 형식에 맞지 않고 input이 빈값이 아니면
         setEmailMsg('※ 이메일 형식 불일치')
         setvalemail(-1)
-        console.log(valemail)
         setEmailStyle('invalid-input')
       }
     }
@@ -191,7 +187,6 @@ function SingUpModal({ show, onHide }) {
 
   // 유효성 체크값들이 모두true가 되면 true를 리턴하여 회원가입 버튼을 활성화 시키는 함수
   const getActivate = () => {
-    console.log(checkID, valchkPwd, valemail, valkeycode);
     return (checkID === true && valchkPwd === 1 && valemail === 1 && valkeycode===1) // valname === true
   }
   // getActivate함수가 활성화되면 자동으로 회원가입 버튼을 활성화시킴
@@ -243,6 +238,7 @@ function SingUpModal({ show, onHide }) {
       } else{
         setKeycode(res.data)
         alert(email+ ' 메일로 인증코드를 전송했습니다')
+        console.log()
       }
 
     }).catch(error => {
@@ -259,11 +255,10 @@ function SingUpModal({ show, onHide }) {
       if (keycode != "" && keycode ===chkMail){
         alert("인증코드가 일치합니다")
         setvalKeycode(1)
-        console.log(valkeycode)
+        
       }else {
         alert("인증코드가 틀렸습니다")
         setvalKeycode(-1)
-        console.log(valkeycode)
       }
     }
     

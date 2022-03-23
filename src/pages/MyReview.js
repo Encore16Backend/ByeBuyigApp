@@ -55,11 +55,9 @@ const MyReview = () => {
             setPageNo(1)
         }).catch(error =>{
             alert("수정실패")
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-            postRefresh() // 토큰이 없으면 재발행시키는 함수
-            modifyReview(reviewid,score,content) //  토큰을 받고 실행하고 싶은 함수 다시 실행
+            console.log(error);
+            // postRefresh() // 토큰이 없으면 재발행시키는 함수
+            // modifyReview(reviewid,score,content) //  토큰을 받고 실행하고 싶은 함수 다시 실행
         })
     }
     
@@ -110,7 +108,6 @@ const MyReview = () => {
             }
         }).then(res => {
             const data = res.data;
-            console.log(res, "reviewgetRes")
             setTotalPageNo(data.totalPages);
             setReview(data.content)
         }).catch(err => {
@@ -163,8 +160,8 @@ const MyReview = () => {
             setCheckItems([]);
         }).catch(err => {
             console.log(err)
-            postRefresh()
-            onSubmit()
+            // postRefresh()
+            // onSubmit()
         }) 
     }
 

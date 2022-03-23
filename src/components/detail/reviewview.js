@@ -41,7 +41,6 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
         setPage(e.selected + 1)
     }
     const handlePage = (data) => {
-        console.log("보낼때")
         setPage(data)
     }
     // 리뷰배열과 아이디
@@ -50,9 +49,6 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
     // 문의사항 배열
     const inquirys = useSelector(state => state.inquiry.inquirys)
     const inquirysPage = useSelector(state => state.inquiry.pages)
-
-    console.log(inquirysPage, "inqPage")
-    console.log(allReviewNums, "allReviewNums")
 
 
 
@@ -95,11 +91,9 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
             modify(reviewid)
             alert('댓글 수정 완료')
         }).catch(error => {
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-            postRefresh() // 토큰이 없으면 재발행시키는 함수
-            modifyReview(reviewid, score, content) //  토큰을 받고 실행하고 싶은 함수 다시 실행
+            console.log(error);
+            // postRefresh() // 토큰이 없으면 재발행시키는 함수
+            // modifyReview(reviewid, score, content) //  토큰을 받고 실행하고 싶은 함수 다시 실행
         })
     }
     // 리뷰삭제
@@ -123,9 +117,7 @@ const ReviewView = ({ lendering, page, setLandering, setPage, setDesc, setDate, 
                 setLandering(!lendering)
                 alert('댓글 삭제 완료')
             }).catch(error => {
-                console.log(error.response.data);
-                console.log(error.response.status);
-                console.log(error.response.headers);
+                console.log(error);
             })
         }
     }

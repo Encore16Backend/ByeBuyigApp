@@ -3,8 +3,6 @@ import {Carousel} from "react-bootstrap"
 
 
 const Carsol = ({images})=>{
-
-    // console.log(images, "imgs")
     
     const render = images.map((img,index)  =>{
         return(
