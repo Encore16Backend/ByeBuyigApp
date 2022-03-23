@@ -30,7 +30,6 @@ const Update= () => {
     const [valisAddress, setvalisAddress] = useState(false);
     const [detailAddress,setdetailAddress] = useState('')
     
-    //test 
 
     useEffect(() => {
         console.log(addpost)
@@ -265,13 +264,12 @@ const Update= () => {
         setPosttitle1(e.target.value)
     }
 
+    const sty = {top:'0.5rem'};
 
 
 
     return( 
         <>
-        <div>
-        </div>
         <div className="centered" style={{'paddingTop':0}}>
         <Container>
         <h1 className="centered">개인 정보 수정</h1>    
@@ -316,9 +314,9 @@ const Update= () => {
                 {addpost === 1 && <Form.Control type="text" value={isZoneCode1} readOnly style={{width:"80px",textAlign:"center"}} />} 
                 {addpost === 2 && <Form.Control type="text" value={isZoneCode2} readOnly style={{width:"80px",textAlign:"center"}} />}
                 &nbsp; &nbsp; 
-                {addpost ===0 &&<Test setIsAddress={setIsAddress} setIsZoneCode={setIsZoneCode}/>}
-                {addpost ===1 &&<Test setIsAddress={setIsAddress1} setIsZoneCode={setIsZoneCode1}/>}
-                {addpost ===2 &&<Test setIsAddress={setIsAddress2} setIsZoneCode={setIsZoneCode2}/>}
+                {addpost ===0 &&<Test setIsAddress={setIsAddress}  setIsZoneCode={setIsZoneCode}  sty={1} />}
+                {addpost ===1 &&<Test setIsAddress={setIsAddress1} setIsZoneCode={setIsZoneCode1} sty={2} />}
+                {addpost ===2 &&<Test setIsAddress={setIsAddress2} setIsZoneCode={setIsZoneCode2} sty={2} />}
             </div>
             </Form.Group>
             <br></br>
