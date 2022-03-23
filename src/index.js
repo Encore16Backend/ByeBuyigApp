@@ -22,6 +22,7 @@ if (sessionStorage.getItem('access_token')){
   store.dispatch(logIn(''))
 }
 
+console.log("index")
 
 
 
