@@ -17,6 +17,8 @@ function App() {
     postRefresh(), 60*3000);
   }
 
+  console.log("App")
+
   return (
     <Router>
       <Provider store={store}>

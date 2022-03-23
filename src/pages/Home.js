@@ -9,10 +9,11 @@ const Home = ()=>{
     // 베스트 아이템들 url을 변경하기 위한 state
     const [BestItemUrl , setBestItemUrl] = useState('/main/bestItem');
 
+    console.log("home url 요청 전");    
     // 베스트 아이템들 (기본 url 후기Best) 전체 Best
     GetBestItems(BestItemUrl);
 
-    console.log("home");    
+    console.log("home url 요청 후");    
 
     return(
         <Container className="pdtContainer centered" style={{width: "auto"}} >
