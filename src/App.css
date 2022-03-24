@@ -141,7 +141,50 @@ a:hover{
   display: inline-block; padding: .5em .75em; color: rgb(92, 55, 55); font-size: inherit; line-height: normal; vertical-align: middle; background-color: #fdfdfd; cursor: pointer; border: 1px solid #ebebeb; border-bottom-color: #e2e2e2; border-radius: .25em;
 }
 
-.testbutton{
-  position: fixed;
+.khscrollor::-webkit-scrollbar {
+  width: 10px;
+}
+.khscrollor::-webkit-scrollbar-thumb {
+  background-color: gainsboro;
+  border-radius: 10px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+.khscrollor::-webkit-scrollbar-track {
+  background-color: 2f3542;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px white;
+}
 
+.arrow-prev,
+.arrow-next {
+    position: relative;
+    border:0px  white;
+    width:20px;
+    height:20px;
+    margin-right:5px;
+}
+
+.arrow-prev::after {
+    position: absolute;
+    left: 5px; 
+    top: 0px;
+    content: '';
+    width: 25px; /* 사이즈 */
+    height: 25px; /* 사이즈 */
+    border-top: 5px solid #000; /* 선 두께 */
+    border-right: 5px solid #000; /* 선 두께 */
+    transform: rotate(225deg); /* 각도 */
+}
+
+.arrow-next::after {
+    position: absolute;
+    left: 5px; 
+    top: 0px; 
+    content: '';
+    width: 25px; /* 사이즈 */
+    height: 25px; /* 사이즈 */
+    border-top: 5px solid #000; /* 선 두께 */
+    border-right: 5px solid #000; /* 선 두께 */
+    transform: rotate(45deg); /* 각도 */
 }

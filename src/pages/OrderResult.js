@@ -1,29 +1,47 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Container, Table, Card, Row, Col } from "react-bootstrap";
 import {useSelector} from "react-redux";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import Carsol from "../components/Base/main/Carsol";
 import {getStringPrice} from "../axiosproperties";
+import '../axiosproperties'
+import axios from 'axios'
+import { IoIosArrowBack,IoIosArrowForward } from "react-icons/io";
 
 
 const ShowOrderResult = ({})=>{
 
+    useEffect(()=>{
+        axios.post('/flask/recommend', {
+            username: sessionStorage.getItem('id')
+        }, {
+        }).then(res => {
+            const data = res.data
+            console.log(res)
+            setAllItem(data)
+            setPrintItem(data.slice(idx, itemCount+idx));
+        }).catch(error => {
+            console.log(error)
+            })
+    },[])
+
+
+    
+    const [allItem,setAllItem] =useState([]);
+    let [printItem, setPrintItem] = useState([]);
+    const [idx, setIdx] = useState(0);
+    const itemCount = 5;
     const history = useHistory();
     const location = useLocation();
     const orderList = location.state.orderItems;
 
-
-  
-
     let sum = 0
 
     const render = orderList.map((order, idx)=>{
-
         sum += order.bcount * order.itemprice
         return(
             <>
-            <div style={{display:"inline-block"}} className="centered">
+            <div style={{display:"inline-block",padding:"10px 10px 10px 30px"}} className="centered">
             <p> <b>  {order.itemname} </b> </p>
                 <img style={{display:"inline",width:"200px", height:"200px"}} src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+order.itemimg}></img>
                 <div style={{display:"inline-block", paddingLeft:"1rem", verticalAlign:"top"}}>
@@ -35,19 +53,48 @@ const ShowOrderResult = ({})=>{
             </>
         )
     })
+
+    const prevEvent = () => {
+        if(idx == 0)
+            return
+        const index = idx-1;
+        setIdx(index);
+        setPrintItem(allItem.slice(index, itemCount+index));
+    } 
     
+    const nextEvent = () => {
+        if(idx == 5)
+            return
+        const index = idx+1;
+        setIdx(index);
+        setPrintItem(allItem.slice(index, itemCount+index));
+    }
+
+    console.log(printItem, idx);
+
     return(
         <div>
             <Container>
+           
                 <br/><br/>
                 <div style={{background:"gainsboro", width:"100%", height:"100px"}}>
                 <h2 className="centered" style={{paddingTop:"30px"}}>{sessionStorage.getItem('id')}님의 주문이 완료되었습니다</h2>
                 </div>
                 <br/>
-                
+
+                <div style={{display:"flex"}}>
                 <Row>
-                    <Col sm={7}>
-                        <br/><br/><br/>
+                    <Col sm={5}>
+                        <div className="khscrollor" style={{overflow:"auto", width:"550px" ,height:"450px" }}>
+                        <div>
+                            {orderList ? render : ""}
+                        </div>
+                        </div>
+                    </Col>
+                </Row>
+
+
+                <div style={{position:"relative",top:"50px",left:"50px"}}>
                         <div>
                             <div style={{display:"inline", paddingRight:"2rem"}}>
                                 <b>배송지 정보</b> 
@@ -76,14 +123,30 @@ const ShowOrderResult = ({})=>{
                                 <br/>
                             </div>
                         </div>
-                    </Col>
-                    <Col sm={5}>
-                        <div>
-                            {orderList ? render : ""}
-                        </div>
-                    </Col>
-                </Row>
-                
+
+
+                            {/* 사진 */}
+                            <Container style={{paddingTop:"3rem"}} >
+                            <IoIosArrowBack  size="25" onClick={prevEvent} style={{cursor:"pointer"}}></IoIosArrowBack>
+                            {
+                                (printItem != 0 ) ? printItem.map((printItem, idx)=>{
+
+                                let Adata =
+                                <>
+                                <img style={{width:"130px",height:"150px",padding:"3px 3px 3px 3px"}}
+                                src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+printItem.images[0].imgpath}></img>
+                                </>
+                                return (Adata)
+                            }):""
+                            }
+                            <IoIosArrowForward size="25" onClick={nextEvent} style={{cursor:"pointer"}}></IoIosArrowForward>
+                            </Container>
+                    </div>
+
+
+                    
+
+                </div>
             </Container>
         </div>
     )
