@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { Container, Table, Card, Row, Col } from "react-bootstrap";
+import { Container, Table, Card, Row, Col,OverlayTrigger,Tooltip } from "react-bootstrap";
 import {useSelector} from "react-redux";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -7,6 +7,7 @@ import {getStringPrice} from "../axiosproperties";
 import '../axiosproperties'
 import axios from 'axios'
 import { IoIosArrowBack,IoIosArrowForward } from "react-icons/io";
+import { relativeTimeRounding } from "moment";
 
 
 const ShowOrderResult = ({})=>{
@@ -70,7 +71,20 @@ const ShowOrderResult = ({})=>{
         setPrintItem(allItem.slice(index, itemCount+index));
     }
 
-    console.log(printItem, idx);
+
+    const imgclick=(itemid)=>{
+
+        history.push({
+            pathname: "/detail",
+            search : "?itemid="+itemid,
+            state: {
+                itemid : itemid,
+            }
+        })
+
+    }
+
+
 
     return(
         <div>
@@ -123,23 +137,36 @@ const ShowOrderResult = ({})=>{
                                 <br/>
                             </div>
                         </div>
-
-
+                        <br/>
+                        <br/>
+                        <div>
+                            <strong>{sessionStorage.getItem('id')}님에 대한 추천 상품입니다.</strong>
+                        </div>
                             {/* 사진 */}
-                            <Container style={{paddingTop:"3rem"}} >
+                            <Container style={{paddingTop:"1rem", display:"flex"}} >
+                            <div style={{position:"relative",top:"55px"}}>
                             <IoIosArrowBack  size="25" onClick={prevEvent} style={{cursor:"pointer"}}></IoIosArrowBack>
+                            </div>
                             {
                                 (printItem != 0 ) ? printItem.map((printItem, idx)=>{
+                                
+                                let hovername = printItem.itemname
+                                let getid = printItem.itemid
+
 
                                 let Adata =
                                 <>
                                 <img style={{width:"130px",height:"150px",padding:"3px 3px 3px 3px"}}
-                                src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+printItem.images[0].imgpath}></img>
+                                src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+printItem.images[0].imgpath}
+                                onClick={()=>imgclick(getid)}>
+                                </img>
                                 </>
                                 return (Adata)
                             }):""
                             }
+                             <div style={{position:"relative",top:"55px"}}>
                             <IoIosArrowForward size="25" onClick={nextEvent} style={{cursor:"pointer"}}></IoIosArrowForward>
+                            </div>
                             </Container>
                     </div>
 
