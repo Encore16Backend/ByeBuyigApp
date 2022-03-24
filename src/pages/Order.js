@@ -266,11 +266,13 @@ const Order = ()=>{
             }
         }).then(res =>{
             alert('리뷰작성완료')
-            history.push({  
-                pathname: "/detail",
-                search : "?itemid="+itemid,
-                state : {itemid : itemid}
-            })                     
+            window.location.reload()
+            // setPathNo(1)
+            // history.push({  
+            //     pathname: "/detail",
+            //     search : "?itemid="+itemid,
+            //     state : {itemid : itemid}
+            // })                     
         }).catch(error =>{
             console.log(error, "saveErr");
         })
