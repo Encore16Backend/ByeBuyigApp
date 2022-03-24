@@ -21,7 +21,10 @@ export const getStringPrice = (intPrice) => {
 export const AddDays = (date) => { 
     if (date === undefined){
         return ""
-    }else{
+    }else if (date === null){
+        return ""
+    }
+    else{
         var result = new Date(date); result.setDate(result.getDate() + 1);
         var strResult = JSON.stringify(result).slice(1, 11)
         return strResult;

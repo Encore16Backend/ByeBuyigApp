@@ -39,6 +39,10 @@ const ManageInquiry =()=>{
     useEffect(()=>{
         const newStart = startDate != undefined ? JSON.stringify(startDate).slice(1, 11) : null
         const newEnd = endDate != undefined ? JSON.stringify(endDate).slice(1, 11) : null
+
+        console.log(AddDays(newStart), "Start")
+        console.log(AddDays(newEnd), "end")
+        
         axios.get('/inquiry/getInquiries',
         {   params :{
                 username: searchuser,
