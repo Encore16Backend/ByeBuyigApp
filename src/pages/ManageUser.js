@@ -13,7 +13,8 @@ const ManageUser =()=>{
     const [totalPage, setTotalPage] = useState();
     const [loginid,setLoginid]=useState('');
     const [tmprole,setTmprole] = useState('');
-
+    const firstuser = "사용자"
+    const firstadmin = "관리자"
     
 
 
@@ -89,6 +90,9 @@ const ManageUser =()=>{
 
 
     const change_Role=(username)=>{
+        if(!tmprole){
+            alert("이미 권한을 가지고있습니다.")
+        }else{
         axios.post('/api/role/add-to-user',
         {
             userid: username,
@@ -108,6 +112,7 @@ const ManageUser =()=>{
             alert("권한이 없습니다.")
             window.location.replace("/manageuser")
         })
+        }
     }
     const changeok =(username)=>{
         if(window.confirm("권한을 변경 하시겠습니까?")){

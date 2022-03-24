@@ -72,16 +72,16 @@ const ShowOrderResult = ({})=>{
     }
 
 
-    const imgclick=(itemid)=>{
-
-        history.push({
-            pathname: "/detail",
-            search : "?itemid="+itemid,
-            state: {
-                itemid : itemid,
-            }
-        })
-
+    const imgclick =(itemid)=>{
+        if(window.confirm("상품페이지로 이동하시겠습니까?")){
+            history.push({
+                pathname: "/detail",
+                search : "?itemid="+itemid,
+                state: {
+                    itemid : itemid,
+                }
+            })
+        }
     }
 
 
