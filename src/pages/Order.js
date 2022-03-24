@@ -13,6 +13,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import {getStringPrice} from "../axiosproperties";
 import MakeReviewModal from "../modals/MakeReviewModal"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { AddDays } from "../axiosproperties";
 
 const Order = ()=>{
 
@@ -150,8 +151,8 @@ const Order = ()=>{
             params: {
                 username: userid,
                 page: pageNo,
-                start : (startDate != null || startDate != undefined) ? getStringDate(startDate) : "",
-                end : (endDate != null || endDate != undefined) ? getStringDate(endDate) : "" 
+                start : (startDate != null || startDate != undefined) ? AddDays(startDate) : "",
+                end : (endDate != null || endDate != undefined) ? AddDays(endDate) : "" 
             },
             headers: {
                 "Content-Type": "application/json",
@@ -321,12 +322,13 @@ const Order = ()=>{
                                     let itemprice = data.itemprice
                                     let addr = data.location
                                     let date = data.date
+                                    let chkreview = data.chkreview;
 
                                     
                                     let reviewData =
                                         <tr key={orderid}>
                                             <td>
-                                                <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimg} width="80" height="96" style={{ marginRight: "5px" }} />
+                                                <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimg}  style={{ marginRight: "5px" ,width:"80px", height:"96px"}} />
                                             </td>
                                             <td><Link to={{ pathname:"/detail", search : "?itemid="+itemid,state : {itemid : itemid,},}} >
                                                 {
@@ -348,13 +350,16 @@ const Order = ()=>{
                                                 {date}
                                             </td>
                                             <td>
-                                                <Button onClick={() => {
-                                                    setModalOn(true)
-                                                    setItemid(itemid)
-                                                    setItemimg(itemimg)
-                                                    setItemname(itemname)
-                                                    setOrderid(orderid)
-                                                }}> 리뷰작성 </Button>
+                                                {
+                                                    chkreview === 0 ? <Button onClick={() => {
+                                                        setModalOn(true)
+                                                        setItemid(itemid)
+                                                        setItemimg(itemimg)
+                                                        setItemname(itemname)
+                                                        setOrderid(orderid)
+                                                    }}> 리뷰작성 </Button> : "작성 완료"
+                                                }
+                                                
                                             </td>
                                         </tr>
                                     return (reviewData)

@@ -191,7 +191,7 @@ const ManageProduct = () => {
                                                     </div>
                                                 </Form>
                                             </td>
-                                            <td> <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/` + pdtImg} width="80" height="96" /></td>
+                                            <td> <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/` + pdtImg} style={{ width:"80px", height:"96px"}} /></td>
                                             <td>
                                                 <Link to={{
                                                     pathname: "/detail", search: "?itemid=" + itemid,

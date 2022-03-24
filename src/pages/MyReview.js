@@ -9,6 +9,7 @@ import postRefresh from "../hooks/postRefresh";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import '../axiosproperties'
 import MyCalendar from "../components/etc/MyCalendar";
+import { AddDays } from "../axiosproperties";
 
 
 const MyReview = () => {
@@ -79,8 +80,8 @@ const MyReview = () => {
             params: {
                 username: userid,
                 page: pageNo,
-                start : startDate != null ? getStringDate(startDate) : "",
-                end : endDate != null ? getStringDate(endDate) : "" 
+                start : startDate != null ? AddDays(startDate) : "",
+                end : endDate != null ? AddDays(endDate) : "" 
             },
             headers: {
                 "Content-Type": "application/json",
@@ -94,6 +95,8 @@ const MyReview = () => {
             console.log(error, ' searchReviewDate 에러');
         })
     }
+
+    
 
     const AllReview = ()=>{
         setIsDate(false)
@@ -196,9 +199,6 @@ const MyReview = () => {
     const handlePage = (value)=>{
         setPageNo(value);
     }
-
-
-
     
     return (
         <>
@@ -267,7 +267,7 @@ const MyReview = () => {
                                         </Form>
                                     </td>
                                     <td>
-                                        <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimage} width="80" height="96" style={{marginRight:"5px"}}/>
+                                        <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimage} style={{marginRight:"5px",width:"80px", height:"96px"}}/>
                                     </td>
                                     <td>
                                         <Link to={{ pathname:"/detail", search : "?itemid="+itemid,state : {itemid : itemid,},}} >

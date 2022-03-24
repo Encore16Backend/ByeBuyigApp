@@ -46,7 +46,7 @@ const MyInquiry = ()=>{
 
     const inQRender = inquirys.map(Q =>{
         const inQ = <tr onClick={()=>{getDetailInquiry(Q)}}>
-                        <td> {Q.itemimage ? <img style={{width:"30%"}} src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+Q.itemimage} width="80" height="96"/> : "예전꺼라 이미지 X"} </td>
+                        <td> {Q.itemimage ? <img  style={{ width:"80px", height:"96px"}} src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+Q.itemimage}  /> : "예전꺼라 이미지 X"} </td>
                         <td  style={{textAlign:"left",width:"*"}}>{Q.itemname.length > 32 ? Q.itemname.substring(0,32) + '...' : Q.itemname }</td>
                         <td style={{width:"20%"}}> {Q.title.substring(0,10)} </td>
                         <td style={{width:"10%"}}>{Q.date}</td>
@@ -91,7 +91,7 @@ const MyInquiry = ()=>{
                     <Table style={{textAlign:"center"}}>
                         <thead>
                             <tr >
-                                <th style={{width:"10%"}}>상품이미지</th>
+                                <th style={{width:"10%"}}></th>
                                 <th style={{width:"25%"}}>상품명</th>
                                 <th style={{width:"10%"}}>제목</th>
                                 <th style={{width:"15%"}}>날짜</th>

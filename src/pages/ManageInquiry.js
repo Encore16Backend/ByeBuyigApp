@@ -6,6 +6,7 @@ import {Table,Button,Form, FormControl, Row, Col,Accordion, FormCheck} from 'rea
 import Page from "../components/Base/main/Page";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import MyCalendar from "../components/etc/MyCalendar";
+import {AddDays} from '../axiosproperties'
 
 
 const ManageInquiry =()=>{
@@ -43,8 +44,8 @@ const ManageInquiry =()=>{
                 username: searchuser,
                 itemname: searchitem,
                 chkAnswer:checkstate,
-                start:newStart,
-                end: newEnd,
+                start:AddDays(newStart),
+                end: AddDays(newEnd),
                 page:pageNo
             },
             headers:{
@@ -198,7 +199,7 @@ const ManageInquiry =()=>{
                                     setAdminanswer(init_answer);}}}>
 
                             <td>{write_date}</td>
-                            <td> <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+pdtImg} width="80" height="96"/></td>
+                            <td> <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+pdtImg} style={{padding:0, width:"80px", height:"96px"}}  /></td>
                             <td>{byusername_itemname}</td>
                             <td>{byusername_title}</td>
                             <td>{byusername_name}</td>

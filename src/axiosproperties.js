@@ -17,3 +17,13 @@ export const getStringPrice = (intPrice) => {
         return StringPrice;
     }
 }
+
+export const AddDays = (date) => { 
+    if (date === undefined){
+        return ""
+    }else{
+        var result = new Date(date); result.setDate(result.getDate() + 1);
+        var strResult = JSON.stringify(result).slice(1, 11)
+        return strResult;
+    }
+}

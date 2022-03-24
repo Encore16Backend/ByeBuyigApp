@@ -6,6 +6,7 @@ import {Table,Button,Form, FormControl, Row, Col,Accordion, FormCheck} from 'rea
 import Page from "../components/Base/main/Page";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import MyCalendar from "../components/etc/MyCalendar";
+import {AddDays} from '../axiosproperties'
 
 
 const Managereview =()=>{
@@ -36,16 +37,26 @@ const Managereview =()=>{
       })   
     }
 
+
+    
+
+
     
     useEffect(()=>{
         const newStart = startDate != undefined ? JSON.stringify(startDate).slice(1, 11) : null
         const newEnd = endDate != undefined ? JSON.stringify(endDate).slice(1, 11) : null
+
+        console.log(AddDays(newStart), "start")
+        console.log(endDate, "endDateSTart")
+        console.log(AddDays(endDate), "end")
+
+
         axios.get('/review/getReviews',
         {   params :{
                 username: searchuser,
                 itemname: searchitem,
-                start :newStart,
-                end: newEnd,
+                start :AddDays(newStart),
+                end: AddDays(endDate),
                 page:pageNo
             },
             headers:{
@@ -153,7 +164,7 @@ const Managereview =()=>{
     return(
         <>
         <h1 className='centered'> 리뷰 관리</h1>
-        <Button className="remove" variant="secondary" size="sm" onClick={delreview}>삭제</Button>
+        <Button className="remove" variant="secondary" size="sm" style={{position:"relative", right:"3rem"}}  onClick={delreview}>삭제</Button>
         <Form className="review" onSubmit={onSubmit} style={{paddingLeft:"48px"}} >
         <div style={{display:"flex"}}>
                 <FormControl type="search" placeholder="ID" className="me-2" aria-label="Search"
@@ -161,7 +172,7 @@ const Managereview =()=>{
              
                 <FormControl type="search" placeholder="상품" className="me-2" aria-label="Search"
                   value={searchitem} onChange={onsearchitem} style={{width:"15%"}}/>&nbsp;
-                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}/>  &nbsp; &nbsp;
+                 <MyCalendar startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate}/>  &nbsp;&nbsp;
              <Button type="submit"style={{width:"70px"}} onClick={getbyusername} >Search</Button>&nbsp;
              <Button style={{width:"70px"}} onClick={pagereload} >Clean</Button>
         </div>
@@ -213,7 +224,7 @@ const Managereview =()=>{
                             </Form>
                             </td>
                             <td>{write_date}</td>
-                            <td> <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+pdtImg} width="80" height="96"/></td>
+                            <td> <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+pdtImg} style={{ width:"80px", height:"96px"}}/></td>
                             <td>{byusername_itemname}</td>
                             <td>{byusername_content}</td>
                             <td>{byusername_name}</td>

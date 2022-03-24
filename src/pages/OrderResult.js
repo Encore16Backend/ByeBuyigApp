@@ -72,16 +72,16 @@ const ShowOrderResult = ({})=>{
     }
 
 
-    const imgclick=(itemid)=>{
-
-        history.push({
-            pathname: "/detail",
-            search : "?itemid="+itemid,
-            state: {
-                itemid : itemid,
-            }
-        })
-
+    const imgclick =(itemid)=>{
+        if(window.confirm("상품페이지로 이동하시겠습니까?")){
+            history.push({
+                pathname: "/detail",
+                search : "?itemid="+itemid,
+                state: {
+                    itemid : itemid,
+                }
+            })
+        }
     }
 
 
@@ -106,8 +106,6 @@ const ShowOrderResult = ({})=>{
                         </div>
                     </Col>
                 </Row>
-
-
                 <div style={{position:"relative",top:"50px",left:"50px"}}>
                         <div>
                             <div style={{display:"inline", paddingRight:"2rem"}}>
@@ -152,8 +150,6 @@ const ShowOrderResult = ({})=>{
                                 
                                 let hovername = printItem.itemname
                                 let getid = printItem.itemid
-
-
                                 let Adata =
                                 <>
                                 <img style={{width:"130px",height:"150px",padding:"3px 3px 3px 3px"}}
@@ -180,4 +176,3 @@ const ShowOrderResult = ({})=>{
 }
 
 export default ShowOrderResult
-
