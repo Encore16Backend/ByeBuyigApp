@@ -9,6 +9,7 @@ const MakeReviewModal = ({ show, onHide, saveReview, itemid, itemimg,itemname, o
     // 리뷰 등록할 내용과 별점
     const [content , setContent] = useState('')
     const [score, setScore] = useState(1)
+    const [init_content,setInit_content]=useState('')
 
   const makeContent = (e)=>{
       setContent(e.target.value)
@@ -18,6 +19,8 @@ const MakeReviewModal = ({ show, onHide, saveReview, itemid, itemimg,itemname, o
   }
 
     const closeHander = ()=>{
+        setContent(init_content)
+        setScore(1)
         onHide()
     }
 
@@ -48,6 +51,8 @@ const MakeReviewModal = ({ show, onHide, saveReview, itemid, itemimg,itemname, o
       <Modal.Footer>
         <Button onClick={()=>{
             saveReview(itemid,itemname,itemimg, content, score, orderid)
+            setContent(init_content)
+            setScore(1)
             onHide()
         }}>리뷰등록</Button>  
         <Button onClick={closeHander}>닫기</Button>
