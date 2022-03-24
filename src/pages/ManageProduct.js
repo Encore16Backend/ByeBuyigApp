@@ -23,7 +23,7 @@ const ManageProduct = () => {
     const [searchItem, setSearchItem] = useState('');
     const [allitem, setAllitem] = useState([]);
     const [searchstate, setSearchState] = useState(-1);
-    const [checkItems, setCheckItems] = useState([]);
+    
 
 
     // 모든 아이템 정보 받아옴
@@ -59,6 +59,7 @@ const ManageProduct = () => {
 
     }
 
+    const [checkItems, setCheckItems] = useState([]);
     // 상품 삭제
     const delProduct = (itemid) => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
@@ -72,7 +73,6 @@ const ManageProduct = () => {
                     "Authorization": "Bearer " + sessionStorage.getItem('access_token')
                 }
             }).then(res => {
-                console.log(res, "res")
                 setPage(1)
                 alert('상품 삭제 완료')
             }).catch(error => {

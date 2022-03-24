@@ -24,7 +24,6 @@ const ImgSearchedList = ()=>{
         } 
         frm.append("file", file);
         axios.post('/flask/retrieval', frm ).then((res)=>{        
-            // 디스패치로 cardwarpper에서 받을 데이터들을 저장, cardwarpper에서 꺼내서 사용함
             dispatch(addCateItems(res.data))
         }).catch(error =>{
             console.log(error)
