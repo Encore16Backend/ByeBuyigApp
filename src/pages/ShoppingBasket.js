@@ -193,7 +193,7 @@ const ShoppingBasket = () => {
         const temp = [...updateItem]
         temp[idx].bcount = temp[idx].bcount -1 
         if (temp[idx].bcount < 1){
-            temp[idx].bcount = 0
+            temp[idx].bcount = 1
         }
         setUpdateItem(
             temp

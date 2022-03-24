@@ -65,7 +65,7 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
       } 
       const sendLocation = locName[addpost]+' '+locations[addpost][1]+' '
             +locations[addpost][0]+' '+locations[addpost][2];
-        makeOrder(sendLocation);
+      makeOrder(sendLocation);
     }
 
     // 배송지명
