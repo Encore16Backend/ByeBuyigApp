@@ -180,7 +180,7 @@ const Update= () => {
             sessionStorage.removeItem('id');
             sessionStorage.removeItem('access_token')
             sessionStorage.removeItem('refresh_token')
-            window.location.replace("/")
+            window.location.replace("/index.html")
 
         }).catch(error => {
             alert("비밀번호를 확인해주세요.");

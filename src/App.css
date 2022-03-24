@@ -205,6 +205,9 @@ img:hover + p.arrow_box {
 img {
   display: flex;
   width: 200px;
-  padding: 2px 16px;
   cursor: pointer;
+}
+
+.btnPosition{
+  color: #000000;
 }

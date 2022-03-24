@@ -274,7 +274,7 @@ const ShoppingBasket = () => {
                                                 </Form>
                                             </td>
                                             <td>
-                                                <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimg} width="80" height="96" style={{ marginRight: "5px" }} />
+                                                <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+itemimg}  style={{ marginRight: "5px",width:"80px", height:"96px" }} />
                                             </td>
                                             <td>
                                             <Link to={{ pathname:"/detail", search : "?itemid="+itemid,

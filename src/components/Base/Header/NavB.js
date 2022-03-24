@@ -32,7 +32,7 @@ const NavB = ({ID, logOut})=>{
     setKeyword("")
   }  
   const cataArr = [
-    "전체","상의","반팔","긴팔","바지","반바지","슬랙스","데님팬츠","아우터","코트","트렌치 코트",
+    "전체","상의","반팔","긴팔","바지","반바지","슬랙스","데님팬츠","아우터","코트","트렌치코트",
     "롱패딩","숏패딩","스커트","롱스커트","미니스커트"
   ]
 
@@ -58,7 +58,7 @@ const NavB = ({ID, logOut})=>{
       sessionStorage.removeItem('access_token')
       sessionStorage.removeItem('refresh_token')
       sessionStorage.removeItem('roles')
-      window.location.replace("/")
+      window.location.replace("/index.html")
     }
     const [isOpen, setMenu] = useState(false);  
   
@@ -88,7 +88,7 @@ const NavB = ({ID, logOut})=>{
         <>
         <Navbar bg="dark" variant="dark">
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <Navbar.Brand href={"/"} >BuyBuying</Navbar.Brand>
+          <Navbar.Brand href={"/index.html"} >BuyBuying</Navbar.Brand>
           <Container>
           <SingUpModal show={singUpModalOn} onHide = {()=>{setSingUpModalOn(false)}}/> {/* 회원가입 */}
           <SingInModal show={SingInModalOn} onHide = {()=>{setSingInModalOn(false)}}   />
@@ -242,10 +242,10 @@ const NavB = ({ID, logOut})=>{
                             <li>
                               <span ><i className="ion-ios-color-filter-outline"></i>
                               <Link to={{pathname: "/searchlist",
-                                        search : "?searchName=트렌치 코트",
+                                        search : "?searchName=트렌치코트",
                                         state: {
                                         keyword:"",
-                                        cataName:"트렌치 코트",},}}>트렌치 코트 </Link>
+                                        cataName:"트렌치코트",},}}>트렌치코트 </Link>
                               </span>
                             </li>
                             
@@ -351,7 +351,7 @@ const NavB = ({ID, logOut})=>{
                         </li>
                         <li>
                           <span onClick={out}><i className="ion-ios-color-filter-outline"></i>
-                          <Link to={{pathname:"/"}}>로그아웃</Link>
+                          <Link to={{pathname:"/index.html"}}>로그아웃</Link>
                           </span>
                         </li>
                       </ul>
@@ -396,7 +396,7 @@ const NavB = ({ID, logOut})=>{
                         </li>
                         <li>
                           <span onClick={out}><i className="ion-ios-color-filter-outline"></i>
-                          <Link to={{pathname:"/"}}>로그아웃</Link>
+                          <Link to={{pathname:"/index.html"}}>로그아웃</Link>
                           </span>
                         </li>
                       </ul>

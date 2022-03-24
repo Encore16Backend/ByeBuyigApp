@@ -28,10 +28,10 @@ function SingInModal({show, onHide, logIn}){
                 sessionStorage.setItem('roles', res.data.roles)
                 sessionStorage.setItem('id', id)
                 cookie.save('pwd', pwd,{
-                    path:"/",
+                    path:"/index.html",
                 })
                 cookie.save('refreshCookie',res.data.refresh_token,{
-                    path:"/",
+                    path:"/index.html",
                 })
                 closeHander();
             }).catch(error => {
