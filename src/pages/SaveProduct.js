@@ -102,7 +102,7 @@ const SaveProduct = () => {
             ],
             "images": imageFile
         }
-        // file배열로 돌면서 s3업로드
+        // file s3업로드
         files.map((f, idx) => {
             const s3Obj = {
                 ACL: 'public-read',
@@ -123,19 +123,17 @@ const SaveProduct = () => {
         axios.post('/main/item/save', {
             itemSave: data
         }, {
-            // header
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + sessionStorage.getItem('access_token')
             }
         })
         .then(res => {
-            console.log(res, "res")
             alert('등록완료')
             setFiles([])
             setFileNames([])
             setFileImgs([])
-            history.push('/')
+            history.push('/index.html')
         })
         .catch(error => {
             console.log(error);
