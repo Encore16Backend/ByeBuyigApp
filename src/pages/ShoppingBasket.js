@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import axios from "axios";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addBasket } from "../redux/basket/actions"
 import Page from "../components/Base/main/Page";
 import { Form, Button, Table } from "react-bootstrap";
@@ -136,7 +136,6 @@ const ShoppingBasket = () => {
     // 장바구니에서 삭제
     const onSubmit = async (e) => {
         e.preventDefault();
-        
         await axios.delete("/basket/delete", {
             params: {
                 basketid: checkBaskets
@@ -169,7 +168,6 @@ const ShoppingBasket = () => {
             },
         }).then(res => {
             const data = res.data
-            
             setModalOn(false)
             histroy.push({
                 pathname:"/orderresult",
@@ -177,7 +175,6 @@ const ShoppingBasket = () => {
                     orderItems:orderItems,
                     addr : addr
                 },
-                
             })
         }).catch(error => {
             console.log(error, ' makeOrder 에러');

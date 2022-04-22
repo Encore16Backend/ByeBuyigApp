@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { Container, Table, Card, Row, Col,OverlayTrigger,Tooltip } from "react-bootstrap";
-import {useSelector} from "react-redux";
+import { Container,  Row, Col } from "react-bootstrap";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import {getStringPrice} from "../axiosproperties";
@@ -56,7 +55,7 @@ const ShowOrderResult = ({})=>{
     })
 
     const prevEvent = () => {
-        if(idx == 0)
+        if(idx === 0)
             return
         const index = idx-1;
         setIdx(index);
@@ -64,7 +63,7 @@ const ShowOrderResult = ({})=>{
     } 
     
     const nextEvent = () => {
-        if(idx == 5)
+        if(idx === 5)
             return
         const index = idx+1;
         setIdx(index);

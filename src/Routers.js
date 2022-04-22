@@ -17,10 +17,15 @@ import MyInquiry from "./pages/MyInquiry";
 import ImgSearchedList from "./pages/ImgSearchList";
 import ManageProduct from "./pages/ManageProduct";
 import SaveProduct from "./pages/SaveProduct";
+import UpdateProduct from "./pages/updateProduct";
 
 // aws : index.html
 // local : /
 export default [
+    {
+        path:"/",
+        component:Home
+    },
     {
         path:'/index.html',
         component:Home
@@ -96,6 +101,10 @@ export default [
     {
         path:"/saveproduct",
         component:SaveProduct
+    },
+    {
+        path:"/updateproduct",
+        component:UpdateProduct
     }
 
 ]

@@ -77,8 +77,7 @@ function SingInModal({show, onHide, logIn}){
                     <Form.Control type="text" className="ID" placeholder="영문자로 시작하는 영문자 또는 숫자 6~20자" onChange={(e)=>{setID(e.target.value)}}
                      value={id}/>
                 </Form.Group>
-
-                    {/* PWD */}
+                {/* PWD */}
                 <Form.Group className="mb-3" >
                     <Form.Label>password</Form.Label>
                     <Form.Control type="password" placeholder="8 ~ 10자 영문, 숫자 조합" className="password" onChange={(e)=>{setPwd(e.target.value)}} value={pwd}/>

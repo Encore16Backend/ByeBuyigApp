@@ -9,9 +9,6 @@ const MyCard = ({categories, itemid, itemname, description, price, purchasecnt, 
     HomeLandering,reviewcount})=>{
         const modiPrice =price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-        console.log("MyCard");
-        console.log("hihihi");
-
     return(
         <div className="cardComponent" >
         <Card style={{ width: '12rem' }}>

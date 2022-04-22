@@ -2,7 +2,7 @@ import React from 'react'
 import '../axiosproperties'
 import axios from 'axios'
 import {useState,useEffect} from 'react'
-import {Table,Button,Form, FormControl, Row, Col,Accordion, FormCheck} from 'react-bootstrap'
+import {Table,Button,Form, FormControl} from 'react-bootstrap'
 import Page from "../components/Base/main/Page";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import MyCalendar from "../components/etc/MyCalendar";
@@ -237,7 +237,7 @@ const ManageInquiry =()=>{
         </div>
         <div className="centered">
                 {
-                    totalPage != 0 ? <Page
+                    totalPage !== 0 ? <Page
                         setPage={handlePage}
                         totalPage={totalPage}
                         selected={pageNo}
