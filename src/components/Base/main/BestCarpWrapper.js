@@ -7,8 +7,6 @@ import { Row, Col } from "react-bootstrap";
 const BestCardWrapper = ({cata,  setHomeLandering, HomeLandering})=>{
     // 받아온 값들을 렌더링하는 컴포넌
 
-    console.log("BestCardWrapper");
-
     const all = useSelector(
         (state)=>{      
             return state.bestItem.items

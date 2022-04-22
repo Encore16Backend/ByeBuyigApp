@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Switch, Route,Link
+import { BrowserRouter as Router, Switch, Route
 } from 'react-router-dom';
 import Routers from './Routers';
 import NavB from './components/Base/Header/NavB';
@@ -36,10 +36,8 @@ function App() {
           </Switch>
         </div>
     </div>
-    
     </Provider>
     </Router>
-    
   );
   
 }

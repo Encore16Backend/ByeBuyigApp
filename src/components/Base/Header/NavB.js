@@ -73,7 +73,7 @@ const NavB = ({ID, logOut})=>{
     }
     const onSubmit = (e)=>{
       e.preventDefault();
-      const sendCataName = cataName == "전체" ? "" : cataName
+      const sendCataName = cataName === "전체" ? "" : cataName
       history.push({  
         pathname: "/searchlist",
         search : "?searchName="+keyword,

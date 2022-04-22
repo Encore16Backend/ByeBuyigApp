@@ -81,7 +81,13 @@ const ManageProduct = () => {
         }
     }
 
-
+    // 수정폼이동
+    const toUpdateForm = (itemid) =>{
+        history.push({
+            pathname:"/updateproduct",
+            state : {itemid:itemid}
+        })
+    }
 
     const handlePage = (value) => {
         setPage(value);
@@ -150,14 +156,14 @@ const ManageProduct = () => {
                                     />
                                 </div>
                             </th>
-                            <th style={{ width: "10%" }}>상품사진</th>
+                            <th style={{ width: "10%"}}>상품사진</th>
                             <th style={{ width: "35%" }}>상품명</th>
                             <th style={{ width: "13%" }}>카테고리</th>
                             <th style={{ width: "7%" }}>가격</th>
-                            <th style={{ width: "10%" }}>리뷰평균</th>
-                            <th style={{ width: "10%" }}>구매수</th>
-                            <th style={{ width: "10%" }}>삭제</th>
-
+                            <th style={{ width: "10%"}}>리뷰평균</th>
+                            <th style={{ width: "5%" }}>구매수</th>
+                            <th style={{ width: "7%"}}>삭제</th>
+                            <th style={{ width: "8%"}}>수정</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -176,7 +182,6 @@ const ManageProduct = () => {
                                         catas.push(cata.catename)
                                     })
                                 }
-
                                 let Adata =
                                     <>
                                         <tr>
@@ -209,6 +214,7 @@ const ManageProduct = () => {
                                             <td>{reviewmean ? JSON.stringify(reviewmean).substring(0, 4) : "0"} 점</td>
                                             <td>{purchasecnt}개</td>
                                             <td> <Button  onClick={() => { delProduct(itemid) }}>삭제</Button> </td>
+                                            <td> <Button  onClick={() => { toUpdateForm(itemid) }}>수정</Button> </td>
                                         </tr>
                                     </>
                                 return (Adata)

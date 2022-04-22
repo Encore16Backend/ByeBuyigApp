@@ -5,12 +5,68 @@ import '../axiosproperties'
 import { ACCESS_KEY, SECRET_ACCESS_KEY, S3_BUCKET, REGION } from '../axiosproperties'
 import AWS from "aws-sdk"
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch } from "react-redux";
+import { addOneItems } from "../redux/oneItem/actions";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 
 
+const UpdateProduct = () => {
+    const [item, setItem] = useState()
+    const location = useLocation();
+    const dispatch = useDispatch()
 
-const SaveProduct = () => {
+    const [pdtName, setPdtName] = useState('')
+    const [pdtCount, setPdtCount] = useState(200)
+    const [pdtPrice, setPdtPrice] = useState(0)
+    const [pdtPurchasecnt, setPdtPurchasecnt] = useState(0)
+    const [pdtReviewMean, setReviewMean] = useState(0)
+    const [pdtReviewCount, setReviewCount] =useState(0)
+    const [cata1, setCata1] = useState("")
+    const [cata2, setCata2] = useState('')
+    const [originImgs, setOriginImgs] = useState([])
 
+    // 상품 하나 검색해서 받아오기
+    const GetOneItem = async (itmeid) =>{
+        await axios.get('/main/item',{
+           params:{
+            itemid:itmeid,
+           }
+        },{
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(res => {
+            dispatch(addOneItems(res.data))
+            setItem(res.data)
+            setPdtName(res.data.itemname)
+            setPdtCount(res.data.count)
+            setPdtPrice(res.data.price)
+            setPdtPurchasecnt(res.data.purchasecnt)
+            setReviewMean(res.data.reviewmean)
+            setReviewCount(res.data.reviewcount)
+            setCata1(res.data.categories[0].catename)
+            setCata2(res.data.categories[1].catename) 
+
+            setOriginImgs(res.data.images)
+
+        }).catch(error => {
+            console.log(error, ' GetOneItem 에러');
+        })
+    }
+
+
+    const itemid = location.state.itemid;
+    useEffect(()=>{
+        GetOneItem(itemid);
+    },[])
+    console.log(item, "item")
+    
+
+    
+
+   
+    
     const frm = new FormData();
     const history = useHistory();
 
@@ -41,14 +97,7 @@ const SaveProduct = () => {
         // 파일이름만 저장
     };
 
-
-    // https://byebuying.s3.ap-northeast-2.amazonaws.com품이미지/상의/긴팔/키작은여성의류1.jpg
-    // 이렇게 db에서 받는다..
-
-    // console.log(files, 'files')
-    // console.log(fileNames, 'fileNames')
-    // console.log(fileImgs, "fileImgs")
-
+    console.log(fileNames, "names")
 
     // 파일 삭제
     const deleteFileImage = () => {
@@ -77,30 +126,29 @@ const SaveProduct = () => {
     const [cata2Skirt, setCata2Skirt] = useState(['롱스커트', '미니스커트'])
     const [cata2Outer, setCata2Outer] = useState(['롱패딩', '숏패딩', '코트', '트렌치 코트'])
 
-    const [pdtName, setPdtName] = useState('')
-    const [pdtCount, setPdtCount] = useState(200)
-    const [pdtPrice, setPdtPrice] = useState(0)
-    const [cata1, setCata1] = useState('상의')
-    const [cata2, setCata2] = useState('긴팔')
+    
+    
 
-    const tempSave = () => {
+    const updatePdt = () => {
         const imageFile = []
         for(var i=0; i<fileNames.length;i++){
             imageFile.push('상품이미지/'+cata1+'/'+cata2+'/'+fileNames[i]);
         }
+        
         const data = {
             "item": {
                 "itemname": pdtName,
                 "price": pdtPrice,
-                "purchasecnt": 0,
+                "purchasecnt": pdtPurchasecnt,
                 "count": pdtCount,
-                "reviewmean": 0,
-                "reviewcount": 0
+                "reviewmean": pdtReviewMean,
+                "reviewcount": pdtReviewCount
             },
             "cate": [
                 cata1, cata2
             ],
-            "images": imageFile
+            "images": imageFile,
+            "itemId":itemid
         }
         // file s3업로드
         files.map((f, idx) => {
@@ -120,8 +168,8 @@ const SaveProduct = () => {
                     if (err) console.log(err)
                 })
         })
-        axios.post('/main/item/save', {
-            itemSave: data
+        axios.post('main/item/update', {
+            itemUpdate: data
         }, {
             headers: {
                 "Content-Type": "application/json",
@@ -129,7 +177,7 @@ const SaveProduct = () => {
             }
         })
         .then(res => {
-            alert('등록완료')
+            alert('수정완료')
             setFiles([])
             setFileNames([])
             setFileImgs([])
@@ -155,14 +203,12 @@ const SaveProduct = () => {
     }
 
     const imgSwap = (idx) =>{
-
         // 가져온 인덱스의 파일과 0번 인덱스의 파일을 바꾸고 새로 배열에 넣어야함  
-
         const fileImgQue = [...fileImgs]
         const fileNamesQue = [...fileNames]
         const filesQue = [...files]
 
-        // js의 구조분해 할당을 사용해보자
+        // js의 구조분해 할당을 사용
         if (fileImgQue){
             [fileImgQue[0], fileImgQue[idx]] = [fileImgQue[idx], fileImgQue[0]]
             setFileImgs(fileImgQue)
@@ -209,8 +255,6 @@ const SaveProduct = () => {
     }
 
 
-    const inputRef = useRef()
-
     return (
         <div>
 
@@ -220,11 +264,11 @@ const SaveProduct = () => {
             </label>  */}
 
             <Container>
-                <h2 className="centered">상품등록</h2>
+                <h2 className="centered">상품 수정</h2>
                 
                 <Form onSubmit={onSubmit} encType="multipart/form-data">
                     <Row>
-                                {/* 상품이미지 input */}
+                    {/* 상품이미지 input */}
                     <div className="centered" style={{position:"relative"}}>
                     </div>
                         <Col>
@@ -232,18 +276,18 @@ const SaveProduct = () => {
                     <div style={{ position: "relative", top: "-49px", paddingBottom: "4rem", paddingTop: "4rem" }}>
                         <div className="centered" style={{display:"grid"}}>
                             {
-                                fileImgs[0] ? <img alt="img" src={fileImgs[0]} style={{  width: "400px", height: "250px" , padding:"5px" }} /> :
-                                    <div style={{ margin: "auto", width: "350px", height: "250px", border: "1px solid black" }}></div>
+                                fileImgs[0]  ? <img alt="img" src={fileImgs[0]} style={{  width: "400px", height: "250px" , padding:"5px" }} /> :
+                                originImgs[0] ? <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+originImgs[0].imgpath} style={{  width: "400px", height: "250px" , padding:"5px" }} /> : ""
                             }
                             <div>
-                            {
-                                fileImgs[1] ?  <img alt="img" onClick={()=>{imgSwap(1)}}  src={fileImgs[1]} style={{  width: "200px", height: "100px", padding:"5px" }} /> :
-                                ""
-                            }
-                            {
-                                fileImgs[2] ?  <img alt="img" onClick={()=>{imgSwap(2)}}  src={fileImgs[2]} style={{  width: "200px", height: "100px", padding:"5px" }} /> :
-                                ""
-                            }
+                                {
+                                    fileImgs[1]  ?  <img alt="img" onClick={()=>{imgSwap(1)}}  src={fileImgs[1]} style={{  width: "200px", height: "100px", padding:"5px" }} /> :
+                                    originImgs[1] ? <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+originImgs[1].imgpath} style={{  width: "200px", height: "100px", padding:"5px" }} /> : ""
+                                }
+                                {
+                                    fileImgs[2]  ?  <img alt="img" onClick={()=>{imgSwap(2)}}  src={fileImgs[2]} style={{  width: "200px", height: "100px", padding:"5px" }} /> :
+                                    originImgs[2] ? <img src={`https://byebuying.s3.ap-northeast-2.amazonaws.com/`+originImgs[2].imgpath} style={{  width: "200px", height: "100px", padding:"5px" }} /> : ""
+                                }
                             </div>
                         </div>
                     </div>
@@ -267,14 +311,23 @@ const SaveProduct = () => {
                     <br/>
 
                     <Form.Label>상품명</Form.Label>
-                    <Form.Control placeholder="등록상품명을 입력하세요" value={pdtName} onChange={(e)=>setPdtName(e.currentTarget.value)} />
+                    <Form.Control placeholder="상품명" value={pdtName} onChange={(e)=>setPdtName(e.currentTarget.value)} />
                     <br />
                     <Form.Label>가격</Form.Label>
-                    <Form.Control placeholder="등록상품가격을 입력하세요"   value={pdtPrice}  onChange={(e)=>setPdtPrice(e.currentTarget.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g, '$1'))} />
+                    <Form.Control placeholder="가격"   value={pdtPrice}  onChange={(e)=>setPdtPrice(e.currentTarget.value.replace(/[^0-9.]/g,'').replace(/(\..*)\./g, '$1'))} />
                     <br />
                     <Form.Label>수량</Form.Label>
-                    <Form.Control placeholder="등록상품수량을 입력하세요" value={pdtCount} onChange={(e)=>setPdtCount(e.currentTarget.value)} />
+                    <Form.Control placeholder="수량" value={pdtCount} onChange={(e)=>setPdtCount(e.currentTarget.value)} />
                     <br />
+                    <Form.Label>구매수</Form.Label>
+                    <Form.Control placeholder="구매숫자" value={pdtPurchasecnt} onChange={(e)=>setPdtPurchasecnt(e.currentTarget.value)} />
+                    <br />
+                    <Form.Label>리뷰평균</Form.Label>
+                    <Form.Control placeholder="리뷰평균" value={pdtReviewMean} onChange={(e)=>setReviewMean(e.currentTarget.value)} />
+                    <br/>
+                    <Form.Label>리뷰 갯수</Form.Label>
+                    <Form.Control placeholder="리뷰 갯수" value={pdtReviewCount} onChange={(e)=>setReviewCount(e.currentTarget.value)} />
+                    <br/>
                     <Form.Label>상위 카테고리를 선택하시오</Form.Label>
                     <Form.Select aria-label="Default select example"
                         onChange={(e) => { cataChange(e.target.value) }} value={cata1}
@@ -302,11 +355,11 @@ const SaveProduct = () => {
             <Form>
             <br/>
                 <InputGroup>
-                    <Button style={{ width:"100px", marginLeft:"45rem"}} onClick={tempSave}>등록</Button>
+                    <Button style={{ width:"100px", marginLeft:"45rem"}} onClick={updatePdt}>수정</Button>
                 </InputGroup>
             </Form>
         </div>
     )
 }
 
-export default SaveProduct
+export default UpdateProduct

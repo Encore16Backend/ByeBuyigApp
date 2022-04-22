@@ -5,6 +5,7 @@ import {Carousel} from "react-bootstrap"
 const Carsol = ({images})=>{
     const render = images.map((img,index)  =>{
         console.log("Carsol");
+        console.log(img.imgpath, "pa")
         return(
                 <Carousel.Item key={"imgItem"+img.imgid} >
                     <img 
