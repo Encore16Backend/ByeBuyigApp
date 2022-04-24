@@ -4,6 +4,11 @@ import axios from 'axios'
 import {useState,useEffect} from 'react'
 import {Table,Button} from 'react-bootstrap'
 import Page from "../components/Base/main/Page";
+import { Nav } from 'react-bootstrap'
+import AddUser from '../modals/AddUser'
+import UpdateUserModal from '../modals/UpdateUserModal'
+import { map } from 'lodash'
+import { stringify } from 'qs'
 
 const ManageUser =()=>{
 
@@ -120,12 +125,19 @@ const ManageUser =()=>{
         }
     }
 
+    // 모달관련 state들
+    const [addUserModalOn, setAddUserModalOn]= useState(false) 
+    const [updateUserModalOn, setUpdateUserModalOn] = useState(true)
+    const [openedContentId, setOpenedContentId] = useState(-1);
     
+   
 
     return(
         <>
         <h1 className='centered'> 회원 관리</h1>
+        <AddUser show={addUserModalOn} onHide = {()=>{setAddUserModalOn(false)}}/> {/* 회원추가 */}
         <div className='userbox'>
+        <Button style={{float:"right"}} onClick={()=>{setAddUserModalOn(true)}}>회원추가</Button>
         <Table >
         <thead>
             <tr>
@@ -134,7 +146,8 @@ const ManageUser =()=>{
                 <th style={{width:"30%"}}>기본 주소</th>
                 <th style={{width:"5%"}}>권한</th>
                 <th style={{width:"10%"}}>권한 변경</th>
-                <th style={{width:"10%"}}>삭제</th>
+                <th style={{width:"5%"}}>수정</th>
+                <th style={{width:"5%"}}>삭제</th>
             </tr>
         </thead>
             <tbody>
@@ -145,7 +158,6 @@ const ManageUser =()=>{
                         let Alocations= !!data.locations ? data.locations :null
                         let basicLocation = !!Alocations[0] ? Alocations[0] : null
                         let BasicAddr = !!basicLocation ? basicLocation.location : null
-                        // let BasicAddr;
                         if (BasicAddr)
                             BasicAddr = basicLocation.location.split('/')[0]
                         
@@ -156,8 +168,6 @@ const ManageUser =()=>{
                         //     { value: 1, name: 1 },
                         //     { value: 3, name: 1 },
                         // ];
-                        
-                        
                         const role_arr =[];
                         if (basicrole ===1){
                             role_arr.push("사용자")
@@ -173,19 +183,12 @@ const ManageUser =()=>{
                             role_arr.push("관리자")
                         }
                         
-
-                        
-
-
                         let Adata =
                         <tr>
                             <td>{Ausername}</td>
                             <td>{Aemail}</td>
                             <td>{BasicAddr}</td>
                             <td>
-                            {/* {basicrole ===1 && "사용자"}
-                            {basicrole ===3 && "매니저"}
-                            {basicrole ===4 && "관리자"} */}
                              <select id='selectbox' style={{height:"38px", width:"112px"}} onChange={handleChange}>
                                 {
                                     role_arr.map(name =>((<option key={name} value={name}>{name}</option>)))
@@ -193,15 +196,26 @@ const ManageUser =()=>{
                             </select>
                             
                             </td>
-                            {/* <td>{basicrole === 1 ? "사용자":"관리자"}</td>  */}
-
                             <td>
                                 {basicrole ===4 ?<Button style={{width:"130px"}} disabled="true">Super Admin</Button>:
                                 <Button style={{width:"100px"}} onClick={()=>changeok(Ausername)}>권한 변경</Button>}
                             </td>
                             {/* <td><Button style={{width:"100px"}} onClick={()=>change_Role(Ausername,"ROLE_ADMIN")}>권한 변경</Button></td> */}
-                            <td>{Ausername ===loginid ||basicrole ===4 ? <Button onClick={()=>del(Ausername)} disabled="true" >유저 삭제</Button>:
-                            <Button onClick={()=>del(Ausername)}>유저 삭제</Button>}
+                            <td>
+                                <Button onClick={()=> {
+                                if(openedContentId === data.id){
+                                    setOpenedContentId(-1);
+                                }else{
+                                    setOpenedContentId(data.id);
+                                    setUpdateUserModalOn(true)
+                                    }}}>수정</Button>
+                            </td>
+                            {
+                                openedContentId === data.id ? <UpdateUserModal show={updateUserModalOn} onHide={()=>{setUpdateUserModalOn(false)}} data={data}/> : ""
+                            }
+                            <td>
+                            {Ausername ===loginid ||basicrole ===4 ? <Button onClick={()=>del(Ausername)} disabled="true" >삭제</Button>:
+                            <Button onClick={()=>del(Ausername)}>삭제</Button>}
                             </td>
                             
                         </tr>

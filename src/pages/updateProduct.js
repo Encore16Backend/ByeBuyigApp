@@ -126,8 +126,6 @@ const UpdateProduct = () => {
     const [cata2Skirt, setCata2Skirt] = useState(['롱스커트', '미니스커트'])
     const [cata2Outer, setCata2Outer] = useState(['롱패딩', '숏패딩', '코트', '트렌치 코트'])
 
-    
-    
 
     const updatePdt = () => {
         const imageFile = []

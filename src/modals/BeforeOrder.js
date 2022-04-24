@@ -28,17 +28,16 @@ const BeforeOrder = ({ show, onHide, orderItems, makeOrder })=>{
             "Authorization": "Bearer " + sessionStorage.getItem('access_token'),
           }
         }).then(res => {
+            console.log(res.data, "addr")
             let data = res.data;
             let locname = [];
             for (var i=0; i<res.data.length; i++){
-              
               data[i] = data[i].location.split('/');
               if (data[i][3] != undefined){
                 locname.push(data[i][3]);
               }else{
                 locname.push("새 배송지");
               }
-              
             }
             setLocName(locname);
             setLocation(data);
